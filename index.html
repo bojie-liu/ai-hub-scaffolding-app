@@ -1,16 +1,870 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-HK">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Basic HTML Project</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>氧氣冒險王 - 化學奇幻之旅</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft JhengHei', 'PingFang TC', 'Heiti TC', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .magical-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 20"><defs><radialGradient id="a" cx="50" cy="50" r="50"><stop offset="0%" stop-color="rgba(255,255,255,.1)"/><stop offset="100%" stop-color="rgba(255,255,255,0)"/></radialGradient></defs><circle cx="10" cy="10" r="1" fill="rgba(255,255,255,.5)"/><circle cx="40" cy="5" r="1.5" fill="rgba(255,255,255,.3)"/><circle cx="70" cy="15" r="1" fill="rgba(255,255,255,.4)"/><circle cx="90" cy="8" r="0.5" fill="rgba(255,255,255,.6)"/></svg>') repeat;
+            animation: twinkle 3s ease-in-out infinite alternate;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.3; }
+            100% { opacity: 0.8; }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .game-header {
+            text-align: center;
+            margin-bottom: 30px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            border: 3px solid rgba(255, 215, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .game-title {
+            font-size: 2.8em;
+            color: #4a5568;
+            margin-bottom: 10px;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.3em;
+            color: #718096;
+            font-weight: 500;
+        }
+
+        .adventure-stats {
+            display: flex;
+            justify-content: space-between;
+            margin: 25px 0;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .stat-crystal {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.1));
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 12px 18px;
+            border-radius: 15px;
+            color: white;
+            font-weight: bold;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            flex: 1;
+            min-width: 120px;
+            text-align: center;
+        }
+
+        .quest-container {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.85));
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            margin-bottom: 25px;
+            border: 3px solid rgba(255, 215, 0, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .quest-number {
+            position: absolute;
+            top: -15px;
+            left: 30px;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .quest-container {
+            position: relative;
+        }
+
+        .question {
+            font-size: 1.4em;
+            margin-bottom: 25px;
+            color: #2d3748;
+            font-weight: bold;
+            line-height: 1.5;
+            padding: 10px;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+        }
+
+        .options {
+            display: grid;
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .option {
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+            border: 3px solid #e2e8f0;
+            border-radius: 15px;
+            padding: 18px 20px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 1.15em;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .option::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .option:hover {
+            background: linear-gradient(135deg, #edf2f7, #cbd5e0);
+            border-color: #a0aec0;
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .option:hover::before {
+            left: 100%;
+        }
+
+        .option.selected {
+            border-color: #4299e1;
+            background: linear-gradient(135deg, #ebf8ff, #bee3f8);
+            transform: scale(1.05);
+        }
+
+        .option.correct {
+            border-color: #48bb78;
+            background: linear-gradient(135deg, #f0fff4, #c6f6d5);
+            color: #2f855a;
+            animation: correctPulse 0.6s ease-in-out;
+        }
+
+        .option.wrong {
+            border-color: #f56565;
+            background: linear-gradient(135deg, #fed7d7, #feb2b2);
+            color: #c53030;
+            animation: wrongShake 0.6s ease-in-out;
+        }
+
+        @keyframes correctPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
+
+        @keyframes wrongShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .feedback {
+            margin: 25px 0;
+            padding: 20px;
+            border-radius: 15px;
+            display: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feedback::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+            animation: feedbackGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes feedbackGlow {
+            0%, 100% { transform: translateX(-100%); }
+            50% { transform: translateX(100%); }
+        }
+
+        .feedback.correct {
+            background: linear-gradient(135deg, #f0fff4, #c6f6d5);
+            border: 3px solid #48bb78;
+            color: #2f855a;
+        }
+
+        .feedback.wrong {
+            background: linear-gradient(135deg, #fed7d7, #fbb6ce);
+            border: 3px solid #f56565;
+            color: #c53030;
+        }
+
+        .explanation {
+            background: rgba(247, 250, 252, 0.9);
+            padding: 18px;
+            border-radius: 12px;
+            margin-top: 18px;
+            font-size: 1.05em;
+            color: #4a5568;
+            border-left: 4px solid #667eea;
+            backdrop-filter: blur(5px);
+        }
+
+        .spell-buttons {
+            display: flex;
+            gap: 18px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .spell-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1.15em;
+            font-weight: bold;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            margin: 8px;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .spell-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .spell-btn:hover {
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .spell-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .spell-btn:disabled {
+            background: #a0aec0;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .spell-btn-secondary {
+            background: linear-gradient(135deg, #38b2ac 0%, #319795 100%);
+        }
+
+        .spell-btn-danger {
+            background: linear-gradient(135deg, #f56565 0%, #e53e3e 100%);
+        }
+
+        .results {
+            text-align: center;
+            display: none;
+        }
+
+        .final-score {
+            font-size: 4em;
+            color: #4299e1;
+            margin: 25px 0;
+            font-weight: bold;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+            animation: scoreGlow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes scoreGlow {
+            0% { text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3); }
+            100% { text-shadow: 3px 3px 20px rgba(66, 153, 225, 0.6); }
+        }
+
+        .progress-crystal {
+            width: 100%;
+            height: 15px;
+            background: rgba(226, 232, 240, 0.8);
+            border-radius: 10px;
+            margin: 25px 0;
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .progress-energy {
+            height: 100%;
+            background: linear-gradient(90deg, #48bb78, #38a169, #2f855a);
+            transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-energy::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.3) 50%, transparent 70%);
+            animation: progressShine 2s ease-in-out infinite;
+        }
+
+        @keyframes progressShine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .wrong-spells {
+            text-align: left;
+            margin-top: 25px;
+            background: linear-gradient(135deg, #fed7d7, #fbb6ce);
+            padding: 25px;
+            border-radius: 15px;
+            border: 3px solid #f56565;
+        }
+
+        .wrong-spell {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid rgba(197, 48, 48, 0.3);
+        }
+
+        .wrong-spell:last-child {
+            border-bottom: none;
+        }
+
+        .adventure-start {
+            text-align: center;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.85));
+            padding: 50px;
+            border-radius: 25px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            border: 4px solid rgba(255, 215, 0, 0.3);
+            backdrop-filter: blur(15px);
+        }
+
+        .hero-character {
+            font-size: 6em;
+            margin-bottom: 25px;
+            animation: heroFloat 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes heroFloat {
+            0% { transform: translateY(0px) rotate(-2deg); }
+            100% { transform: translateY(-20px) rotate(2deg); }
+        }
+
+        .high-score-crystal {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 193, 7, 0.1));
+            padding: 15px;
+            border-radius: 15px;
+            margin: 25px 0;
+            color: #744210;
+            font-weight: bold;
+            border: 2px solid rgba(255, 193, 7, 0.3);
+        }
+
+        .level-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin: 10px 5px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            .game-title {
+                font-size: 2.2em;
+            }
+
+            .quest-container {
+                padding: 25px;
+            }
+
+            .options {
+                gap: 12px;
+            }
+
+            .spell-buttons {
+                flex-direction: column;
+            }
+
+            .adventure-stats {
+                justify-content: center;
+            }
+
+            .hero-character {
+                font-size: 4em;
+            }
+
+            .final-score {
+                font-size: 3em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .game-title {
+                font-size: 1.8em;
+            }
+
+            .quest-container {
+                padding: 20px;
+            }
+
+            .option {
+                padding: 15px;
+                font-size: 1em;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Hello World!</h1>
-    <p>Welcome to your new project.</p>
-  </div>
-  <script src="script.js"></script>
+    <div class="magical-bg"></div>
+
+    <div class="container">
+        <div class="game-header">
+            <h1 class="game-title">🧪 氧氣冒險王</h1>
+            <p class="subtitle">踏上奇幻化學之旅，探索氧氣的神秘世界！</p>
+            <div class="level-badge">適合高小 P4-P6</div>
+            <div class="level-badge">中等難度</div>
+        </div>
+
+        <!-- 冒險開始畫面 -->
+        <div id="startScreen" class="adventure-start">
+            <div class="hero-character">🧙‍♂️</div>
+            <h2>🌟 歡迎來到氧氣魔法學院！</h2>
+            <p style="font-size: 1.1em; margin: 20px 0; color: #4a5568;">
+                年輕的魔法師，準備好接受氧氣魔法的挑戰了嗎？<br>
+                完成10道神秘咒語（化學題目），成為真正的氧氣大師！
+            </p>
+            <div class="high-score-crystal" id="highScoreDisplay" style="display: none;"></div>
+            <button class="spell-btn" onclick="startAdventure()">🚀 開始冒險！</button>
+            <button class="spell-btn spell-btn-secondary" onclick="reviewFailedSpells()" id="reviewBtn" style="display: none;">📚 複習失敗咒語</button>
+        </div>
+
+        <!-- 遊戲進行畫面 -->
+        <div id="gameScreen" style="display: none;">
+            <div class="adventure-stats">
+                <div class="stat-crystal">🎯 咒語: <span id="currentQuest">1</span>/10</div>
+                <div class="stat-crystal">✨ 成功: <span id="correctCount">0</span></div>
+                <div class="stat-crystal">🏆 魔力值: <span id="currentScore">0</span></div>
+            </div>
+
+            <div class="progress-crystal">
+                <div class="progress-energy" id="progressBar"></div>
+            </div>
+
+            <div class="quest-container">
+                <div class="quest-number" id="questNumber">咒語 1</div>
+                <div class="question" id="questionText"></div>
+                <div class="options" id="optionsContainer"></div>
+                <div class="feedback" id="feedback">
+                    <div id="feedbackText"></div>
+                    <div class="explanation" id="explanation"></div>
+                </div>
+                <div class="spell-buttons">
+                    <button class="spell-btn" id="nextBtn" onclick="nextQuest()" style="display: none;">➡️ 下個咒語</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 結果畫面 -->
+        <div id="resultScreen" class="results">
+            <div class="hero-character">🏆</div>
+            <h2>🎉 冒險完成！</h2>
+            <div class="final-score" id="finalScore"></div>
+            <div id="scoreMessage"></div>
+
+            <div class="wrong-spells" id="wrongSpellsContainer" style="display: none;">
+                <h3>📜 失敗的咒語回顧</h3>
+                <div id="wrongSpellsList"></div>
+            </div>
+
+            <div class="spell-buttons">
+                <button class="spell-btn" onclick="restartAdventure()">🔄 重新挑戰</button>
+                <button class="spell-btn spell-btn-secondary" onclick="reviewFailedSpells()" id="reviewWrongBtn" style="display: none;">📚 複習失敗咒語</button>
+                <button class="spell-btn spell-btn-danger" onclick="backToStart()">🏠 回到學院</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const magicalQuests = [
+            {
+                question: "🌬️ 在魔法大氣層中，氧氣精靈大約佔據多少領域？",
+                options: ["約 15% 的空間", "約 21% 的空間", "約 30% 的空間", "約 50% 的空間"],
+                correct: 1,
+                explanation: "在我們神奇的大氣層中，氧氣精靈佔據約21%的空間，氮氣巨人佔78%，其餘1%是其他魔法元素。這個完美比例維持著地球上所有生命的平衡！"
+            },
+            {
+                question: "🔥 火焰魔法需要三個神秘條件才能施展，下列哪個是必需的魔法元素？",
+                options: ["水精靈", "氧氣精靈", "二氧化碳幽靈", "氮氣巨人"],
+                correct: 1,
+                explanation: "火焰魔法需要三個條件：可燃的魔法材料、氧氣精靈（助燃魔法）和達到燃點的熱量咒語。缺少任何一個，火焰魔法都無法成功施展！"
+            },
+            {
+                question: "🫁 人類魔法師呼吸時，氧氣精靈主要在身體的哪個魔法器官被吸收？",
+                options: ["心臟城堡", "肺部宮殿", "胃部洞穴", "肝臟森林"],
+                correct: 1,
+                explanation: "氧氣精靈在肺部宮殿的肺泡中被血液法術吸收，然後由血液使者運送到全身各個器官，供細胞進行神奇的呼吸魔法。"
+            },
+            {
+                question: "🐠 水中的魚類魔法生物是如何獲得氧氣精靈的力量？",
+                options: ["直接飲用魔法水", "透過魔法鰓從水中提取溶解的氧氣精靈", "浮到水面呼吸魔法空氣", "透過皮膚魔法吸收"],
+                correct: 1,
+                explanation: "魚類用魔法鰓呼吸，當魔法水流經過鰓時，鰓絲會施展特殊咒語從水中提取溶解的氧氣精靈，同時排出二氧化碳幽靈。"
+            },
+            {
+                question: "🌱 植物魔法師在白天進行光合魔法時會創造出什麼神奇氣體？",
+                options: ["二氧化碳幽靈", "氮氣巨人", "氧氣精靈", "水蒸氣妖精"],
+                correct: 2,
+                explanation: "植物魔法師在光合魔法中使用二氧化碳幽靈和魔法水，在陽光咒語幫助下製造魔法養分，同時創造出氧氣精靈送給大氣層。這就是為什麼植物被稱為地球的'綠色魔法師'！"
+            },
+            {
+                question: "🔬 魔法師要用什麼神奇方法來檢驗一個魔法瓶中是否裝著氧氣精靈？",
+                options: ["聞魔法香味", "用帶火星的魔法木條測試", "搖晃魔法瓶子", "加入魔法水"],
+                correct: 1,
+                explanation: "將帶有火星的魔法木條放入瓶中，如果木條重新燃燒發光，就證明瓶內住著氧氣精靈。因為氧氣精靈擁有強大的助燃魔法！"
+            },
+            {
+                question: "❄️ 當氧氣精靈變成液態魔法形態時，會呈現什麼神秘顏色？",
+                options: ["透明無色", "神秘淡藍色", "魔法綠色", "火焰紅色"],
+                correct: 1,
+                explanation: "雖然氧氣精靈在氣體形態時是透明的，但當它們在極低溫魔法（-183°C）下變成液態時，會呈現美麗的淡藍色光芒！"
+            },
+            {
+                question: "🏔️ 在高山魔法領域，空氣中的氧氣精靈濃度會發生什麼變化？",
+                options: ["魔力增強", "魔力減弱", "魔力不變", "先增強後減弱"],
+                correct: 1,
+                explanation: "海拔越高，魔法大氣壓力越低，空氣越稀薄，氧氣精靈的濃度也會減少。這就是為什麼登山魔法師在高海拔地區會感到呼吸困難。"
+            },
+            {
+                question: "🚑 醫院中的治療魔法師給病人使用氧氣魔法瓶，主要目的是什麼？",
+                options: ["降低血壓魔法", "增加血液中氧氣精靈的濃度", "幫助消化魔法", "減少疼痛咒語"],
+                correct: 1,
+                explanation: "醫用氧氣魔法能增加血液中氧氣精靈的濃度，幫助病人的器官獲得足夠的魔法能量，特別是呼吸困難或心臟虛弱的患者。"
+            },
+            {
+                question: "🌍 如果地球魔法世界中沒有氧氣精靈，會發生什麼可怕的事情？",
+                options: ["只是動物魔法師無法生存", "植物魔法師會長得更好", "大部分魔法生物都無法生存", "只影響海洋魔法生物"],
+                correct: 2,
+                explanation: "氧氣精靈對大部分魔法生物都是必需的生命能量。沒有氧氣精靈，動物魔法師無法呼吸，植物魔法師無法進行呼吸魔法，火焰魔法也無法施展，地球將變成一個毫無魔法生機的死寂星球。"
+            }
+        ];
+
+        let currentQuestIndex = 0;
+        let magicalScore = 0;
+        let successfulSpells = 0;
+        let failedSpells = [];
+        let adventureMode = 'normal'; // 'normal' or 'review'
+
+        // 載入冒險數據
+        function loadAdventureData() {
+            const highScore = localStorage.getItem('oxygenAdventureHighScore') || 0;
+            const savedFailedSpells = localStorage.getItem('oxygenAdventureFailedSpells');
+
+            if (savedFailedSpells) {
+                failedSpells = JSON.parse(savedFailedSpells);
+                if (failedSpells.length > 0) {
+                    document.getElementById('reviewBtn').style.display = 'inline-block';
+                }
+            }
+
+            if (highScore > 0) {
+                document.getElementById('highScoreDisplay').innerHTML = `🏆 最高魔力值: ${highScore}分`;
+                document.getElementById('highScoreDisplay').style.display = 'block';
+            }
+        }
+
+        // 保存冒險數據
+        function saveAdventureData() {
+            const currentHighScore = localStorage.getItem('oxygenAdventureHighScore') || 0;
+            if (magicalScore > currentHighScore) {
+                localStorage.setItem('oxygenAdventureHighScore', magicalScore);
+            }
+            localStorage.setItem('oxygenAdventureFailedSpells', JSON.stringify(failedSpells));
+        }
+
+        // 開始冒險
+        function startAdventure() {
+            adventureMode = 'normal';
+            resetAdventure();
+            document.getElementById('startScreen').style.display = 'none';
+            document.getElementById('gameScreen').style.display = 'block';
+            loadQuest();
+        }
+
+        // 重置冒險
+        function resetAdventure() {
+            currentQuestIndex = 0;
+            magicalScore = 0;
+            successfulSpells = 0;
+            failedSpells = [];
+            updateAdventureStats();
+            updateProgressCrystal();
+        }
+
+        // 複習失敗咒語
+        function reviewFailedSpells() {
+            if (failedSpells.length === 0) {
+                alert('🎉 太棒了！目前沒有失敗的咒語需要複習！');
+                return;
+            }
+
+            adventureMode = 'review';
+            currentQuestIndex = 0;
+            magicalScore = 0;
+            successfulSpells = 0;
+
+            // 只顯示之前失敗的咒語
+            const savedFailedSpells = [...failedSpells];
+            failedSpells = [];
+
+            // 重新排列失敗咒語
+            magicalQuests.splice(0, magicalQuests.length, ...savedFailedSpells);
+
+            document.getElementById('startScreen').style.display = 'none';
+            document.getElementById('gameScreen').style.display = 'block';
+            loadQuest();
+        }
+
+        // 載入任務
+        function loadQuest() {
+            if (currentQuestIndex >= magicalQuests.length || (adventureMode === 'review' && currentQuestIndex >= magicalQuests.length)) {
+                showResults();
+                return;
+            }
+
+            const quest = magicalQuests[currentQuestIndex];
+            document.getElementById('questNumber').textContent = `咒語 ${currentQuestIndex + 1}`;
+            document.getElementById('questionText').textContent = quest.question;
+
+            const optionsContainer = document.getElementById('optionsContainer');
+            optionsContainer.innerHTML = '';
+
+            quest.options.forEach((option, index) => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'option';
+                optionElement.textContent = option;
+                optionElement.onclick = () => castSpell(index);
+                optionsContainer.appendChild(optionElement);
+            });
+
+            document.getElementById('feedback').style.display = 'none';
+            document.getElementById('nextBtn').style.display = 'none';
+
+            updateAdventureStats();
+            updateProgressCrystal();
+        }
+
+        // 施展咒語（選擇答案）
+        function castSpell(selectedIndex) {
+            const quest = magicalQuests[currentQuestIndex];
+            const options = document.querySelectorAll('.option');
+
+            // 禁用所有選項
+            options.forEach(option => option.onclick = null);
+
+            // 標記選中的咒語
+            options[selectedIndex].classList.add('selected');
+
+            // 顯示正確咒語
+            options[quest.correct].classList.add('correct');
+
+            let isSuccessful = selectedIndex === quest.correct;
+
+            if (!isSuccessful) {
+                options[selectedIndex].classList.add('wrong');
+                // 將失敗咒語加入列表
+                failedSpells.push({
+                    question: quest.question,
+                    options: quest.options,
+                    correct: quest.correct,
+                    explanation: quest.explanation,
+                    userAnswer: selectedIndex
+                });
+            } else {
+                successfulSpells++;
+                magicalScore += 10;
+            }
+
+            // 顯示魔法反饋
+            const feedback = document.getElementById('feedback');
+            const feedbackText = document.getElementById('feedbackText');
+            const explanation = document.getElementById('explanation');
+
+            if (isSuccessful) {
+                feedback.className = 'feedback correct';
+                feedbackText.textContent = '🎉 咒語成功！魔法能量增加！';
+            } else {
+                feedback.className = 'feedback wrong';
+                feedbackText.textContent = `❌ 咒語失敗！正確的魔法咒語是：${quest.options[quest.correct]}`;
+            }
+
+            explanation.textContent = quest.explanation;
+            feedback.style.display = 'block';
+
+            document.getElementById('nextBtn').style.display = 'inline-block';
+            updateAdventureStats();
+        }
+
+        // 下個任務
+        function nextQuest() {
+            currentQuestIndex++;
+            loadQuest();
+        }
+
+        // 更新冒險統計
+        function updateAdventureStats() {
+            document.getElementById('currentQuest').textContent = currentQuestIndex + 1;
+            document.getElementById('correctCount').textContent = successfulSpells;
+            document.getElementById('currentScore').textContent = magicalScore;
+        }
+
+        // 更新進度水晶
+        function updateProgressCrystal() {
+            const progress = ((currentQuestIndex) / magicalQuests.length) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        // 顯示結果
+        function showResults() {
+            document.getElementById('gameScreen').style.display = 'none';
+            document.getElementById('resultScreen').style.display = 'block';
+
+            const percentage = Math.round((successfulSpells / magicalQuests.length) * 100);
+            document.getElementById('finalScore').textContent = `${magicalScore} 魔力值`;
+
+            let message = '';
+            let rank = '';
+            if (percentage >= 90) {
+                message = '🌟 恭喜！你已成為氧氣大魔法師！對氧氣魔法的掌握已達到大師境界！';
+                rank = '🏆 氧氣大魔法師';
+            } else if (percentage >= 70) {
+                message = '👍 很棒！你是優秀的化學魔法學徒！繼續努力修煉魔法！';
+                rank = '⭐ 化學魔法學徒';
+            } else if (percentage >= 50) {
+                message = '📚 不錯的開始！多加練習魔法咒語，你會變得更強！';
+                rank = '📖 見習魔法師';
+            } else {
+                message = '💪 不要灰心！每個大魔法師都是從基礎開始，多複習魔法知識吧！';
+                rank = '🔰 魔法新手';
+            }
+
+            document.getElementById('scoreMessage').innerHTML = `
+                <div style="font-size: 1.3em; margin: 20px 0;">
+                    <div class="level-badge" style="font-size: 1.2em; margin: 10px;">${rank}</div>
+                </div>
+                <p style="font-size: 1.2em; margin: 15px 0;"><strong>成功率：${percentage}%</strong></p>
+                <p style="font-size: 1.1em; color: #4a5568; line-height: 1.6;">${message}</p>
+            `;
+
+            // 顯示失敗咒語
+            if (failedSpells.length > 0) {
+                document.getElementById('wrongSpellsContainer').style.display = 'block';
+                document.getElementById('reviewWrongBtn').style.display = 'inline-block';
+
+                const wrongList = document.getElementById('wrongSpellsList');
+                wrongList.innerHTML = '';
+
+                failedSpells.forEach((spell, index) => {
+                    const wrongItem = document.createElement('div');
+                    wrongItem.className = 'wrong-spell';
+                    wrongItem.innerHTML = `
+                        <strong style="color: #2d3748;">失敗咒語 ${index + 1}:</strong> ${spell.question}<br>
+                        <span style="color: #c53030; font-weight: bold;">🔮 你的咒語：${spell.options[spell.userAnswer]}</span><br>
+                        <span style="color: #2f855a; font-weight: bold;">✨ 正確咒語：${spell.options[spell.correct]}</span><br>
+                        <div style="background: rgba(255,255,255,0.7); padding: 10px; border-radius: 8px; margin-top: 8px;">
+                            <em style="color: #4a5568;">${spell.explanation}</em>
+                        </div>
+                    `;
+                    wrongList.appendChild(wrongItem);
+                });
+            }
+
+            saveAdventureData();
+        }
+
+        // 重新開始冒險
+        function restartAdventure() {
+            location.reload();
+        }
+
+        // 回到開始
+        function backToStart() {
+            document.getElementById('resultScreen').style.display = 'none';
+            document.getElementById('startScreen').style.display = 'block';
+            loadAdventureData();
+        }
+
+        // 頁面載入時初始化
+        window.onload = function() {
+            loadAdventureData();
+        };
+    </script>
 </body>
 </html>
