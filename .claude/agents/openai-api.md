@@ -81,10 +81,13 @@ import { NextResponse } from 'next/server';
 
 export async function POST(req: Request) {
   try {
-    const { messages } = await req.json();
+    const { messages, chatId } = await req.json();
 
     const completion = await openai.chat.completions.create({
       model: 'gpt-4-turbo-preview',
+      chatId: chatId,
+      stream: false,
+      detail: false,
       messages: messages,
       temperature: 0.7,
       max_tokens: 1000,
@@ -111,10 +114,13 @@ import { openai } from '@/lib/openai';
 import { OpenAIStream, StreamingTextResponse } from 'ai';
 
 export async function POST(req: Request) {
-  const { messages } = await req.json();
+  const { messages, chatId } = await req.json();
 
   const response = await openai.chat.completions.create({
     model: 'gpt-4-turbo-preview',
+    chatId: chatId,
+    stream: false,
+    detail: false,
     messages: messages,
     stream: true,
   });
@@ -130,12 +136,14 @@ export async function POST(req: Request) {
 
 ```typescript
 export async function POST(req: Request) {
-  const { messages } = await req.json();
+  const { messages, chatId } = await req.json();
 
   const stream = await openai.chat.completions.create({
     model: 'gpt-4-turbo-preview',
-    messages: messages,
+    chatId: chatId,
     stream: true,
+    detail: false,
+    messages: messages,
   });
 
   const encoder = new TextEncoder();
@@ -187,10 +195,13 @@ const tools = [
 ];
 
 export async function POST(req: Request) {
-  const { messages } = await req.json();
+  const { messages, chatId } = await req.json();
 
   const response = await openai.chat.completions.create({
     model: 'gpt-4-turbo-preview',
+    chatId: chatId,
+    stream: false,
+    detail: false,
     messages: messages,
     tools: tools,
     tool_choice: 'auto',
@@ -210,6 +221,9 @@ export async function POST(req: Request) {
       // Send function response back to the model
       const secondResponse = await openai.chat.completions.create({
         model: 'gpt-4-turbo-preview',
+        chatId: chatId,
+        stream: false,
+        detail: false,
         messages: [
           ...messages,
           message,
@@ -272,10 +286,13 @@ import { NextResponse } from 'next/server';
 
 export async function POST(req: Request) {
   try {
-    const { imageUrl, prompt } = await req.json();
+    const { imageUrl, prompt, chatId } = await req.json();
 
     const response = await openai.chat.completions.create({
       model: 'gpt-4-vision-preview',
+      chatId: chatId,
+      stream: false,
+      detail: false,
       messages: [
         {
           role: 'user',
@@ -375,6 +392,9 @@ import OpenAI from 'openai';
 try {
   const completion = await openai.chat.completions.create({
     model: 'gpt-4-turbo-preview',
+    chatId: chatId,
+    stream: false,
+    detail: false,
     messages: messages,
   });
 } catch (error) {
@@ -439,13 +459,16 @@ const models = {
 // Implement caching for repeated queries
 const cache = new Map();
 
-async function getCachedCompletion(prompt: string) {
+async function getCachedCompletion(prompt: string, chatId: string) {
   if (cache.has(prompt)) {
     return cache.get(prompt);
   }
 
   const result = await openai.chat.completions.create({
     model: 'gpt-3.5-turbo',
+    chatId: chatId,
+    stream: false,
+    detail: false,
     messages: [{ role: 'user', content: prompt }],
   });
 
@@ -506,6 +529,9 @@ async function retryWithBackoff<T>(
 const completion = await retryWithBackoff(() =>
   openai.chat.completions.create({
     model: 'gpt-4-turbo-preview',
+    chatId: chatId,
+    stream: false,
+    detail: false,
     messages: messages,
   })
 );
@@ -533,6 +559,9 @@ const messages = [
 ```typescript
 const completion = await openai.chat.completions.create({
   model: 'gpt-4-turbo-preview',
+  chatId: chatId,
+  stream: false,
+  detail: false,
   messages: [
     {
       role: 'system',
