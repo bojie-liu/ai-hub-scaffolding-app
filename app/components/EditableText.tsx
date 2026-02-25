@@ -57,7 +57,6 @@ export default function EditableText({
   }
 
   return (
-    // @ts-expect-error dynamic tag
     <Tag
       className={`${className} cursor-pointer rounded hover:outline hover:outline-2 hover:outline-blue-300 hover:outline-offset-2 transition-all`}
       title="Click to edit"

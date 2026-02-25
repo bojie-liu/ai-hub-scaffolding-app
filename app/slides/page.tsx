@@ -2,6 +2,7 @@
 import { useState, useRef, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import VennDiagram from "../components/VennDiagram";
+import React from "react";
 
 const initialSlides = [
   {
@@ -111,7 +112,7 @@ function Editable({
   value: string;
   onChange: (v: string) => void;
   className?: string;
-  as?: keyof JSX.IntrinsicElements;
+  as?: keyof React.JSX.IntrinsicElements;
 }) {
   const ref = useRef<HTMLElement>(null);
 
@@ -122,9 +123,10 @@ function Editable({
     }
   }, [value]);
 
+  const DynamicTag = Tag as React.ElementType;
+
   return (
-    // @ts-expect-error dynamic tag
-    <Tag
+    <DynamicTag
       ref={ref}
       contentEditable
       suppressContentEditableWarning
@@ -133,7 +135,7 @@ function Editable({
       className={`outline-none rounded px-0.5 cursor-text hover:bg-black/5 focus:bg-blue-50 focus:ring-1 focus:ring-blue-300 transition-colors ${className ?? ""}`}
     >
       {value}
-    </Tag>
+    </DynamicTag>
   );
 }
 
