@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react";
 interface EditableTextProps {
   initialValue: string;
   storageKey?: string;
-  as?: keyof JSX.IntrinsicElements;
+  as?: keyof React.JSX.IntrinsicElements;
   className?: string;
   multiline?: boolean;
 }
