@@ -1,8 +1,16 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --primary: #2563eb;
+  --primary-dark: #1d4ed8;
+  --secondary: #7c3aed;
+  --accent: #059669;
+  --surface: #ffffff;
+  --border: #e2e8f0;
+  --muted: #64748b;
+  --highlight: #eff6ff;
 }
 
 @theme inline {
@@ -12,15 +20,47 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+}
+
+/* Smooth scroll offset for sticky nav */
+html {
+  scroll-padding-top: 72px;
+}
+
+/* Flashcard flip animation */
+.flashcard-inner {
+  transition: transform 0.5s;
+  transform-style: preserve-3d;
+  position: relative;
+}
+.flashcard-inner.flipped {
+  transform: rotateY(180deg);
+}
+.flashcard-front,
+.flashcard-back {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.flashcard-back {
+  transform: rotateY(180deg);
+  position: absolute;
+  inset: 0;
+}
+
+/* Quiz option hover */
+.quiz-option:hover:not(:disabled) {
+  border-color: var(--primary);
+  background: var(--highlight);
+}
+
+/* Slide transitions */
+.slide {
+  display: none;
+}
+.slide.active {
+  display: flex;
 }
