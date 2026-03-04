@@ -12,6 +12,8 @@ const sections = [
   { id: "assessment", label: "Assessment" },
   { id: "alignment", label: "Alignment" },
   { id: "resources", label: "Resources" },
+  { id: "differentiation", label: "Inclusivity" },
+  { id: "reflection", label: "Reflection" },
 ];
 
 export default function Navbar() {
@@ -24,13 +26,13 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-16">
         {/* Logo / Title */}
         <Link href="/" className="flex items-center gap-2 shrink-0">
-          <span className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold text-sm">EP</span>
-          <span className="font-semibold text-slate-800 text-sm hidden sm:block">Educational Psychology</span>
+          <span className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold text-sm">TP</span>
+          <span className="font-semibold text-slate-800 text-sm hidden sm:block">TPACK Framework</span>
         </Link>
 
         {/* Desktop section links — only on main page */}
         {!isSlides && (
-          <div className="hidden lg:flex items-center gap-1 overflow-x-auto">
+          <div className="hidden lg:flex items-center gap-1 overflow-x-auto max-w-2xl">
             {sections.map((s) => (
               <a
                 key={s.id}
@@ -57,7 +59,7 @@ export default function Navbar() {
               href="/slides"
               className="px-4 py-2 text-sm font-medium bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
             >
-              📊 Slides
+              Slides
             </Link>
           )}
           {/* Mobile menu toggle */}
@@ -79,7 +81,7 @@ export default function Navbar() {
 
       {/* Mobile dropdown */}
       {!isSlides && menuOpen && (
-        <div className="lg:hidden border-t border-slate-100 bg-white px-4 py-2 flex flex-col gap-1">
+        <div className="lg:hidden border-t border-slate-100 bg-white px-4 py-2 flex flex-col gap-1 max-h-64 overflow-y-auto">
           {sections.map((s) => (
             <a
               key={s.id}
