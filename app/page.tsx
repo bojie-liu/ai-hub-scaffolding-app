@@ -393,7 +393,7 @@ export default function Home() {
               <VideoPlayer
                 title="TPACK in the Classroom"
                 description="Example of AI-enhanced TPACK implementation"
-                videoId="dQw4w9WgXcQ"
+                videoId="yMQiHJsePOM"
                 duration="5:00"
                 allowCustomUrl
               />
