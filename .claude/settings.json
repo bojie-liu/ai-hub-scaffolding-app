@@ -48,8 +48,8 @@
     ]
   },
   "env": {
-    "NODE_ENV": "development",
-    "NEXT_PUBLIC_APP_ENV": "development",
+    "NODE_ENV": "production",
+    "NEXT_PUBLIC_APP_ENV": "production",
     "SHADCN_STYLE": "new-york",
     "SHADCN_BASE_COLOR": "zinc",
     "TAILWIND_CONFIG": "tailwind.config.js",
