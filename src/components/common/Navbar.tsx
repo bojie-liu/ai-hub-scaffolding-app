@@ -1,97 +1,138 @@
-"use client";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useState } from "react";
+'use client';
 
-const sections = [
-  { id: "ilos", label: "Outcomes" },
-  { id: "preclass", label: "Pre-Class" },
-  { id: "introduction", label: "Introduction" },
-  { id: "development", label: "Activities" },
-  { id: "synthesis", label: "Synthesis" },
-  { id: "assessment", label: "Assessment" },
-  { id: "alignment", label: "Alignment" },
-  { id: "resources", label: "Resources" },
+import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
+import { useUser } from '@/contexts/UserContext';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { LayoutDashboard, LogOut, BookOpen, User, FileText } from 'lucide-react';
+
+const navLinks = [
+  { href: '/lesson', label: 'Lesson Plan', icon: FileText },
+  { href: '/slides', label: 'Slides', icon: BookOpen, hideForGuest: true },
+  { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard, requiredRole: 'TEACHER' },
 ];
 
 export default function Navbar() {
   const pathname = usePathname();
-  const isSlides = pathname === "/slides";
-  const [menuOpen, setMenuOpen] = useState(false);
+  const router = useRouter();
+  const { user, isGuest, logout } = useUser();
+
+  function handleLogout() {
+    logout();
+    router.push('/login');
+  }
+
+  const visibleLinks = navLinks.filter((link) => {
+    if (link.requiredRole && user?.role !== link.requiredRole) return false;
+    if (link.hideForGuest && isGuest) return false;
+    return true;
+  });
 
   return (
-    <nav className="sticky top-0 z-50 bg-white border-b border-slate-200 shadow-sm">
+    <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-slate-200 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-16">
-        {/* Logo / Title */}
-        <Link href="/" className="flex items-center gap-2 shrink-0">
-          <span className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold text-sm">EP</span>
-          <span className="font-semibold text-slate-800 text-sm hidden sm:block">Educational Psychology</span>
-        </Link>
-
-        {/* Desktop section links — only on main page */}
-        {!isSlides && (
-          <div className="hidden lg:flex items-center gap-1 overflow-x-auto">
-            {sections.map((s) => (
-              <a
-                key={s.id}
-                href={`#${s.id}`}
-                className="px-3 py-1.5 text-sm text-slate-600 hover:text-blue-600 hover:bg-blue-50 rounded-md transition-colors whitespace-nowrap"
-              >
-                {s.label}
-              </a>
-            ))}
+        <div className="flex items-center gap-6">
+          <Link href="/lesson" className="flex items-center gap-2 shrink-0">
+            <span className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold text-sm">AI</span>
+            <span className="font-semibold text-slate-800 text-sm hidden sm:block">AI in Software Engineering</span>
+          </Link>
+          <div className="hidden sm:flex items-center gap-1">
+            {visibleLinks.map((link) => {
+              const Icon = link.icon;
+              const isActive = pathname === link.href || pathname.startsWith(link.href + '/');
+              return (
+                <Link key={link.href} href={link.href}>
+                  <Button
+                    variant={isActive ? 'secondary' : 'ghost'}
+                    size="sm"
+                    className="gap-1.5"
+                  >
+                    <Icon className="h-4 w-4" />
+                    {link.label}
+                  </Button>
+                </Link>
+              );
+            })}
           </div>
-        )}
+        </div>
 
-        {/* Right actions */}
         <div className="flex items-center gap-2">
-          {isSlides ? (
-            <Link
-              href="/"
-              className="px-4 py-2 text-sm font-medium text-slate-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
-            >
-              ← Course Page
-            </Link>
+          {/* Mobile nav links */}
+          <div className="flex sm:hidden items-center gap-1">
+            {visibleLinks.map((link) => {
+              const Icon = link.icon;
+              const isActive = pathname === link.href;
+              return (
+                <Link key={link.href} href={link.href}>
+                  <Button variant={isActive ? 'secondary' : 'ghost'} size="icon" className="h-8 w-8">
+                    <Icon className="h-4 w-4" />
+                  </Button>
+                </Link>
+              );
+            })}
+          </div>
+
+          {user ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger className="inline-flex items-center gap-2 h-7 rounded-md px-2 text-sm font-medium hover:bg-muted hover:text-foreground transition-colors">
+                <Avatar className="h-6 w-6">
+                  <AvatarFallback className={`text-xs ${isGuest ? 'bg-slate-100 text-slate-600' : 'bg-blue-100 text-blue-700'}`}>
+                    {(user.username || 'U')[0].toUpperCase()}
+                  </AvatarFallback>
+                </Avatar>
+                <span className="hidden sm:inline text-sm">{user.username}</span>
+                {isGuest ? (
+                  <Badge variant="outline" className="text-xs px-1.5 py-0">Guest</Badge>
+                ) : (
+                  <Badge variant={user.role === 'TEACHER' ? 'default' : 'secondary'} className="text-xs px-1.5 py-0">
+                    {user.role}
+                  </Badge>
+                )}
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                {isGuest ? (
+                  <>
+                    <DropdownMenuItem onClick={() => router.push('/login')}>
+                      <User className="h-4 w-4 mr-2" />
+                      Sign In
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={handleLogout}>
+                      <LogOut className="h-4 w-4 mr-2" />
+                      Exit Guest Mode
+                    </DropdownMenuItem>
+                  </>
+                ) : (
+                  <>
+                    <DropdownMenuItem disabled>
+                      <User className="h-4 w-4 mr-2" />
+                      {user.username} ({user.role})
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={handleLogout}>
+                      <LogOut className="h-4 w-4 mr-2" />
+                      Logout
+                    </DropdownMenuItem>
+                  </>
+                )}
+              </DropdownMenuContent>
+            </DropdownMenu>
           ) : (
-            <Link
-              href="/slides"
-              className="px-4 py-2 text-sm font-medium bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-            >
-              📊 Slides
+            <Link href="/login">
+              <Button size="sm">Sign In</Button>
             </Link>
-          )}
-          {/* Mobile menu toggle */}
-          {!isSlides && (
-            <button
-              className="lg:hidden p-2 rounded-md text-slate-600 hover:bg-slate-100"
-              onClick={() => setMenuOpen(!menuOpen)}
-              aria-label="Toggle menu"
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                {menuOpen
-                  ? <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  : <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />}
-              </svg>
-            </button>
           )}
         </div>
       </div>
-
-      {/* Mobile dropdown */}
-      {!isSlides && menuOpen && (
-        <div className="lg:hidden border-t border-slate-100 bg-white px-4 py-2 flex flex-col gap-1">
-          {sections.map((s) => (
-            <a
-              key={s.id}
-              href={`#${s.id}`}
-              onClick={() => setMenuOpen(false)}
-              className="px-3 py-2 text-sm text-slate-600 hover:text-blue-600 hover:bg-blue-50 rounded-md transition-colors"
-            >
-              {s.label}
-            </a>
-          ))}
-        </div>
-      )}
     </nav>
   );
 }

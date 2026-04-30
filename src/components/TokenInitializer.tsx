@@ -8,17 +8,19 @@ import { exchangeToken } from '@/lib/api/token-exchange';
 
 export function TokenInitializer() {
   const searchParams = useSearchParams();
-  const { setUser } = useUser();
+  const { setUser, setTokenProcessed } = useUser();
   const { setCourse } = useCourse();
   const hasInitialized = useRef(false);
 
   useEffect(() => {
-    console.log('TokenInitializer useEffect triggered with searchParams:', searchParams.toString());
     if (hasInitialized.current) return;
     hasInitialized.current = true;
 
     const token = searchParams.get('token');
-    if (!token) return;
+    if (!token) {
+      setTokenProcessed(true);
+      return;
+    }
 
     const initializeFromToken = async () => {
       try {
@@ -28,19 +30,19 @@ export function TokenInitializer() {
           userId: data.userId,
           username: data.username,
           email: data.email,
-          role: data.role,
+          role: data.role.toUpperCase(),
         });
 
         setCourse(data.course);
-
-        console.log('Token exchange successful:', data);
       } catch (error) {
         console.error('Failed to exchange token:', error);
+      } finally {
+        setTokenProcessed(true);
       }
     };
 
     initializeFromToken();
-  }, [searchParams, setUser, setCourse]);
+  }, [searchParams, setUser, setCourse, setTokenProcessed]);
 
   return null;
 }
