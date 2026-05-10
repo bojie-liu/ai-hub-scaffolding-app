@@ -3,14 +3,523 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Basic HTML Project</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Concept Check | Primary English - Special Education</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #f6f8fb;
+      --card-front: #ffffff;
+      --card-back: #e8f5e9;
+      --accent: #4caf7d;
+      --accent-hover: #3d9969;
+      --review: #ff9800;
+      --review-hover: #e68a00;
+      --text: #2c3e50;
+      --text-light: #7f8c8d;
+      --border: #e0e6ed;
+      --shadow: 0 4px 24px rgba(0,0,0,0.07);
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    header {
+      width: 100%;
+      max-width: 520px;
+      padding: 32px 20px 0;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    header .subtitle {
+      font-size: 0.85rem;
+      color: var(--text-light);
+    }
+
+    .progress-bar-wrapper {
+      width: 100%;
+      max-width: 520px;
+      padding: 20px 20px 0;
+    }
+
+    .progress-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      font-size: 0.82rem;
+      color: var(--text-light);
+    }
+
+    .progress-info .count {
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 6px;
+      background: var(--border);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 3px;
+      transition: width 0.4s ease;
+    }
+
+    .card-counter {
+      font-size: 0.8rem;
+      color: var(--text-light);
+      text-align: center;
+      margin-top: 16px;
+    }
+
+    .card-area {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 20px;
+      width: 100%;
+      max-width: 520px;
+    }
+
+    .card-container {
+      perspective: 800px;
+      width: 100%;
+      max-width: 380px;
+      height: 260px;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.5s ease;
+      transform-style: preserve-3d;
+    }
+
+    .card-inner.flipped {
+      transform: rotateY(180deg);
+    }
+
+    .card-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 28px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+
+    .card-front {
+      background: var(--card-front);
+    }
+
+    .card-front .label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-light);
+      margin-bottom: 14px;
+    }
+
+    .card-front .word {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .card-front .hint {
+      font-size: 0.75rem;
+      color: var(--text-light);
+      margin-top: 18px;
+      opacity: 0.7;
+    }
+
+    .card-back {
+      background: var(--card-back);
+      transform: rotateY(180deg);
+    }
+
+    .card-back .label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-light);
+      margin-bottom: 10px;
+    }
+
+    .card-back .word-en {
+      font-size: 1.15rem;
+      color: var(--text-light);
+      margin-bottom: 6px;
+    }
+
+    .card-back .word-zh {
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .mastered-badge {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.65rem;
+      padding: 3px 8px;
+      border-radius: 10px;
+      font-weight: 600;
+      display: none;
+    }
+
+    .card-container.mastered .mastered-badge {
+      display: block;
+    }
+
+    .controls {
+      width: 100%;
+      max-width: 520px;
+      padding: 0 20px 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .action-row {
+      display: flex;
+      gap: 12px;
+      width: 100%;
+      max-width: 380px;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 13px 0;
+      border: none;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .btn:active { transform: scale(0.97); }
+
+    .btn-master {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .btn-master:hover { background: var(--accent-hover); }
+
+    .btn-review {
+      background: var(--review);
+      color: #fff;
+    }
+
+    .btn-review:hover { background: var(--review-hover); }
+
+    .btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .nav-row {
+      display: flex;
+      gap: 12px;
+      width: 100%;
+      max-width: 380px;
+    }
+
+    .btn-nav {
+      flex: 1;
+      padding: 11px 0;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      background: #fff;
+      color: var(--text);
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+
+    .btn-nav:hover {
+      background: var(--bg);
+      border-color: var(--accent);
+    }
+
+    .btn-shuffle {
+      margin-top: 4px;
+      padding: 10px 24px;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      background: #fff;
+      color: var(--text-light);
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+
+    .btn-shuffle:hover {
+      background: var(--bg);
+      border-color: var(--accent);
+      color: var(--text);
+    }
+
+    .complete-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(255,255,255,0.92);
+      z-index: 100;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .complete-overlay.show {
+      display: flex;
+    }
+
+    .complete-overlay .emoji { font-size: 3rem; }
+    .complete-overlay h2 { font-size: 1.4rem; color: var(--text); }
+    .complete-overlay p { color: var(--text-light); font-size: 0.9rem; }
+
+    .complete-overlay .btn-reset {
+      margin-top: 12px;
+      padding: 12px 32px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    @media (max-width: 420px) {
+      .card-container { height: 230px; }
+      .card-front .word { font-size: 1.8rem; }
+      .card-back .word-zh { font-size: 2rem; }
+      header h1 { font-size: 1.1rem; }
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Hello World!</h1>
-    <p>Welcome to your new project.</p>
+
+  <header>
+    <h1>Primary English - Special Education</h1>
+    <div class="subtitle">Junior Primary (P1-P3) &middot; Concept Check</div>
+  </header>
+
+  <div class="progress-bar-wrapper">
+    <div class="progress-info">
+      <span>Learning Progress</span>
+      <span>Mastered <span class="count" id="masteredCount">0</span> / <span id="totalCount">20</span></span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progressFill" style="width:0%"></div>
+    </div>
   </div>
-  <script src="script.js"></script>
+
+  <div class="card-counter" id="cardCounter">Card 1 of 20</div>
+
+  <div class="card-area">
+    <div class="card-container" id="cardContainer" onclick="flipCard()">
+      <div class="card-inner" id="cardInner">
+        <div class="card-face card-front">
+          <div class="label">English</div>
+          <div class="word" id="frontWord">—</div>
+          <div class="hint">tap to flip</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="label">中文</div>
+          <div class="word-en" id="backWordEn">—</div>
+          <div class="word-zh" id="backWordZh">—</div>
+        </div>
+      </div>
+      <div class="mastered-badge">✓ Mastered</div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <div class="action-row">
+      <button class="btn btn-master" id="btnMaster" onclick="markMastered()" disabled>✓ Mastered</button>
+      <button class="btn btn-review" id="btnReview" onclick="markReview()" disabled>↻ Review</button>
+    </div>
+    <div class="nav-row">
+      <button class="btn-nav" onclick="prevCard()">← Prev</button>
+      <button class="btn-nav" onclick="nextCard()">Next →</button>
+    </div>
+    <button class="btn-shuffle" onclick="shuffleCards()">🔀 Shuffle</button>
+  </div>
+
+  <div class="complete-overlay" id="completeOverlay">
+    <div class="emoji">🎉</div>
+    <h2>All Cards Mastered!</h2>
+    <p>Great job! You've learned all 20 words.</p>
+    <button class="btn-reset" onclick="resetAll()">Start Again</button>
+  </div>
+
+  <script>
+    const CARDS_DATA = [
+      { en: "Special",    zh: "特別的" },
+      { en: "Need",       zh: "需要" },
+      { en: "Help",       zh: "幫助" },
+      { en: "Listen",     zh: "聽" },
+      { en: "Look",       zh: "看" },
+      { en: "Speak",      zh: "說話" },
+      { en: "Hear",       zh: "聽見" },
+      { en: "See",        zh: "看見" },
+      { en: "Walk",       zh: "步行" },
+      { en: "Write",      zh: "書寫" },
+      { en: "Read",       zh: "閱讀" },
+      { en: "Wheelchair", zh: "輪椅" },
+      { en: "Glasses",    zh: "眼鏡" },
+      { en: "Friend",     zh: "朋友" },
+      { en: "Kind",       zh: "善良的" },
+      { en: "Care",       zh: "關心" },
+      { en: "Share",      zh: "分享" },
+      { en: "Together",   zh: "一起" },
+      { en: "Different",  zh: "不同的" },
+      { en: "Brave",      zh: "勇敢的" }
+    ];
+
+    let cards = CARDS_DATA.map((c, i) => ({ ...c, id: i, mastered: false }));
+    let currentIndex = 0;
+    let isFlipped = false;
+
+    function renderCard() {
+      const card = cards[currentIndex];
+      document.getElementById('frontWord').textContent = card.en;
+      document.getElementById('backWordEn').textContent = card.en;
+      document.getElementById('backWordZh').textContent = card.zh;
+      document.getElementById('cardCounter').textContent = `Card ${currentIndex + 1} of ${cards.length}`;
+
+      const container = document.getElementById('cardContainer');
+      container.classList.toggle('mastered', card.mastered);
+
+      isFlipped = false;
+      document.getElementById('cardInner').classList.remove('flipped');
+      document.getElementById('btnMaster').disabled = true;
+      document.getElementById('btnReview').disabled = true;
+    }
+
+    function flipCard() {
+      isFlipped = !isFlipped;
+      document.getElementById('cardInner').classList.toggle('flipped', isFlipped);
+      document.getElementById('btnMaster').disabled = !isFlipped;
+      document.getElementById('btnReview').disabled = !isFlipped;
+    }
+
+    function markMastered() {
+      cards[currentIndex].mastered = true;
+      updateProgress();
+      renderCard();
+      checkComplete();
+    }
+
+    function markReview() {
+      cards[currentIndex].mastered = false;
+      updateProgress();
+      nextCard();
+    }
+
+    function nextCard() {
+      currentIndex = (currentIndex + 1) % cards.length;
+      renderCard();
+    }
+
+    function prevCard() {
+      currentIndex = (currentIndex - 1 + cards.length) % cards.length;
+      renderCard();
+    }
+
+    function shuffleCards() {
+      for (let i = cards.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [cards[i], cards[j]] = [cards[j], cards[i]];
+      }
+      currentIndex = 0;
+      renderCard();
+    }
+
+    function updateProgress() {
+      const mastered = cards.filter(c => c.mastered).length;
+      document.getElementById('masteredCount').textContent = mastered;
+      document.getElementById('totalCount').textContent = cards.length;
+      const pct = (mastered / cards.length) * 100;
+      document.getElementById('progressFill').style.width = pct + '%';
+    }
+
+    function checkComplete() {
+      const mastered = cards.filter(c => c.mastered).length;
+      if (mastered === cards.length) {
+        document.getElementById('completeOverlay').classList.add('show');
+      }
+    }
+
+    function resetAll() {
+      cards.forEach(c => c.mastered = false);
+      updateProgress();
+      document.getElementById('completeOverlay').classList.remove('show');
+      currentIndex = 0;
+      renderCard();
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') nextCard();
+      else if (e.key === 'ArrowLeft') prevCard();
+      else if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); flipCard(); }
+    });
+
+    renderCard();
+  </script>
 </body>
 </html>
