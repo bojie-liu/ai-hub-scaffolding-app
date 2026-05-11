@@ -21,9 +21,6 @@ export async function runMigrations() {
   }
 }
 
-// Run migrations if this file is executed directly
-if (require.main === module) {
-  runMigrations()
-    .then(() => process.exit(0))
-    .catch(() => process.exit(1));
-}
+runMigrations()
+  .then(() => process.exit(0))
+  .catch(() => process.exit(1));

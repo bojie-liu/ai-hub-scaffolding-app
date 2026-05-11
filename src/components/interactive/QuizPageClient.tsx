@@ -1,32 +1,19 @@
 'use client';
 
 import { useUser } from '@/contexts/UserContext';
-import Quiz from '@/components/lesson/interactive/Quiz';
+import { Quiz } from '@/components/lesson/interactive/Quiz';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ShieldAlert } from 'lucide-react';
 import Link from 'next/link';
 
-interface Question {
-  id: number;
-  questionText: string;
-  questionType: string;
-  questionOrder: number;
-  explanation: string | null;
-  answers: {
-    id: number;
-    answerText: string;
-    isCorrect: boolean;
-    answerOrder: number;
-  }[];
-}
-
 interface QuizPageClientProps {
   quizId: number;
   title: string;
-  questions: Question[];
+  description?: string;
+  questionCount?: number;
 }
 
-export default function QuizPageClient({ quizId, title, questions }: QuizPageClientProps) {
+export default function QuizPageClient({ quizId, title, description, questionCount }: QuizPageClientProps) {
   const { user, isGuest } = useUser();
 
   if (!user || isGuest) {
@@ -54,8 +41,8 @@ export default function QuizPageClient({ quizId, title, questions }: QuizPageCli
     <Quiz
       quizId={quizId}
       title={title}
-      questions={questions as any}
-      userId={user.userId}
+      description={description}
+      questionCount={questionCount}
     />
   );
 }

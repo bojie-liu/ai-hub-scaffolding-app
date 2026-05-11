@@ -1,31 +1,46 @@
 'use client';
 
 import { useState } from 'react';
+import { useUser } from '@/contexts/UserContext';
 import { submitConceptCheckResponse } from '@/lib/actions/concept-check';
+import { getConceptChecks } from '@/lib/actions/concept-check';
 import { Button } from '@/components/ui/button';
-import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent } from '@/components/ui/card';
-import { ThumbsUp, ThumbsDown } from 'lucide-react';
+import { ThumbsUp, ThumbsDown, Minus } from 'lucide-react';
 import { toast } from 'sonner';
 
 interface ConceptCheckProps {
   checkId: number;
+  storageKey: string;
   title: string;
   prompt: string;
-  checkType: 'thumbs' | 'scale' | 'text';
-  userId: number;
-  userRole: string;
-  existingResponse?: string | null;
+  checkType?: 'thumbs' | 'scale' | 'text';
+  sectionKey?: string;
 }
 
-export default function ConceptCheck({ checkId, title, prompt, checkType, userId, userRole, existingResponse }: ConceptCheckProps) {
-  const [response, setResponse] = useState<string | null>(existingResponse ?? null);
-  const [textInput, setTextInput] = useState('');
+export function ConceptCheck({ checkId, storageKey, title, prompt, checkType = 'thumbs', sectionKey }: ConceptCheckProps) {
+  const { user } = useUser();
+  const [response, setResponse] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [resolvedCheckId, setResolvedCheckId] = useState<number | null>(checkId || null);
+
+  useState(() => {
+    if (checkId > 0) return;
+    getConceptChecks().then((result) => {
+      if (result.success && result.data) {
+        const found = result.data.find((c: { storageKey: string; id: number }) => c.storageKey === storageKey);
+        if (found) setResolvedCheckId(found.id);
+      }
+    });
+  });
 
   async function submit(value: string) {
+    if (!user || user.role === 'GUEST' || !resolvedCheckId) {
+      toast.error('Please log in to submit a response');
+      return;
+    }
     setLoading(true);
-    const result = await submitConceptCheckResponse(checkId, userId, value);
+    const result = await submitConceptCheckResponse(resolvedCheckId, user.userId, value);
     if (result.success) {
       setResponse(value);
       toast.success('Response recorded');
@@ -40,11 +55,15 @@ export default function ConceptCheck({ checkId, title, prompt, checkType, userId
       <Card className="bg-emerald-50 border-emerald-200">
         <CardContent className="pt-4">
           <p className="font-medium text-emerald-800 text-sm">{title}</p>
-          <p className="text-emerald-700 text-sm mt-1">Your response: <span className="font-medium">{response}</span></p>
+          <p className="text-emerald-700 text-sm mt-1">
+            Your response: <span className="font-medium capitalize">{response.replace(/_/g, ' ')}</span>
+          </p>
         </CardContent>
       </Card>
     );
   }
+
+  const isGuest = !user || user.role === 'GUEST';
 
   return (
     <Card>
@@ -56,21 +75,30 @@ export default function ConceptCheck({ checkId, title, prompt, checkType, userId
           <div className="flex gap-3">
             <Button
               variant="outline"
-              size="lg"
+              size="sm"
               className="flex-1 gap-2 hover:bg-emerald-50 hover:border-emerald-300 hover:text-emerald-700"
-              onClick={() => submit('up')}
-              disabled={loading}
+              onClick={() => submit('thumbs_up')}
+              disabled={loading || isGuest}
             >
-              <ThumbsUp className="h-5 w-5" /> Yes
+              <ThumbsUp className="h-4 w-4" /> Yes
             </Button>
             <Button
               variant="outline"
-              size="lg"
-              className="flex-1 gap-2 hover:bg-red-50 hover:border-red-300 hover:text-red-700"
-              onClick={() => submit('down')}
-              disabled={loading}
+              size="sm"
+              className="flex-1 gap-2 hover:bg-amber-50 hover:border-amber-300 hover:text-amber-700"
+              onClick={() => submit('neutral')}
+              disabled={loading || isGuest}
             >
-              <ThumbsDown className="h-5 w-5" /> No
+              <Minus className="h-4 w-4" /> Unsure
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              className="flex-1 gap-2 hover:bg-red-50 hover:border-red-300 hover:text-red-700"
+              onClick={() => submit('thumbs_down')}
+              disabled={loading || isGuest}
+            >
+              <ThumbsDown className="h-4 w-4" /> No
             </Button>
           </div>
         )}
@@ -81,10 +109,10 @@ export default function ConceptCheck({ checkId, title, prompt, checkType, userId
               <Button
                 key={n}
                 variant="outline"
-                size="lg"
-                className="flex-1 text-lg font-bold"
+                size="sm"
+                className="flex-1 text-sm font-bold"
                 onClick={() => submit(String(n))}
-                disabled={loading}
+                disabled={loading || isGuest}
               >
                 {n}
               </Button>
@@ -92,18 +120,8 @@ export default function ConceptCheck({ checkId, title, prompt, checkType, userId
           </div>
         )}
 
-        {checkType === 'text' && (
-          <div className="space-y-2">
-            <Textarea
-              value={textInput}
-              onChange={(e) => setTextInput(e.target.value)}
-              placeholder="Type your response..."
-              rows={3}
-            />
-            <Button size="sm" onClick={() => submit(textInput)} disabled={loading || !textInput.trim()}>
-              Submit
-            </Button>
-          </div>
+        {isGuest && (
+          <p className="text-xs text-slate-400">Sign in to submit a response</p>
         )}
       </CardContent>
     </Card>

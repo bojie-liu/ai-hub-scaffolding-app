@@ -1,7 +1,7 @@
 'use client';
 
 import { useUser } from '@/contexts/UserContext';
-import Discussion from '@/components/lesson/interactive/Discussion';
+import { Discussion } from '@/components/lesson/interactive/Discussion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ShieldAlert } from 'lucide-react';
 import Link from 'next/link';
@@ -24,7 +24,6 @@ export default function DiscussionPageClient({
   discussionId,
   title,
   description,
-  posts,
 }: DiscussionPageClientProps) {
   const { user, isGuest } = useUser();
 
@@ -53,10 +52,7 @@ export default function DiscussionPageClient({
     <Discussion
       discussionId={discussionId}
       title={title}
-      description={description}
-      posts={posts}
-      userId={user.userId}
-      userRole={user.role}
+      description={description ?? undefined}
     />
   );
 }
