@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "npm run db:generate; npm run db:migrate; next dev",
-    "build": "export NODE_ENV=production && next build",
-    "start": "export NODE_ENV=production && npm run db:generate && npm run db:migrate && next start",
+    "build": "export NODE_ENV=production; next build",
+    "start": "export NODE_ENV=production; npm run db:generate; npm run db:migrate; next start",
     "lint": "eslint",
     "db:generate": "drizzle-kit generate",
     "db:push": "drizzle-kit push",
