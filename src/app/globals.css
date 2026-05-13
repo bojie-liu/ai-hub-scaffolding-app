@@ -117,6 +117,26 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+@layer components {
+  .flashcard-inner {
+    position: relative;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+  }
+  .flashcard-inner.flipped {
+    transform: rotateY(180deg);
+  }
+  .flashcard-front,
+  .flashcard-back {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+  }
+  .flashcard-back {
+    transform: rotateY(180deg);
+  }
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
