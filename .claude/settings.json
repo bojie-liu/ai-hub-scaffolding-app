@@ -41,6 +41,7 @@
       "Read(.env.production)",
       "Read(.env.local)",
       "Write(.env)",
+      "Write(next.config.ts)",
       "Bash(rm -rf:*)",
       "Bash(npm publish:*)",
       "Read(node_modules/**)",
