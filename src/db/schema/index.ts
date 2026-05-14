@@ -14,4 +14,5 @@ export * from './concept-checks';
 export * from './concept-check-responses';
 export * from './slides';
 export * from './student-progress';
+export * from './seed-log';
 export * from './relations';

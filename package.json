@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "npm run db:generate; npm run db:migrate; next dev",
+    "dev": "npx tsx src/db/dev-setup.ts",
     "build": "export NODE_ENV=production && next build",
-    "start": "export NODE_ENV=production && npm run db:generate && npm run db:migrate && next start",
+    "start": "export NODE_ENV=production && npx tsx src/db/start.ts",
     "lint": "eslint",
     "db:generate": "drizzle-kit generate",
     "db:push": "drizzle-kit push",
