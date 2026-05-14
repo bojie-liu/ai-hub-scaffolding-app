@@ -1,41 +1,44 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { useUser } from '@/contexts/UserContext';
 import EditableText from '@/components/interactive/EditableText';
-import { useEffect, useState } from 'react';
 import { getEditableContent } from '@/lib/actions/editable-content';
 
 interface EditableContentProps {
   storageKey: string;
-  initialValue: string;
+  fallback: string;
+  isTeacher?: boolean;
   as?: keyof React.JSX.IntrinsicElements;
   className?: string;
   multiline?: boolean;
 }
 
-export default function EditableContent({
+export function EditableContent({
   storageKey,
-  initialValue,
+  fallback,
+  isTeacher: isTeacherProp,
   as = 'span',
   className,
   multiline = false,
 }: EditableContentProps) {
   const { user } = useUser();
+  const isTeacher = isTeacherProp ?? user?.role === 'TEACHER';
   const [savedValue, setSavedValue] = useState<string | null>(null);
 
   useEffect(() => {
-    if (user?.role !== 'TEACHER') {
+    if (!isTeacher) {
       getEditableContent(storageKey).then((content) => {
         if (content !== null) setSavedValue(content);
       });
     }
-  }, [storageKey, user?.role]);
+  }, [storageKey, isTeacher]);
 
-  if (user?.role === 'TEACHER') {
+  if (isTeacher) {
     return (
       <EditableText
         storageKey={storageKey}
-        initialValue={initialValue}
+        initialValue={fallback}
         as={as}
         className={className}
         multiline={multiline}
@@ -44,5 +47,7 @@ export default function EditableContent({
   }
 
   const Tag = as;
-  return <Tag className={className}>{savedValue ?? initialValue}</Tag>;
+  return <Tag className={className}>{savedValue ?? fallback}</Tag>;
 }
+
+export { EditableContent as default };

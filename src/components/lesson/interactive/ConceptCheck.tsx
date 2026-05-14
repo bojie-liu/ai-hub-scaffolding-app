@@ -5,7 +5,7 @@ import { submitConceptCheckResponse } from '@/lib/actions/concept-check';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent } from '@/components/ui/card';
-import { ThumbsUp, ThumbsDown } from 'lucide-react';
+import { ThumbsUp, ThumbsDown, Minus, CheckCircle2 } from 'lucide-react';
 import { toast } from 'sonner';
 
 interface ConceptCheckProps {
@@ -13,17 +13,29 @@ interface ConceptCheckProps {
   title: string;
   prompt: string;
   checkType: 'thumbs' | 'scale' | 'text';
-  userId: number;
-  userRole: string;
+  userId?: number;
+  userRole?: string;
   existingResponse?: string | null;
 }
 
-export default function ConceptCheck({ checkId, title, prompt, checkType, userId, userRole, existingResponse }: ConceptCheckProps) {
+export default function ConceptCheck({
+  checkId,
+  title,
+  prompt,
+  checkType,
+  userId,
+  userRole,
+  existingResponse,
+}: ConceptCheckProps) {
   const [response, setResponse] = useState<string | null>(existingResponse ?? null);
   const [textInput, setTextInput] = useState('');
   const [loading, setLoading] = useState(false);
 
   async function submit(value: string) {
+    if (!userId) {
+      toast.error('Please log in to submit a response');
+      return;
+    }
     setLoading(true);
     const result = await submitConceptCheckResponse(checkId, userId, value);
     if (result.success) {
@@ -39,8 +51,13 @@ export default function ConceptCheck({ checkId, title, prompt, checkType, userId
     return (
       <Card className="bg-emerald-50 border-emerald-200">
         <CardContent className="pt-4">
-          <p className="font-medium text-emerald-800 text-sm">{title}</p>
-          <p className="text-emerald-700 text-sm mt-1">Your response: <span className="font-medium">{response}</span></p>
+          <div className="flex items-center gap-2">
+            <CheckCircle2 className="h-4 w-4 text-emerald-600" />
+            <p className="font-medium text-emerald-800 text-sm">{title}</p>
+          </div>
+          <p className="text-emerald-700 text-sm mt-1">
+            Your response: <span className="font-medium">{response}</span>
+          </p>
         </CardContent>
       </Card>
     );
@@ -100,12 +117,41 @@ export default function ConceptCheck({ checkId, title, prompt, checkType, userId
               placeholder="Type your response..."
               rows={3}
             />
-            <Button size="sm" onClick={() => submit(textInput)} disabled={loading || !textInput.trim()}>
+            <Button
+              size="sm"
+              onClick={() => submit(textInput)}
+              disabled={loading || !textInput.trim()}
+            >
               Submit
             </Button>
           </div>
         )}
       </CardContent>
     </Card>
+  );
+}
+
+interface ConceptCheckInlineProps {
+  check: {
+    id: number;
+    storageKey: string;
+    title: string;
+    prompt: string;
+    checkType: string;
+    sectionKey: string | null;
+  } | undefined;
+  userId?: number;
+}
+
+export function ConceptCheckInline({ check, userId }: ConceptCheckInlineProps) {
+  if (!check) return null;
+  return (
+    <ConceptCheck
+      checkId={check.id}
+      title={check.title}
+      prompt={check.prompt}
+      checkType={check.checkType as 'thumbs' | 'scale' | 'text'}
+      userId={userId}
+    />
   );
 }
