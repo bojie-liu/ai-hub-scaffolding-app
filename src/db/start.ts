@@ -35,6 +35,7 @@ function runStep(name: string, command: string): void {
   }
 }
 
+console.log('DATABASE_URL:', process.env.DATABASE_URL || '(not set)');
 runStep('DB: Generate', 'npx drizzle-kit generate');
 runStep('DB: Migrate', 'npx drizzle-kit migrate');
 runStep('DB: Seed', 'npx tsx src/db/seed.ts');

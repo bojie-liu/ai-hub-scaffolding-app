@@ -13,6 +13,7 @@ try {
       const value = match[2].trim().replace(/^["']|["']$/g, '');
       if (!process.env[key]) {
         process.env[key] = value;
+        console.log(`Loaded env var: ${key}=${value}`);
       }
     }
   }
