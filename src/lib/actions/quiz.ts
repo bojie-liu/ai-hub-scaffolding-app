@@ -143,7 +143,7 @@ export async function submitQuizAttempt(
 
 export async function getQuizResults(quizId: number) {
   try {
-    const results = await db
+    const _results = await db
       .select({
         attempt: quizAttempts,
         user: {
@@ -153,7 +153,6 @@ export async function getQuizResults(quizId: number) {
       })
       .from(quizAttempts)
       .innerJoin(
-        // We need to join with users table, so let's use a proper approach
         db.select({
           id: quizAttempts.userId,
         }).from(quizAttempts).as('_sub'),
@@ -162,7 +161,6 @@ export async function getQuizResults(quizId: number) {
       .where(eq(quizAttempts.quizId, quizId))
       .orderBy(desc(quizAttempts.completedAt));
 
-    // Simpler approach: fetch attempts then fetch users
     const attempts = await db
       .select()
       .from(quizAttempts)
@@ -176,7 +174,7 @@ export async function getQuizResults(quizId: number) {
     }
 
     const { users } = await import('@/db/schema');
-    const userList = await db
+    const _userList = await db
       .select({
         id: users.id,
         username: users.username,

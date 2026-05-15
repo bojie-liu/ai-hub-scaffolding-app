@@ -165,7 +165,7 @@ export default function TeacherDashboard() {
     0
   );
 
-  const activeDiscussions = 0; // Could be fetched separately if needed
+  const _activeDiscussions = 0;
 
   // --- Loading skeleton ---
 
@@ -395,7 +395,7 @@ export default function TeacherDashboard() {
                         </tr>
                       </thead>
                       <tbody>
-                        {results.map(({ attempt, user }, idx) => {
+                        {results.map(({ attempt, user }) => {
                           const pct = Math.round(
                             (attempt.score / attempt.totalQuestions) * 100
                           );

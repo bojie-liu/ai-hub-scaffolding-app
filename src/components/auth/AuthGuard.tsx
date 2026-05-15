@@ -2,7 +2,7 @@
 
 import { useUser } from '@/contexts/UserContext';
 import { useRouter } from 'next/navigation';
-import { useEffect, ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ShieldAlert } from 'lucide-react';
@@ -13,14 +13,20 @@ interface AuthGuardProps {
 }
 
 export function AuthGuard({ children, requiredRole }: AuthGuardProps) {
-  const { user, isGuest } = useUser();
+  const { user, isGuest, tokenProcessed } = useUser();
   const router = useRouter();
 
-  useEffect(() => {
-    if (!user) {
-      router.push('/login');
-    }
-  }, [user, router]);
+  // Don't render anything until token processing is complete
+  // This prevents redirect loops during login flow
+  if (!tokenProcessed && !user) {
+    return null;
+  }
+
+  // Allow guest access unless a specific role is required
+  if (!user && !requiredRole) {
+    // Not logged in but no role required - show content with limited interactivity
+    return <>{children}</>;
+  }
 
   if (!user) {
     return (

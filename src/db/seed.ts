@@ -1,7 +1,6 @@
 import { drizzle } from 'drizzle-orm/node-postgres';
 import { Pool } from 'pg';
-import { sql } from 'drizzle-orm';
-import { eq } from 'drizzle-orm';
+import { sql, eq } from 'drizzle-orm';
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import bcrypt from 'bcryptjs';
@@ -25,7 +24,7 @@ try {
   // .env.local not found, rely on existing env vars
 }
 
-const SEED_VERSION = 'v1_initial';
+const SEED_VERSION = 'v2_lesson_data';
 
 async function seed() {
   const pool = new Pool({ connectionString: process.env.DATABASE_URL });
@@ -60,20 +59,530 @@ async function seed() {
         10,
       );
 
-      await tx.insert(schema.users).values({
-        username: 'admin',
-        email: 'admin@example.com',
+      // Create users
+      const [teacher] = await tx.insert(schema.users).values({
+        username: 'teacher',
+        email: 'teacher@example.com',
         passwordHash,
         role: 'TEACHER',
-        displayName: 'Admin User',
+        displayName: 'Prof. Anderson',
+      }).returning();
+
+      const studentPasswordHash = await bcrypt.hash('student123', 10);
+
+      const _studentRows = await tx.insert(schema.users).values([
+        { username: 'student1', email: 'student1@example.com', passwordHash: studentPasswordHash, role: 'STUDENT', displayName: 'Alice Chen' },
+        { username: 'student2', email: 'student2@example.com', passwordHash: studentPasswordHash, role: 'STUDENT', displayName: 'Bob Martinez' },
+        { username: 'student3', email: 'student3@example.com', passwordHash: studentPasswordHash, role: 'STUDENT', displayName: 'Carol Kim' },
+      ]).returning();
+
+      // ===== PRE-TEST QUIZ (8 questions) =====
+      const [preTestQuiz] = await tx.insert(schema.quizzes).values({
+        storageKey: 'quiz:pretest',
+        title: 'Pre-Test: AI Impact on Development',
+        description: 'Assess your current understanding of AI in software development',
+        quizType: 'multiple_choice',
+      }).returning();
+
+      const preTestQuestions = [
+        {
+          storageKey: 'pretest:q1',
+          questionText: 'What proportion of code do leading AI tools auto-complete in IDEs?',
+          questionType: 'multiple_choice',
+          questionOrder: 1,
+          explanation: 'Leading AI coding assistants like GitHub Copilot auto-complete approximately 30-45% of code in supported languages, with higher rates for boilerplate and common patterns.',
+          answers: [
+            { answerText: '10-20%', isCorrect: false, answerOrder: 1 },
+            { answerText: '30-45%', isCorrect: true, answerOrder: 2 },
+            { answerText: '60-75%', isCorrect: false, answerOrder: 3 },
+            { answerText: '80-95%', isCorrect: false, answerOrder: 4 },
+          ],
+        },
+        {
+          storageKey: 'pretest:q2',
+          questionText: 'Which of the following is NOT a commonly cited benefit of AI-powered development tools?',
+          questionType: 'multiple_choice',
+          questionOrder: 2,
+          explanation: 'While AI tools improve speed, reduce boilerplate, and assist debugging, they do not eliminate the need for testing—testing remains critical and may even need to be expanded.',
+          answers: [
+            { answerText: 'Faster code generation', isCorrect: false, answerOrder: 1 },
+            { answerText: 'Reduced boilerplate code', isCorrect: false, answerOrder: 2 },
+            { answerText: 'Elimination of software testing', isCorrect: true, answerOrder: 3 },
+            { answerText: 'Assisted debugging', isCorrect: false, answerOrder: 4 },
+          ],
+        },
+        {
+          storageKey: 'pretest:q3',
+          questionText: 'GitHub Copilot is primarily powered by which AI model?',
+          questionType: 'multiple_choice',
+          questionOrder: 3,
+          explanation: 'GitHub Copilot is powered by OpenAI Codex, a large language model specifically trained on code from public repositories.',
+          answers: [
+            { answerText: 'GPT-3', isCorrect: false, answerOrder: 1 },
+            { answerText: 'OpenAI Codex', isCorrect: true, answerOrder: 2 },
+            { answerText: 'BERT', isCorrect: false, answerOrder: 3 },
+            { answerText: 'AlphaGo', isCorrect: false, answerOrder: 4 },
+          ],
+        },
+        {
+          storageKey: 'pretest:q4',
+          questionText: 'How does AI shift the developer role according to the lesson?',
+          questionType: 'multiple_choice',
+          questionOrder: 4,
+          explanation: 'AI tools shift the developer role from "coder" to "architect" by automating routine coding tasks, allowing developers to focus on higher-level design and problem decomposition.',
+          answers: [
+            { answerText: 'From "coder" to "architect"', isCorrect: true, answerOrder: 1 },
+            { answerText: 'From "architect" to "coder"', isCorrect: false, answerOrder: 2 },
+            { answerText: 'From "tester" to "deployer"', isCorrect: false, answerOrder: 3 },
+            { answerText: 'From "manager" to "developer"', isCorrect: false, answerOrder: 4 },
+          ],
+        },
+        {
+          storageKey: 'pretest:q5',
+          questionText: 'Which ethical concern is most associated with AI-generated code?',
+          questionType: 'multiple_choice',
+          questionOrder: 5,
+          explanation: 'Code plagiarism and licensing issues are primary ethical concerns, as AI models trained on public code may reproduce copyrighted patterns without attribution.',
+          answers: [
+            { answerText: 'High energy consumption', isCorrect: false, answerOrder: 1 },
+            { answerText: 'Code plagiarism and licensing', isCorrect: true, answerOrder: 2 },
+            { answerText: 'User interface design', isCorrect: false, answerOrder: 3 },
+            { answerText: 'Database normalization', isCorrect: false, answerOrder: 4 },
+          ],
+        },
+        {
+          storageKey: 'pretest:q6',
+          questionText: 'Amazon CodeWhisperer is best described as:',
+          questionType: 'multiple_choice',
+          questionOrder: 6,
+          explanation: 'Amazon CodeWhisperer is an AI-powered code generation tool that provides real-time code recommendations based on comments and existing code context.',
+          answers: [
+            { answerText: 'A testing framework', isCorrect: false, answerOrder: 1 },
+            { answerText: 'An AI code generation tool', isCorrect: true, answerOrder: 2 },
+            { answerText: 'A deployment platform', isCorrect: false, answerOrder: 3 },
+            { answerText: 'A version control system', isCorrect: false, answerOrder: 4 },
+          ],
+        },
+        {
+          storageKey: 'pretest:q7',
+          questionText: 'What is a key limitation of current AI code generation tools?',
+          questionType: 'multiple_choice',
+          questionOrder: 7,
+          explanation: 'Current AI tools can generate plausible but incorrect code, requiring developer oversight to verify correctness and maintain quality standards.',
+          answers: [
+            { answerText: 'They only work in Python', isCorrect: false, answerOrder: 1 },
+            { answerText: 'They cannot generate functions', isCorrect: false, answerOrder: 2 },
+            { answerText: 'They may generate plausible but incorrect code', isCorrect: true, answerOrder: 3 },
+            { answerText: 'They require internet to function', isCorrect: false, answerOrder: 4 },
+          ],
+        },
+        {
+          storageKey: 'pretest:q8',
+          questionText: 'The term "synthetic datasets" in AI refers to:',
+          questionType: 'multiple_choice',
+          questionOrder: 8,
+          explanation: 'Synthetic datasets are artificially generated data used to train AI models when real data is scarce, expensive, or privacy-sensitive.',
+          answers: [
+            { answerText: 'Data from real user interactions', isCorrect: false, answerOrder: 1 },
+            { answerText: 'Artificially generated training data', isCorrect: true, answerOrder: 2 },
+            { answerText: 'Data stored in synthetic databases', isCorrect: false, answerOrder: 3 },
+            { answerText: 'Open-source dataset collections', isCorrect: false, answerOrder: 4 },
+          ],
+        },
+      ];
+
+      for (const q of preTestQuestions) {
+        const [question] = await tx.insert(schema.questions).values({
+          quizId: preTestQuiz.id,
+          storageKey: q.storageKey,
+          questionText: q.questionText,
+          questionType: q.questionType,
+          questionOrder: q.questionOrder,
+          explanation: q.explanation,
+        }).returning();
+
+        for (const a of q.answers) {
+          await tx.insert(schema.answers).values({
+            questionId: question.id,
+            answerText: a.answerText,
+            isCorrect: a.isCorrect,
+            answerOrder: a.answerOrder,
+          });
+        }
+      }
+
+      // ===== POST-TEST QUIZ (6 questions) =====
+      const [postTestQuiz] = await tx.insert(schema.quizzes).values({
+        storageKey: 'quiz:posttest',
+        title: 'Post-Test: AI Challenge Assessment',
+        description: 'Evaluate your understanding after completing the lesson',
+        quizType: 'multiple_choice',
+      }).returning();
+
+      const postTestQuestions = [
+        {
+          storageKey: 'posttest:q1',
+          questionText: 'Which approach best describes integrating AI tools into an existing development workflow?',
+          questionType: 'multiple_choice',
+          questionOrder: 1,
+          explanation: 'Gradual integration with pilot projects allows teams to evaluate AI tool effectiveness and address challenges before full adoption.',
+          answers: [
+            { answerText: 'Replace all existing tools immediately', isCorrect: false, answerOrder: 1 },
+            { answerText: 'Gradual integration with pilot projects', isCorrect: true, answerOrder: 2 },
+            { answerText: 'Only use AI for new projects', isCorrect: false, answerOrder: 3 },
+            { answerText: 'Avoid integration until tools mature', isCorrect: false, answerOrder: 4 },
+          ],
+        },
+        {
+          storageKey: 'posttest:q2',
+          questionText: 'When scaling a team from 5 to 50 developers with AI tools, what is the most critical adaptation?',
+          questionType: 'multiple_choice',
+          questionOrder: 2,
+          explanation: 'Adapting code review processes is critical when scaling, as AI-generated code needs systematic review to maintain quality and consistency across a larger team.',
+          answers: [
+            { answerText: 'Buying more AI tool licenses', isCorrect: false, answerOrder: 1 },
+            { answerText: 'Adapting code review processes', isCorrect: true, answerOrder: 2 },
+            { answerText: 'Reducing testing requirements', isCorrect: false, answerOrder: 3 },
+            { answerText: 'Eliminating documentation', isCorrect: false, answerOrder: 4 },
+          ],
+        },
+        {
+          storageKey: 'posttest:q3',
+          questionText: 'In the debate "AI tools democratize vs devalue software skills," the democratization argument states:',
+          questionType: 'multiple_choice',
+          questionOrder: 3,
+          explanation: 'The democratization argument holds that AI tools lower barriers to entry, enabling more people to participate in software development regardless of their experience level.',
+          answers: [
+            { answerText: 'AI makes software development accessible to more people', isCorrect: true, answerOrder: 1 },
+            { answerText: 'AI reduces the need for any technical knowledge', isCorrect: false, answerOrder: 2 },
+            { answerText: 'AI tools should be free for everyone', isCorrect: false, answerOrder: 3 },
+            { answerText: 'AI eliminates all junior developer positions', isCorrect: false, answerOrder: 4 },
+          ],
+        },
+        {
+          storageKey: 'posttest:q4',
+          questionText: 'What is one traditional practice that teams should maintain despite AI adoption?',
+          questionType: 'multiple_choice',
+          questionOrder: 4,
+          explanation: 'Code review remains essential even with AI tools, as human oversight ensures quality, catches AI errors, and maintains team knowledge sharing.',
+          answers: [
+            { answerText: 'Manual code review', isCorrect: true, answerOrder: 1 },
+            { answerText: 'Writing all code from scratch', isCorrect: false, answerOrder: 2 },
+            { answerText: 'Avoiding automated testing', isCorrect: false, answerOrder: 3 },
+            { answerText: 'Using only one programming language', isCorrect: false, answerOrder: 4 },
+          ],
+        },
+        {
+          storageKey: 'posttest:q5',
+          questionText: 'The code generation workflow follows which sequence?',
+          questionType: 'multiple_choice',
+          questionOrder: 5,
+          explanation: 'The typical AI code generation workflow follows: prompt → generation → modification, where developers provide context, AI generates code, and developers refine it.',
+          answers: [
+            { answerText: 'Generation → Testing → Deployment', isCorrect: false, answerOrder: 1 },
+            { answerText: 'Prompt → Generation → Modification', isCorrect: true, answerOrder: 2 },
+            { answerText: 'Analysis → Design → Implementation', isCorrect: false, answerOrder: 3 },
+            { answerText: 'Planning → Coding → Review', isCorrect: false, answerOrder: 4 },
+          ],
+        },
+        {
+          storageKey: 'posttest:q6',
+          questionText: 'The constructive alignment in this lesson connects "Evaluate challenges" to which assessment method?',
+          questionType: 'multiple_choice',
+          questionOrder: 6,
+          explanation: 'Evaluating challenges through debate and polling is assessed via exit tickets, which capture students\' analysis of ethical and technical challenges.',
+          answers: [
+            { answerText: 'Summative assignment', isCorrect: false, answerOrder: 1 },
+            { answerText: 'Exit tickets', isCorrect: true, answerOrder: 2 },
+            { answerText: 'Post-test questions', isCorrect: false, answerOrder: 3 },
+            { answerText: 'Observation rubric', isCorrect: false, answerOrder: 4 },
+          ],
+        },
+      ];
+
+      for (const q of postTestQuestions) {
+        const [question] = await tx.insert(schema.questions).values({
+          quizId: postTestQuiz.id,
+          storageKey: q.storageKey,
+          questionText: q.questionText,
+          questionType: q.questionType,
+          questionOrder: q.questionOrder,
+          explanation: q.explanation,
+        }).returning();
+
+        for (const a of q.answers) {
+          await tx.insert(schema.answers).values({
+            questionId: question.id,
+            answerText: a.answerText,
+            isCorrect: a.isCorrect,
+            answerOrder: a.answerOrder,
+          });
+        }
+      }
+
+      // ===== FLASHCARD QUIZ (key terms) =====
+      const [flashcardQuiz] = await tx.insert(schema.quizzes).values({
+        storageKey: 'quiz:flashcards',
+        title: 'Key Terms: AI in Software Engineering',
+        description: 'Test your knowledge of essential AI development terminology',
+        quizType: 'multiple_choice',
+      }).returning();
+
+      const flashcardQuestions = [
+        {
+          storageKey: 'flashcard:q1',
+          questionText: 'What does "code plagiarism" mean in the context of AI tools?',
+          questionType: 'multiple_choice',
+          questionOrder: 1,
+          explanation: 'Code plagiarism with AI tools refers to the reproduction of copyrighted code patterns without proper attribution, as AI models are trained on existing public repositories.',
+          answers: [
+            { answerText: 'Copying code manually from another developer', isCorrect: false, answerOrder: 1 },
+            { answerText: 'AI reproducing copyrighted code patterns without attribution', isCorrect: true, answerOrder: 2 },
+            { answerText: 'Using open-source libraries in your project', isCorrect: false, answerOrder: 3 },
+            { answerText: 'Sharing code snippets in team chat', isCorrect: false, answerOrder: 4 },
+          ],
+        },
+        {
+          storageKey: 'flashcard:q2',
+          questionText: 'What are "synthetic datasets"?',
+          questionType: 'multiple_choice',
+          questionOrder: 2,
+          explanation: 'Synthetic datasets are artificially generated data used for training AI models when real-world data is unavailable, expensive, or privacy-restricted.',
+          answers: [
+            { answerText: 'Real datasets from production systems', isCorrect: false, answerOrder: 1 },
+            { answerText: 'Artificially generated data for AI training', isCorrect: true, answerOrder: 2 },
+            { answerText: 'Datasets from social media platforms', isCorrect: false, answerOrder: 3 },
+            { answerText: 'Curated datasets from academic papers', isCorrect: false, answerOrder: 4 },
+          ],
+        },
+        {
+          storageKey: 'flashcard:q3',
+          questionText: 'What is "prompt engineering" in AI-assisted development?',
+          questionType: 'multiple_choice',
+          questionOrder: 3,
+          explanation: 'Prompt engineering is the practice of crafting effective inputs to AI models to generate accurate and relevant code outputs.',
+          answers: [
+            { answerText: 'Writing software documentation', isCorrect: false, answerOrder: 1 },
+            { answerText: 'Crafting effective inputs to AI models for better outputs', isCorrect: true, answerOrder: 2 },
+            { answerText: 'Designing user interface prompts', isCorrect: false, answerOrder: 3 },
+            { answerText: 'Creating command-line interfaces', isCorrect: false, answerOrder: 4 },
+          ],
+        },
+      ];
+
+      for (const q of flashcardQuestions) {
+        const [question] = await tx.insert(schema.questions).values({
+          quizId: flashcardQuiz.id,
+          storageKey: q.storageKey,
+          questionText: q.questionText,
+          questionType: q.questionType,
+          questionOrder: q.questionOrder,
+          explanation: q.explanation,
+        }).returning();
+
+        for (const a of q.answers) {
+          await tx.insert(schema.answers).values({
+            questionId: question.id,
+            answerText: a.answerText,
+            isCorrect: a.isCorrect,
+            answerOrder: a.answerOrder,
+          });
+        }
+      }
+
+      // ===== SLIDES (10 slides) =====
+      const slidesData = [
+        {
+          storageKey: 'slide:1',
+          slideOrder: 1,
+          title: 'The Modern Software Developer',
+          content: 'How AI-Powered Tools Are Transforming Software Engineering',
+          slideType: 'title',
+          backgroundColor: null,
+        },
+        {
+          storageKey: 'slide:2',
+          slideOrder: 2,
+          title: 'Learning Outcomes',
+          content: '- Analyze how AI-powered tools transform traditional software engineering\n- Evaluate ethical and technical challenges of AI integration\n- Design a basic AI-enhanced development workflow\n- Collaborate to identify appropriate AI tool scenarios',
+          slideType: 'content',
+          backgroundColor: null,
+        },
+        {
+          storageKey: 'slide:3',
+          slideOrder: 3,
+          title: 'The AI Tool Landscape',
+          content: '- GitHub Copilot: AI pair programmer auto-completing 30-45% of code\n- Amazon CodeWhisperer: Real-time code recommendations\n- Evolution from manual coding → assisted coding → AI-generated code\n- Developer role shifts from "coder" to "architect"',
+          slideType: 'content',
+          backgroundColor: null,
+        },
+        {
+          storageKey: 'slide:4',
+          slideOrder: 4,
+          title: 'Code Generation Workflow',
+          content: '- Step 1: Developer provides context via comments or partial code\n- Step 2: AI generates code suggestions based on patterns\n- Step 3: Developer reviews, modifies, and validates output\n- Cycle repeats with refined prompts for better results',
+          slideType: 'content',
+          backgroundColor: null,
+        },
+        {
+          storageKey: 'slide:5',
+          slideOrder: 5,
+          title: 'Case Study: Scaling with AI',
+          content: '- Scenario: Startup scaling from 5 to 50 developers\n- Integration points in planning phase\n- Testing workflow modifications needed\n- Code review process adaptations required\n- Maintaining code quality at scale with AI assistance',
+          slideType: 'activity',
+          backgroundColor: null,
+        },
+        {
+          storageKey: 'slide:6',
+          slideOrder: 6,
+          title: 'Group Work: AI Integration',
+          content: '- Identify integration points in the planning phase\n- Evaluate testing workflow modifications\n- Propose code review process adaptations\n- Consider: How do AI tools change team dynamics?\n- 6 groups of 5 — 30 minutes',
+          slideType: 'activity',
+          backgroundColor: null,
+        },
+        {
+          storageKey: 'slide:7',
+          slideOrder: 7,
+          title: 'Ethical Analysis',
+          content: '- Code plagiarism: AI reproducing copyrighted patterns\n- Licensing: Who owns AI-generated code?\n- Attribution: Giving credit to original sources\n- Bias: AI models reflecting training data biases\n- Debate: "Do AI tools democratize or devalue skills?"',
+          slideType: 'content',
+          backgroundColor: null,
+        },
+        {
+          storageKey: 'slide:8',
+          slideOrder: 8,
+          title: 'Assessment Overview',
+          content: '- Pre-test (8 questions): Baseline knowledge assessment\n- Post-test (6 questions): Learning gain measurement\n- Concept checks: Quick comprehension checks\n- Discussion participation: Threaded Q&A\n- Summative: AI Integration Strategy Proposal (1500 words)',
+          slideType: 'assessment',
+          backgroundColor: null,
+        },
+        {
+          storageKey: 'slide:9',
+          slideOrder: 9,
+          title: 'Constructive Alignment',
+          content: '- Analyze AI impact → Lecture & case study → Summative assignment\n- Evaluate challenges → Debate & polling → Exit tickets\n- Design workflow → Concept map & group work → Post-test\n- Collaborate → Group case study → Observation rubric',
+          slideType: 'content',
+          backgroundColor: null,
+        },
+        {
+          storageKey: 'slide:10',
+          slideOrder: 10,
+          title: 'Key Takeaways',
+          content: '- AI tools are transforming development — embrace the shift\n- Maintain critical practices: code review, testing, documentation\n- Ethical awareness is essential for responsible AI adoption\n- The developer role is evolving, not disappearing\n- Next session: AI in QA Testing & Continuous Integration',
+          slideType: 'title',
+          backgroundColor: null,
+        },
+      ];
+
+      for (const slide of slidesData) {
+        await tx.insert(schema.slides).values(slide);
+      }
+
+      // ===== DISCUSSIONS =====
+      const [discussion1] = await tx.insert(schema.discussions).values({
+        storageKey: 'discussion:guiding-questions',
+        title: 'Pre-Class Guiding Questions',
+        description: 'Reflect on these questions before the lesson: How does AI shift the developer role? What limitations might AI tools have? What ethical concerns arise with AI-generated code?',
+        createdBy: teacher.id,
+        isPinned: true,
+      }).returning();
+
+      await tx.insert(schema.discussions).values({
+        storageKey: 'discussion:case-study',
+        title: 'Case Study: Scaling with AI Tools',
+        description: 'Discuss integration points, testing modifications, and code review adaptations for scaling from 5 to 50 developers with AI tools.',
+        createdBy: teacher.id,
+        isPinned: true,
+      }).returning();
+
+      const [discussion3] = await tx.insert(schema.discussions).values({
+        storageKey: 'discussion:ethics-debate',
+        title: 'Debate: Democratize vs Devalue',
+        description: 'Do AI tools democratize software development by making it accessible, or do they devalue software skills by automating core tasks? Share your perspective.',
+        createdBy: teacher.id,
+        isPinned: false,
+      }).returning();
+
+      await tx.insert(schema.discussions).values({
+        storageKey: 'discussion:one-minute-paper',
+        title: 'One-Minute Paper',
+        description: 'What is one traditional practice all teams should keep despite AI adoption? Share your thoughts.',
+        createdBy: teacher.id,
+        isPinned: false,
+      }).returning();
+
+      // Add a seed post from the teacher
+      await tx.insert(schema.discussionPosts).values({
+        discussionId: discussion1.id,
+        authorId: teacher.id,
+        content: 'Welcome! Please share your thoughts on the three guiding questions before our next class. How does AI shift the developer role from "coder" to "architect"?',
       });
 
+      await tx.insert(schema.discussionPosts).values({
+        discussionId: discussion3.id,
+        authorId: teacher.id,
+        content: 'Remember: there are no wrong answers here. Consider both sides of the argument — how might AI tools both democratize AND devalue software skills?',
+      });
+
+      // ===== CONCEPT CHECKS =====
+      const conceptChecksData = [
+        {
+          storageKey: 'concept:hook',
+          title: 'AI Tool Familiarity',
+          prompt: 'How familiar are you with AI coding tools like GitHub Copilot or CodeWhisperer?',
+          checkType: 'scale',
+          sectionKey: 'introduction',
+        },
+        {
+          storageKey: 'concept:ai-landscape',
+          title: 'AI Tool Landscape Understanding',
+          prompt: 'Do you understand the evolution from traditional to AI-enhanced development workflows?',
+          checkType: 'thumbs',
+          sectionKey: 'development',
+        },
+        {
+          storageKey: 'concept:workflow',
+          title: 'Code Generation Workflow',
+          prompt: 'Can you describe the prompt → generation → modification cycle in AI code generation?',
+          checkType: 'thumbs',
+          sectionKey: 'development',
+        },
+        {
+          storageKey: 'concept:case-study',
+          title: 'Case Study Comprehension',
+          prompt: 'Do you feel confident identifying AI integration points in a development workflow?',
+          checkType: 'thumbs',
+          sectionKey: 'development',
+        },
+        {
+          storageKey: 'concept:ethics',
+          title: 'Ethical Awareness',
+          prompt: 'Can you identify at least two ethical concerns with AI-generated code?',
+          checkType: 'thumbs',
+          sectionKey: 'development',
+        },
+        {
+          storageKey: 'concept:synthesis',
+          title: 'Lesson Synthesis',
+          prompt: 'What is one traditional practice all teams should keep despite AI adoption? Explain briefly.',
+          checkType: 'text',
+          sectionKey: 'synthesis',
+        },
+      ];
+
+      for (const cc of conceptChecksData) {
+        await tx.insert(schema.conceptChecks).values(cc);
+      }
+
+      // Mark seed as applied
       await tx.insert(schema.seedLog).values({
         seedVersion: SEED_VERSION,
       });
     });
 
     console.log(`Seed "${SEED_VERSION}" applied successfully.`);
+    console.log('Created: teacher account (teacher/changeme), 3 student accounts (student1-3/student123)');
+    console.log('Created: 3 quizzes (pre-test, post-test, flashcards), 10 slides, 4 discussions, 6 concept checks');
   } catch (error) {
     console.error('Seeding failed:', error);
     throw error;

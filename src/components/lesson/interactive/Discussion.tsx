@@ -113,7 +113,7 @@ function buildPostTree(posts: RawPost[]): DiscussionPost[] {
   return roots;
 }
 
-export default function Discussion({ discussionId, title, description, posts: rawPosts, userId, userRole }: DiscussionProps) {
+export default function Discussion({ discussionId, title, description, posts: rawPosts, userId, userRole: _userRole }: DiscussionProps) {
   const [newPost, setNewPost] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const router = useRouter();
