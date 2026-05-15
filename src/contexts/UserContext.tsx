@@ -26,18 +26,52 @@ export function UserProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [tokenProcessed, setTokenProcessed] = useState(false);
 
+  // Persist user to sessionStorage and restore on mount
+  const persistUser = useCallback((u: User | null) => {
+    if (u) {
+      try {
+        sessionStorage.setItem('lessonUser', JSON.stringify(u));
+      } catch { /* ignore storage errors */ }
+    } else {
+      try {
+        sessionStorage.removeItem('lessonUser');
+      } catch { /* ignore storage errors */ }
+    }
+    setUser(u);
+  }, []);
+
+  // Restore user from sessionStorage on mount
+  useState(() => {
+    try {
+      const stored = sessionStorage.getItem('lessonUser');
+      if (stored) {
+        const parsed = JSON.parse(stored) as User;
+        // Ensure role is uppercase for consistent checks
+        parsed.role = parsed.role.toUpperCase();
+        setUser(parsed);
+      }
+    } catch { /* ignore storage errors */ }
+  });
+
   const isGuest = user?.role === 'GUEST';
 
   const loginAsGuest = useCallback(() => {
-    setUser(GUEST_USER);
-  }, []);
+    persistUser(GUEST_USER);
+  }, [persistUser]);
 
   const logout = useCallback(() => {
-    setUser(null);
-  }, []);
+    persistUser(null);
+  }, [persistUser]);
+
+  const wrappedSetUser = useCallback((u: User | null) => {
+    if (u) {
+      u.role = u.role.toUpperCase();
+    }
+    persistUser(u);
+  }, [persistUser]);
 
   return (
-    <UserContext.Provider value={{ user, isGuest, tokenProcessed, setTokenProcessed, setUser, loginAsGuest, logout }}>
+    <UserContext.Provider value={{ user, isGuest, tokenProcessed, setTokenProcessed, setUser: wrappedSetUser, loginAsGuest, logout }}>
       {children}
     </UserContext.Provider>
   );
