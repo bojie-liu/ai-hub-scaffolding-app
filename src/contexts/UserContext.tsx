@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useState, ReactNode, useCallback } from 'react';
+import { createContext, useContext, useState, ReactNode, useCallback, useEffect } from 'react';
 import type { User } from '@/lib/types';
 
 interface UserContextValue {
@@ -20,21 +20,68 @@ const GUEST_USER: User = {
   role: 'GUEST',
 };
 
+const STORAGE_KEY = 'lesson_app_user';
+
+function loadUserFromStorage(): User | null {
+  if (typeof window === 'undefined') return null;
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored) return JSON.parse(stored);
+  } catch {
+    // ignore parse errors
+  }
+  return null;
+}
+
+function saveUserToStorage(user: User | null) {
+  if (typeof window === 'undefined') return;
+  try {
+    if (user) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(user));
+    } else {
+      localStorage.removeItem(STORAGE_KEY);
+    }
+  } catch {
+    // ignore storage errors
+  }
+}
+
 const UserContext = createContext<UserContextValue | undefined>(undefined);
 
 export function UserProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUserState] = useState<User | null>(null);
+  const [mounted, setMounted] = useState(false);
   const [tokenProcessed, setTokenProcessed] = useState(false);
+
+  // Hydrate from localStorage on mount - standard Next.js client hydration pattern
+  useEffect(() => {
+    const stored = loadUserFromStorage();
+    if (stored) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setUserState(stored);
+    }
+    setMounted(true);
+  }, []);
+
+  const setUser = useCallback((user: User | null) => {
+    setUserState(user);
+    saveUserToStorage(user);
+  }, []);
 
   const isGuest = user?.role === 'GUEST';
 
   const loginAsGuest = useCallback(() => {
     setUser(GUEST_USER);
-  }, []);
+  }, [setUser]);
 
   const logout = useCallback(() => {
     setUser(null);
-  }, []);
+  }, [setUser]);
+
+  // Wait for mount to avoid hydration mismatch
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <UserContext.Provider value={{ user, isGuest, tokenProcessed, setTokenProcessed, setUser, loginAsGuest, logout }}>

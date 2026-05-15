@@ -6,24 +6,22 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ShieldAlert } from 'lucide-react';
 import Link from 'next/link';
 
-interface Question {
+interface QuizQuestion {
   id: number;
   questionText: string;
-  questionType: string;
-  questionOrder: number;
+  questionType: 'multiple_choice' | 'true_false' | 'short_answer';
   explanation: string | null;
   answers: {
     id: number;
     answerText: string;
     isCorrect: boolean;
-    answerOrder: number;
   }[];
 }
 
 interface QuizPageClientProps {
   quizId: number;
   title: string;
-  questions: Question[];
+  questions: QuizQuestion[];
 }
 
 export default function QuizPageClient({ quizId, title, questions }: QuizPageClientProps) {
@@ -54,7 +52,7 @@ export default function QuizPageClient({ quizId, title, questions }: QuizPageCli
     <Quiz
       quizId={quizId}
       title={title}
-      questions={questions as any}
+      questions={questions}
       userId={user.userId}
     />
   );

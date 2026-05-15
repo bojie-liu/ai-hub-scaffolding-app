@@ -55,6 +55,55 @@ export async function getQuiz(id: number) {
   }
 }
 
+export async function getQuizByStorageKey(storageKey: string) {
+  try {
+    const quizRows = await db
+      .select()
+      .from(quizzes)
+      .where(eq(quizzes.storageKey, storageKey))
+      .limit(1);
+
+    if (quizRows.length === 0) {
+      return { success: false, error: 'Quiz not found' };
+    }
+
+    const quiz = quizRows[0];
+
+    const questionRows = await db
+      .select({
+        question: questions,
+        answer: answers,
+      })
+      .from(questions)
+      .leftJoin(answers, eq(questions.id, answers.questionId))
+      .where(eq(questions.quizId, quiz.id))
+      .orderBy(questions.questionOrder, answers.answerOrder);
+
+    const questionsMap = new Map<number, typeof questions.$inferSelect & { answers: typeof answers.$inferSelect[] }>();
+
+    for (const row of questionRows) {
+      const q = row.question;
+      if (!questionsMap.has(q.id)) {
+        questionsMap.set(q.id, { ...q, answers: [] });
+      }
+      if (row.answer) {
+        questionsMap.get(q.id)!.answers.push(row.answer);
+      }
+    }
+
+    return {
+      success: true,
+      data: {
+        quiz,
+        questions: Array.from(questionsMap.values()),
+      },
+    };
+  } catch (error) {
+    console.error('Failed to fetch quiz by storage key:', error);
+    return { success: false, error: 'Failed to fetch quiz' };
+  }
+}
+
 export async function getAllQuizzes() {
   try {
     const allQuizzes = await db
@@ -132,7 +181,7 @@ export async function submitQuizAttempt(
       .set({ score, completedAt: new Date() })
       .where(eq(quizAttempts.id, attempt.id));
 
-    revalidatePath(routes.quizzes);
+    revalidatePath(routes.quiz);
 
     return { success: true, data: { score, totalQuestions } };
   } catch (error) {
@@ -143,26 +192,6 @@ export async function submitQuizAttempt(
 
 export async function getQuizResults(quizId: number) {
   try {
-    const results = await db
-      .select({
-        attempt: quizAttempts,
-        user: {
-          id: quizAttempts.userId,
-          username: quizAttempts.userId,
-        },
-      })
-      .from(quizAttempts)
-      .innerJoin(
-        // We need to join with users table, so let's use a proper approach
-        db.select({
-          id: quizAttempts.userId,
-        }).from(quizAttempts).as('_sub'),
-        eq(quizAttempts.id, quizAttempts.id)
-      )
-      .where(eq(quizAttempts.quizId, quizId))
-      .orderBy(desc(quizAttempts.completedAt));
-
-    // Simpler approach: fetch attempts then fetch users
     const attempts = await db
       .select()
       .from(quizAttempts)
@@ -176,17 +205,6 @@ export async function getQuizResults(quizId: number) {
     }
 
     const { users } = await import('@/db/schema');
-    const userList = await db
-      .select({
-        id: users.id,
-        username: users.username,
-        displayName: users.displayName,
-        email: users.email,
-      })
-      .from(users)
-      .where(eq(users.id, userIds[0])); // We'll fetch all users below
-
-    // Fetch all relevant users in one query
     const allUsers = await db.select().from(users);
 
     const userMap = new Map(allUsers.map((u) => [u.id, u]));

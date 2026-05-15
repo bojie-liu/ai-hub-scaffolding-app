@@ -13,11 +13,13 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { LayoutDashboard, LogOut, BookOpen, User, FileText } from 'lucide-react';
+import { LayoutDashboard, LogOut, BookOpen, User, FileText, HelpCircle, MessageSquare } from 'lucide-react';
 
 const navLinks = [
   { href: '/lesson', label: 'Lesson Plan', icon: FileText },
-  { href: '/slides', label: 'Slides', icon: BookOpen, hideForGuest: true },
+  { href: '/slides', label: 'Slides', icon: BookOpen, hideForGuest: false },
+  { href: '/quiz', label: 'Quiz', icon: HelpCircle, hideForGuest: true },
+  { href: '/discussion', label: 'Discussion', icon: MessageSquare, hideForGuest: true },
   { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard, requiredRole: 'TEACHER' },
 ];
 
