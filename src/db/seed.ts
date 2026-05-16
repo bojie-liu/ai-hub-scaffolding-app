@@ -1,30 +1,10 @@
 import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
 import { sql, eq } from 'drizzle-orm';
-import { readFileSync } from 'fs';
-import { resolve } from 'path';
 import bcrypt from 'bcryptjs';
 import * as schema from './schema';
 
-// // Load .env.local
-// try {
-//   const envPath = resolve(process.cwd(), '.env.local');
-//   const envContent = readFileSync(envPath, 'utf-8');
-//   for (const line of envContent.split('\n')) {
-//     const match = line.match(/^([^#=]+)=(.*)$/);
-//     if (match) {
-//       const key = match[1].trim();
-//       const value = match[2].trim().replace(/^["']|["']$/g, '');
-//       if (!process.env[key]) {
-//         process.env[key] = value;
-//       }
-//     }
-//   }
-// } catch {
-//   // .env.local not found, rely on existing env vars
-// }
-
-const SEED_VERSION = 'v1_initial';
+const SEED_VERSION = 'v2_lesson_content';
 
 async function seed() {
   const client = postgres(process.env.DATABASE_URL!);
@@ -52,21 +32,381 @@ async function seed() {
       return;
     }
 
-    // Run seed data within a transaction
     await db.transaction(async (tx) => {
+      // ── Users ──
       const passwordHash = await bcrypt.hash(
         process.env.SEED_ADMIN_PASSWORD || 'changeme',
         10,
       );
 
-      await tx.insert(schema.users).values({
-        username: 'admin',
-        email: 'admin@example.com',
+      const [teacher] = await tx.insert(schema.users).values({
+        username: 'teacher',
+        email: 'teacher@example.com',
         passwordHash,
         role: 'TEACHER',
-        displayName: 'Admin User',
-      });
+        displayName: 'Prof. Johnson',
+      }).returning();
 
+      const studentPasswordHash = await bcrypt.hash('student123', 10);
+
+      const [student1] = await tx.insert(schema.users).values({
+        username: 'student1',
+        email: 'student1@example.com',
+        passwordHash: studentPasswordHash,
+        role: 'STUDENT',
+        displayName: 'Alice Chen',
+      }).returning();
+
+      const [student2] = await tx.insert(schema.users).values({
+        username: 'student2',
+        email: 'student2@example.com',
+        passwordHash: studentPasswordHash,
+        role: 'STUDENT',
+        displayName: 'Bob Martinez',
+      }).returning();
+
+      // ── Slides (10 slides for presentation) ──
+      const slideData = [
+        {
+          storageKey: 'slide:title',
+          slideOrder: 1,
+          title: 'Modern Software Developer',
+          content: 'AI-Enhanced Software Development Workflows\nUniversity Lesson Plan | 90 minutes',
+          slideType: 'title',
+          backgroundColor: null,
+        },
+        {
+          storageKey: 'slide:ilos',
+          slideOrder: 2,
+          title: 'Intended Learning Outcomes',
+          content: 'By the end of this session, you will be able to:\n- Analyze the evolution of software development workflows from traditional to AI-enhanced models\n- Apply at least two AI-assisted coding tools to specific development stages\n- Evaluate the effectiveness of AI tools in addressing traditional SE challenges\n- Synthesize a personalized workflow integrating human expertise with AI tools',
+          slideType: 'content',
+          backgroundColor: null,
+        },
+        {
+          storageKey: 'slide:evolution',
+          slideOrder: 3,
+          title: 'Framework Evolution',
+          content: 'How software development has evolved:\n- Traditional: Waterfall, manual coding, sequential testing\n- Modern: CI/CD pipelines, automated testing, DevOps culture\n- AI-Enhanced: AI pair programming, automated code review, intelligent debugging\n\nKey insight: Each evolution builds on the previous, not replaces it',
+          slideType: 'content',
+          backgroundColor: null,
+        },
+        {
+          storageKey: 'slide:ai-tools',
+          slideOrder: 4,
+          title: 'AI Development Tools',
+          content: 'Three key AI-assisted coding tools:\n- ChatGPT-4: Planning and architecture decisions\n- GitHub Copilot: Code generation and completion\n- Cursor AI: Debugging and code explanation\n\nEach tool excels at different stages of development',
+          slideType: 'content',
+          backgroundColor: null,
+        },
+        {
+          storageKey: 'slide:copilot',
+          slideOrder: 5,
+          title: 'GitHub Copilot in Action',
+          content: 'Code generation capabilities:\n- Context-aware code suggestions\n- Multi-language support\n- Function generation from comments\n- Test case generation\n\nBest practices: Review all suggestions, understand generated code',
+          slideType: 'content',
+          backgroundColor: null,
+        },
+        {
+          storageKey: 'slide:activity',
+          slideOrder: 6,
+          title: 'Group Challenge',
+          content: 'Build an e-commerce checkout system using AI tools within 30 minutes\n\nConstraints:\n- Must meet accessibility requirements (WCAG 2.1 AA)\n- Cross-browser compatibility required\n- Use at least 2 AI tools in your workflow\n\nEvaluation: Code quality, tool utilization, innovation, ethics',
+          slideType: 'activity',
+          backgroundColor: null,
+        },
+        {
+          storageKey: 'slide:checklist',
+          slideOrder: 7,
+          title: 'AI-Enhanced Solution Evaluation',
+          content: '4-point evaluation rubric:\n- Code quality metrics: Is the code clean, tested, and maintainable?\n- Tool utilization: Were AI tools used effectively and appropriately?\n- Innovation: Creative problem-solving with AI assistance\n- Ethical risk: Did the team consider security, bias, and ownership?',
+          slideType: 'content',
+          backgroundColor: null,
+        },
+        {
+          storageKey: 'slide:assessment',
+          slideOrder: 8,
+          title: 'Assessment Overview',
+          content: 'Formative Assessment:\n- Pre/post test comparison (+30% knowledge gain target)\n- Exit ticket reflection on technical debt\n- Live code review during practice\n\nSummative Assessment:\n- 2000-word workflow analysis (40%)\n- Implementation plan (30%)\n- Ethical considerations (20%)\n- Innovation in tool integration (10%)',
+          slideType: 'assessment',
+          backgroundColor: null,
+        },
+        {
+          storageKey: 'slide:alignment',
+          slideOrder: 9,
+          title: 'Constructive Alignment',
+          content: 'ILO 1: Analyze evolution → Interactive lecture → Workflow analysis\nILO 2: Apply tools → Tool demos + practice → Sandbox exercises\nILO 3: Evaluate effectiveness → Group debate → Exit ticket reflection\nILO 4: Synthesize workflow → Gallery walk → Implementation plan\n\nAll activities align with measurable outcomes',
+          slideType: 'content',
+          backgroundColor: null,
+        },
+        {
+          storageKey: 'slide:closing',
+          slideOrder: 10,
+          title: 'Key Takeaways',
+          content: 'AI tools augment, not replace, human developers\n- Human expertise remains essential for design, ethics, and quality\n- AI enhances productivity at every development stage\n- Critical evaluation of AI output is a vital skill\n\nNext session: Ethical implications of AI-generated code in enterprise environments',
+          slideType: 'title',
+          backgroundColor: null,
+        },
+      ];
+
+      for (const slide of slideData) {
+        await tx.insert(schema.slides).values(slide);
+      }
+
+      // ── Pre-test Quiz ──
+      const [pretestQuiz] = await tx.insert(schema.quizzes).values({
+        storageKey: 'quiz:pretest',
+        title: 'Pre-Class Assessment',
+        description: '5-question quiz covering core concepts of AI in software development',
+        quizType: 'multiple_choice',
+      }).returning();
+
+      const pretestQuestions = [
+        {
+          storageKey: 'question:pretest:1',
+          questionText: 'What is the primary benefit of CI/CD pipelines in software development?',
+          questionOrder: 1,
+          questionType: 'multiple_choice',
+          explanation: 'CI/CD pipelines automate the build, test, and deployment process, enabling faster and more reliable software delivery.',
+          answers: [
+            { answerText: 'Faster and more reliable software delivery through automation', isCorrect: true, answerOrder: 1 },
+            { answerText: 'Reduced need for human developers', isCorrect: false, answerOrder: 2 },
+            { answerText: 'Complete elimination of software bugs', isCorrect: false, answerOrder: 3 },
+            { answerText: 'Automatic generation of user requirements', isCorrect: false, answerOrder: 4 },
+          ],
+        },
+        {
+          storageKey: 'question:pretest:2',
+          questionText: 'What is technical debt in software development?',
+          questionOrder: 2,
+          questionType: 'multiple_choice',
+          explanation: 'Technical debt refers to the extra development work that arises when code that is easy to implement in the short run is chosen over better approaches that take longer.',
+          answers: [
+            { answerText: 'The cost of software licenses and tools', isCorrect: false, answerOrder: 1 },
+            { answerText: 'The accumulated cost of choosing quick solutions over better long-term approaches', isCorrect: true, answerOrder: 2 },
+            { answerText: 'The financial budget allocated for technology purchases', isCorrect: false, answerOrder: 3 },
+            { answerText: 'The amount of time developers spend on documentation', isCorrect: false, answerOrder: 4 },
+          ],
+        },
+        {
+          storageKey: 'question:pretest:3',
+          questionText: 'How can AI tools like GitHub Copilot assist developers?',
+          questionOrder: 3,
+          questionType: 'multiple_choice',
+          explanation: 'GitHub Copilot provides context-aware code suggestions based on the surrounding code and comments, helping developers write code faster.',
+          answers: [
+            { answerText: 'By completely replacing the need for human code review', isCorrect: false, answerOrder: 1 },
+            { answerText: 'By providing context-aware code suggestions and completions', isCorrect: true, answerOrder: 2 },
+            { answerText: 'By automatically deploying applications to production', isCorrect: false, answerOrder: 3 },
+            { answerText: 'By writing project documentation automatically', isCorrect: false, answerOrder: 4 },
+          ],
+        },
+        {
+          storageKey: 'question:pretest:4',
+          questionText: 'True or False: AI-generated code is always secure and does not need human review.',
+          questionOrder: 4,
+          questionType: 'true_false',
+          explanation: 'AI-generated code can contain security vulnerabilities, bugs, or follow poor practices. Human review is always essential.',
+          answers: [
+            { answerText: 'True', isCorrect: false, answerOrder: 1 },
+            { answerText: 'False', isCorrect: true, answerOrder: 2 },
+          ],
+        },
+        {
+          storageKey: 'question:pretest:5',
+          questionText: 'Which of the following is an ethical concern with AI-generated code?',
+          questionOrder: 5,
+          questionType: 'multiple_choice',
+          explanation: 'All of these are valid ethical concerns. AI-generated code raises questions about intellectual property, bias in training data, and code ownership.',
+          answers: [
+            { answerText: 'Code ownership and intellectual property issues', isCorrect: false, answerOrder: 1 },
+            { answerText: 'Potential bias from training data', isCorrect: false, answerOrder: 2 },
+            { answerText: 'Security vulnerabilities in generated code', isCorrect: false, answerOrder: 3 },
+            { answerText: 'All of the above', isCorrect: true, answerOrder: 4 },
+          ],
+        },
+      ];
+
+      for (const q of pretestQuestions) {
+        const answers = q.answers;
+        const questionData = {
+          quizId: pretestQuiz.id,
+          storageKey: q.storageKey,
+          questionText: q.questionText,
+          questionOrder: q.questionOrder,
+          questionType: q.questionType,
+          explanation: q.explanation,
+        };
+        const [insertedQuestion] = await tx.insert(schema.questions).values(questionData).returning();
+
+        for (const a of answers) {
+          await tx.insert(schema.answers).values({
+            questionId: insertedQuestion.id,
+            answerText: a.answerText,
+            isCorrect: a.isCorrect,
+            answerOrder: a.answerOrder,
+          });
+        }
+      }
+
+      // ── Formative Assessment Quiz ──
+      const [formativeQuiz] = await tx.insert(schema.quizzes).values({
+        storageKey: 'quiz:formative',
+        title: 'AI Tool Workflow Analysis',
+        description: 'Formative assessment - 5 questions on AI tool integration in development workflows',
+        quizType: 'multiple_choice',
+      }).returning();
+
+      const formativeQuestions = [
+        {
+          storageKey: 'question:formative:1',
+          questionText: 'In the AI-Enhanced Coding Loop, what happens after the Planning stage?',
+          questionOrder: 1,
+          questionType: 'multiple_choice',
+          explanation: 'The AI-Enhanced Coding Loop follows: Planning → Code Generation → Testing → Iteration Loop',
+          answers: [
+            { answerText: 'Code Generation', isCorrect: true, answerOrder: 1 },
+            { answerText: 'Testing', isCorrect: false, answerOrder: 2 },
+            { answerText: 'Deployment', isCorrect: false, answerOrder: 3 },
+            { answerText: 'Code Review', isCorrect: false, answerOrder: 4 },
+          ],
+        },
+        {
+          storageKey: 'question:formative:2',
+          questionText: 'Which AI tool is most suitable for debugging existing code?',
+          questionOrder: 2,
+          questionType: 'multiple_choice',
+          explanation: 'Cursor AI is specifically designed to help with debugging by explaining code and suggesting fixes for errors.',
+          answers: [
+            { answerText: 'GitHub Copilot', isCorrect: false, answerOrder: 1 },
+            { answerText: 'Cursor AI', isCorrect: true, answerOrder: 2 },
+            { answerText: 'Docker', isCorrect: false, answerOrder: 3 },
+            { answerText: 'Jenkins', isCorrect: false, answerOrder: 4 },
+          ],
+        },
+        {
+          storageKey: 'question:formative:3',
+          questionText: 'True or False: AI tools can completely eliminate technical debt.',
+          questionOrder: 3,
+          questionType: 'true_false',
+          explanation: 'AI tools can help identify and address technical debt, but cannot completely eliminate it. Human judgment is required to prioritize and make architectural decisions.',
+          answers: [
+            { answerText: 'True', isCorrect: false, answerOrder: 1 },
+            { answerText: 'False', isCorrect: true, answerOrder: 2 },
+          ],
+        },
+        {
+          storageKey: 'question:formative:4',
+          questionText: 'What is a key advantage of using ChatGPT-4 for project planning?',
+          questionOrder: 4,
+          questionType: 'multiple_choice',
+          explanation: 'ChatGPT-4 can help brainstorm architectural decisions and provide different approaches to problem-solving during the planning phase.',
+          answers: [
+            { answerText: 'It can deploy applications automatically', isCorrect: false, answerOrder: 1 },
+            { answerText: 'It can brainstorm architectural decisions and provide multiple approaches', isCorrect: true, answerOrder: 2 },
+            { answerText: 'It can write production-ready code without review', isCorrect: false, answerOrder: 3 },
+            { answerText: 'It can replace all human developers on a team', isCorrect: false, answerOrder: 4 },
+          ],
+        },
+        {
+          storageKey: 'question:formative:5',
+          questionText: 'When evaluating an AI-enhanced solution, which criterion assesses whether ethical risks were considered?',
+          questionOrder: 5,
+          questionType: 'multiple_choice',
+          explanation: 'Ethical risk mitigation specifically evaluates whether the team considered security, bias, privacy, and code ownership issues in their AI-assisted solution.',
+          answers: [
+            { answerText: 'Code quality metrics', isCorrect: false, answerOrder: 1 },
+            { answerText: 'Tool utilization effectiveness', isCorrect: false, answerOrder: 2 },
+            { answerText: 'Innovation in problem solving', isCorrect: false, answerOrder: 3 },
+            { answerText: 'Ethical risk mitigation', isCorrect: true, answerOrder: 4 },
+          ],
+        },
+      ];
+
+      for (const q of formativeQuestions) {
+        const answers = q.answers;
+        const questionData = {
+          quizId: formativeQuiz.id,
+          storageKey: q.storageKey,
+          questionText: q.questionText,
+          questionOrder: q.questionOrder,
+          questionType: q.questionType,
+          explanation: q.explanation,
+        };
+        const [insertedQuestion] = await tx.insert(schema.questions).values(questionData).returning();
+
+        for (const a of answers) {
+          await tx.insert(schema.answers).values({
+            questionId: insertedQuestion.id,
+            answerText: a.answerText,
+            isCorrect: a.isCorrect,
+            answerOrder: a.answerOrder,
+          });
+        }
+      }
+
+      // ── Discussions ──
+      const discussionData = [
+        {
+          storageKey: 'discussion:ai-developer-role',
+          title: 'How might AI change the traditional developer role?',
+          description: 'Discuss how AI tools could transform what it means to be a software developer. Will the role evolve, diminish, or expand?',
+          createdBy: teacher.id,
+        },
+        {
+          storageKey: 'discussion:ethics-ai-code',
+          title: 'What ethical concerns should we consider with AI-generated code?',
+          description: 'Explore ethical implications including intellectual property, bias, security, and accountability in AI-generated code.',
+          createdBy: teacher.id,
+        },
+        {
+          storageKey: 'discussion:accessibility',
+          title: 'How could AI tools impact software development accessibility?',
+          description: 'Discuss how AI coding tools could make software development more accessible to people with different backgrounds and abilities.',
+          createdBy: teacher.id,
+        },
+        {
+          storageKey: 'discussion:workflow-integration',
+          title: 'Integrating AI tools into your development workflow',
+          description: 'Share your experiences and strategies for incorporating AI tools like Copilot and Cursor into daily development work.',
+          createdBy: teacher.id,
+        },
+      ];
+
+      for (const disc of discussionData) {
+        await tx.insert(schema.discussions).values(disc);
+      }
+
+      // ── Concept Checks ──
+      const conceptCheckData = [
+        {
+          storageKey: 'concept:ilos',
+          title: 'Understanding the ILOs',
+          prompt: 'Do you understand the four intended learning outcomes for this session?',
+          checkType: 'thumbs',
+          sectionKey: 'ilos',
+        },
+        {
+          storageKey: 'concept:intro',
+          title: 'Introduction Comprehension',
+          prompt: 'How well do you understand the concept of AI-enhanced development workflows after the introduction?',
+          checkType: 'scale',
+          sectionKey: 'introduction',
+        },
+        {
+          storageKey: 'concept:synthesis',
+          title: 'Session Reflection',
+          prompt: 'Has your understanding of the developer role changed after this session?',
+          checkType: 'thumbs',
+          sectionKey: 'synthesis',
+        },
+      ];
+
+      for (const cc of conceptCheckData) {
+        await tx.insert(schema.conceptChecks).values(cc);
+      }
+
+      // ── Seed log ──
       await tx.insert(schema.seedLog).values({
         seedVersion: SEED_VERSION,
       });

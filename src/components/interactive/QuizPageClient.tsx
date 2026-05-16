@@ -54,7 +54,13 @@ export default function QuizPageClient({ quizId, title, questions }: QuizPageCli
     <Quiz
       quizId={quizId}
       title={title}
-      questions={questions as any}
+      questions={questions.map((q) => ({
+          id: q.id,
+          questionText: q.questionText,
+          questionType: q.questionType as 'multiple_choice' | 'true_false' | 'short_answer',
+          explanation: q.explanation,
+          answers: q.answers,
+        }))}
       userId={user.userId}
     />
   );

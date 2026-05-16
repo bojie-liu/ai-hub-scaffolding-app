@@ -20,20 +20,58 @@ const GUEST_USER: User = {
   role: 'GUEST',
 };
 
+const STORAGE_KEY = 'lesson_app_user';
+
+function loadUserFromStorage(): User | null {
+  if (typeof window === 'undefined') return null;
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored) {
+      return JSON.parse(stored);
+    }
+  } catch {
+    // Ignore parse errors
+  }
+  return null;
+}
+
+function saveUserToStorage(user: User | null) {
+  if (typeof window === 'undefined') return;
+  try {
+    if (user && user.role !== 'GUEST') {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(user));
+    } else {
+      localStorage.removeItem(STORAGE_KEY);
+    }
+  } catch {
+    // Ignore storage errors
+  }
+}
+
 const UserContext = createContext<UserContextValue | undefined>(undefined);
 
 export function UserProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUserState] = useState<User | null>(() => {
+    if (typeof window === 'undefined') return null;
+    return loadUserFromStorage();
+  });
   const [tokenProcessed, setTokenProcessed] = useState(false);
+
+  const setUser = useCallback((newUser: User | null) => {
+    setUserState(newUser);
+    saveUserToStorage(newUser);
+  }, []);
 
   const isGuest = user?.role === 'GUEST';
 
   const loginAsGuest = useCallback(() => {
-    setUser(GUEST_USER);
+    setUserState(GUEST_USER);
+    saveUserToStorage(null);
   }, []);
 
   const logout = useCallback(() => {
-    setUser(null);
+    setUserState(null);
+    saveUserToStorage(null);
   }, []);
 
   return (
