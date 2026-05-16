@@ -1,7 +1,6 @@
-import { drizzle } from 'drizzle-orm/node-postgres';
-import { Pool } from 'pg';
-import { sql } from 'drizzle-orm';
-import { eq } from 'drizzle-orm';
+import { drizzle } from 'drizzle-orm/postgres-js';
+import postgres from 'postgres';
+import { sql, eq } from 'drizzle-orm';
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import bcrypt from 'bcryptjs';
@@ -28,8 +27,8 @@ import * as schema from './schema';
 const SEED_VERSION = 'v1_initial';
 
 async function seed() {
-  const pool = new Pool({ connectionString: process.env.DATABASE_URL });
-  const db = drizzle(pool, { schema });
+  const client = postgres(process.env.DATABASE_URL!);
+  const db = drizzle(client, { schema });
 
   try {
     // Create _seed_log table idempotently
@@ -78,7 +77,7 @@ async function seed() {
     console.error('Seeding failed:', error);
     throw error;
   } finally {
-    await pool.end();
+    await client.end();
   }
 }
 
