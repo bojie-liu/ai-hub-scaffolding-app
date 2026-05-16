@@ -1,6 +1,7 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 import { saveEditableContent, getEditableContent } from "@/lib/actions/editable-content";
+import { linkify } from "@/lib/linkify";
 
 interface EditableTextProps {
   initialValue: string;
@@ -97,7 +98,7 @@ export default function EditableText({
       title="Click to edit"
       onClick={() => setEditing(true)}
     >
-      {value}
+      {linkify(value)}
     </Tag>
   );
 }

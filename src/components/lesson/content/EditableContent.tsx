@@ -4,6 +4,7 @@ import { useUser } from '@/contexts/UserContext';
 import EditableText from '@/components/interactive/EditableText';
 import { useEffect, useState } from 'react';
 import { getEditableContent } from '@/lib/actions/editable-content';
+import { linkify } from '@/lib/linkify';
 
 interface EditableContentProps {
   storageKey: string;
@@ -44,5 +45,5 @@ export default function EditableContent({
   }
 
   const Tag = as;
-  return <Tag className={className}>{savedValue ?? initialValue}</Tag>;
+  return <Tag className={className}>{linkify(savedValue ?? initialValue)}</Tag>;
 }
