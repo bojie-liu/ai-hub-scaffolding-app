@@ -1,30 +1,10 @@
-import { drizzle } from 'drizzle-orm/postgres-js';
-import postgres from 'postgres';
-import { sql, eq } from 'drizzle-orm';
-import { readFileSync } from 'fs';
-import { resolve } from 'path';
-import bcrypt from 'bcryptjs';
-import * as schema from './schema';
+import { drizzle } from "drizzle-orm/postgres-js";
+import postgres from "postgres";
+import { sql, eq } from "drizzle-orm";
+import bcrypt from "bcryptjs";
+import * as schema from "./schema";
 
-// // Load .env.local
-// try {
-//   const envPath = resolve(process.cwd(), '.env.local');
-//   const envContent = readFileSync(envPath, 'utf-8');
-//   for (const line of envContent.split('\n')) {
-//     const match = line.match(/^([^#=]+)=(.*)$/);
-//     if (match) {
-//       const key = match[1].trim();
-//       const value = match[2].trim().replace(/^["']|["']$/g, '');
-//       if (!process.env[key]) {
-//         process.env[key] = value;
-//       }
-//     }
-//   }
-// } catch {
-//   // .env.local not found, rely on existing env vars
-// }
-
-const SEED_VERSION = 'v1_initial';
+const SEED_VERSION = "v2_constructivism";
 
 async function seed() {
   const client = postgres(process.env.DATABASE_URL!);
@@ -54,19 +34,749 @@ async function seed() {
 
     // Run seed data within a transaction
     await db.transaction(async (tx) => {
+      // --- Admin user ---
       const passwordHash = await bcrypt.hash(
-        process.env.SEED_ADMIN_PASSWORD || 'changeme',
+        process.env.SEED_ADMIN_PASSWORD || "changeme",
         10,
       );
 
-      await tx.insert(schema.users).values({
-        username: 'admin',
-        email: 'admin@example.com',
-        passwordHash,
-        role: 'TEACHER',
-        displayName: 'Admin User',
-      });
+      const [adminUser] = await tx
+        .insert(schema.users)
+        .values({
+          username: "admin",
+          email: "admin@example.com",
+          passwordHash,
+          role: "TEACHER",
+          displayName: "Admin User",
+        })
+        .returning();
 
+      const adminId = adminUser.id;
+
+      // --- Slides ---
+      await tx
+        .insert(schema.slides)
+        .values([
+          {
+            storageKey: "slide:1",
+            slideOrder: 1,
+            title: "Cognitive and Social Constructivism Theory",
+            content:
+              "Introduction to Educational Psychology | 180 minutes | 90 Students",
+            slideType: "title",
+          },
+          {
+            storageKey: "slide:2",
+            slideOrder: 2,
+            title: "Intended Learning Outcomes",
+            content:
+              "By the end of this lesson, students will be able to:\n\n" +
+              "1. Explain the core principles of cognitive constructivism (Piaget) and social constructivism (Vygotsky), including schema theory, assimilation, accommodation, ZPD, and scaffolding.\n\n" +
+              "2. Compare and contrast cognitive and social constructivism, identifying key similarities and differences in their views of how learning occurs.\n\n" +
+              "3. Apply constructivist principles to design a lesson plan that incorporates scaffolding, social interaction, and active knowledge construction.",
+            slideType: "content",
+          },
+          {
+            storageKey: "slide:3",
+            slideOrder: 3,
+            title: "Pre-Class Preparation",
+            content:
+              "Pre-Reading:\n" +
+              '- Chapter 4: "Constructivist Theories of Learning" from Educational Psychology textbook\n' +
+              '- Supplementary article: "Piaget vs Vygotsky: A Comparison"\n\n' +
+              "Diagnostic Pre-Test:\n" +
+              "- Complete the online diagnostic quiz to assess prior knowledge\n" +
+              "- Results will guide the pace and focus of today's session\n\n" +
+              "Guiding Questions:\n" +
+              "- How do individuals construct knowledge according to Piaget?\n" +
+              "- What role does social interaction play in learning according to Vygotsky?\n" +
+              "- How can teachers apply these theories in the classroom?",
+            slideType: "content",
+          },
+          {
+            storageKey: "slide:4",
+            slideOrder: 4,
+            title: "Introduction: Hook Activity",
+            content:
+              "Mentimeter Poll:\n" +
+              "- \"What comes to mind when you hear 'constructivism'?\" - Word cloud activity\n\n" +
+              "Pre-Test Review:\n" +
+              "- Share class-wide results anonymously\n" +
+              "- Identify common misconceptions and knowledge gaps\n\n" +
+              "Venn Diagram Activity:\n" +
+              "- In pairs, create a Venn diagram comparing what you know about Piaget and Vygotsky\n" +
+              "- Share one insight with the class\n\n" +
+              "Real-World Connection:\n" +
+              '- "Think of a time when you learned something new through collaboration. How was it different from learning alone?"',
+            slideType: "content",
+          },
+          {
+            storageKey: "slide:5",
+            slideOrder: 5,
+            title: "Cognitive Constructivism",
+            content:
+              "Schema Theory:\n" +
+              "- Schemas are mental frameworks for organizing and interpreting information\n" +
+              "- Learners actively build and modify schemas through experience\n\n" +
+              "Piaget's Stages of Cognitive Development:\n" +
+              "- Sensorimotor (0-2 years): Learning through senses and actions\n" +
+              "- Preoperational (2-7 years): Symbolic thinking, egocentrism\n" +
+              "- Concrete operational (7-11 years): Logical thinking about concrete events\n" +
+              "- Formal operational (12+ years): Abstract and hypothetical reasoning\n\n" +
+              "Assimilation and Accommodation:\n" +
+              "- Assimilation: Incorporating new information into existing schemas\n" +
+              "- Accommodation: Modifying existing schemas to fit new information\n" +
+              "- Equilibration: Balancing assimilation and accommodation drives cognitive development",
+            slideType: "content",
+          },
+          {
+            storageKey: "slide:6",
+            slideOrder: 6,
+            title: "Social Constructivism",
+            content:
+              "Vygotsky's Zone of Proximal Development (ZPD):\n" +
+              "- The gap between what a learner can do independently and what they can do with guidance\n" +
+              "- Learning is most effective when targeting the ZPD\n" +
+              '- Emphasizes the importance of "just right" challenge\n\n' +
+              "Scaffolding:\n" +
+              "- Temporary support provided to help learners accomplish tasks within their ZPD\n" +
+              "- Gradually removed as competence increases\n" +
+              "- Examples: prompts, models, hints, guided questions, partial solutions\n\n" +
+              "More Knowledgeable Other (MKO):\n" +
+              "- Anyone with more knowledge or skill than the learner (teacher, peer, mentor)\n" +
+              "- MKO provides the scaffolding within the ZPD\n" +
+              "- Can be a person or even a tool/resource that aids learning",
+            slideType: "content",
+          },
+          {
+            storageKey: "slide:7",
+            slideOrder: 7,
+            title: "Case Study Analysis",
+            content:
+              "Group Work Activity (20 minutes):\n\n" +
+              "In groups of 4-5, analyze one of the following scenarios:\n\n" +
+              "Scenario A: A 7-year-old student believes the moon follows them when they walk at night. How would Piaget explain this? How would Vygotsky approach helping the student understand?\n\n" +
+              "Scenario B: A teacher notices a student struggling with fractions. The student can add fractions with like denominators but not unlike denominators. Identify the student's ZPD and design appropriate scaffolding.\n\n" +
+              "Scenario C: A collaborative project where students with different skill levels work together. How does social constructivism explain the learning that occurs?\n\n" +
+              "Discussion Questions:\n" +
+              "- What constructivist principles are evident in your scenario?\n" +
+              "- How would you design instruction based on these principles?\n" +
+              "- What are potential challenges in applying constructivist approaches?",
+            slideType: "activity",
+          },
+          {
+            storageKey: "slide:8",
+            slideOrder: 8,
+            title: "Application Exercise",
+            content:
+              "Lesson Plan Template Activity (25 minutes):\n\n" +
+              "Design a 30-minute lesson plan for a topic of your choice that incorporates:\n\n" +
+              "1. Schema Activation: How will you connect to students' existing knowledge?\n" +
+              "2. Scaffolding Plan: What support will you provide? How will you fade it?\n" +
+              "3. Social Interaction: How will students collaborate or learn from each other?\n" +
+              "4. ZPD Consideration: How will you identify and target the ZPD?\n" +
+              "5. Assessment: How will you check understanding during the lesson?\n\n" +
+              "Share and Peer Review:\n" +
+              "- Exchange lesson plans with another group\n" +
+              "- Provide feedback using the constructivist principles checklist\n" +
+              "- Revise your plan based on feedback",
+            slideType: "activity",
+          },
+          {
+            storageKey: "slide:9",
+            slideOrder: 9,
+            title: "Assessment & Alignment",
+            content:
+              "Formative Assessment (during lesson):\n" +
+              "- Kahoot-style quiz on key concepts\n" +
+              "- Concept checks after each major section\n" +
+              "- Think-pair-share responses\n" +
+              "- Exit ticket discussion\n\n" +
+              "Summative Assessment:\n" +
+              "- Constructivist lesson plan (Application Exercise)\n" +
+              "- Comparative essay: Cognitive vs Social Constructivism\n" +
+              "- Reflective journal entry on personal learning experience\n\n" +
+              "ILO-Alignment Matrix:\n" +
+              "- ILO1 (Explain principles) -> Pre-test, Kahoot quiz, Comparative essay\n" +
+              "- ILO2 (Compare & contrast) -> Venn diagram, Case study, Comparative essay\n" +
+              "- ILO3 (Apply principles) -> Lesson plan, Peer review, Reflective journal",
+            slideType: "assessment",
+          },
+          {
+            storageKey: "slide:10",
+            slideOrder: 10,
+            title: "Resources, Differentiation & Reflection",
+            content:
+              "Resources:\n" +
+              "- Educational Psychology textbook, Chapter 4\n" +
+              "- Vygotsky, L.S. (1978). Mind in Society\n" +
+              "- Piaget, J. (1952). The Origins of Intelligence\n" +
+              "- Online simulation: Schema development interactive\n\n" +
+              "Inclusivity & Differentiation:\n" +
+              "- Visual learners: Diagrams, concept maps, video resources\n" +
+              "- Auditory learners: Discussion, verbal explanations, podcasts\n" +
+              "- Kinesthetic learners: Hands-on activities, role-play scenarios\n" +
+              "- Additional scaffolding for students who need more support\n" +
+              "- Extension tasks for advanced learners\n\n" +
+              "Continuous Improvement:\n" +
+              "- Review pre-test vs. post-test performance\n" +
+              "- Gather student feedback on lesson effectiveness\n" +
+              "- Adjust scaffolding levels based on formative assessment data\n" +
+              "- Incorporate new case studies and examples each semester",
+            slideType: "content",
+          },
+        ])
+        .returning();
+
+      // --- Quizzes ---
+      const insertedQuizzes = await tx
+        .insert(schema.quizzes)
+        .values([
+          {
+            storageKey: "quiz:pretest",
+            title: "Diagnostic Pre-Test",
+            description:
+              "Assess your prior knowledge of constructivism before the lesson begins.",
+            quizType: "multiple_choice",
+          },
+          {
+            storageKey: "quiz:formative",
+            title: "Formative Assessment",
+            description:
+              "Kahoot-style quiz to check understanding of key constructivism concepts during the lesson.",
+            quizType: "multiple_choice",
+          },
+        ])
+        .returning();
+
+      const pretestQuizId = insertedQuizzes.find(
+        (q) => q.storageKey === "quiz:pretest",
+      )!.id;
+      const formativeQuizId = insertedQuizzes.find(
+        (q) => q.storageKey === "quiz:formative",
+      )!.id;
+
+      // --- Questions & Answers ---
+      // Pre-Test Questions
+      const pretestQuestions = await tx
+        .insert(schema.questions)
+        .values([
+          {
+            quizId: pretestQuizId,
+            storageKey: "quiz:pretest:q1",
+            questionText:
+              "What is the core principle of cognitive constructivism?",
+            questionOrder: 1,
+            questionType: "multiple_choice",
+          },
+          {
+            quizId: pretestQuizId,
+            storageKey: "quiz:pretest:q2",
+            questionText:
+              "Who is primarily associated with cognitive constructivism?",
+            questionOrder: 2,
+            questionType: "multiple_choice",
+          },
+          {
+            quizId: pretestQuizId,
+            storageKey: "quiz:pretest:q3",
+            questionText: "What does ZPD stand for?",
+            questionOrder: 3,
+            questionType: "multiple_choice",
+          },
+          {
+            quizId: pretestQuizId,
+            storageKey: "quiz:pretest:q4",
+            questionText:
+              "Which concept refers to the support given to a learner that is gradually removed?",
+            questionOrder: 4,
+            questionType: "multiple_choice",
+          },
+          {
+            quizId: pretestQuizId,
+            storageKey: "quiz:pretest:q5",
+            questionText:
+              "In Piaget's theory, what occurs when new information is incorporated into an existing schema?",
+            questionOrder: 5,
+            questionType: "multiple_choice",
+          },
+          {
+            quizId: pretestQuizId,
+            storageKey: "quiz:pretest:q6",
+            questionText:
+              "What is the More Knowledgeable Other (MKO) in Vygotsky's theory?",
+            questionOrder: 6,
+            questionType: "multiple_choice",
+          },
+          {
+            quizId: pretestQuizId,
+            storageKey: "quiz:pretest:q7",
+            questionText:
+              "Which theorist emphasized the role of social interaction in learning?",
+            questionOrder: 7,
+            questionType: "multiple_choice",
+          },
+          {
+            quizId: pretestQuizId,
+            storageKey: "quiz:pretest:q8",
+            questionText:
+              "What process involves modifying existing schemas to incorporate new information?",
+            questionOrder: 8,
+            questionType: "multiple_choice",
+          },
+          {
+            quizId: pretestQuizId,
+            storageKey: "quiz:pretest:q9",
+            questionText:
+              "According to Piaget, what drives cognitive development?",
+            questionOrder: 9,
+            questionType: "multiple_choice",
+          },
+          {
+            quizId: pretestQuizId,
+            storageKey: "quiz:pretest:q10",
+            questionText:
+              "Which of the following best describes Vygotsky's view of learning?",
+            questionOrder: 10,
+            questionType: "multiple_choice",
+          },
+        ])
+        .returning();
+
+      // Pre-Test Answers
+      for (const question of pretestQuestions) {
+        const qKey = question.storageKey;
+        let answers: {
+          answerText: string;
+          isCorrect: boolean;
+          answerOrder: number;
+        }[];
+
+        switch (qKey) {
+          case "quiz:pretest:q1":
+            answers = [
+              {
+                answerText: "Learning through social interaction",
+                isCorrect: false,
+                answerOrder: 1,
+              },
+              {
+                answerText: "Knowledge is actively constructed by the learner",
+                isCorrect: true,
+                answerOrder: 2,
+              },
+              {
+                answerText: "Behavior is shaped by reinforcement",
+                isCorrect: false,
+                answerOrder: 3,
+              },
+              {
+                answerText: "Memory is enhanced through repetition",
+                isCorrect: false,
+                answerOrder: 4,
+              },
+            ];
+            break;
+          case "quiz:pretest:q2":
+            answers = [
+              { answerText: "Vygotsky", isCorrect: false, answerOrder: 1 },
+              { answerText: "Skinner", isCorrect: false, answerOrder: 2 },
+              { answerText: "Piaget", isCorrect: true, answerOrder: 3 },
+              { answerText: "Bandura", isCorrect: false, answerOrder: 4 },
+            ];
+            break;
+          case "quiz:pretest:q3":
+            answers = [
+              {
+                answerText: "Zone of Primary Development",
+                isCorrect: false,
+                answerOrder: 1,
+              },
+              {
+                answerText: "Zone of Proximal Development",
+                isCorrect: true,
+                answerOrder: 2,
+              },
+              {
+                answerText: "Zone of Prior Knowledge",
+                isCorrect: false,
+                answerOrder: 3,
+              },
+              {
+                answerText: "Zone of Progressive Development",
+                isCorrect: false,
+                answerOrder: 4,
+              },
+            ];
+            break;
+          case "quiz:pretest:q4":
+            answers = [
+              { answerText: "Assimilation", isCorrect: false, answerOrder: 1 },
+              { answerText: "Accommodation", isCorrect: false, answerOrder: 2 },
+              { answerText: "Scaffolding", isCorrect: true, answerOrder: 3 },
+              { answerText: "Equilibration", isCorrect: false, answerOrder: 4 },
+            ];
+            break;
+          case "quiz:pretest:q5":
+            answers = [
+              { answerText: "Accommodation", isCorrect: false, answerOrder: 1 },
+              { answerText: "Assimilation", isCorrect: true, answerOrder: 2 },
+              { answerText: "Scaffolding", isCorrect: false, answerOrder: 3 },
+              {
+                answerText: "Differentiation",
+                isCorrect: false,
+                answerOrder: 4,
+              },
+            ];
+            break;
+          case "quiz:pretest:q6":
+            answers = [
+              {
+                answerText: "A test measuring knowledge",
+                isCorrect: false,
+                answerOrder: 1,
+              },
+              {
+                answerText: "Anyone with more knowledge than the learner",
+                isCorrect: true,
+                answerOrder: 2,
+              },
+              {
+                answerText: "A specific teaching method",
+                isCorrect: false,
+                answerOrder: 3,
+              },
+              {
+                answerText: "The learner's current developmental stage",
+                isCorrect: false,
+                answerOrder: 4,
+              },
+            ];
+            break;
+          case "quiz:pretest:q7":
+            answers = [
+              { answerText: "Piaget", isCorrect: false, answerOrder: 1 },
+              { answerText: "Bruner", isCorrect: false, answerOrder: 2 },
+              { answerText: "Vygotsky", isCorrect: true, answerOrder: 3 },
+              { answerText: "Pavlov", isCorrect: false, answerOrder: 4 },
+            ];
+            break;
+          case "quiz:pretest:q8":
+            answers = [
+              { answerText: "Assimilation", isCorrect: false, answerOrder: 1 },
+              { answerText: "Scaffolding", isCorrect: false, answerOrder: 2 },
+              { answerText: "Accommodation", isCorrect: true, answerOrder: 3 },
+              { answerText: "Equilibration", isCorrect: false, answerOrder: 4 },
+            ];
+            break;
+          case "quiz:pretest:q9":
+            answers = [
+              {
+                answerText: "Social interaction",
+                isCorrect: false,
+                answerOrder: 1,
+              },
+              {
+                answerText:
+                  "Equilibration between assimilation and accommodation",
+                isCorrect: true,
+                answerOrder: 2,
+              },
+              {
+                answerText: "Behavioral reinforcement",
+                isCorrect: false,
+                answerOrder: 3,
+              },
+              {
+                answerText: "Observational learning",
+                isCorrect: false,
+                answerOrder: 4,
+              },
+            ];
+            break;
+          case "quiz:pretest:q10":
+            answers = [
+              {
+                answerText: "Learning is an individual process of discovery",
+                isCorrect: false,
+                answerOrder: 1,
+              },
+              {
+                answerText:
+                  "Learning occurs through internal cognitive restructuring",
+                isCorrect: false,
+                answerOrder: 2,
+              },
+              {
+                answerText: "Learning is a socially mediated process",
+                isCorrect: true,
+                answerOrder: 3,
+              },
+              {
+                answerText:
+                  "Learning results from stimulus-response associations",
+                isCorrect: false,
+                answerOrder: 4,
+              },
+            ];
+            break;
+          default:
+            continue;
+        }
+
+        await tx.insert(schema.answers).values(
+          answers.map((a) => ({
+            questionId: question.id,
+            answerText: a.answerText,
+            isCorrect: a.isCorrect,
+            answerOrder: a.answerOrder,
+          })),
+        );
+      }
+
+      // Formative Assessment Questions
+      const formativeQuestions = await tx
+        .insert(schema.questions)
+        .values([
+          {
+            quizId: formativeQuizId,
+            storageKey: "quiz:formative:q1",
+            questionText:
+              "Which theorist emphasized peer collaboration in learning?",
+            questionOrder: 1,
+            questionType: "multiple_choice",
+            explanation:
+              "Vygotsky emphasized social interaction and peer collaboration through concepts like ZPD and scaffolding.",
+          },
+          {
+            quizId: formativeQuizId,
+            storageKey: "quiz:formative:q2",
+            questionText: "What is schema in cognitive constructivism?",
+            questionOrder: 2,
+            questionType: "multiple_choice",
+            explanation:
+              "Schemas are cognitive structures that help organize and interpret information.",
+          },
+          {
+            quizId: formativeQuizId,
+            storageKey: "quiz:formative:q3",
+            questionText: "What happens in the Zone of Proximal Development?",
+            questionOrder: 3,
+            questionType: "multiple_choice",
+            explanation:
+              "The ZPD represents the gap between what a learner can do independently and what they can do with guidance.",
+          },
+          {
+            quizId: formativeQuizId,
+            storageKey: "quiz:formative:q4",
+            questionText: "Which is an example of scaffolding?",
+            questionOrder: 4,
+            questionType: "multiple_choice",
+            explanation:
+              "Scaffolding involves providing temporary support that is gradually removed as the learner becomes more competent.",
+          },
+          {
+            quizId: formativeQuizId,
+            storageKey: "quiz:formative:q5",
+            questionText: "How do cognitive and social constructivism differ?",
+            questionOrder: 5,
+            questionType: "multiple_choice",
+            explanation:
+              "While both theories view learning as active construction, cognitive constructivism focuses on individual mental processes while social constructivism emphasizes the role of social interaction.",
+          },
+        ])
+        .returning();
+
+      // Formative Assessment Answers
+      for (const question of formativeQuestions) {
+        const qKey = question.storageKey;
+        let answers: {
+          answerText: string;
+          isCorrect: boolean;
+          answerOrder: number;
+        }[];
+
+        switch (qKey) {
+          case "quiz:formative:q1":
+            answers = [
+              { answerText: "Piaget", isCorrect: false, answerOrder: 1 },
+              { answerText: "Vygotsky", isCorrect: true, answerOrder: 2 },
+              { answerText: "Skinner", isCorrect: false, answerOrder: 3 },
+              { answerText: "Pavlov", isCorrect: false, answerOrder: 4 },
+            ];
+            break;
+          case "quiz:formative:q2":
+            answers = [
+              {
+                answerText: "A teaching plan",
+                isCorrect: false,
+                answerOrder: 1,
+              },
+              {
+                answerText: "A mental framework for organizing knowledge",
+                isCorrect: true,
+                answerOrder: 2,
+              },
+              {
+                answerText: "A social interaction pattern",
+                isCorrect: false,
+                answerOrder: 3,
+              },
+              {
+                answerText: "A behavioral response",
+                isCorrect: false,
+                answerOrder: 4,
+              },
+            ];
+            break;
+          case "quiz:formative:q3":
+            answers = [
+              {
+                answerText: "Students learn independently",
+                isCorrect: false,
+                answerOrder: 1,
+              },
+              {
+                answerText:
+                  "Students perform tasks they cannot yet do alone but can do with help",
+                isCorrect: true,
+                answerOrder: 2,
+              },
+              {
+                answerText: "Students demonstrate mastered skills",
+                isCorrect: false,
+                answerOrder: 3,
+              },
+              {
+                answerText: "Students memorize new information",
+                isCorrect: false,
+                answerOrder: 4,
+              },
+            ];
+            break;
+          case "quiz:formative:q4":
+            answers = [
+              { answerText: "Giving a test", isCorrect: false, answerOrder: 1 },
+              {
+                answerText: "Providing hints and gradually removing them",
+                isCorrect: true,
+                answerOrder: 2,
+              },
+              {
+                answerText: "Lecturing for the entire class",
+                isCorrect: false,
+                answerOrder: 3,
+              },
+              {
+                answerText: "Assigning homework",
+                isCorrect: false,
+                answerOrder: 4,
+              },
+            ];
+            break;
+          case "quiz:formative:q5":
+            answers = [
+              {
+                answerText: "They are identical theories",
+                isCorrect: false,
+                answerOrder: 1,
+              },
+              {
+                answerText:
+                  "Cognitive focuses on individual construction; social emphasizes social interaction",
+                isCorrect: true,
+                answerOrder: 2,
+              },
+              {
+                answerText: "Social constructivism ignores cognition",
+                isCorrect: false,
+                answerOrder: 3,
+              },
+              {
+                answerText: "Cognitive constructivism is outdated",
+                isCorrect: false,
+                answerOrder: 4,
+              },
+            ];
+            break;
+          default:
+            continue;
+        }
+
+        await tx.insert(schema.answers).values(
+          answers.map((a) => ({
+            questionId: question.id,
+            answerText: a.answerText,
+            isCorrect: a.isCorrect,
+            answerOrder: a.answerOrder,
+          })),
+        );
+      }
+
+      // --- Concept Checks ---
+      await tx.insert(schema.conceptChecks).values([
+        {
+          storageKey: "concept:intro",
+          title: "Understanding Check",
+          prompt:
+            "Do you understand the difference between cognitive and social constructivism?",
+          checkType: "thumbs",
+          sectionKey: "introduction",
+        },
+        {
+          storageKey: "concept:schema",
+          title: "Schema Theory",
+          prompt:
+            "Can you explain schema development through assimilation and accommodation?",
+          checkType: "thumbs",
+          sectionKey: "development",
+        },
+        {
+          storageKey: "concept:zpd",
+          title: "ZPD Understanding",
+          prompt: "Can you describe Vygotsky's Zone of Proximal Development?",
+          checkType: "thumbs",
+          sectionKey: "development",
+        },
+        {
+          storageKey: "concept:application",
+          title: "Lesson Plan Confidence",
+          prompt:
+            "How confident are you in creating a constructivist lesson plan?",
+          checkType: "scale",
+          sectionKey: "development",
+        },
+      ]);
+
+      // --- Discussions ---
+      await tx.insert(schema.discussions).values([
+        {
+          storageKey: "discussion:guiding1",
+          title: "How do cognitive and social constructivism differ?",
+          description:
+            "Discuss the key differences between Piaget's cognitive constructivism and Vygotsky's social constructivism. Consider their views on how knowledge is constructed, the role of the individual versus society, and implications for teaching.",
+          createdBy: adminId,
+          isPinned: true,
+        },
+        {
+          storageKey: "discussion:guiding2",
+          title: "Implications for modern teaching practices",
+          description:
+            "How can constructivist principles be applied in today's diverse classrooms? Share examples of scaffolding, collaborative learning, and active knowledge construction that you have experienced or observed.",
+          createdBy: adminId,
+          isPinned: true,
+        },
+        {
+          storageKey: "discussion:exit",
+          title: "Exit Ticket: Takeaways and Questions",
+          description:
+            "Share your key takeaway from today's lesson and any remaining questions you have about constructivism. What will you apply in your own teaching practice?",
+          createdBy: adminId,
+          isPinned: false,
+        },
+      ]);
+
+      // --- Mark seed version ---
       await tx.insert(schema.seedLog).values({
         seedVersion: SEED_VERSION,
       });
@@ -74,7 +784,7 @@ async function seed() {
 
     console.log(`Seed "${SEED_VERSION}" applied successfully.`);
   } catch (error) {
-    console.error('Seeding failed:', error);
+    console.error("Seeding failed:", error);
     throw error;
   } finally {
     await client.end();

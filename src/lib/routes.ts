@@ -4,8 +4,12 @@
 // To verify: ensure each value below has a corresponding src/app/{path}/page.tsx file.
 
 export const routes = {
+  home: '/',
+  login: '/login',
+  lesson: '/lesson',
+  slides: '/slides',
   dashboard: '/dashboard',
+  quizzes: '/quizzes',
   discussion: '/discussion',
   discussionDetail: (id: number) => `/discussion/${id}`,
-  quizzes: '/quizzes',
 } as const;
