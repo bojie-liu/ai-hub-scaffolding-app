@@ -42,7 +42,6 @@ function runStepAllowFailure(name: string, command: string): void {
   }
 }
 
-runStepAllowFailure('DB: Generate', 'npx drizzle-kit generate');
 runStepAllowFailure('DB: Migrate', 'npx tsx src/db/migrate.ts');
 runStepAllowFailure('DB: Seed', 'npx tsx src/db/seed.ts');
 runStep('Next.js Dev', 'npx next dev');

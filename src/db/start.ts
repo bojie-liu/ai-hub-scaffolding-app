@@ -35,7 +35,6 @@ function runStep(name: string, command: string): void {
   }
 }
 
-runStep('DB: Generate', 'npx drizzle-kit generate');
 runStep('DB: Migrate', 'npx tsx src/db/migrate.ts');
 runStep('DB: Seed', 'npx tsx src/db/seed.ts');
 runStep('Next.js Start', 'npx next start');
