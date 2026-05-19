@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Suspense } from "react";
 import "./globals.css";
 import { AppProvider } from "@/contexts/AppProvider";
-import { TokenInitializer } from "@/components/TokenInitializer";
+import { TokenGuard } from "@/components/TokenGuard";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,9 +32,8 @@ export default function RootLayout({
       >
         <AppProvider>
           <Suspense>
-            <TokenInitializer />
+            <TokenGuard>{children}</TokenGuard>
           </Suspense>
-          {children}
         </AppProvider>
       </body>
     </html>

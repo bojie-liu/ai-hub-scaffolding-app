@@ -1,3 +1,5 @@
+'use server';
+
 import type { TokenExchangeResponse } from '@/lib/types';
 
 const AI_HUB_SERVER_HOST = process.env.AI_HUB_SERVER_HOST || 'https://localhost:3000';
