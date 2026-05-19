@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, ReactNode } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useUser } from '@/contexts/UserContext';
 import { useCourse } from '@/contexts/CourseContext';
@@ -8,9 +8,9 @@ import { exchangeToken } from '@/lib/api/token-exchange';
 
 const TOKEN_KEY = 'auth_token';
 
-export function TokenInitializer() {
+export function TokenGuard({ children }: { children: ReactNode }) {
   const searchParams = useSearchParams();
-  const { setUser, setTokenProcessed } = useUser();
+  const { user, setUser, setTokenProcessed, tokenProcessed } = useUser();
   const { setCourse } = useCourse();
   const hasInitialized = useRef(false);
 
@@ -56,5 +56,10 @@ export function TokenInitializer() {
     initializeFromToken();
   }, [searchParams, setUser, setCourse, setTokenProcessed]);
 
-  return null;
+  // Wait until token processing is complete before rendering children
+  if (!tokenProcessed) {
+    return null;
+  }
+
+  return <>{children}</>;
 }

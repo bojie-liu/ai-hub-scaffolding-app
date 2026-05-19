@@ -4,7 +4,7 @@ import { Suspense } from "react";
 import "./globals.css";
 import { AppProvider } from "@/contexts/AppProvider";
 import { ScrollRootProvider } from "@/contexts/ScrollRootContext";
-import { TokenInitializer } from "@/components/TokenInitializer";
+import { TokenGuard } from "@/components/TokenGuard";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,9 +34,8 @@ export default function RootLayout({
         <AppProvider>
           <ScrollRootProvider>
             <Suspense>
-              <TokenInitializer />
+              <TokenGuard>{children}</TokenGuard>
             </Suspense>
-            {children}
           </ScrollRootProvider>
         </AppProvider>
       </body>
