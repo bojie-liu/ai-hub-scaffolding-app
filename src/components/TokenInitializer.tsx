@@ -6,6 +6,8 @@ import { useUser } from '@/contexts/UserContext';
 import { useCourse } from '@/contexts/CourseContext';
 import { exchangeToken } from '@/lib/api/token-exchange';
 
+const TOKEN_KEY = 'auth_token';
+
 export function TokenInitializer() {
   const searchParams = useSearchParams();
   const { setUser, setTokenProcessed } = useUser();
@@ -16,7 +18,14 @@ export function TokenInitializer() {
     if (hasInitialized.current) return;
     hasInitialized.current = true;
 
-    const token = searchParams.get('token');
+    // Persist token from URL to sessionStorage before any redirect can strip it
+    const urlToken = searchParams.get('token');
+    if (urlToken) {
+      sessionStorage.setItem(TOKEN_KEY, urlToken);
+    }
+
+    // Read token from sessionStorage (survives redirects that drop URL params)
+    const token = sessionStorage.getItem(TOKEN_KEY);
     if (!token) {
       setTokenProcessed(true);
       return;
@@ -34,6 +43,9 @@ export function TokenInitializer() {
         });
 
         setCourse(data.course);
+
+        // Clear stored token after successful exchange
+        sessionStorage.removeItem(TOKEN_KEY);
       } catch (error) {
         console.error('Failed to exchange token:', error);
       } finally {
