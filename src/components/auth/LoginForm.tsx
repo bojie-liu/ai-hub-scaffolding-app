@@ -25,8 +25,13 @@ export function LoginForm() {
     try {
       const result = await loginUser(username, password);
       if (result.success && result.user) {
-        setUser(result.user);
-        if (result.user.role === 'TEACHER') {
+        setUser({
+          userId: result.user.userId,
+          username: result.user.username,
+          email: result.user.email,
+          role: result.user.role.toUpperCase(),
+        });
+        if (result.user.role.toUpperCase() === 'TEACHER') {
           router.push('/dashboard');
         } else {
           router.push('/lesson');
@@ -45,8 +50,8 @@ export function LoginForm() {
     <div className="flex items-center justify-center min-h-screen p-4 bg-gradient-to-br from-blue-50 to-indigo-100">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
-          <div className="mx-auto w-12 h-12 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold text-lg mb-2">AI</div>
-          <CardTitle className="text-2xl">AI in Software Engineering</CardTitle>
+          <div className="mx-auto w-12 h-12 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold text-lg mb-2">EP</div>
+          <CardTitle className="text-2xl">Cognitive & Social Constructivism</CardTitle>
           <CardDescription>Sign in to access the lesson plan</CardDescription>
         </CardHeader>
         <CardContent>

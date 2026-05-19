@@ -13,10 +13,12 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { LayoutDashboard, LogOut, BookOpen, User, FileText } from 'lucide-react';
+import { LayoutDashboard, LogOut, BookOpen, User, FileText, Brain } from 'lucide-react';
 
 const navLinks = [
-  { href: '/lesson', label: 'Lesson Plan', icon: FileText },
+  { href: '/lesson', label: 'Lesson', icon: FileText },
+  { href: '/quizzes', label: 'Quizzes', icon: BookOpen, hideForGuest: true },
+  { href: '/discussion', label: 'Discussion', icon: Brain, hideForGuest: true },
   { href: '/slides', label: 'Slides', icon: BookOpen, hideForGuest: true },
   { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard, requiredRole: 'TEACHER' },
 ];
@@ -42,8 +44,8 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-16">
         <div className="flex items-center gap-6">
           <Link href="/lesson" className="flex items-center gap-2 shrink-0">
-            <span className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold text-sm">AI</span>
-            <span className="font-semibold text-slate-800 text-sm hidden sm:block">AI in Software Engineering</span>
+            <span className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold text-sm">EP</span>
+            <span className="font-semibold text-slate-800 text-sm hidden sm:block">EdPsych: Constructivism</span>
           </Link>
           <div className="hidden sm:flex items-center gap-1">
             {visibleLinks.map((link) => {

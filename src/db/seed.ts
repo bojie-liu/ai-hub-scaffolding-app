@@ -1,30 +1,10 @@
 import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
 import { sql, eq } from 'drizzle-orm';
-import { readFileSync } from 'fs';
-import { resolve } from 'path';
 import bcrypt from 'bcryptjs';
 import * as schema from './schema';
 
-// // Load .env.local
-// try {
-//   const envPath = resolve(process.cwd(), '.env.local');
-//   const envContent = readFileSync(envPath, 'utf-8');
-//   for (const line of envContent.split('\n')) {
-//     const match = line.match(/^([^#=]+)=(.*)$/);
-//     if (match) {
-//       const key = match[1].trim();
-//       const value = match[2].trim().replace(/^["']|["']$/g, '');
-//       if (!process.env[key]) {
-//         process.env[key] = value;
-//       }
-//     }
-//   }
-// } catch {
-//   // .env.local not found, rely on existing env vars
-// }
-
-const SEED_VERSION = 'v1_initial';
+const SEED_VERSION = 'v2_constructivism_lesson';
 
 async function seed() {
   const client = postgres(process.env.DATABASE_URL!);
@@ -52,21 +32,470 @@ async function seed() {
       return;
     }
 
-    // Run seed data within a transaction
     await db.transaction(async (tx) => {
+      // ─── 1. Users ───────────────────────────────────────────
       const passwordHash = await bcrypt.hash(
         process.env.SEED_ADMIN_PASSWORD || 'changeme',
         10,
       );
 
-      await tx.insert(schema.users).values({
+      const [teacher] = await tx.insert(schema.users).values({
         username: 'admin',
         email: 'admin@example.com',
         passwordHash,
         role: 'TEACHER',
-        displayName: 'Admin User',
+        displayName: 'Dr. Martinez',
+      }).returning();
+
+      const studentHash = await bcrypt.hash('student123', 10);
+      const studentValues = [
+        { username: 'student1', email: 'student1@university.edu', passwordHash: studentHash, role: 'STUDENT', displayName: 'Alice Chen' },
+        { username: 'student2', email: 'student2@university.edu', passwordHash: studentHash, role: 'STUDENT', displayName: 'Bob Smith' },
+        { username: 'student3', email: 'student3@university.edu', passwordHash: studentHash, role: 'STUDENT', displayName: 'Carol Davis' },
+      ];
+      await tx.insert(schema.users).values(studentValues);
+
+      // ─── 2. Quizzes ─────────────────────────────────────────
+
+      // Pre-Test Quiz (ID 1)
+      const [pretest] = await tx.insert(schema.quizzes).values({
+        storageKey: 'quiz:pretest',
+        title: 'Pre-Test: Piaget and Vygotsky Concepts',
+        description: 'Assess your prior knowledge of assimilation, accommodation, and zone of proximal development (ZPD).',
+        quizType: 'multiple_choice',
+      }).returning();
+
+      const pretestQuestions = [
+        {
+          quizId: pretest.id,
+          storageKey: 'quiz:pretest:q1',
+          questionText: 'What is assimilation in Piaget\'s theory?',
+          questionOrder: 0,
+          questionType: 'multiple_choice',
+          explanation: 'Assimilation is the process of incorporating new information into existing schemas without changing them.',
+          answers: [
+            { answerText: 'Modifying existing schemas to fit new information', isCorrect: false, answerOrder: 0 },
+            { answerText: 'Incorporating new information into existing schemas', isCorrect: true, answerOrder: 1 },
+            { answerText: 'The balance between assimilation and accommodation', isCorrect: false, answerOrder: 2 },
+            { answerText: 'A stage of cognitive development', isCorrect: false, answerOrder: 3 },
+          ],
+        },
+        {
+          quizId: pretest.id,
+          storageKey: 'quiz:pretest:q2',
+          questionText: 'The Zone of Proximal Development (ZPD) refers to:',
+          questionOrder: 1,
+          questionType: 'multiple_choice',
+          explanation: 'ZPD is the gap between what a learner can do independently and what they can do with guidance from a More Knowledgeable Other.',
+          answers: [
+            { answerText: 'The difference between a student\'s current grade and the passing grade', isCorrect: false, answerOrder: 0 },
+            { answerText: 'The gap between independent performance and guided performance', isCorrect: true, answerOrder: 1 },
+            { answerText: 'The area of the brain responsible for problem-solving', isCorrect: false, answerOrder: 2 },
+            { answerText: 'A teaching method using zone-based classroom layouts', isCorrect: false, answerOrder: 3 },
+          ],
+        },
+        {
+          quizId: pretest.id,
+          storageKey: 'quiz:pretest:q3',
+          questionText: 'Accommodation occurs when:',
+          questionOrder: 2,
+          questionType: 'multiple_choice',
+          explanation: 'Accommodation happens when existing schemas must be modified or new schemas created to account for new information that doesn\'t fit.',
+          answers: [
+            { answerText: 'New information fits perfectly into existing schemas', isCorrect: false, answerOrder: 0 },
+            { answerText: 'A child reaches a new developmental stage', isCorrect: false, answerOrder: 1 },
+            { answerText: 'Existing schemas are modified to incorporate new experiences', isCorrect: true, answerOrder: 2 },
+            { answerText: 'A teacher provides direct instruction', isCorrect: false, answerOrder: 3 },
+          ],
+        },
+        {
+          quizId: pretest.id,
+          storageKey: 'quiz:pretest:q4',
+          questionText: 'Scaffolding is most closely associated with which theorist?',
+          questionOrder: 3,
+          questionType: 'multiple_choice',
+          explanation: 'While the term was coined by Wood, Bruner, and Ross, scaffolding is most closely associated with Vygotsky\'s concept of the ZPD and the role of the More Knowledgeable Other.',
+          answers: [
+            { answerText: 'Jean Piaget', isCorrect: false, answerOrder: 0 },
+            { answerText: 'Lev Vygotsky', isCorrect: true, answerOrder: 1 },
+            { answerText: 'B.F. Skinner', isCorrect: false, answerOrder: 2 },
+            { answerText: 'John Dewey', isCorrect: false, answerOrder: 3 },
+          ],
+        },
+        {
+          quizId: pretest.id,
+          storageKey: 'quiz:pretest:q5',
+          questionText: 'According to Piaget, cognitive development proceeds through:',
+          questionOrder: 4,
+          questionType: 'multiple_choice',
+          explanation: 'Piaget proposed four invariant, universal stages: sensorimotor, preoperational, concrete operational, and formal operational.',
+          answers: [
+            { answerText: 'Continuous, gradual accumulation of knowledge', isCorrect: false, answerOrder: 0 },
+            { answerText: 'Universal, invariant stages', isCorrect: true, answerOrder: 1 },
+            { answerText: 'Culturally variable sequences', isCorrect: false, answerOrder: 2 },
+            { answerText: 'Socially mediated processes only', isCorrect: false, answerOrder: 3 },
+          ],
+        },
+      ];
+
+      for (const q of pretestQuestions) {
+        const [question] = await tx.insert(schema.questions).values({
+          quizId: q.quizId,
+          storageKey: q.storageKey,
+          questionText: q.questionText,
+          questionOrder: q.questionOrder,
+          questionType: q.questionType,
+          explanation: q.explanation,
+        }).returning();
+
+        await tx.insert(schema.answers).values(
+          q.answers.map((a) => ({ ...a, questionId: question.id }))
+        );
+      }
+
+      // Formative Quiz (ID 2)
+      const [formative] = await tx.insert(schema.quizzes).values({
+        storageKey: 'quiz:formative',
+        title: 'Formative Quiz: Constructivism Terminology',
+        description: 'Quick comprehension check on key constructivism terms.',
+        quizType: 'multiple_choice',
+      }).returning();
+
+      const formativeQuestions = [
+        {
+          quizId: formative.id,
+          storageKey: 'quiz:formative:q1',
+          questionText: 'Equilibration in Piaget\'s theory refers to:',
+          questionOrder: 0,
+          questionType: 'multiple_choice',
+          explanation: 'Equilibration is the self-regulating process that balances assimilation and accommodation to achieve cognitive stability.',
+          answers: [
+            { answerText: 'The final stage of cognitive development', isCorrect: false, answerOrder: 0 },
+            { answerText: 'The balance between assimilation and accommodation', isCorrect: true, answerOrder: 1 },
+            { answerText: 'Social equilibrium in group learning', isCorrect: false, answerOrder: 2 },
+            { answerText: 'Emotional stability in the classroom', isCorrect: false, answerOrder: 3 },
+          ],
+        },
+        {
+          quizId: formative.id,
+          storageKey: 'quiz:formative:q2',
+          questionText: 'A More Knowledgeable Other (MKO) can be:',
+          questionOrder: 1,
+          questionType: 'multiple_choice',
+          explanation: 'An MKO is anyone with a better understanding than the learner — this could be a teacher, peer, or even a computer program.',
+          answers: [
+            { answerText: 'Only a certified teacher', isCorrect: false, answerOrder: 0 },
+            { answerText: 'Only an adult', isCorrect: false, answerOrder: 1 },
+            { answerText: 'Anyone with higher ability in the relevant domain', isCorrect: true, answerOrder: 2 },
+            { answerText: 'Only the student\'s parent', isCorrect: false, answerOrder: 3 },
+          ],
+        },
+        {
+          quizId: formative.id,
+          storageKey: 'quiz:formative:q3',
+          questionText: 'Which statement best distinguishes Piaget from Vygotsky?',
+          questionOrder: 2,
+          questionType: 'multiple_choice',
+          explanation: 'Piaget emphasized individual discovery and universal stages, while Vygotsky emphasized social interaction and cultural tools as drivers of development.',
+          answers: [
+            { answerText: 'Piaget emphasized social interaction; Vygotsky emphasized individual discovery', isCorrect: false, answerOrder: 0 },
+            { answerText: 'Piaget emphasized individual discovery; Vygotsky emphasized social interaction', isCorrect: true, answerOrder: 1 },
+            { answerText: 'Both theorists had identical views on development', isCorrect: false, answerOrder: 2 },
+            { answerText: 'Piaget focused on adults; Vygotsky focused on children', isCorrect: false, answerOrder: 3 },
+          ],
+        },
+        {
+          quizId: formative.id,
+          storageKey: 'quiz:formative:q4',
+          questionText: 'Cognitive dissonance in learning is best described as:',
+          questionOrder: 3,
+          questionType: 'multiple_choice',
+          explanation: 'Cognitive dissonance is the mental discomfort when new information conflicts with existing beliefs, which drives schema reorganization.',
+          answers: [
+            { answerText: 'A behavioral problem in the classroom', isCorrect: false, answerOrder: 0 },
+            { answerText: 'Mental discomfort from conflicting information that drives schema change', isCorrect: true, answerOrder: 1 },
+            { answerText: 'The result of too much homework', isCorrect: false, answerOrder: 2 },
+            { answerText: 'A type of learning disability', isCorrect: false, answerOrder: 3 },
+          ],
+        },
+        {
+          quizId: formative.id,
+          storageKey: 'quiz:formative:q5',
+          questionText: 'Metacognition refers to:',
+          questionOrder: 4,
+          questionType: 'multiple_choice',
+          explanation: 'Metacognition is thinking about one\'s own thinking — awareness and regulation of learning strategies.',
+          answers: [
+            { answerText: 'Learning through observation of others', isCorrect: false, answerOrder: 0 },
+            { answerText: 'Memorization techniques', isCorrect: false, answerOrder: 1 },
+            { answerText: 'Thinking about one\'s own thinking processes', isCorrect: true, answerOrder: 2 },
+            { answerText: 'Collaborative group work', isCorrect: false, answerOrder: 3 },
+          ],
+        },
+        {
+          quizId: formative.id,
+          storageKey: 'quiz:formative:q6',
+          questionText: 'According to Vygotsky, language in cognitive development:',
+          questionOrder: 5,
+          questionType: 'multiple_choice',
+          explanation: 'Vygotsky saw language as the primary driver of thought, with inner speech developing from social dialogue.',
+          answers: [
+            { answerText: 'Is merely a byproduct of cognitive development', isCorrect: false, answerOrder: 0 },
+            { answerText: 'Is the primary driver of thought', isCorrect: true, answerOrder: 1 },
+            { answerText: 'Has no significant role', isCorrect: false, answerOrder: 2 },
+            { answerText: 'Only matters in formal education', isCorrect: false, answerOrder: 3 },
+          ],
+        },
+        {
+          quizId: formative.id,
+          storageKey: 'quiz:formative:q7',
+          questionText: 'Which activity best represents a constructivist approach to teaching fractions?',
+          questionOrder: 6,
+          questionType: 'multiple_choice',
+          explanation: 'Constructivism emphasizes hands-on manipulation and connecting new concepts to prior knowledge through active experience.',
+          answers: [
+            { answerText: 'Lecturing the formula for adding fractions', isCorrect: false, answerOrder: 0 },
+            { answerText: 'Having students manipulate fraction tiles to discover equivalence', isCorrect: true, answerOrder: 1 },
+            { answerText: 'Assigning 50 practice problems from the textbook', isCorrect: false, answerOrder: 2 },
+            { answerText: 'Showing a video about fractions with no discussion', isCorrect: false, answerOrder: 3 },
+          ],
+        },
+        {
+          quizId: formative.id,
+          storageKey: 'quiz:formative:q8',
+          questionText: 'Scaffolding should be:',
+          questionOrder: 7,
+          questionType: 'multiple_choice',
+          explanation: 'Scaffolding is temporary support that should be gradually faded as the learner becomes more capable.',
+          answers: [
+            { answerText: 'Permanent and consistent throughout learning', isCorrect: false, answerOrder: 0 },
+            { answerText: 'Gradually removed as the learner gains competence', isCorrect: true, answerOrder: 1 },
+            { answerText: 'Only provided at the beginning of a lesson', isCorrect: false, answerOrder: 2 },
+            { answerText: 'The same for every student', isCorrect: false, answerOrder: 3 },
+          ],
+        },
+        {
+          quizId: formative.id,
+          storageKey: 'quiz:formative:q9',
+          questionText: 'In a jigsaw activity, students first:',
+          questionOrder: 8,
+          questionType: 'multiple_choice',
+          explanation: 'In jigsaw, students first become experts on a subtopic in their home group, then teach peers in new mixed-expert groups.',
+          answers: [
+            { answerText: 'Work independently on the entire topic', isCorrect: false, answerOrder: 0 },
+            { answerText: 'Become experts on one subtopic in a group', isCorrect: true, answerOrder: 1 },
+            { answerText: 'Take a quiz on all the material', isCorrect: false, answerOrder: 2 },
+            { answerText: 'Listen to a lecture from the teacher', isCorrect: false, answerOrder: 3 },
+          ],
+        },
+        {
+          quizId: formative.id,
+          storageKey: 'quiz:formative:q10',
+          questionText: 'A key implication of constructivism for teaching is:',
+          questionOrder: 9,
+          questionType: 'multiple_choice',
+          explanation: 'Constructivism implies that learners actively construct knowledge, so teachers should build on prior knowledge and create opportunities for active engagement.',
+          answers: [
+            { answerText: 'Students should passively receive information', isCorrect: false, answerOrder: 0 },
+            { answerText: 'Teachers should build on students\' prior knowledge', isCorrect: true, answerOrder: 1 },
+            { answerText: 'All students learn the same way', isCorrect: false, answerOrder: 2 },
+            { answerText: 'Direct instruction is always best', isCorrect: false, answerOrder: 3 },
+          ],
+        },
+      ];
+
+      for (const q of formativeQuestions) {
+        const [question] = await tx.insert(schema.questions).values({
+          quizId: q.quizId,
+          storageKey: q.storageKey,
+          questionText: q.questionText,
+          questionOrder: q.questionOrder,
+          questionType: q.questionType,
+          explanation: q.explanation,
+        }).returning();
+
+        await tx.insert(schema.answers).values(
+          q.answers.map((a) => ({ ...a, questionId: question.id }))
+        );
+      }
+
+      // Post-Test Quiz (ID 3)
+      const [posttest] = await tx.insert(schema.quizzes).values({
+        storageKey: 'quiz:posttest',
+        title: 'Post-Test: Theory Comparison & Application',
+        description: 'Demonstrate your understanding by comparing theories and applying constructivist principles.',
+        quizType: 'short_answer',
+      }).returning();
+
+      const posttestQuestions = [
+        {
+          quizId: posttest.id,
+          storageKey: 'quiz:posttest:q1',
+          questionText: 'Compare Piaget\'s cognitive constructivism with Vygotsky\'s social constructivism. How does each explain the process of learning?',
+          questionOrder: 0,
+          questionType: 'short_answer',
+          explanation: 'Piaget emphasizes individual schema construction through assimilation and accommodation driven by equilibration. Vygotsky emphasizes that learning is socially mediated through the ZPD, scaffolding, and cultural tools. Piaget sees development driving learning; Vygotsky sees learning driving development.',
+        },
+        {
+          quizId: posttest.id,
+          storageKey: 'quiz:posttest:q2',
+          questionText: 'Design a brief lesson plan (3-5 steps) for teaching a concept of your choice using constructivist principles. Identify which principles you applied and why.',
+          questionOrder: 1,
+          questionType: 'short_answer',
+          explanation: 'A strong answer would: activate prior knowledge, create cognitive dissonance or engage the ZPD, provide scaffolding, enable peer collaboration, and include reflection. It should reference specific principles from both Piaget and Vygotsky.',
+        },
+      ];
+
+      for (const q of posttestQuestions) {
+        await tx.insert(schema.questions).values({
+          quizId: q.quizId,
+          storageKey: q.storageKey,
+          questionText: q.questionText,
+          questionOrder: q.questionOrder,
+          questionType: q.questionType,
+          explanation: q.explanation,
+        }).returning();
+        // Short answer questions have no predefined answers
+      }
+
+      // ─── 3. Slides ──────────────────────────────────────────
+      const slideData = [
+        {
+          storageKey: 'slide:1',
+          slideOrder: 0,
+          title: 'Cognitive & Social Constructivism',
+          content: 'Introduction to Educational Psychology\nFirst-Year Undergraduate Session\n3-Hour Interactive Lesson',
+          slideType: 'title',
+          backgroundColor: null,
+        },
+        {
+          storageKey: 'slide:2',
+          title: 'Learning Outcomes',
+          content: 'By the end of this session, you will be able to:\n- Analyze core principles of cognitive and social constructivism\n- Distinguish Piagetian schema theory from Vygotskian sociocultural theory\n- Apply constructivist principles to design a lesson plan',
+          slideType: 'content',
+          slideOrder: 1,
+          backgroundColor: null,
+        },
+        {
+          storageKey: 'slide:3',
+          title: 'Pre-Class Recap',
+          content: 'Reading: Slavin (2023), pp. 88–112\n- Constructivist Frameworks\nVideo: Constructivism Explained (12 min)\nPre-Test: Key concepts check\n- Assimilation, Accommodation, ZPD',
+          slideType: 'content',
+          slideOrder: 2,
+          backgroundColor: null,
+        },
+        {
+          storageKey: 'slide:4',
+          title: 'Think-Pair-Share',
+          content: 'Is learning passive absorption of information?\nWhy or why not?\n\nDiscuss with your neighbor for 2 minutes',
+          slideType: 'activity',
+          slideOrder: 3,
+          backgroundColor: null,
+        },
+        {
+          storageKey: 'slide:5',
+          title: 'Piaget vs. Vygotsky',
+          content: 'Piaget (Cognitive Constructivism)\n- Schema adaptation: assimilation & accommodation\n- Equilibration drives development\n- Universal invariant stages\n- Language as byproduct of thought\n\nVygotsky (Social Constructivism)\n- Social interaction & cultural tools\n- ZPD and scaffolding\n- No fixed stages; culturally variable\n- Language as driver of thought',
+          slideType: 'content',
+          slideOrder: 4,
+          backgroundColor: null,
+        },
+        {
+          storageKey: 'slide:6',
+          title: 'Case Analysis Activity',
+          content: 'Scenario: A student is struggling with algebra\n\nTask: Design a 5-step constructivist intervention\n- Apply Piagetian principles (disequilibrium, schema building)\n- Apply Vygotskian principles (ZPD, scaffolding, MKO)\n- Use the Constructivism Strategy Matrix\n\nSubmit your group response via Padlet',
+          slideType: 'activity',
+          slideOrder: 5,
+          backgroundColor: null,
+        },
+        {
+          storageKey: 'slide:7',
+          title: 'Jigsaw Activity',
+          content: 'Expert Groups → Teaching Groups\n\nSubtopics:\n- Metacognition & self-regulation\n- Peer scaffolding & collaboration\n- Inquiry-based learning\n- Reflection & inner speech\n\nTeach your peers using the prompt:\n"How does your assigned theory address motivation in learning?"',
+          slideType: 'activity',
+          slideOrder: 6,
+          backgroundColor: null,
+        },
+        {
+          storageKey: 'slide:8',
+          title: 'Key Terminology Review',
+          content: 'Assimilation — fitting new info into existing schemas\nAccommodation — modifying schemas for new info\nZPD — gap between independent & guided performance\nScaffolding — temporary support within ZPD\nEquilibration — balancing assimilation & accommodation\nMetacognition — thinking about thinking\nMKO — More Knowledgeable Other',
+          slideType: 'content',
+          slideOrder: 7,
+          backgroundColor: null,
+        },
+        {
+          storageKey: 'slide:9',
+          title: 'Assessment Overview',
+          content: 'Formative Assessment\n- Mentimeter word cloud\n- Padlet group submissions\n- Poll Everywhere quiz\n\nSummative Assessment (Due Next Week)\n- Reflective Essay (500 words)\n- "Apply constructivist principles to redesign a K-12 lesson"\n- Rubric: Theory integration (30%), Scaffolding creativity (30%), Real-world clarity (40%)',
+          slideType: 'assessment',
+          slideOrder: 8,
+          backgroundColor: null,
+        },
+        {
+          storageKey: 'slide:10',
+          title: 'Reflection & Next Steps',
+          content: 'Exit Ticket:\n- What surprised you tonight?\n- How might you teach differently?\n\nNext Session:\nBehaviorist vs. Constructivist Learning\n\nThank you for your engagement!',
+          slideType: 'title',
+          slideOrder: 9,
+          backgroundColor: null,
+        },
+      ];
+
+      await tx.insert(schema.slides).values(slideData);
+
+      // ─── 4. Discussions ─────────────────────────────────────
+      const [mainDiscussion] = await tx.insert(schema.discussions).values({
+        storageKey: 'discussion:constructivism-application',
+        title: 'Applying Constructivism: Share Your Ideas',
+        description: 'How would you apply constructivist principles in your own teaching? Share your 5-step intervention from the case analysis activity, or discuss how constructivism changes your view of learning.',
+        createdBy: teacher.id,
+        isPinned: true,
+      }).returning();
+
+      // Add a starter post from the teacher
+      await tx.insert(schema.discussionPosts).values({
+        discussionId: mainDiscussion.id,
+        authorId: teacher.id,
+        content: 'Welcome to the discussion! Think about a time when you struggled to learn something new. How might a constructivist teacher have helped you? Share your thoughts on how Piaget\'s or Vygotsky\'s ideas could improve classroom learning.',
+        parentPostId: null,
       });
 
+      // ─── 5. Concept Checks ──────────────────────────────────
+      const conceptCheckData = [
+        {
+          storageKey: 'concept:preclass',
+          title: 'Pre-Class Readiness',
+          prompt: 'Do you feel prepared for today\'s lesson on constructivism?',
+          checkType: 'thumbs',
+          sectionKey: 'preclass',
+        },
+        {
+          storageKey: 'concept:introduction',
+          title: 'Hook Comprehension',
+          prompt: 'Can learning be considered a passive process?',
+          checkType: 'thumbs',
+          sectionKey: 'introduction',
+        },
+        {
+          storageKey: 'concept:lecture',
+          title: 'Theory Comparison Check',
+          prompt: 'How well do you understand the difference between Piaget\'s and Vygotsky\'s theories? (1 = Not at all, 5 = Very well)',
+          checkType: 'scale',
+          sectionKey: 'lecture',
+        },
+        {
+          storageKey: 'concept:jigsaw',
+          title: 'Jigsaw Participation',
+          prompt: 'Did the peer teaching activity help you understand your subtopic better?',
+          checkType: 'thumbs',
+          sectionKey: 'jigsaw',
+        },
+      ];
+
+      await tx.insert(schema.conceptChecks).values(conceptCheckData);
+
+      // ─── 6. Seed Log ────────────────────────────────────────
       await tx.insert(schema.seedLog).values({
         seedVersion: SEED_VERSION,
       });
