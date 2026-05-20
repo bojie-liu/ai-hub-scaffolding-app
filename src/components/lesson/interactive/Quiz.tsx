@@ -65,7 +65,7 @@ export default function Quiz({ quizId, title, questions, userId }: QuizProps) {
     <Card className="overflow-hidden">
       <div className="bg-blue-600 px-6 py-4">
         <CardTitle className="text-white text-lg">{title}</CardTitle>
-        <p className="text-blue-100 text-sm mt-0.5">{questions.length} questions</p>
+        <p className="text-blue-100 text-sm mt-0.5">{questions.length} 題</p>
       </div>
       <CardContent className="p-6 space-y-6">
         {questions.map((q, qi) => {
@@ -81,13 +81,13 @@ export default function Quiz({ quizId, title, questions, userId }: QuizProps) {
                 <span className="text-blue-600 font-bold mr-2">{qi + 1}.</span>
                 {q.questionText}
                 <Badge variant="outline" className="ml-2 text-xs">
-                  {q.questionType === 'true_false' ? 'True/False' : q.questionType === 'short_answer' ? 'Short Answer' : 'Multiple Choice'}
+                  {q.questionType === 'true_false' ? '是非題' : q.questionType === 'short_answer' ? '簡答題' : '選擇題'}
                 </Badge>
               </p>
 
               {q.questionType === 'short_answer' ? (
                 <Textarea
-                  placeholder="Type your answer..."
+                  placeholder="請輸入您的答案..."
                   value={typeof selected === 'string' ? selected : ''}
                   onChange={(e) => handleTextChange(q.id, e.target.value)}
                   disabled={submitted}
@@ -128,17 +128,17 @@ export default function Quiz({ quizId, title, questions, userId }: QuizProps) {
         <div className="flex items-center gap-4">
           {!submitted ? (
             <Button onClick={handleSubmit} disabled={loading || answers.size < questions.filter(q => q.questionType !== 'short_answer').length}>
-              {loading ? 'Submitting...' : 'Submit Answers'}
+              {loading ? '提交中...' : '提交答案'}
             </Button>
           ) : (
             <>
               <div className="flex-1 bg-slate-50 rounded-xl px-4 py-2.5 text-sm font-medium text-slate-700">
-                Score:{' '}
+                得分：{' '}
                 <span className={score === questions.length ? 'text-emerald-600' : score >= questions.length / 2 ? 'text-blue-600' : 'text-red-500'}>
                   {score}/{questions.length}
                 </span>
               </div>
-              <Button variant="outline" onClick={handleReset}>Try Again</Button>
+              <Button variant="outline" onClick={handleReset}>重新作答</Button>
             </>
           )}
         </div>

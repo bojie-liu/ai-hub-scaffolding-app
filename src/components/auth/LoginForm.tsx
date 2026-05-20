@@ -3,21 +3,23 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useUser } from '@/contexts/UserContext';
-import { loginUser } from '@/lib/actions/auth';
+import { loginUser, registerUser } from '@/lib/actions/auth';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 export function LoginForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const { setUser, loginAsGuest } = useUser();
   const router = useRouter();
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleLogin(e: React.FormEvent) {
     e.preventDefault();
     setError('');
     setLoading(true);
@@ -32,10 +34,30 @@ export function LoginForm() {
           router.push('/lesson');
         }
       } else {
-        setError(result.error || 'Login failed');
+        setError(result.error || '登入失敗');
       }
     } catch {
-      setError('An unexpected error occurred');
+      setError('發生未預期的錯誤');
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function handleRegister(e: React.FormEvent) {
+    e.preventDefault();
+    setError('');
+    setLoading(true);
+
+    try {
+      const result = await registerUser(username, email, password);
+      if (result.success && result.user) {
+        setUser(result.user);
+        router.push('/lesson');
+      } else {
+        setError(result.error || '註冊失敗');
+      }
+    } catch {
+      setError('發生未預期的錯誤');
     } finally {
       setLoading(false);
     }
@@ -45,63 +67,120 @@ export function LoginForm() {
     <div className="flex items-center justify-center min-h-screen p-4 bg-gradient-to-br from-blue-50 to-indigo-100">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
-          <div className="mx-auto w-12 h-12 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold text-lg mb-2">AI</div>
-          <CardTitle className="text-2xl">AI in Software Engineering</CardTitle>
-          <CardDescription>Sign in to access the lesson plan</CardDescription>
+          <div className="mx-auto w-12 h-12 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold text-lg mb-2">知</div>
+          <CardTitle className="text-2xl">學校知識管理課程</CardTitle>
+          <CardDescription>登入以存取課程內容</CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="username">Username</Label>
-              <Input
-                id="username"
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                placeholder="Enter your username"
-                required
-                disabled={loading}
-              />
+          <Tabs defaultValue="login" className="w-full">
+            <TabsList className="grid w-full grid-cols-2">
+              <TabsTrigger value="login">登入</TabsTrigger>
+              <TabsTrigger value="register">註冊</TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="login">
+              <form onSubmit={handleLogin} className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="login-username">使用者名稱</Label>
+                  <Input
+                    id="login-username"
+                    type="text"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    placeholder="請輸入使用者名稱"
+                    required
+                    disabled={loading}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="login-password">密碼</Label>
+                  <Input
+                    id="login-password"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="請輸入密碼"
+                    required
+                    disabled={loading}
+                  />
+                </div>
+                {error && (
+                  <p className="text-sm text-red-600 bg-red-50 p-2 rounded">{error}</p>
+                )}
+                <Button type="submit" className="w-full" disabled={loading}>
+                  {loading ? '登入中...' : '登入'}
+                </Button>
+              </form>
+            </TabsContent>
+
+            <TabsContent value="register">
+              <form onSubmit={handleRegister} className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="reg-username">使用者名稱</Label>
+                  <Input
+                    id="reg-username"
+                    type="text"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    placeholder="請輸入使用者名稱"
+                    required
+                    disabled={loading}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="reg-email">電子郵件</Label>
+                  <Input
+                    id="reg-email"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="請輸入電子郵件"
+                    required
+                    disabled={loading}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="reg-password">密碼</Label>
+                  <Input
+                    id="reg-password"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="請輸入密碼"
+                    required
+                    disabled={loading}
+                  />
+                </div>
+                {error && (
+                  <p className="text-sm text-red-600 bg-red-50 p-2 rounded">{error}</p>
+                )}
+                <Button type="submit" className="w-full" disabled={loading}>
+                  {loading ? '註冊中...' : '註冊'}
+                </Button>
+              </form>
+            </TabsContent>
+          </Tabs>
+
+          <div className="relative mt-4">
+            <div className="absolute inset-0 flex items-center">
+              <span className="w-full border-t" />
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
-              <Input
-                id="password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter your password"
-                required
-                disabled={loading}
-              />
+            <div className="relative flex justify-center text-xs uppercase">
+              <span className="bg-card px-2 text-muted-foreground">或</span>
             </div>
-            {error && (
-              <p className="text-sm text-red-600 bg-red-50 p-2 rounded">{error}</p>
-            )}
-            <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? 'Signing in...' : 'Sign In'}
-            </Button>
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <span className="w-full border-t" />
-              </div>
-              <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-card px-2 text-muted-foreground">or</span>
-              </div>
-            </div>
-            <Button
-              type="button"
-              variant="outline"
-              className="w-full"
-              disabled={loading}
-              onClick={() => {
-                loginAsGuest();
-                router.push('/lesson');
-              }}
-            >
-              Continue as Guest
-            </Button>
-          </form>
+          </div>
+          <Button
+            type="button"
+            variant="outline"
+            className="w-full mt-4"
+            disabled={loading}
+            onClick={() => {
+              loginAsGuest();
+              router.push('/lesson');
+            }}
+          >
+            以訪客身份繼續
+          </Button>
         </CardContent>
       </Card>
     </div>

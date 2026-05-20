@@ -85,7 +85,7 @@ export default function Slides({ slides }: SlidesProps) {
   if (slides.length === 0) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <p className="text-lg text-muted-foreground">No slides available.</p>
+        <p className="text-lg text-muted-foreground">尚無投影片</p>
       </div>
     );
   }

@@ -13,12 +13,12 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { LayoutDashboard, LogOut, BookOpen, User, FileText } from 'lucide-react';
+import { LayoutDashboard, LogOut, BookOpen, User, FileText, Presentation } from 'lucide-react';
 
 const navLinks = [
-  { href: '/lesson', label: 'Lesson Plan', icon: FileText },
-  { href: '/slides', label: 'Slides', icon: BookOpen, hideForGuest: true },
-  { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard, requiredRole: 'TEACHER' },
+  { href: '/lesson', label: '課程內容', icon: FileText },
+  { href: '/slides', label: '投影片', icon: Presentation, hideForGuest: true },
+  { href: '/dashboard', label: '教學儀表板', icon: LayoutDashboard, requiredRole: 'TEACHER' },
 ];
 
 export default function Navbar() {
@@ -42,8 +42,8 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-16">
         <div className="flex items-center gap-6">
           <Link href="/lesson" className="flex items-center gap-2 shrink-0">
-            <span className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold text-sm">AI</span>
-            <span className="font-semibold text-slate-800 text-sm hidden sm:block">AI in Software Engineering</span>
+            <span className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold text-sm">知</span>
+            <span className="font-semibold text-slate-800 text-sm hidden sm:block">學校知識管理課程</span>
           </Link>
           <div className="hidden sm:flex items-center gap-1">
             {visibleLinks.map((link) => {
@@ -91,10 +91,10 @@ export default function Navbar() {
                 </Avatar>
                 <span className="hidden sm:inline text-sm">{user.username}</span>
                 {isGuest ? (
-                  <Badge variant="outline" className="text-xs px-1.5 py-0">Guest</Badge>
+                  <Badge variant="outline" className="text-xs px-1.5 py-0">訪客</Badge>
                 ) : (
                   <Badge variant={user.role === 'TEACHER' ? 'default' : 'secondary'} className="text-xs px-1.5 py-0">
-                    {user.role}
+                    {user.role === 'TEACHER' ? '教師' : '學生'}
                   </Badge>
                 )}
               </DropdownMenuTrigger>
@@ -103,24 +103,24 @@ export default function Navbar() {
                   <>
                     <DropdownMenuItem onClick={() => router.push('/login')}>
                       <User className="h-4 w-4 mr-2" />
-                      Sign In
+                      登入帳號
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem onClick={handleLogout}>
                       <LogOut className="h-4 w-4 mr-2" />
-                      Exit Guest Mode
+                      退出訪客模式
                     </DropdownMenuItem>
                   </>
                 ) : (
                   <>
                     <DropdownMenuItem disabled>
                       <User className="h-4 w-4 mr-2" />
-                      {user.username} ({user.role})
+                      {user.username}（{user.role === 'TEACHER' ? '教師' : '學生'}）
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem onClick={handleLogout}>
                       <LogOut className="h-4 w-4 mr-2" />
-                      Logout
+                      登出
                     </DropdownMenuItem>
                   </>
                 )}
@@ -128,7 +128,7 @@ export default function Navbar() {
             </DropdownMenu>
           ) : (
             <Link href="/login">
-              <Button size="sm">Sign In</Button>
+              <Button size="sm">登入</Button>
             </Link>
           )}
         </div>

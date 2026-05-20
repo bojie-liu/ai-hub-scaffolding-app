@@ -66,7 +66,7 @@ function PostItem({ post, userId, discussionId, depth = 0 }: { post: DiscussionP
           </div>
           <p className="text-sm text-slate-700 whitespace-pre-wrap">{post.content}</p>
           <Button variant="ghost" size="sm" className="mt-1 text-xs text-slate-500" onClick={() => setShowReply(!showReply)}>
-            Reply
+            回覆
           </Button>
         </div>
       </div>
@@ -76,12 +76,12 @@ function PostItem({ post, userId, discussionId, depth = 0 }: { post: DiscussionP
           <Textarea
             value={replyText}
             onChange={(e) => setReplyText(e.target.value)}
-            placeholder="Write a reply..."
+            placeholder="撰寫回覆..."
             className="text-sm"
             rows={2}
           />
           <Button size="sm" onClick={handleReply} disabled={submitting || !replyText.trim()}>
-            {submitting ? '...' : 'Post'}
+            {submitting ? '...' : '發佈'}
           </Button>
         </div>
       )}
@@ -143,18 +143,18 @@ export default function Discussion({ discussionId, title, description, posts: ra
           <Textarea
             value={newPost}
             onChange={(e) => setNewPost(e.target.value)}
-            placeholder="Share your thoughts..."
+            placeholder="分享您的想法..."
             rows={3}
           />
           <Button onClick={handleNewPost} disabled={submitting || !newPost.trim()} size="sm">
-            {submitting ? 'Posting...' : 'Post'}
+            {submitting ? '發佈中...' : '發佈'}
           </Button>
         </CardContent>
       </Card>
 
       <div className="space-y-1">
         {posts.length === 0 && (
-          <p className="text-sm text-muted-foreground py-4 text-center">No posts yet. Start the discussion!</p>
+          <p className="text-sm text-muted-foreground py-4 text-center">尚無留言，開始討論吧！</p>
         )}
         {posts.map((post) => (
           <PostItem key={post.id} post={post} userId={userId} discussionId={discussionId} />

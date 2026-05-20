@@ -21,8 +21,6 @@ import { getAllStudentProgress } from '@/lib/actions/progress';
 import { getAllQuizzes, getQuizResults } from '@/lib/actions/quiz';
 import { getConceptCheckResults } from '@/lib/actions/concept-check';
 
-// --- Type definitions ---
-
 interface StudentInfo {
   id: number;
   username: string;
@@ -80,14 +78,16 @@ interface ConceptCheckResult {
 }
 
 const SECTION_LABELS: Record<string, string> = {
-  ilos: 'Learning Outcomes',
-  preclass: 'Pre-Class',
-  introduction: 'Introduction',
-  development: 'Activities',
-  synthesis: 'Synthesis',
-  assessment: 'Assessment',
-  alignment: 'Alignment',
-  resources: 'Resources',
+  objectives: '學習目標',
+  preclass: '課前預備',
+  introduction: '引言',
+  development: '發展活動',
+  summary: '總結與延伸',
+  assessment: '評估方式',
+  alignment: '建構一致矩陣',
+  resources: '教學資源需求',
+  differentiation: '差異化設計',
+  reflection: '教學反思機制',
 };
 
 export default function TeacherDashboard() {
@@ -104,14 +104,12 @@ export default function TeacherDashboard() {
     setError(null);
 
     try {
-      // Fetch student progress
       const progressResult = await getAllStudentProgress();
       if (!progressResult.success || !progressResult.data) {
-        throw new Error(progressResult.error ?? 'Failed to load student progress');
+        throw new Error(progressResult.error ?? '無法載入學生進度');
       }
       setStudents(progressResult.data);
 
-      // Fetch quizzes and their results
       const quizzesResult = await getAllQuizzes();
       if (quizzesResult.success && quizzesResult.data) {
         const quizResultsPromises = quizzesResult.data.map(async (quiz) => {
@@ -127,13 +125,12 @@ export default function TeacherDashboard() {
         setQuizResults(allQuizResults);
       }
 
-      // Fetch concept check results
       const conceptResult = await getConceptCheckResults();
       if (conceptResult.success && conceptResult.data) {
         setConceptResults(conceptResult.data);
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to load dashboard data');
+      setError(err instanceof Error ? err.message : '無法載入儀表板資料');
     } finally {
       setLoading(false);
     }
@@ -142,8 +139,6 @@ export default function TeacherDashboard() {
   useEffect(() => {
     fetchData();
   }, [fetchData]);
-
-  // --- Computed summary stats ---
 
   const totalStudents = students.length;
 
@@ -165,14 +160,9 @@ export default function TeacherDashboard() {
     0
   );
 
-  const activeDiscussions = 0; // Could be fetched separately if needed
-
-  // --- Loading skeleton ---
-
   if (loading) {
     return (
       <div className="space-y-6">
-        {/* Summary cards skeleton */}
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {[1, 2, 3, 4].map((i) => (
             <Card key={i}>
@@ -189,7 +179,6 @@ export default function TeacherDashboard() {
           ))}
         </div>
 
-        {/* Content skeleton */}
         <Card>
           <CardHeader>
             <Skeleton className="h-6 w-40" />
@@ -208,13 +197,11 @@ export default function TeacherDashboard() {
     );
   }
 
-  // --- Error state ---
-
   if (error) {
     return (
       <Card className="max-w-md mx-auto mt-8">
         <CardHeader>
-          <CardTitle className="text-red-600">Error Loading Dashboard</CardTitle>
+          <CardTitle className="text-red-600">載入儀表板時發生錯誤</CardTitle>
         </CardHeader>
         <CardContent>
           <p className="text-muted-foreground">{error}</p>
@@ -222,8 +209,6 @@ export default function TeacherDashboard() {
       </Card>
     );
   }
-
-  // --- Render helpers ---
 
   const renderProgressTable = () => {
     const sectionKeys = Object.keys(SECTION_LABELS);
@@ -233,7 +218,7 @@ export default function TeacherDashboard() {
         <div className="text-center py-8">
           <Users className="mx-auto h-8 w-8 text-muted-foreground mb-2" />
           <p className="text-sm text-muted-foreground">
-            No students found.
+            尚未有任何學生
           </p>
         </div>
       );
@@ -245,7 +230,7 @@ export default function TeacherDashboard() {
           <thead>
             <tr className="border-b">
               <th className="text-left py-3 px-2 font-medium text-muted-foreground">
-                Student
+                學生
               </th>
               {sectionKeys.map((key) => (
                 <th
@@ -256,7 +241,7 @@ export default function TeacherDashboard() {
                 </th>
               ))}
               <th className="text-center py-3 px-2 font-medium text-muted-foreground">
-                Overall
+                整體
               </th>
             </tr>
           </thead>
@@ -324,7 +309,7 @@ export default function TeacherDashboard() {
         <div className="text-center py-8">
           <BookOpen className="mx-auto h-8 w-8 text-muted-foreground mb-2" />
           <p className="text-sm text-muted-foreground">
-            No quiz results available.
+            尚無測驗結果
           </p>
         </div>
       );
@@ -352,7 +337,7 @@ export default function TeacherDashboard() {
                   <CardTitle className="text-base">{quizTitle}</CardTitle>
                   <div className="flex items-center gap-2">
                     <Badge variant="outline">
-                      {results.length} {results.length === 1 ? 'attempt' : 'attempts'}
+                      {results.length} 次作答
                     </Badge>
                     {results.length > 0 && (
                       <Badge
@@ -364,7 +349,7 @@ export default function TeacherDashboard() {
                               : 'destructive'
                         }
                       >
-                        Avg: {avgScore}%
+                        平均：{avgScore}%
                       </Badge>
                     )}
                   </div>
@@ -373,7 +358,7 @@ export default function TeacherDashboard() {
               <CardContent>
                 {results.length === 0 ? (
                   <p className="text-sm text-muted-foreground text-center py-4">
-                    No attempts yet.
+                    尚無作答紀錄
                   </p>
                 ) : (
                   <div className="overflow-x-auto">
@@ -381,21 +366,21 @@ export default function TeacherDashboard() {
                       <thead>
                         <tr className="border-b">
                           <th className="text-left py-2 px-2 font-medium text-muted-foreground">
-                            Student
+                            學生
                           </th>
                           <th className="text-center py-2 px-2 font-medium text-muted-foreground">
-                            Score
+                            得分
                           </th>
                           <th className="text-center py-2 px-2 font-medium text-muted-foreground">
-                            Percentage
+                            百分比
                           </th>
                           <th className="text-right py-2 px-2 font-medium text-muted-foreground">
-                            Completed
+                            完成時間
                           </th>
                         </tr>
                       </thead>
                       <tbody>
-                        {results.map(({ attempt, user }, idx) => {
+                        {results.map(({ attempt, user }) => {
                           const pct = Math.round(
                             (attempt.score / attempt.totalQuestions) * 100
                           );
@@ -414,7 +399,7 @@ export default function TeacherDashboard() {
                                     </AvatarFallback>
                                   </Avatar>
                                   <span className="truncate max-w-[120px]">
-                                    {user?.displayName ?? user?.username ?? `User ${attempt.userId}`}
+                                    {user?.displayName ?? user?.username ?? `使用者 ${attempt.userId}`}
                                   </span>
                                 </div>
                               </td>
@@ -436,8 +421,8 @@ export default function TeacherDashboard() {
                               </td>
                               <td className="text-right py-2 px-2 text-muted-foreground text-xs">
                                 {attempt.completedAt
-                                  ? new Date(attempt.completedAt).toLocaleDateString()
-                                  : 'N/A'}
+                                  ? new Date(attempt.completedAt).toLocaleDateString('zh-TW')
+                                  : '—'}
                               </td>
                             </tr>
                           );
@@ -460,7 +445,7 @@ export default function TeacherDashboard() {
         <div className="text-center py-8">
           <BarChart3 className="mx-auto h-8 w-8 text-muted-foreground mb-2" />
           <p className="text-sm text-muted-foreground">
-            No concept check results available.
+            尚無概念檢查結果
           </p>
         </div>
       );
@@ -482,14 +467,14 @@ export default function TeacherDashboard() {
                     </p>
                   </div>
                   <Badge variant="outline">
-                    {totalResponses} {totalResponses === 1 ? 'response' : 'responses'}
+                    {totalResponses} 則回應
                   </Badge>
                 </div>
               </CardHeader>
               <CardContent>
                 {totalResponses === 0 ? (
                   <p className="text-sm text-muted-foreground text-center py-2">
-                    No responses yet.
+                    尚無回應
                   </p>
                 ) : (
                   <div className="space-y-2">
@@ -498,7 +483,6 @@ export default function TeacherDashboard() {
                       .map(([value, count]) => {
                         const pct = Math.round((count / totalResponses) * 100);
 
-                        // Map common response values to icons
                         const getResponseIcon = (val: string) => {
                           const lower = val.toLowerCase();
                           if (lower === 'thumbs_up' || lower === 'up' || lower === 'yes')
@@ -540,11 +524,8 @@ export default function TeacherDashboard() {
     );
   };
 
-  // --- Main render ---
-
   return (
     <div className="space-y-6">
-      {/* Summary Cards */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <Card>
           <CardContent className="pt-6">
@@ -553,7 +534,7 @@ export default function TeacherDashboard() {
                 <Users className="h-5 w-5 text-primary" />
               </div>
               <div>
-                <p className="text-sm text-muted-foreground">Total Students</p>
+                <p className="text-sm text-muted-foreground">學生總數</p>
                 <p className="text-2xl font-bold">{totalStudents}</p>
               </div>
             </div>
@@ -567,7 +548,7 @@ export default function TeacherDashboard() {
                 <CheckCircle className="h-5 w-5 text-emerald-600" />
               </div>
               <div>
-                <p className="text-sm text-muted-foreground">Avg Completion</p>
+                <p className="text-sm text-muted-foreground">平均完成度</p>
                 <p className="text-2xl font-bold">{avgCompletion}%</p>
               </div>
             </div>
@@ -581,7 +562,7 @@ export default function TeacherDashboard() {
                 <BookOpen className="h-5 w-5 text-blue-600" />
               </div>
               <div>
-                <p className="text-sm text-muted-foreground">Quiz Attempts</p>
+                <p className="text-sm text-muted-foreground">測驗作答次數</p>
                 <p className="text-2xl font-bold">{totalQuizAttempts}</p>
               </div>
             </div>
@@ -595,7 +576,7 @@ export default function TeacherDashboard() {
                 <BarChart3 className="h-5 w-5 text-violet-600" />
               </div>
               <div>
-                <p className="text-sm text-muted-foreground">Concept Checks</p>
+                <p className="text-sm text-muted-foreground">概念檢查</p>
                 <p className="text-2xl font-bold">{conceptResults.length}</p>
               </div>
             </div>
@@ -605,30 +586,29 @@ export default function TeacherDashboard() {
 
       <Separator />
 
-      {/* Tabbed Content */}
       <Tabs defaultValue="progress" className="w-full">
         <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger value="progress" className="gap-1.5">
             <Users className="h-4 w-4" />
-            <span className="hidden sm:inline">Student Progress</span>
-            <span className="sm:hidden">Progress</span>
+            <span className="hidden sm:inline">學生進度</span>
+            <span className="sm:hidden">進度</span>
           </TabsTrigger>
           <TabsTrigger value="quizzes" className="gap-1.5">
             <BookOpen className="h-4 w-4" />
-            <span className="hidden sm:inline">Quiz Results</span>
-            <span className="sm:hidden">Quizzes</span>
+            <span className="hidden sm:inline">測驗結果</span>
+            <span className="sm:hidden">測驗</span>
           </TabsTrigger>
           <TabsTrigger value="concepts" className="gap-1.5">
             <BarChart3 className="h-4 w-4" />
-            <span className="hidden sm:inline">Concept Checks</span>
-            <span className="sm:hidden">Concepts</span>
+            <span className="hidden sm:inline">概念檢查</span>
+            <span className="sm:hidden">概念</span>
           </TabsTrigger>
         </TabsList>
 
         <TabsContent value="progress" className="mt-4">
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg">Student Progress by Section</CardTitle>
+              <CardTitle className="text-lg">各區段學生進度</CardTitle>
             </CardHeader>
             <CardContent>{renderProgressTable()}</CardContent>
           </Card>

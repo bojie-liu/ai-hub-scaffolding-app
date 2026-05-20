@@ -28,14 +28,14 @@ export function AuthGuard({ children, requiredRole }: AuthGuardProps) {
         <Card className="w-full max-w-md">
           <CardHeader className="text-center">
             <ShieldAlert className="mx-auto h-12 w-12 text-amber-500 mb-2" />
-            <CardTitle>Authentication Required</CardTitle>
+            <CardTitle>需要登入</CardTitle>
           </CardHeader>
           <CardContent className="text-center space-y-4">
             <p className="text-muted-foreground">
-              Please log in to access this page.
+              請登入以存取此頁面。
             </p>
             <Button onClick={() => router.push('/login')} variant="outline">
-              Go to Login
+              前往登入
             </Button>
           </CardContent>
         </Card>
@@ -49,18 +49,17 @@ export function AuthGuard({ children, requiredRole }: AuthGuardProps) {
         <Card className="w-full max-w-md">
           <CardHeader className="text-center">
             <ShieldAlert className="mx-auto h-12 w-12 text-red-500 mb-2" />
-            <CardTitle>Access Denied</CardTitle>
+            <CardTitle>存取被拒</CardTitle>
           </CardHeader>
           <CardContent className="text-center space-y-4">
             <p className="text-muted-foreground">
-              You do not have permission to access this page. This area is
-              restricted to users with the &ldquo;{requiredRole}&rdquo; role.
+              您沒有權限存取此頁面。此區域僅限「{requiredRole === 'TEACHER' ? '教師' : requiredRole}」角色使用。
             </p>
             <p className="text-sm text-muted-foreground">
-              Your current role: <span className="font-medium">{isGuest ? 'Guest' : user.role}</span>
+              您目前的角色：<span className="font-medium">{isGuest ? '訪客' : user.role === 'TEACHER' ? '教師' : '學生'}</span>
             </p>
             <Button onClick={() => router.push('/login')} variant="outline">
-              Sign In for Access
+              登入以取得存取權
             </Button>
           </CardContent>
         </Card>
