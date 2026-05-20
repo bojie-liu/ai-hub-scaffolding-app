@@ -1,16 +1,1461 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-HK">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Basic HTML Project</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Generative AI 複習網站 | 大學課程</title>
+  <style>
+    /* ===== CSS Variables & Theme ===== */
+    :root {
+      --bg-primary: #f8f9fc;
+      --bg-secondary: #ffffff;
+      --bg-card: #ffffff;
+      --bg-nav: rgba(255,255,255,0.95);
+      --text-primary: #1a1a2e;
+      --text-secondary: #4a4a6a;
+      --text-muted: #8888a8;
+      --accent: #6c5ce7;
+      --accent-light: #a29bfe;
+      --accent-dark: #5a4bd1;
+      --success: #00b894;
+      --warning: #fdcb6e;
+      --danger: #e17055;
+      --border: #e8e8f0;
+      --shadow: 0 4px 20px rgba(0,0,0,0.06);
+      --shadow-lg: 0 10px 40px rgba(0,0,0,0.1);
+      --radius: 12px;
+      --radius-sm: 8px;
+      --transition: 0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+    [data-theme="dark"] {
+      --bg-primary: #0f0f1a;
+      --bg-secondary: #1a1a2e;
+      --bg-card: #222240;
+      --bg-nav: rgba(26,26,46,0.95);
+      --text-primary: #e8e8f0;
+      --text-secondary: #b8b8d0;
+      --text-muted: #7878a0;
+      --accent: #a29bfe;
+      --accent-light: #6c5ce7;
+      --accent-dark: #b8b0ff;
+      --border: #333355;
+      --shadow: 0 4px 20px rgba(0,0,0,0.3);
+      --shadow-lg: 0 10px 40px rgba(0,0,0,0.4);
+    }
+
+    /* ===== Reset & Base ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans SC', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+      transition: background var(--transition), color var(--transition);
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { color: var(--accent-dark); }
+
+    /* ===== Navigation ===== */
+    .navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      background: var(--bg-nav);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      transition: background var(--transition);
+    }
+    .navbar-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px;
+    }
+    .navbar-brand {
+      font-size: 1.25rem; font-weight: 700; color: var(--accent);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .navbar-brand span { font-size: 1.5rem; }
+    .navbar-links {
+      display: flex; align-items: center; gap: 4px; list-style: none;
+    }
+    .navbar-links a {
+      padding: 8px 16px; border-radius: var(--radius-sm);
+      color: var(--text-secondary); font-size: 0.9rem; font-weight: 500;
+      transition: all var(--transition);
+    }
+    .navbar-links a:hover, .navbar-links a.active {
+      background: var(--accent); color: #fff;
+    }
+    .nav-controls {
+      display: flex; align-items: center; gap: 12px;
+    }
+    .theme-toggle {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: var(--bg-card); border: 1px solid var(--border);
+      cursor: pointer; font-size: 1.2rem;
+      display: flex; align-items: center; justify-content: center;
+      transition: all var(--transition);
+    }
+    .theme-toggle:hover { background: var(--accent); color: #fff; }
+    .search-toggle {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: var(--bg-card); border: 1px solid var(--border);
+      cursor: pointer; font-size: 1.1rem;
+      display: flex; align-items: center; justify-content: center;
+      transition: all var(--transition);
+    }
+    .search-toggle:hover { background: var(--accent); color: #fff; }
+    .hamburger {
+      display: none; background: none; border: none;
+      font-size: 1.5rem; cursor: pointer; color: var(--text-primary);
+    }
+
+    /* ===== Search Overlay ===== */
+    .search-overlay {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.6); backdrop-filter: blur(8px);
+      z-index: 2000; display: none; align-items: flex-start; justify-content: center;
+      padding-top: 120px;
+    }
+    .search-overlay.active { display: flex; }
+    .search-box {
+      background: var(--bg-card); border-radius: var(--radius);
+      width: 90%; max-width: 600px; padding: 24px;
+      box-shadow: var(--shadow-lg);
+    }
+    .search-input-wrap {
+      display: flex; align-items: center; gap: 12px;
+      border: 2px solid var(--accent); border-radius: var(--radius-sm);
+      padding: 12px 16px; margin-bottom: 16px;
+    }
+    .search-input-wrap input {
+      flex: 1; border: none; outline: none; background: transparent;
+      font-size: 1.1rem; color: var(--text-primary);
+    }
+    .search-results { max-height: 400px; overflow-y: auto; }
+    .search-result-item {
+      padding: 12px; border-radius: var(--radius-sm);
+      cursor: pointer; transition: background var(--transition);
+      border-bottom: 1px solid var(--border);
+    }
+    .search-result-item:hover { background: var(--bg-primary); }
+    .search-result-item h4 { font-size: 0.95rem; color: var(--accent); margin-bottom: 4px; }
+    .search-result-item p { font-size: 0.85rem; color: var(--text-muted); }
+    .search-highlight { background: var(--warning); padding: 0 2px; border-radius: 2px; }
+
+    /* ===== Pages ===== */
+    .page { display: none; padding: 88px 24px 40px; min-height: 100vh; }
+    .page.active { display: block; }
+    .page-inner { max-width: 1000px; margin: 0 auto; }
+
+    /* ===== Hero ===== */
+    .hero {
+      text-align: center; padding: 60px 0 40px;
+    }
+    .hero h1 {
+      font-size: 2.8rem; font-weight: 800;
+      background: linear-gradient(135deg, var(--accent), #e17055);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text; margin-bottom: 16px;
+    }
+    .hero p { font-size: 1.15rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto 32px; }
+    .hero-stats {
+      display: flex; justify-content: center; gap: 40px; flex-wrap: wrap;
+    }
+    .hero-stat { text-align: center; }
+    .hero-stat .num { font-size: 2rem; font-weight: 700; color: var(--accent); }
+    .hero-stat .label { font-size: 0.85rem; color: var(--text-muted); }
+
+    /* ===== Section ===== */
+    .section { margin-bottom: 48px; }
+    .section-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 20px; flex-wrap: wrap; gap: 12px;
+    }
+    .section-title {
+      font-size: 1.5rem; font-weight: 700;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .section-title .icon { font-size: 1.3rem; }
+
+    /* ===== Cards ===== */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: var(--bg-card); border-radius: var(--radius);
+      border: 1px solid var(--border); padding: 24px;
+      box-shadow: var(--shadow); transition: all var(--transition);
+      position: relative; cursor: pointer;
+    }
+    .card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+    .card-tag {
+      display: inline-block; padding: 3px 10px; border-radius: 20px;
+      font-size: 0.75rem; font-weight: 600; margin-bottom: 12px;
+      background: var(--accent); color: #fff;
+    }
+    .card h3 { font-size: 1.1rem; margin-bottom: 8px; }
+    .card p { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; }
+    .card-bookmark {
+      position: absolute; top: 16px; right: 16px;
+      background: none; border: none; font-size: 1.3rem;
+      cursor: pointer; color: var(--text-muted);
+      transition: all var(--transition);
+    }
+    .card-bookmark.bookmarked { color: var(--warning); }
+    .card-bookmark:hover { transform: scale(1.2); }
+    .card-progress {
+      margin-top: 16px; height: 4px; background: var(--border); border-radius: 2px;
+    }
+    .card-progress-bar {
+      height: 100%; background: var(--accent); border-radius: 2px;
+      transition: width 0.5s ease;
+    }
+
+    /* ===== Modal ===== */
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
+      z-index: 3000; display: none; align-items: center; justify-content: center;
+      padding: 24px;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal {
+      background: var(--bg-card); border-radius: var(--radius);
+      max-width: 700px; width: 100%; max-height: 85vh; overflow-y: auto;
+      box-shadow: var(--shadow-lg); padding: 32px;
+      animation: modalIn 0.3s ease;
+    }
+    @keyframes modalIn {
+      from { opacity: 0; transform: scale(0.95) translateY(20px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .modal-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--border);
+    }
+    .modal-header h2 { font-size: 1.4rem; }
+    .modal-close {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: var(--bg-primary); border: 1px solid var(--border);
+      cursor: pointer; font-size: 1.1rem;
+      display: flex; align-items: center; justify-content: center;
+      transition: all var(--transition);
+    }
+    .modal-close:hover { background: var(--danger); color: #fff; border-color: transparent; }
+    .modal-body { line-height: 1.8; }
+    .modal-body h3 { margin: 20px 0 10px; color: var(--accent); font-size: 1.1rem; }
+    .modal-body ul { padding-left: 20px; margin: 8px 0; }
+    .modal-body li { margin-bottom: 6px; color: var(--text-secondary); }
+    .modal-body p { color: var(--text-secondary); margin-bottom: 10px; }
+    .modal-body .key-concept {
+      background: linear-gradient(135deg, rgba(108,92,231,0.1), rgba(162,155,254,0.1));
+      border-left: 4px solid var(--accent); padding: 12px 16px;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      margin: 16px 0;
+    }
+
+    /* ===== Flashcards ===== */
+    .flashcard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 20px;
+    }
+    .flashcard-wrapper { perspective: 800px; height: 240px; }
+    .flashcard {
+      width: 100%; height: 100%;
+      transition: transform 0.6s cubic-bezier(0.4,0,0.2,1);
+      transform-style: preserve-3d; cursor: pointer;
+      position: relative;
+    }
+    .flashcard.flipped { transform: rotateY(180deg); }
+    .flashcard-front, .flashcard-back {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      backface-visibility: hidden; border-radius: var(--radius);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 24px; text-align: center;
+      box-shadow: var(--shadow); border: 1px solid var(--border);
+    }
+    .flashcard-front {
+      background: var(--bg-card);
+    }
+    .flashcard-back {
+      background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+      color: #fff; transform: rotateY(180deg);
+    }
+    .flashcard-front h3 { font-size: 1.05rem; margin-bottom: 8px; }
+    .flashcard-front .hint { font-size: 0.8rem; color: var(--text-muted); }
+    .flashcard-back p { font-size: 0.9rem; line-height: 1.6; }
+    .flashcard-num {
+      position: absolute; top: 12px; left: 16px;
+      font-size: 0.75rem; font-weight: 700; color: var(--text-muted);
+    }
+    .flashcard-difficulty {
+      position: absolute; bottom: 12px; right: 16px;
+      font-size: 0.7rem; padding: 2px 8px; border-radius: 10px;
+      background: var(--warning); color: #333;
+    }
+
+    /* ===== Quiz ===== */
+    .quiz-container { max-width: 700px; margin: 0 auto; }
+    .quiz-progress {
+      display: flex; align-items: center; gap: 12px; margin-bottom: 32px;
+    }
+    .quiz-progress-bar-wrap {
+      flex: 1; height: 8px; background: var(--border); border-radius: 4px;
+    }
+    .quiz-progress-bar {
+      height: 100%; background: var(--accent); border-radius: 4px;
+      transition: width 0.4s ease;
+    }
+    .quiz-progress-text { font-size: 0.9rem; font-weight: 600; color: var(--accent); }
+    .quiz-question {
+      background: var(--bg-card); border-radius: var(--radius);
+      padding: 32px; box-shadow: var(--shadow); margin-bottom: 20px;
+    }
+    .quiz-question h3 { font-size: 1.15rem; margin-bottom: 20px; line-height: 1.6; }
+    .quiz-options { display: flex; flex-direction: column; gap: 12px; }
+    .quiz-option {
+      padding: 14px 20px; border: 2px solid var(--border); border-radius: var(--radius-sm);
+      cursor: pointer; transition: all var(--transition); font-size: 0.95rem;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .quiz-option:hover { border-color: var(--accent); background: rgba(108,92,231,0.05); }
+    .quiz-option.selected { border-color: var(--accent); background: rgba(108,92,231,0.1); }
+    .quiz-option.correct { border-color: var(--success); background: rgba(0,184,148,0.1); }
+    .quiz-option.wrong { border-color: var(--danger); background: rgba(225,112,85,0.1); }
+    .quiz-option-letter {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: var(--bg-primary); display: flex; align-items: center; justify-content: center;
+      font-size: 0.85rem; font-weight: 600; flex-shrink: 0;
+    }
+    .quiz-option.correct .quiz-option-letter { background: var(--success); color: #fff; }
+    .quiz-option.wrong .quiz-option-letter { background: var(--danger); color: #fff; }
+    .quiz-explanation {
+      margin-top: 16px; padding: 16px; border-radius: var(--radius-sm);
+      background: rgba(108,92,231,0.08); font-size: 0.9rem; color: var(--text-secondary);
+      display: none;
+    }
+    .quiz-explanation.show { display: block; }
+    .quiz-nav {
+      display: flex; justify-content: space-between; gap: 12px;
+    }
+    .btn {
+      padding: 12px 28px; border-radius: var(--radius-sm); border: none;
+      font-size: 0.95rem; font-weight: 600; cursor: pointer;
+      transition: all var(--transition);
+    }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { background: var(--accent-dark); }
+    .btn-secondary { background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border); }
+    .btn-secondary:hover { background: var(--bg-secondary); }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .quiz-result {
+      text-align: center; padding: 40px;
+      background: var(--bg-card); border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .quiz-result .score { font-size: 3rem; font-weight: 800; color: var(--accent); }
+    .quiz-result .score-label { color: var(--text-muted); margin-bottom: 24px; }
+    .quiz-result-details { margin: 24px 0; text-align: left; }
+    .quiz-result-item {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 12px 0; border-bottom: 1px solid var(--border);
+    }
+    .quiz-result-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 2px; }
+
+    /* ===== Dashboard ===== */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 24px;
+    }
+    .dash-card {
+      background: var(--bg-card); border-radius: var(--radius);
+      border: 1px solid var(--border); padding: 24px;
+      box-shadow: var(--shadow);
+    }
+    .dash-card h3 {
+      font-size: 1rem; color: var(--text-muted); margin-bottom: 16px;
+      font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .dash-stat { text-align: center; padding: 16px 0; }
+    .dash-stat .value { font-size: 2.5rem; font-weight: 800; color: var(--accent); }
+    .dash-stat .unit { font-size: 1rem; color: var(--text-muted); }
+    .pie-chart {
+      width: 180px; height: 180px; border-radius: 50%; margin: 0 auto 16px;
+      position: relative;
+    }
+    .pie-legend {
+      display: flex; justify-content: center; gap: 24px; font-size: 0.85rem;
+    }
+    .pie-legend-item { display: flex; align-items: center; gap: 6px; }
+    .pie-legend-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+    }
+    .progress-table {
+      width: 100%; border-collapse: collapse; font-size: 0.85rem;
+    }
+    .progress-table th, .progress-table td {
+      padding: 10px 12px; text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    .progress-table th {
+      color: var(--text-muted); font-weight: 600; font-size: 0.8rem;
+      text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .progress-table td { color: var(--text-secondary); }
+    .badge {
+      display: inline-block; padding: 2px 8px; border-radius: 10px;
+      font-size: 0.75rem; font-weight: 600;
+    }
+    .badge-success { background: rgba(0,184,148,0.15); color: var(--success); }
+    .badge-warning { background: rgba(253,203,110,0.2); color: #d4a017; }
+    .badge-danger { background: rgba(225,112,85,0.15); color: var(--danger); }
+    .weakness-list { list-style: none; }
+    .weakness-list li {
+      padding: 10px 0; border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .weakness-list li:last-child { border: none; }
+    .weakness-topic { font-size: 0.9rem; }
+    .weakness-score { font-size: 0.85rem; font-weight: 600; }
+
+    /* ===== Chapter Content ===== */
+    .chapter-content {
+      background: var(--bg-card); border-radius: var(--radius);
+      padding: 32px; box-shadow: var(--shadow); margin-bottom: 24px;
+    }
+    .chapter-content h2 {
+      font-size: 1.5rem; margin-bottom: 16px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .chapter-content h3 { color: var(--accent); margin: 20px 0 10px; font-size: 1.1rem; }
+    .chapter-content p { color: var(--text-secondary); margin-bottom: 12px; }
+    .chapter-content ul { padding-left: 24px; color: var(--text-secondary); margin-bottom: 12px; }
+    .chapter-content li { margin-bottom: 6px; }
+    .keyword-link {
+      color: var(--accent); cursor: pointer; border-bottom: 1px dashed var(--accent);
+      transition: all var(--transition);
+    }
+    .keyword-link:hover { border-bottom-style: solid; }
+    .info-box {
+      background: linear-gradient(135deg, rgba(108,92,231,0.08), rgba(162,155,254,0.08));
+      border-left: 4px solid var(--accent); padding: 16px 20px;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      margin: 16px 0; font-size: 0.9rem; color: var(--text-secondary);
+    }
+    .chapter-check {
+      display: flex; align-items: center; gap: 10px; margin-top: 20px;
+      padding: 16px; background: var(--bg-primary); border-radius: var(--radius-sm);
+    }
+    .chapter-check input[type="checkbox"] {
+      width: 20px; height: 20px; accent-color: var(--accent); cursor: pointer;
+    }
+    .chapter-check label { cursor: pointer; font-size: 0.95rem; }
+
+    /* ===== Page tabs ===== */
+    .page-tabs {
+      display: flex; gap: 8px; margin-bottom: 32px; flex-wrap: wrap;
+    }
+    .page-tab {
+      padding: 8px 20px; border-radius: 20px; border: 1px solid var(--border);
+      background: var(--bg-card); cursor: pointer; font-size: 0.9rem;
+      transition: all var(--transition); font-weight: 500;
+    }
+    .page-tab:hover, .page-tab.active {
+      background: var(--accent); color: #fff; border-color: var(--accent);
+    }
+
+    /* ===== Footer ===== */
+    .footer {
+      text-align: center; padding: 40px 24px;
+      color: var(--text-muted); font-size: 0.85rem;
+      border-top: 1px solid var(--border); margin-top: 40px;
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2rem; }
+      .navbar-links { display: none; flex-direction: column; position: absolute;
+        top: 64px; left: 0; right: 0; background: var(--bg-nav);
+        padding: 16px; border-bottom: 1px solid var(--border);
+        backdrop-filter: blur(20px);
+      }
+      .navbar-links.open { display: flex; }
+      .hamburger { display: block; }
+      .card-grid, .flashcard-grid, .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+      .chapter-content { padding: 20px; }
+      .modal { padding: 20px; }
+      .hero-stats { gap: 20px; }
+    }
+    @media (max-width: 480px) {
+      .page { padding: 76px 16px 24px; }
+      .hero h1 { font-size: 1.6rem; }
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Hello World!</h1>
-    <p>Welcome to your new project.</p>
+
+  <!-- ===== Navigation ===== -->
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <div class="navbar-brand"><span>🤖</span> GenAI 複習</div>
+      <ul class="navbar-links" id="navLinks">
+        <li><a href="#" data-page="overview" class="active">概覽</a></li>
+        <li><a href="#" data-page="chapters">課程內容</a></li>
+        <li><a href="#" data-page="flashcards">溫習卡片</a></li>
+        <li><a href="#" data-page="quiz">測驗與儀表板</a></li>
+      </ul>
+      <div class="nav-controls">
+        <button class="search-toggle" onclick="toggleSearch()" title="搜尋">🔍</button>
+        <button class="theme-toggle" onclick="toggleTheme()" title="夜間模式" id="themeBtn">🌙</button>
+        <button class="hamburger" onclick="toggleMobileNav()">☰</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== Search Overlay ===== -->
+  <div class="search-overlay" id="searchOverlay" onclick="if(event.target===this)closeSearch()">
+    <div class="search-box">
+      <div class="search-input-wrap">
+        <span>🔍</span>
+        <input type="text" id="searchInput" placeholder="搜尋關鍵字..." oninput="performSearch(this.value)">
+        <button onclick="closeSearch()" style="background:none;border:none;font-size:1.2rem;cursor:pointer">✕</button>
+      </div>
+      <div class="search-results" id="searchResults"></div>
+    </div>
   </div>
-  <script src="script.js"></script>
+
+  <!-- ===== Modal ===== -->
+  <div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="modalTitle"></h2>
+        <button class="modal-close" onclick="closeModal()">✕</button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+    </div>
+  </div>
+
+  <!-- ===== Page 1: Overview ===== -->
+  <div class="page active" id="page-overview">
+    <div class="page-inner">
+      <div class="hero">
+        <h1>Generative AI</h1>
+        <p>涵蓋生成式人工智能的核心概念、技術架構與應用，配合香港大學課程標準設計的互動複習平台</p>
+        <div class="hero-stats">
+          <div class="hero-stat"><div class="num">4</div><div class="label">章節</div></div>
+          <div class="hero-stat"><div class="num">15</div><div class="label">溫習卡片</div></div>
+          <div class="hero-stat"><div class="num">10</div><div class="label">測驗題目</div></div>
+          <div class="hero-stat"><div class="num" id="heroProgress">0%</div><div class="label">完成進度</div></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-header">
+          <div class="section-title"><span class="icon">📖</span> 課程章節</div>
+        </div>
+        <div class="card-grid" id="overviewCards"></div>
+      </div>
+
+      <div class="section">
+        <div class="section-header">
+          <div class="section-title"><span class="icon">🔖</span> 已收藏內容</div>
+        </div>
+        <div id="bookmarkedItems" style="color:var(--text-muted);font-size:0.9rem;">尚未收藏任何內容</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Page 2: Chapters ===== -->
+  <div class="page" id="page-chapters">
+    <div class="page-inner">
+      <h1 style="font-size:1.8rem;margin-bottom:24px;">📚 課程內容</h1>
+      <div class="page-tabs" id="chapterTabs"></div>
+      <div id="chapterContent"></div>
+    </div>
+  </div>
+
+  <!-- ===== Page 3: Flashcards ===== -->
+  <div class="page" id="page-flashcards">
+    <div class="page-inner">
+      <h1 style="font-size:1.8rem;margin-bottom:8px;">🎴 溫習卡片</h1>
+      <p style="color:var(--text-muted);margin-bottom:32px;">點擊卡片翻轉查看答案 · 共 15 張中等難度卡片</p>
+      <div class="flashcard-grid" id="flashcardGrid"></div>
+    </div>
+  </div>
+
+  <!-- ===== Page 4: Quiz & Dashboard ===== -->
+  <div class="page" id="page-quiz">
+    <div class="page-inner">
+      <div class="page-tabs" style="margin-bottom:32px;">
+        <div class="page-tab active" data-tab="quizTab" onclick="switchQuizTab('quizTab')">📝 測驗</div>
+        <div class="page-tab" data-tab="dashTab" onclick="switchQuizTab('dashTab')">📊 儀表板</div>
+      </div>
+
+      <!-- Quiz Tab -->
+      <div id="quizTab">
+        <div class="quiz-container" id="quizContainer"></div>
+      </div>
+
+      <!-- Dashboard Tab -->
+      <div id="dashTab" style="display:none;">
+        <div class="dashboard-grid" id="dashboardGrid"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Footer ===== -->
+  <div class="footer">
+    Generative AI 複習網站 · 符合香港大學課程標準 · 2026
+  </div>
+
+<script>
+// ===== DATA =====
+const chapters = [
+  {
+    id: 'ch1', title: '生成式AI基礎概念', icon: '🧠', tag: '基礎',
+    desc: '了解生成式人工智能的定義、發展歷史、與傳統AI的區別，以及核心數學原理。',
+    sections: [
+      {
+        title: '1.1 生成式AI的定義與範疇',
+        content: `<p>生成式人工智能（Generative AI）是指能夠<span class="keyword-link" data-keyword="generative-model">學習數據分佈並生成新內容</span>的人工智能系統。這些內容可以包括文字、圖像、音頻、影片及程式碼等。</p>
+        <div class="info-box">🔑 核心區別：判別式模型（Discriminative）學習決策邊界，生成式模型（Generative）學習數據的分佈。</div>
+        <h3>生成式AI的主要類型</h3>
+        <ul>
+          <li><strong>文字生成：</strong>如 GPT、LLaMA、Claude 等大型語言模型</li>
+          <li><strong>圖像生成：</strong>如 DALL-E、Stable Diffusion、Midjourney</li>
+          <li><strong>音頻生成：</strong>如 VALL-E、MusicLM、Jukebox</li>
+          <li><strong>多模態生成：</strong>如 GPT-4V、Gemini 等跨模態模型</li>
+          <li><strong>程式碼生成：</strong>如 GitHub Copilot、CodeLlama</li>
+        </ul>`
+      },
+      {
+        title: '1.2 發展歷史與里程碑',
+        content: `<p>生成式AI的發展經歷了從<span class="keyword-link" data-keyword="gan">生成對抗網絡（GAN）</span>到<span class="keyword-link" data-keyword="transformer">Transformer架構</span>的重要演進。</p>
+        <h3>關鍵里程碑</h3>
+        <ul>
+          <li><strong>2014年：</strong>Ian Goodfellow 提出GAN，開創了生成模型的新紀元</li>
+          <li><strong>2017年：</strong>Google 發表 "Attention Is All You Need"，提出 Transformer</li>
+          <li><strong>2018年：</strong>GPT-1 發佈，開創預訓練-微調範式</li>
+          <li><strong>2020年：</strong>GPT-3 展示了大型語言模型的湧現能力</li>
+          <li><strong>2021年：</strong>DALL-E 實現文字到圖像的生成</li>
+          <li><strong>2022年：</strong>Stable Diffusion 開源，ChatGPT 引爆AI應用</li>
+          <li><strong>2023-2025年：</strong>多模態模型、Agent系統、推理模型快速發展</li>
+        </ul>
+        <div class="info-box">💡 湧現能力（Emergent Abilities）：當模型規模達到一定程度時，會出現小模型所不具備的新能力，這是大型生成式模型的重要特徵。</div>`
+      },
+      {
+        title: '1.3 核心數學原理',
+        content: `<p>生成式AI的數學基礎建立在<span class="keyword-link" data-keyword="probability">概率論</span>與<span class="keyword-link" data-keyword="optimization">優化理論</span>之上。</p>
+        <h3>關鍵概念</h3>
+        <ul>
+          <li><strong>概率分佈建模：</strong>學習數據的聯合概率分佈 P(x₁, x₂, ..., xₙ)</li>
+          <li><strong>最大似然估計（MLE）：</strong>最大化訓練數據的對數似然</li>
+          <li><strong>KL 散度：</strong>衡量兩個概率分佈的差異 D_KL(P||Q)</li>
+          <li><strong>變分推斷：</strong>用近似分佈逼近真實後驗分佈</li>
+          <li><strong>擴散過程：</strong>逐步加噪與去噪的馬爾可夫鏈過程</li>
+        </ul>
+        <div class="info-box">📐 變分自編碼器（VAE）的損失函數 = 重構損失 + KL散度正則化項，這體現了重建質量與潛在空間規則化之間的權衡。</div>`
+      }
+    ]
+  },
+  {
+    id: 'ch2', title: '核心技術架構', icon: '⚙️', tag: '技術',
+    desc: '深入理解Transformer、GAN、VAE、擴散模型等核心生成式架構的原理與設計。',
+    sections: [
+      {
+        title: '2.1 Transformer 架構',
+        content: `<p><span class="keyword-link" data-keyword="transformer">Transformer</span> 是現代生成式AI的基石架構，完全基於注意力機制，摒棄了傳統的循環結構。</p>
+        <h3>核心組件</h3>
+        <ul>
+          <li><strong>自注意力機制（Self-Attention）：</strong>計算序列中每個位置與其他位置的關聯度 Attention(Q,K,V) = softmax(QK^T/√d_k)V</li>
+          <li><strong>多頭注意力（Multi-Head Attention）：</strong>並行多個注意力頭，捕捉不同子空間的特徵</li>
+          <li><strong>位置編碼（Positional Encoding）：</strong>注入序列位置資訊，彌補無循環結構的不足</li>
+          <li><strong>前饋網絡（FFN）：</strong>對每個位置獨立應用的非線性變換</li>
+          <li><strong>層歸一化與殘差連接：</strong>穩定深層網絡的訓練</li>
+        </ul>
+        <div class="info-box">🔑 GPT 使用 Decoder-only Transformer（因果注意力），BERT 使用 Encoder-only，T5 使用 Encoder-Decoder 架構。</div>`
+      },
+      {
+        title: '2.2 GAN 生成對抗網絡',
+        content: `<p><span class="keyword-link" data-keyword="gan">GAN</span> 由生成器（Generator）和判別器（Discriminator）組成，兩者進行對抗訓練。</p>
+        <h3>訓練過程</h3>
+        <ul>
+          <li><strong>生成器：</strong>從隨機噪聲生成假數據，試圖欺騙判別器</li>
+          <li><strong>判別器：</strong>區分真實數據和生成數據</li>
+          <li><strong>對抗目標：</strong>min_G max_D E[log D(x)] + E[log(1 - D(G(z)))]</li>
+        </ul>
+        <h3>GAN 的變體</h3>
+        <ul>
+          <li><strong>DCGAN：</strong>使用卷積網絡的GAN</li>
+          <li><strong>WGAN：</strong>使用Wasserstein距離改善訓練穩定性</li>
+          <li><strong>StyleGAN：</strong>通過風格控制實現高質量圖像生成</li>
+          <li><strong>CycleGAN：</strong>無配對數據的圖像風格遷移</li>
+        </ul>
+        <div class="info-box">⚠️ GAN 的常見問題：模式崩潰（Mode Collapse）、訓練不穩定、梯度消失等。</div>`
+      },
+      {
+        title: '2.3 VAE 變分自編碼器',
+        content: `<p><span class="keyword-link" data-keyword="vae">VAE</span> 是一種基於變分推斷的生成模型，學習數據的潛在表示。</p>
+        <h3>架構設計</h3>
+        <ul>
+          <li><strong>編碼器：</strong>將輸入映射到潛在空間的參數（均值 μ 和方差 σ²）</li>
+          <li><strong>重參數化技巧：</strong>z = μ + σ ⊙ ε，其中 ε ~ N(0, I)，使採樣過程可微分</li>
+          <li><strong>解碼器：</strong>從潛在向量重建輸入</li>
+        </ul>
+        <h3>VAE 與 GAN 的比較</h3>
+        <ul>
+          <li><strong>VAE：</strong>有明確的概率框架，生成多樣性較好但質量較低</li>
+          <li><strong>GAN：</strong>生成質量高但多樣性不足，訓練不穩定</li>
+          <li><strong>VQ-VAE：</strong>使用離散潛在空間，改善生成質量</li>
+        </ul>`
+      },
+      {
+        title: '2.4 擴散模型',
+        content: `<p><span class="keyword-link" data-keyword="diffusion">擴散模型</span>是當前最先進的圖像生成方法，通過逐步去噪生成高質量樣本。</p>
+        <h3>核心原理</h3>
+        <ul>
+          <li><strong>前向過程：</strong>逐步向數據添加高斯噪聲，直至變為純噪聲</li>
+          <li><strong>反向過程：</strong>學習逐步去除噪聲，恢復原始數據</li>
+          <li><strong>噪聲預測：</strong>訓練網絡預測每步添加的噪聲</li>
+        </ul>
+        <h3>重要模型</h3>
+        <ul>
+          <li><strong>DDPM：</strong>去噪擴散概率模型，奠定理論基礎</li>
+          <li><strong>Stable Diffusion：</strong>在潛在空間中進行擴散，大幅提高效率</li>
+          <li><strong>DALL-E 2/3：</strong>使用先驗模型+擴散解碼器的兩階段架構</li>
+          <li><strong>Imagen：</strong>結合大型語言模型與擴散模型</li>
+        </ul>
+        <div class="info-box">💡 潛在擴散模型（Latent Diffusion）的關鍵創新：在低維潛在空間而非像素空間進行擴散，大幅降低計算成本。</div>`
+      }
+    ]
+  },
+  {
+    id: 'ch3', title: '大型語言模型與應用', icon: '💬', tag: '應用',
+    desc: '探索LLM的訓練方法、提示工程、RAG技術及實際應用場景。',
+    sections: [
+      {
+        title: '3.1 大型語言模型的訓練',
+        content: `<p><span class="keyword-link" data-keyword="llm">大型語言模型（LLM）</span>的訓練通常分為多個階段。</p>
+        <h3>訓練流程</h3>
+        <ul>
+          <li><strong>預訓練（Pre-training）：</strong>在大規模文本語料上進行自監督學習（下一詞預測）</li>
+          <li><strong>監督微調（SFT）：</strong>使用高質量指令-回答對進行微調</li>
+          <li><strong>人類反饋強化學習（RLHF）：</strong>利用人類偏好數據訓練獎勵模型，優化輸出品質</li>
+          <li><strong>直接偏好優化（DPO）：</strong>直接從偏好數據學習，無需獎勵模型</li>
+        </ul>
+        <h3>關鍵技術</h3>
+        <ul>
+          <li><strong>Token化：</strong>BPE、SentencePiece 等子詞分割方法</li>
+          <li><strong>上下文窗口：</strong>從 2K 到 1M+ tokens 的演進</li>
+          <li><strong>分佈式訓練：</strong>數據並行、模型並行、流水線並行</li>
+        </ul>
+        <div class="info-box">🔑 Scaling Laws：模型性能與計算量、數據量、模型大小呈冪律關係，這為模型規劃提供了理論指導。</div>`
+      },
+      {
+        title: '3.2 提示工程',
+        content: `<p><span class="keyword-link" data-keyword="prompting">提示工程</span>是有效利用LLM的關鍵技能，通過精心設計輸入來引導模型產生期望輸出。</p>
+        <h3>核心技術</h3>
+        <ul>
+          <li><strong>零樣本提示（Zero-shot）：</strong>不提供示例，直接描述任務</li>
+          <li><strong>少樣本提示（Few-shot）：</strong>提供少量示例引導模型</li>
+          <li><strong>思維鏈（Chain-of-Thought）：</strong>要求模型展示推理步驟</li>
+          <li><strong>自我一致性（Self-Consistency）：</strong>多次採樣取多數結果</li>
+          <li><strong>樹狀思維（Tree-of-Thought）：</strong>探索多條推理路徑</li>
+          <li><strong>ReAct：</strong>結合推理與行動的框架</li>
+        </ul>
+        <div class="info-box">💡 System Prompt 是設定模型行為和角色的重要工具，有效的 System Prompt 能顯著提升輸出品質和一致性。</div>`
+      },
+      {
+        title: '3.3 RAG 與 Agent 系統',
+        content: `<p><span class="keyword-link" data-keyword="rag">檢索增強生成（RAG）</span>和<span class="keyword-link" data-keyword="agent">AI Agent</span>是LLM的兩大重要應用範式。</p>
+        <h3>RAG 架構</h3>
+        <ul>
+          <li><strong>索引階段：</strong>文檔分塊 → 向量化（Embedding）→ 存入向量數據庫</li>
+          <li><strong>檢索階段：</strong>查詢向量化 → 語義搜索 → 返回相關文檔</li>
+          <li><strong>生成階段：</strong>將檢索結果作為上下文，LLM生成回答</li>
+        </ul>
+        <h3>AI Agent 系統</h3>
+        <ul>
+          <li><strong>感知：</strong>理解用戶需求和環境狀態</li>
+          <li><strong>規劃：</strong>分解任務為可執行步驟</li>
+          <li><strong>行動：</strong>調用工具（API、搜索、程式碼執行等）</li>
+          <li><strong>反思：</strong>評估結果並調整策略</li>
+        </ul>
+        <div class="info-box">🔑 Agentic RAG 結合了 RAG 的知識檢索能力和 Agent 的自主決策能力，是當前的重要發展方向。</div>`
+      }
+    ]
+  },
+  {
+    id: 'ch4', title: '倫理、挑戰與未來', icon: '🌐', tag: '倫理',
+    desc: '探討生成式AI的倫理問題、偏見與安全挑戰，以及技術發展趨勢。',
+    sections: [
+      {
+        title: '4.1 倫理與社會影響',
+        content: `<p>生成式AI帶來了深遠的<span class="keyword-link" data-keyword="ethics">倫理與社會挑戰</span>，需要審慎面對。</p>
+        <h3>核心倫理議題</h3>
+        <ul>
+          <li><strong>偏見與公平性：</strong>模型可能放大訓練數據中的社會偏見（性別、種族、文化等）</li>
+          <li><strong>虛假資訊：</strong>深偽技術（Deepfake）和AI生成的虛假內容</li>
+          <li><strong>版權爭議：</strong>訓練數據的版權問題，生成內容的知識產權歸屬</li>
+          <li><strong>隱私風險：</strong>模型可能洩露訓練數據中的個人資訊</li>
+          <li><strong>就業影響：</strong>AI自動化對勞動市場的衝擊與轉型</li>
+        </ul>
+        <div class="info-box">⚖️ 香港個人資料私隱專員公署已發出《人工智能（AI）：個人資料保障範本》指引，規範AI中的個人資料處理。</div>`
+      },
+      {
+        title: '4.2 安全與對齊',
+        content: `<p><span class="keyword-link" data-keyword="alignment">AI對齊</span>是確保AI系統行為符合人類意圖和價值觀的關鍵挑戰。</p>
+        <h3>安全挑戰</h3>
+        <ul>
+          <li><strong>提示注入攻擊：</strong>惡意輸入繞過安全限制</li>
+          <li><strong>越獄攻擊：</strong>誘導模型產生有害內容</li>
+          <li><strong>數據投毒：</strong>污染訓練數據影響模型行為</li>
+          <li><strong>幻覺問題：</strong>模型生成看似合理但事實錯誤的內容</li>
+        </ul>
+        <h3>對齊方法</h3>
+        <ul>
+          <li><strong>RLHF：</strong>通過人類反饋強化學習進行對齊</li>
+          <li><strong>Constitutional AI：</strong>基於原則的自我修正</li>
+          <li><strong>紅隊測試：</strong>系統性尋找模型的安全漏洞</li>
+          <li><strong>可解釋性研究：</strong>理解模型內部決策機制</li>
+        </ul>`
+      },
+      {
+        title: '4.3 未來發展趨勢',
+        content: `<p>生成式AI正在快速演進，以下為重要發展方向。</p>
+        <h3>技術趨勢</h3>
+        <ul>
+          <li><strong>多模態融合：</strong>統一處理文字、圖像、音頻、影片</li>
+          <li><strong>推理能力提升：</strong>思維鏈、思維樹等推理範式</li>
+          <li><strong>高效微調：</strong>LoRA、QLoRA、Adapter 等參數高效方法</li>
+          <li><strong>小型化與端側部署：</strong>在手機和邊緣設備上運行LLM</li>
+          <li><strong>AI Agent 生態：</strong>自主規劃與執行的智能體系統</li>
+        </ul>
+        <h3>應用趨勢</h3>
+        <ul>
+          <li><strong>個人化AI助手：</strong>適應個人需求的智能助手</li>
+          <li><strong>科學發現：</strong>AI輔助藥物研發、材料設計</li>
+          <li><strong>教育革新：</strong>自適應學習、智能輔導</li>
+          <li><strong>創意產業：</strong>AI輔助設計、音樂創作、內容生成</li>
+        </ul>
+        <div class="info-box">🔮 香港在AI發展方面：數碼港AI超算中心、InnoHK創新香港研發平台、以及各大學的AI研究中心正在推動本地AI生態發展。</div>`
+      }
+    ]
+  }
+];
+
+const flashcardsData = [
+  { front: '生成式AI與判別式AI的核心區別是什麼？', back: '判別式AI學習決策邊界 P(y|x)，用於分類和預測；生成式AI學習數據的聯合分佈 P(x)，能夠生成新的數據樣本。生成式模型不僅能判別，還能創造。', difficulty: '中等' },
+  { front: 'Transformer 中的自注意力機制如何運作？', back: '自注意力通過計算 Query、Key、Value 三個矩陣：Attention(Q,K,V) = softmax(QK^T/√d_k)V。每個位置通過與所有位置計算注意力權重，獲得加權聚合的表示，從而捕捉長距離依賴關係。', difficulty: '中等' },
+  { front: 'GAN 的訓練目標函數是什麼？', back: 'min_G max_D V(D,G) = E_x~p_data[log D(x)] + E_z~p_z[log(1 - D(G(z)))]。生成器G試圖最小化判別器D的正確率，判別器D試圖最大化區分真偽數據的能力，兩者達到納什均衡時為最優。', difficulty: '中等' },
+  { front: 'VAE 中的重參數化技巧為什麼必要？', back: '因為從分佈 N(μ, σ²) 中採樣的過程不可微分，無法反向傳播。重參數化技巧 z = μ + σ ⊙ ε（ε~N(0,I)）將隨機性轉移到外部變量 ε，使梯度可以通過 μ 和 σ 流動，實現端到端訓練。', difficulty: '中等' },
+  { front: '擴散模型的前向和反向過程分別是什麼？', back: '前向過程：逐步向數據添加高斯噪聲 x_t = √(1-β_t)x_{t-1} + √β_t ε，經過T步後數據變為純噪聲。反向過程：學習噪聲預測網絡 ε_θ，從噪聲開始逐步去噪恢復原始數據。', difficulty: '中等' },
+  { front: '什麼是大型語言模型的「湧現能力」？', back: '湧現能力是指當模型規模（參數量、計算量、數據量）達到某一閾值時，突然出現小模型所不具備的能力，如少樣本學習、思維鏈推理等。這些能力無法僅通過小模型的性能外推來預測。', difficulty: '中等' },
+  { front: 'RLHF 的三個步驟是什麼？', back: '1) 監督微調（SFT）：用人工撰寫的高質量對話數據微調模型；2) 訓練獎勵模型：用人類偏好排序數據訓練一個能評分回答質量的模型；3) PPO優化：用獎勵模型的反饋通過強化學習算法進一步優化語言模型。', difficulty: '中等' },
+  { front: '思維鏈（Chain-of-Thought）提示如何提升推理能力？', back: 'CoT要求模型在給出最終答案前展示中間推理步驟，相當於將複雜問題分解為多個簡單子問題。這利用了模型逐token生成的特性——每一步推理都為下一步提供了上下文，降低了單步推理的難度。', difficulty: '中等' },
+  { front: 'RAG 系統的工作流程是什麼？', back: '1) 文檔處理：將知識庫文檔分塊並通過Embedding模型向量化；2) 向量存儲：將向量存入向量數據庫（如FAISS、Pinecone）；3) 語義檢索：用戶查詢向量化後，檢索最相關的文檔片段；4) 增強生成：將檢索結果作為上下文注入Prompt，LLM基於此生成回答。', difficulty: '中等' },
+  { front: '什麼是 AI 的「幻覺」問題？如何緩解？', back: '幻覺是指模型生成看似合理但事實錯誤的內容。原因包括：訓練數據中的噪聲、過度自信、缺乏事實 grounding。緩解方法：RAG（檢索增強）、提高取樣溫度、自我一致性驗證、事實核查工具、以及通過RLHF強化真實性偏好。', difficulty: '中等' },
+  { front: '潛在擴散模型（Latent Diffusion）相比像素空間擴散有何優勢？', back: '潛在擴散在低維潛在空間而非高維像素空間進行擴散過程，優勢：1) 計算成本大幅降低（降維後運算量顯著減少）；2) 語義更豐富的表示空間；3) 訓練和推理速度更快；4) 這是Stable Diffusion能夠在消費級GPU上運行的關鍵。', difficulty: '中等' },
+  { front: 'LoRA 微調的原理是什麼？', back: 'LoRA（Low-Rank Adaptation）假設模型適應新任務的權重變化是低秩的，將權重更新 ΔW 分解為兩個低秩矩陣 BA 的乘積，其中 B∈R^(d×r), A∈R^(r×k)，r << min(d,k)。只需訓練極少量參數（通常<1%），即可達到接近全量微調的效果。', difficulty: '中等' },
+  { front: 'AI Agent 的核心組成部分有哪些？', back: 'AI Agent 通常包含：1) 感知模組：理解用戶意圖和環境狀態；2) 規劃模組：將複雜任務分解為可執行步驟；3) 記憶模組：短期（上下文）和長期（向量數據庫）記憶；4) 行動模組：調用工具和API執行操作；5) 反思模組：評估結果並調整策略。', difficulty: '中等' },
+  { front: '什麼是「對齊稅」？', back: '對齊稅（Alignment Tax）是指為使模型更安全、更符合人類價值觀而進行的對齊訓練，可能導致模型在某些能力（如創造力、推理能力）上表現下降的現象。這反映了安全性與能力之間的潛在權衡，是AI對齊研究中的重要課題。', difficulty: '中等' },
+  { front: 'Scaling Laws 如何指導LLM的開發？', back: 'Scaling Laws 揭示了模型性能與三個因素呈冪律關係：計算量C、數據量D、模型參數量N。核心結論：1) 固定計算預算時，存在最優的模型大小和數據量配比；2) 性能提升需要三個因素同步增長；3) Chinchilla研究指出此前訓練數據量嚴重不足，應增大數據量。', difficulty: '中等' }
+];
+
+const quizData = [
+  {
+    q: '以下哪個是生成式模型而非判別式模型？',
+    options: ['邏輯回歸', '支持向量機', '變分自編碼器（VAE）', '隨機森林'],
+    correct: 2,
+    explanation: 'VAE 學習數據的聯合概率分佈 P(x) 並能生成新樣本，屬於生成式模型。邏輯回歸、SVM 和隨機森林都只學習決策邊界 P(y|x)，屬於判別式模型。'
+  },
+  {
+    q: 'Transformer 中的自注意力計算公式 Attention(Q,K,V) = softmax(QK^T/√d_k)V 中，除以 √d_k 的目的是什麼？',
+    options: ['增加注意力權重的差異性', '防止點積結果過大導致 softmax 梯度消失', '降低計算複雜度', '實現多頭注意力'],
+    correct: 1,
+    explanation: '當 d_k 較大時，QK^T 的點積結果方差也會增大，導致 softmax 函數進入梯度極小的飽和區。除以 √d_k 可以穩定梯度，使訓練更穩定。'
+  },
+  {
+    q: 'GAN 訓練中「模式崩潰」（Mode Collapse）是指什麼？',
+    options: ['判別器性能過好', '生成器只能產生有限幾種輸出', '訓練損失無法收斂', '模型過擬合訓練數據'],
+    correct: 1,
+    explanation: '模式崩潰是指生成器找到少數幾個能欺騙判別器的輸出模式後，只生成這幾種相似的樣本，而忽略數據分佈中的其他模式，導致生成多樣性嚴重下降。'
+  },
+  {
+    q: 'VAE 中重參數化技巧 z = μ + σ ⊙ ε 的主要作用是？',
+    options: ['提高生成質量', '使採樣過程可微分，允許反向傳播', '增加潛在空間的維度', '減少模型參數量'],
+    correct: 1,
+    explanation: '直接從 N(μ, σ²) 採樣是不可微分的操作，無法進行反向傳播。重參數化將隨機性轉移到獨立於模型參數的 ε 上，使梯度可以通過 μ 和 σ 流動。'
+  },
+  {
+    q: '潛在擴散模型（Latent Diffusion）相較於像素空間擴散的主要優勢是？',
+    options: ['生成質量更高', '在低維空間操作大幅降低計算成本', '不需要訓練編碼器', '只需更少的訓練步驟'],
+    correct: 1,
+    explanation: '潛在擴散模型先將圖像壓縮到低維潛在空間，再在潛在空間中進行擴散過程。由於操作空間維度大幅降低，計算成本顯著下降，這是 Stable Diffusion 能在消費級 GPU 上運行的關鍵。'
+  },
+  {
+    q: '以下哪項不屬於 RLHF 的訓練步驟？',
+    options: ['監督微調（SFT）', '訓練獎勵模型', '通過 PPO 進行強化學習優化', '通過反向傳播直接優化人類偏好'],
+    correct: 3,
+    explanation: 'RLHF 包含三個步驟：SFT、訓練獎勵模型、PPO強化學習優化。人類偏好信號是通過獎勵模型間接傳遞的，而非直接反向傳播，因為人類偏好是不可微分的標量信號。'
+  },
+  {
+    q: 'Chain-of-Thought 提示提升推理能力的根本原因是？',
+    options: ['增加了 prompt 的長度', '將複雜推理分解為多個簡單步驟，降低每步難度', '使用了更多的訓練參數', '提高了模型的溫度參數'],
+    correct: 1,
+    explanation: 'CoT 要求模型逐步推理，相當於將一個複雜問題分解為多個較簡單的子問題。由於模型是逐 token 生成，每一步推理的結果都成為下一步的上下文，降低了單步推理的認知負荷。'
+  },
+  {
+    q: 'RAG 系統中使用向量數據庫的主要目的是？',
+    options: ['存儲模型的權重參數', '高效進行語義相似度搜索', '加速模型推理過程', '壓縮訓練數據'],
+    correct: 1,
+    explanation: 'RAG 的核心是在生成前檢索相關文檔。向量數據庫（如 FAISS、Pinecone）存儲文檔的 Embedding 向量，支持高效的近似最近鄰搜索（ANN），快速找到與查詢語義最相關的文檔片段。'
+  },
+  {
+    q: 'LoRA 微調中「低秩」的含義是什麼？',
+    options: ['使用低精度的浮點數', '權重更新矩陣的秩遠小於原始矩陣', '減少網絡層數', '降低學習率'],
+    correct: 1,
+    explanation: 'LoRA 假設任務適應的權重變化 ΔW 具有低秩特性，將其分解為兩個小矩陣 B×A 的乘積，秩 r 遠小於原始維度。這樣只需訓練極少量參數（<1%）即可達到接近全量微調的效果。'
+  },
+  {
+    q: '以下哪項是緩解 AI 幻覺問題的有效方法？',
+    options: ['增大模型參數量', '使用更高的取樣溫度', '採用 RAG 檢索增強生成', '減少訓練數據量'],
+    correct: 2,
+    explanation: 'RAG 通過檢索外部知識庫中的真實文檔作為上下文，使模型基於事實信息生成回答，而非僅依賴參數化記憶。這有效減少了模型憑空捏造事實的情況，是緩解幻覺最實用的方法之一。'
+  }
+];
+
+// Keyword detail data for modals
+const keywordDetails = {
+  'generative-model': {
+    title: '生成式模型 (Generative Model)',
+    body: `<h3>定義</h3><p>生成式模型學習數據的聯合概率分佈 P(X, Y) 或 P(X)，不僅能進行預測，還能生成新的數據樣本。</p><h3>與判別式模型的比較</h3><ul><li><strong>判別式模型：</strong>學習 P(Y|X)，直接建模決策邊界，如 logistic regression、SVM</li><li><strong>生成式模型：</strong>學習 P(X, Y)，可以通過貝葉斯定理得到 P(Y|X)，如 Naive Bayes、HMM、VAE、GAN</li></ul><div class="key-concept">🔑 生成式模型的優勢：能處理缺失數據、可生成新樣本、可進行無監督學習。但通常需要更多數據和計算資源。</div>`
+  },
+  'gan': {
+    title: 'GAN 生成對抗網絡',
+    body: `<h3>基本原理</h3><p>GAN 由 Ian Goodfellow 於 2014 年提出，包含兩個對抗訓練的神經網絡：</p><ul><li><strong>生成器 G：</strong>從隨機噪聲 z 生成假數據 G(z)</li><li><strong>判別器 D：</strong>區分真實數據和生成數據</li></ul><h3>訓練目標</h3><p>min_G max_D E[log D(x)] + E[log(1 - D(G(z)))]</p><h3>常見問題</h3><ul><li>模式崩潰（Mode Collapse）</li><li>訓練不穩定</li><li>梯度消失</li></ul><div class="key-concept">🔑 GAN 的本質是一個極小極大博弈（Minimax Game），理想狀態下達到納什均衡，此時 D(x)=0.5，無法區分真偽。</div>`
+  },
+  'transformer': {
+    title: 'Transformer 架構',
+    body: `<h3>核心創新</h3><p>Transformer 於 2017 年在 "Attention Is All You Need" 論文中提出，完全基於注意力機制，摒棄了 RNN 的序列結構。</p><h3>核心組件</h3><ul><li><strong>自注意力：</strong>Attention(Q,K,V) = softmax(QK^T/√d_k)V</li><li><strong>多頭注意力：</strong>並行多個注意力頭捕捉不同特徵</li><li><strong>位置編碼：</strong>注入序列位置資訊</li><li><strong>殘差連接 + 層歸一化：</strong>穩定訓練</li></ul><div class="key-concept">🔑 Transformer 的三大變體：Decoder-only (GPT系列)、Encoder-only (BERT)、Encoder-Decoder (T5, BART)。</div>`
+  },
+  'probability': {
+    title: '概率論基礎',
+    body: `<h3>生成式AI中的核心概率概念</h3><ul><li><strong>聯合概率 P(X,Y)：</strong>兩個事件同時發生的概率</li><li><strong>條件概率 P(Y|X)：</strong>在X發生條件下Y的概率</li><li><strong>貝葉斯定理：</strong>P(Y|X) = P(X|Y)P(Y) / P(X)</li><li><strong>最大似然估計：</strong>θ* = argmax Σ log P(x_i|θ)</li></ul><div class="key-concept">🔑 生成式模型的核心目標是學習數據的分佈 P(X)，使得從該分佈中採樣可以產生與真實數據相似的樣本。</div>`
+  },
+  'optimization': {
+    title: '優化理論',
+    body: `<h3>深度學習中的優化</h3><ul><li><strong>梯度下降：</strong>θ = θ - η∇L(θ)</li><li><strong>Adam：</strong>自適應學習率的優化器，結合動量和自適應</li><li><strong>學習率調度：</strong>Cosine annealing、Warmup策略</li><li><strong>梯度裁剪：</strong>防止梯度爆炸</li></ul><div class="key-concept">🔑 在GAN訓練中，優化涉及兩個網絡的交替更新，這是一個極小極大優化問題，比標準優化更複雜。</div>`
+  },
+  'vae': {
+    title: 'VAE 變分自編碼器',
+    body: `<h3>架構</h3><ul><li><strong>編碼器 q(z|x)：</strong>將輸入映射到潛在空間的參數</li><li><strong>重參數化：</strong>z = μ + σ ⊙ ε</li><li><strong>解碼器 p(x|z)：</strong>從潛在向量重建輸入</li></ul><h3>損失函數</h3><p>ELBO = E[log p(x|z)] - D_KL(q(z|x) || p(z))</p><p>= 重構損失 + KL散度正則化項</p><div class="key-concept">🔑 VAE 的核心思想是變分推斷：用一個簡單的分佈（通常是高斯）去逼近真實的後驗分佈 p(z|x)，並通過最大化 ELBO 來同時優化編碼器和解碼器。</div>`
+  },
+  'diffusion': {
+    title: '擴散模型',
+    body: `<h3>基本原理</h3><p>擴散模型通過兩個過程工作：</p><ul><li><strong>前向過程：</strong>逐步添加噪聲，將數據轉化為純噪聲</li><li><strong>反向過程：</strong>學習逐步去噪，從噪聲恢復數據</li></ul><h3>數學描述</h3><p>前向：q(x_t|x_{t-1}) = N(x_t; √(1-β_t)x_{t-1}, β_t I)</p><p>反向：p_θ(x_{t-1}|x_t) = N(x_{t-1}; μ_θ(x_t, t), Σ_θ(x_t, t))</p><div class="key-concept">🔑 Stable Diffusion 的關鍵創新是在潛在空間（而非像素空間）進行擴散，使計算成本降低數個數量級。</div>`
+  },
+  'llm': {
+    title: '大型語言模型 (LLM)',
+    body: `<h3>定義</h3><p>大型語言模型是基於 Transformer 架構、在海量文本數據上預訓練的深度學習模型，具有強大的語言理解和生成能力。</p><h3>代表模型</h3><ul><li><strong>GPT 系列：</strong>OpenAI，Decoder-only 架構</li><li><strong>LLaMA 系列：</strong>Meta，開源模型</li><li><strong>Claude：</strong>Anthropic，注重安全對齊</li><li><strong>Gemini：</strong>Google，多模態原生</li></ul><div class="key-concept">🔑 LLM 的核心能力來自「下一詞預測」的預訓練目標，以及大規模帶來的湧現能力。</div>`
+  },
+  'prompting': {
+    title: '提示工程 (Prompt Engineering)',
+    body: `<h3>定義</h3><p>提示工程是設計和優化輸入提示（Prompt）以引導 LLM 產生期望輸出的技術。</p><h3>主要策略</h3><ul><li><strong>Zero-shot：</strong>直接描述任務</li><li><strong>Few-shot：</strong>提供少量示例</li><li><strong>Chain-of-Thought：</strong>引導逐步推理</li><li><strong>Self-Consistency：</strong>多次採樣取共識</li><li><strong>ReAct：</strong>推理+行動循環</li></ul><div class="key-concept">🔑 好的 Prompt 應該：角色明確、任務清晰、約束具體、示例充分、格式規範。</div>`
+  },
+  'rag': {
+    title: 'RAG 檢索增強生成',
+    body: `<h3>定義</h3><p>RAG (Retrieval-Augmented Generation) 是一種將外部知識檢索與語言模型生成相結合的技術。</p><h3>工作流程</h3><ul><li>1. 文檔分塊並向量化（Embedding）</li><li>2. 存入向量數據庫</li><li>3. 查詢向量化後進行語義搜索</li><li>4. 檢索結果作為上下文注入 Prompt</li><li>5. LLM 基於增強上下文生成回答</li></ul><div class="key-concept">🔑 RAG 的優勢：知識可更新、可溯源、減少幻覺、無需重新訓練模型。局限：檢索質量直接影響回答質量。</div>`
+  },
+  'agent': {
+    title: 'AI Agent 系統',
+    body: `<h3>定義</h3><p>AI Agent 是能夠自主感知環境、制定計劃、執行行動並反思結果的智能系統。</p><h3>核心組件</h3><ul><li><strong>感知：</strong>理解用戶需求和環境狀態</li><li><strong>規劃：</strong>將任務分解為可執行步驟</li><li><strong>記憶：</strong>短期（上下文）和長期（向量DB）</li><li><strong>行動：</strong>調用工具和API</li><li><strong>反思：</strong>評估結果並調整策略</li></ul><div class="key-concept">🔑 Agent 與普通LLM交互的區別：Agent 具有「循環」能力——可以觀察行動結果，調整策略，繼續執行，直到任務完成。</div>`
+  },
+  'ethics': {
+    title: 'AI 倫理議題',
+    body: `<h3>核心倫理問題</h3><ul><li><strong>偏見：</strong>模型放大訓練數據中的社會偏見</li><li><strong>虛假資訊：</strong>Deepfake 和 AI 生成假內容</li><li><strong>版權：</strong>訓練數據和生成內容的知識產權</li><li><strong>隱私：</strong>模型可能洩露個人資訊</li><li><strong>就業：</strong>自動化對勞動市場的衝擊</li></ul><h3>香港相關法規</h3><ul><li>個人資料（私隱）條例</li><li>AI：個人資料保障範本指引</li></ul><div class="key-concept">🔑 負責任的AI原則：公平性、透明性、可問責性、隱私保護、安全性。</div>`
+  },
+  'alignment': {
+    title: 'AI 對齊 (Alignment)',
+    body: `<h3>定義</h3><p>AI對齊是確保AI系統的行為、目標和輸出符合人類意圖和價值觀的研究領域。</p><h3>主要方法</h3><ul><li><strong>RLHF：</strong>人類反饋強化學習</li><li><strong>Constitutional AI：</strong>基於原則的自我修正</li><li><strong>紅隊測試：</strong>系統性尋找安全漏洞</li><li><strong>可解釋性：</strong>理解模型內部決策</li></ul><h3>對齊挑戰</h3><ul><li>對齊稅（Alignment Tax）</li><li>價值觀的多樣性</li><li> Goodhart's Law</li></ul><div class="key-concept">🔑 對齊的難題：人類價值觀難以精確定義和量化，且不同文化和群體的價值觀可能衝突。</div>`
+  }
+};
+
+// Search index
+const searchIndex = [];
+chapters.forEach(ch => {
+  ch.sections.forEach(sec => {
+    const text = sec.content.replace(/<[^>]*>/g, '');
+    searchIndex.push({ title: sec.title, page: 'chapters', chapter: ch.id, text: text.substring(0, 200), fullText: text });
+  });
+});
+flashcardsData.forEach((fc, i) => {
+  searchIndex.push({ title: `卡片 ${i+1}: ${fc.front}`, page: 'flashcards', text: fc.front + ' ' + fc.back, fullText: fc.front + ' ' + fc.back });
+});
+quizData.forEach((q, i) => {
+  searchIndex.push({ title: `測驗題 ${i+1}`, page: 'quiz', text: q.q + ' ' + q.explanation, fullText: q.q + ' ' + q.explanation });
+});
+
+// ===== STATE =====
+let bookmarks = JSON.parse(localStorage.getItem('genai_bookmarks') || '[]');
+let progress = JSON.parse(localStorage.getItem('genai_progress') || '{}');
+let quizHistory = JSON.parse(localStorage.getItem('genai_quiz_history') || '[]');
+let currentQuizQuestion = 0;
+let quizAnswers = [];
+let quizSubmitted = false;
+
+// ===== NAVIGATION =====
+function switchPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  document.querySelectorAll('.navbar-links a').forEach(a => {
+    a.classList.toggle('active', a.dataset.page === page);
+  });
+  document.getElementById('navLinks').classList.remove('open');
+  window.scrollTo(0, 0);
+}
+document.querySelectorAll('.navbar-links a').forEach(a => {
+  a.addEventListener('click', e => { e.preventDefault(); switchPage(a.dataset.page); });
+});
+function toggleMobileNav() {
+  document.getElementById('navLinks').classList.toggle('open');
+}
+
+// ===== THEME =====
+function toggleTheme() {
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  document.documentElement.setAttribute('data-theme', isDark ? '' : 'dark');
+  document.getElementById('themeBtn').textContent = isDark ? '🌙' : '☀️';
+  localStorage.setItem('genai_theme', isDark ? 'light' : 'dark');
+}
+if (localStorage.getItem('genai_theme') === 'dark') { toggleTheme(); }
+
+// ===== SEARCH =====
+function toggleSearch() {
+  const overlay = document.getElementById('searchOverlay');
+  overlay.classList.toggle('active');
+  if (overlay.classList.contains('active')) {
+    setTimeout(() => document.getElementById('searchInput').focus(), 100);
+  }
+}
+function closeSearch() {
+  document.getElementById('searchOverlay').classList.remove('active');
+  document.getElementById('searchInput').value = '';
+  document.getElementById('searchResults').innerHTML = '';
+}
+function performSearch(query) {
+  const results = document.getElementById('searchResults');
+  if (!query.trim()) { results.innerHTML = ''; return; }
+  const q = query.toLowerCase();
+  const matches = searchIndex.filter(item =>
+    item.title.toLowerCase().includes(q) || item.fullText.toLowerCase().includes(q)
+  ).slice(0, 10);
+  results.innerHTML = matches.length ? matches.map(m => `
+    <div class="search-result-item" onclick="closeSearch();navigateToResult('${m.page}','${m.chapter||''}')">
+      <h4>${highlightText(m.title, query)}</h4>
+      <p>${highlightText(m.text.substring(0, 120), query)}...</p>
+    </div>
+  `).join('') : '<p style="padding:16px;color:var(--text-muted);">沒有找到相關結果</p>';
+}
+function highlightText(text, query) {
+  if (!query) return text;
+  const re = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+  return text.replace(re, '<span class="search-highlight">$1</span>');
+}
+function navigateToResult(page, chapter) {
+  switchPage(page);
+  if (chapter && page === 'chapters') {
+    setTimeout(() => {
+      const tab = document.querySelector(`.page-tab[data-chapter="${chapter}"]`);
+      if (tab) tab.click();
+    }, 100);
+  }
+}
+document.addEventListener('keydown', e => {
+  if ((e.ctrlKey || e.metaKey) && e.key === 'k') { e.preventDefault(); toggleSearch(); }
+  if (e.key === 'Escape') { closeSearch(); closeModal(); }
+});
+
+// ===== MODAL =====
+function openModal(keyword) {
+  const detail = keywordDetails[keyword];
+  if (!detail) return;
+  document.getElementById('modalTitle').textContent = detail.title;
+  document.getElementById('modalBody').innerHTML = detail.body;
+  document.getElementById('modalOverlay').classList.add('active');
+}
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('active');
+}
+// Delegate keyword link clicks
+document.addEventListener('click', e => {
+  if (e.target.classList.contains('keyword-link')) {
+    openModal(e.target.dataset.keyword);
+  }
+});
+
+// ===== OVERVIEW PAGE =====
+function renderOverviewCards() {
+  const grid = document.getElementById('overviewCards');
+  grid.innerHTML = chapters.map(ch => {
+    const prog = getChapterProgress(ch.id);
+    const isBookmarked = bookmarks.includes(ch.id);
+    return `
+      <div class="card" onclick="switchPage('chapters');setTimeout(()=>{document.querySelector('.page-tab[data-chapter=${ch.id}]').click()},100)">
+        <button class="card-bookmark ${isBookmarked?'bookmarked':''}" onclick="event.stopPropagation();toggleBookmark('${ch.id}',this)" title="收藏">🔖</button>
+        <span class="card-tag">${ch.tag}</span>
+        <h3>${ch.icon} ${ch.title}</h3>
+        <p>${ch.desc}</p>
+        <div class="card-progress"><div class="card-progress-bar" style="width:${prog}%"></div></div>
+        <div style="margin-top:8px;font-size:0.8rem;color:var(--text-muted)">完成度 ${prog}%</div>
+      </div>`;
+  }).join('');
+  updateBookmarkedItems();
+}
+
+function getChapterProgress(chId) {
+  const ch = chapters.find(c => c.id === chId);
+  if (!ch) return 0;
+  const total = ch.sections.length;
+  const done = ch.sections.filter((_, i) => progress[`${chId}_${i}`]).length;
+  return Math.round((done / total) * 100);
+}
+
+function updateOverallProgress() {
+  let total = 0, done = 0;
+  chapters.forEach(ch => {
+    total += ch.sections.length;
+    ch.sections.forEach((_, i) => { if (progress[`${ch.id}_${i}`]) done++; });
+  });
+  document.getElementById('heroProgress').textContent = Math.round((done/total)*100) + '%';
+}
+
+// ===== BOOKMARKS =====
+function toggleBookmark(id, btn) {
+  const idx = bookmarks.indexOf(id);
+  if (idx > -1) { bookmarks.splice(idx, 1); btn.classList.remove('bookmarked'); }
+  else { bookmarks.push(id); btn.classList.add('bookmarked'); }
+  localStorage.setItem('genai_bookmarks', JSON.stringify(bookmarks));
+  updateBookmarkedItems();
+}
+function updateBookmarkedItems() {
+  const container = document.getElementById('bookmarkedItems');
+  if (!bookmarks.length) {
+    container.innerHTML = '<span style="color:var(--text-muted);font-size:0.9rem;">尚未收藏任何內容</span>';
+    return;
+  }
+  container.innerHTML = bookmarks.map(id => {
+    const ch = chapters.find(c => c.id === id);
+    return ch ? `<div style="display:inline-flex;align-items:center;gap:6px;padding:6px 14px;background:var(--bg-card);border:1px solid var(--border);border-radius:20px;margin:4px;font-size:0.85rem;cursor:pointer" onclick="switchPage('chapters');setTimeout(()=>{document.querySelector('.page-tab[data-chapter=${id}]').click()},100)">🔖 ${ch.icon} ${ch.title}</div>` : '';
+  }).join('');
+}
+
+// ===== CHAPTERS PAGE =====
+function renderChapterTabs() {
+  const tabs = document.getElementById('chapterTabs');
+  tabs.innerHTML = chapters.map((ch, i) =>
+    `<div class="page-tab ${i===0?'active':''}" data-chapter="${ch.id}" onclick="selectChapter('${ch.id}',this)">${ch.icon} ${ch.title}</div>`
+  ).join('');
+}
+function selectChapter(chId, tabEl) {
+  document.querySelectorAll('#chapterTabs .page-tab').forEach(t => t.classList.remove('active'));
+  tabEl.classList.add('active');
+  renderChapterContent(chId);
+}
+function renderChapterContent(chId) {
+  const ch = chapters.find(c => c.id === chId);
+  const container = document.getElementById('chapterContent');
+  container.innerHTML = ch.sections.map((sec, i) => {
+    const checked = progress[`${chId}_${i}`] ? 'checked' : '';
+    return `
+      <div class="chapter-content">
+        <h2>${sec.title}</h2>
+        ${sec.content}
+        <div class="chapter-check">
+          <input type="checkbox" id="chk_${chId}_${i}" ${checked} onchange="toggleProgress('${chId}',${i},this.checked)">
+          <label for="chk_${chId}_${i}">✅ 已閱讀此章節</label>
+        </div>
+      </div>`;
+  }).join('');
+}
+function toggleProgress(chId, secIdx, checked) {
+  progress[`${chId}_${secIdx}`] = checked;
+  if (!checked) delete progress[`${chId}_${secIdx}`];
+  localStorage.setItem('genai_progress', JSON.stringify(progress));
+  updateOverallProgress();
+  renderOverviewCards();
+}
+
+// ===== FLASHCARDS =====
+function renderFlashcards() {
+  const grid = document.getElementById('flashcardGrid');
+  grid.innerHTML = flashcardsData.map((fc, i) => `
+    <div class="flashcard-wrapper">
+      <div class="flashcard" onclick="this.classList.toggle('flipped')">
+        <div class="flashcard-front">
+          <div class="flashcard-num">#${i+1}</div>
+          <h3>${fc.front}</h3>
+          <div class="hint">點擊翻轉查看答案</div>
+          <div class="flashcard-difficulty">${fc.difficulty}</div>
+        </div>
+        <div class="flashcard-back">
+          <p>${fc.back}</p>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ===== QUIZ =====
+function renderQuiz() {
+  currentQuizQuestion = 0;
+  quizAnswers = new Array(quizData.length).fill(-1);
+  quizSubmitted = false;
+  renderQuizQuestion();
+}
+function renderQuizQuestion() {
+  const container = document.getElementById('quizContainer');
+  if (quizSubmitted) {
+    renderQuizResult();
+    return;
+  }
+  const q = quizData[currentQuizQuestion];
+  const letters = ['A','B','C','D'];
+  container.innerHTML = `
+    <div class="quiz-progress">
+      <div class="quiz-progress-bar-wrap"><div class="quiz-progress-bar" style="width:${((currentQuizQuestion+1)/quizData.length)*100}%"></div></div>
+      <div class="quiz-progress-text">${currentQuizQuestion+1} / ${quizData.length}</div>
+    </div>
+    <div class="quiz-question">
+      <h3>第 ${currentQuizQuestion+1} 題：${q.q}</h3>
+      <div class="quiz-options">
+        ${q.options.map((opt, i) => `
+          <div class="quiz-option ${quizAnswers[currentQuizQuestion]===i?'selected':''}" onclick="selectQuizOption(${i})">
+            <span class="quiz-option-letter">${letters[i]}</span>
+            <span>${opt}</span>
+          </div>
+        `).join('')}
+      </div>
+      <div class="quiz-explanation" id="quizExplanation">${q.explanation}</div>
+    </div>
+    <div class="quiz-nav">
+      <button class="btn btn-secondary" ${currentQuizQuestion===0?'disabled':''} onclick="prevQuizQuestion()">← 上一題</button>
+      ${currentQuizQuestion === quizData.length - 1
+        ? '<button class="btn btn-primary" onclick="submitQuiz()">提交測驗 📊</button>'
+        : '<button class="btn btn-primary" onclick="nextQuizQuestion()">下一題 →</button>'}
+    </div>`;
+}
+function selectQuizOption(idx) {
+  if (quizSubmitted) return;
+  quizAnswers[currentQuizQuestion] = idx;
+  const q = quizData[currentQuizQuestion];
+  document.querySelectorAll('.quiz-option').forEach((el, i) => {
+    el.classList.remove('selected', 'correct', 'wrong');
+    if (i === idx) el.classList.add('selected');
+  });
+  // Show correct/wrong
+  setTimeout(() => {
+    document.querySelectorAll('.quiz-option').forEach((el, i) => {
+      if (i === q.correct) el.classList.add('correct');
+      if (i === idx && i !== q.correct) el.classList.add('wrong');
+    });
+    document.getElementById('quizExplanation').classList.add('show');
+  }, 300);
+}
+function nextQuizQuestion() {
+  if (currentQuizQuestion < quizData.length - 1) {
+    currentQuizQuestion++;
+    renderQuizQuestion();
+  }
+}
+function prevQuizQuestion() {
+  if (currentQuizQuestion > 0) {
+    currentQuizQuestion--;
+    renderQuizQuestion();
+  }
+}
+function submitQuiz() {
+  quizSubmitted = true;
+  let score = 0;
+  quizAnswers.forEach((a, i) => { if (a === quizData[i].correct) score++; });
+  quizHistory.push({
+    date: new Date().toLocaleDateString('zh-HK'),
+    score,
+    total: quizData.length,
+    answers: [...quizAnswers]
+  });
+  localStorage.setItem('genai_quiz_history', JSON.stringify(quizHistory));
+  renderQuizResult();
+}
+function renderQuizResult() {
+  const container = document.getElementById('quizContainer');
+  let score = 0;
+  quizAnswers.forEach((a, i) => { if (a === quizData[i].correct) score++; });
+  const letters = ['A','B','C','D'];
+  container.innerHTML = `
+    <div class="quiz-result">
+      <div class="score">${score}/${quizData.length}</div>
+      <div class="score-label">測驗得分</div>
+      <p style="color:var(--text-secondary);margin-bottom:16px">${score >= 8 ? '🎉 表現優秀！' : score >= 6 ? '👍 不錯！繼續努力！' : '💪 需要加強複習！'}</p>
+      <div class="quiz-result-details">
+        ${quizData.map((q, i) => {
+          const correct = quizAnswers[i] === q.correct;
+          return `<div class="quiz-result-item">
+            <span class="quiz-result-icon">${correct ? '✅' : '❌'}</span>
+            <div><strong>第${i+1}題：</strong>${q.q}<br><span style="font-size:0.85rem;color:var(--text-muted)">你的答案：${quizAnswers[i]>=0?letters[quizAnswers[i]]+'. '+q.options[quizAnswers[i]]:'未作答'} | 正確答案：${letters[q.correct]}. ${q.options[q.correct]}</span></div>
+          </div>`;
+        }).join('')}
+      </div>
+      <button class="btn btn-primary" onclick="renderQuiz()" style="margin-top:20px;">重新測驗 🔄</button>
+    </div>`;
+}
+
+// ===== QUIZ TABS =====
+function switchQuizTab(tab) {
+  document.querySelectorAll('#page-quiz .page-tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
+  document.getElementById('quizTab').style.display = tab === 'quizTab' ? 'block' : 'none';
+  document.getElementById('dashTab').style.display = tab === 'dashTab' ? 'block' : 'none';
+  if (tab === 'dashTab') renderDashboard();
+}
+
+// ===== DASHBOARD =====
+function renderDashboard() {
+  const grid = document.getElementById('dashboardGrid');
+  // Calculate stats
+  const totalAttempts = quizHistory.length;
+  let totalCorrect = 0, totalQuestions = 0;
+  quizHistory.forEach(h => { totalCorrect += h.score; totalQuestions += h.total; });
+  const overallAccuracy = totalQuestions ? Math.round((totalCorrect/totalQuestions)*100) : 0;
+
+  // Per-question stats
+  const qStats = quizData.map((q, i) => {
+    let correct = 0, attempts = 0;
+    quizHistory.forEach(h => {
+      if (h.answers[i] !== undefined && h.answers[i] !== -1) {
+        attempts++;
+        if (h.answers[i] === q.correct) correct++;
+      }
+    });
+    return { idx: i+1, question: q.q.substring(0, 40) + '...', correct, attempts, rate: attempts ? Math.round((correct/attempts)*100) : 0 };
+  });
+
+  // Weaknesses
+  const weaknesses = qStats.filter(q => q.rate < 60 && q.attempts > 0).sort((a,b) => a.rate - b.rate);
+
+  // Pie chart gradient
+  const correctPct = overallAccuracy;
+  const wrongPct = 100 - correctPct;
+
+  // Chapter progress
+  const chProgress = chapters.map(ch => ({
+    title: ch.title,
+    progress: getChapterProgress(ch.id)
+  }));
+
+  grid.innerHTML = `
+    <div class="dash-card">
+      <h3>總體準確率</h3>
+      <div class="dash-stat">
+        <div class="pie-chart" style="background: conic-gradient(var(--success) 0% ${correctPct}%, var(--danger) ${correctPct}% 100%);"></div>
+        <div class="pie-legend">
+          <div class="pie-legend-item"><div class="pie-legend-dot" style="background:var(--success)"></div> 正確 ${correctPct}%</div>
+          <div class="pie-legend-item"><div class="pie-legend-dot" style="background:var(--danger)"></div> 錯誤 ${wrongPct}%</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dash-card">
+      <h3>學習統計</h3>
+      <div class="dash-stat">
+        <div class="value">${totalAttempts}</div>
+        <div class="unit">測驗次數</div>
+      </div>
+      <div style="display:flex;justify-content:space-around;margin-top:16px;">
+        <div style="text-align:center"><div style="font-size:1.5rem;font-weight:700;color:var(--success)">${totalCorrect}</div><div style="font-size:0.8rem;color:var(--text-muted)">答對</div></div>
+        <div style="text-align:center"><div style="font-size:1.5rem;font-weight:700;color:var(--danger)">${totalQuestions - totalCorrect}</div><div style="font-size:0.8rem;color:var(--text-muted)">答錯</div></div>
+      </div>
+    </div>
+
+    <div class="dash-card">
+      <h3>章節進度</h3>
+      ${chProgress.map(ch => `
+        <div style="margin-bottom:14px;">
+          <div style="display:flex;justify-content:space-between;font-size:0.85rem;margin-bottom:4px;">
+            <span>${ch.title}</span><span style="color:var(--accent);font-weight:600">${ch.progress}%</span>
+          </div>
+          <div class="card-progress"><div class="card-progress-bar" style="width:${ch.progress}%"></div></div>
+        </div>
+      `).join('')}
+    </div>
+
+    <div class="dash-card" style="grid-column:1/-1;">
+      <h3>各題答題表現</h3>
+      ${totalAttempts ? `
+        <div style="overflow-x:auto;">
+          <table class="progress-table">
+            <thead><tr><th>題號</th><th>題目</th><th>答對次數</th><th>作答次數</th><th>正確率</th><th>表現</th></tr></thead>
+            <tbody>
+              ${qStats.map(q => `<tr>
+                <td>${q.idx}</td>
+                <td>${q.question}</td>
+                <td>${q.correct}</td>
+                <td>${q.attempts}</td>
+                <td>${q.rate}%</td>
+                <td><span class="badge ${q.rate>=80?'badge-success':q.rate>=50?'badge-warning':'badge-danger'}">${q.rate>=80?'良好':q.rate>=50?'一般':'需加強'}</span></td>
+              </tr>`).join('')}
+            </tbody>
+          </table>
+        </div>
+      ` : '<p style="color:var(--text-muted);padding:20px 0;text-align:center;">尚未有測驗記錄，完成測驗後即可查看表現分析</p>'}
+    </div>
+
+    <div class="dash-card">
+      <h3>弱點分析</h3>
+      ${weaknesses.length ? `
+        <ul class="weakness-list">
+          ${weaknesses.map(w => `<li>
+            <span class="weakness-topic">第${w.idx}題</span>
+            <span class="weakness-score" style="color:var(--danger)">${w.rate}%</span>
+          </li>`).join('')}
+        </ul>
+      ` : '<p style="color:var(--text-muted);text-align:center;padding:20px 0;">暫無弱點，繼續保持！</p>'}
+    </div>
+
+    <div class="dash-card">
+      <h3>測驗歷史</h3>
+      ${totalAttempts ? `
+        <table class="progress-table">
+          <thead><tr><th>日期</th><th>得分</th><th>正確率</th></tr></thead>
+          <tbody>
+            ${quizHistory.slice(-10).reverse().map(h => `<tr>
+              <td>${h.date}</td>
+              <td>${h.score}/${h.total}</td>
+              <td>${Math.round((h.score/h.total)*100)}%</td>
+            </tr>`).join('')}
+          </tbody>
+        </table>
+      ` : '<p style="color:var(--text-muted);text-align:center;padding:20px 0;">尚未有測驗記錄</p>'}
+    </div>
+  `;
+}
+
+// ===== INIT =====
+function init() {
+  renderOverviewCards();
+  renderChapterTabs();
+  renderChapterContent(chapters[0].id);
+  renderFlashcards();
+  renderQuiz();
+  updateOverallProgress();
+}
+init();
+</script>
 </body>
 </html>
