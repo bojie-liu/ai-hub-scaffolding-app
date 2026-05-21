@@ -80,14 +80,20 @@ interface ConceptCheckResult {
 }
 
 const SECTION_LABELS: Record<string, string> = {
-  ilos: 'Learning Outcomes',
-  preclass: 'Pre-Class',
-  introduction: 'Introduction',
-  development: 'Activities',
-  synthesis: 'Synthesis',
-  assessment: 'Assessment',
-  alignment: 'Alignment',
-  resources: 'Resources',
+  ilos: '預期學習成果',
+  preclass: '課前準備',
+  introduction: '引言',
+  activity1: '活動一：理論解構',
+  activity2: '活動二：知識審計',
+  activity3: '活動三：平台設計',
+  activity4: '活動四：策略制定',
+  summary: '總結與延伸',
+  assessment: '評估方式',
+  alignment: '建構主義對應',
+  resources: '資源與工具',
+  differentiation: '差異化策略',
+  reflection: '教學反思',
+  supplementary: '補充教材',
 };
 
 export default function TeacherDashboard() {
@@ -233,7 +239,7 @@ export default function TeacherDashboard() {
         <div className="text-center py-8">
           <Users className="mx-auto h-8 w-8 text-muted-foreground mb-2" />
           <p className="text-sm text-muted-foreground">
-            No students found.
+            尚無學生資料。
           </p>
         </div>
       );
@@ -324,7 +330,7 @@ export default function TeacherDashboard() {
         <div className="text-center py-8">
           <BookOpen className="mx-auto h-8 w-8 text-muted-foreground mb-2" />
           <p className="text-sm text-muted-foreground">
-            No quiz results available.
+            尚無測驗結果。
           </p>
         </div>
       );
@@ -460,7 +466,7 @@ export default function TeacherDashboard() {
         <div className="text-center py-8">
           <BarChart3 className="mx-auto h-8 w-8 text-muted-foreground mb-2" />
           <p className="text-sm text-muted-foreground">
-            No concept check results available.
+            尚無概念檢測結果。
           </p>
         </div>
       );
@@ -553,7 +559,7 @@ export default function TeacherDashboard() {
                 <Users className="h-5 w-5 text-primary" />
               </div>
               <div>
-                <p className="text-sm text-muted-foreground">Total Students</p>
+                <p className="text-sm text-muted-foreground">學生總數</p>
                 <p className="text-2xl font-bold">{totalStudents}</p>
               </div>
             </div>
@@ -567,7 +573,7 @@ export default function TeacherDashboard() {
                 <CheckCircle className="h-5 w-5 text-emerald-600" />
               </div>
               <div>
-                <p className="text-sm text-muted-foreground">Avg Completion</p>
+                <p className="text-sm text-muted-foreground">平均完成率</p>
                 <p className="text-2xl font-bold">{avgCompletion}%</p>
               </div>
             </div>
@@ -581,7 +587,7 @@ export default function TeacherDashboard() {
                 <BookOpen className="h-5 w-5 text-blue-600" />
               </div>
               <div>
-                <p className="text-sm text-muted-foreground">Quiz Attempts</p>
+                <p className="text-sm text-muted-foreground">測驗次數</p>
                 <p className="text-2xl font-bold">{totalQuizAttempts}</p>
               </div>
             </div>
@@ -595,7 +601,7 @@ export default function TeacherDashboard() {
                 <BarChart3 className="h-5 w-5 text-violet-600" />
               </div>
               <div>
-                <p className="text-sm text-muted-foreground">Concept Checks</p>
+                <p className="text-sm text-muted-foreground">概念檢測</p>
                 <p className="text-2xl font-bold">{conceptResults.length}</p>
               </div>
             </div>
@@ -610,25 +616,25 @@ export default function TeacherDashboard() {
         <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger value="progress" className="gap-1.5">
             <Users className="h-4 w-4" />
-            <span className="hidden sm:inline">Student Progress</span>
-            <span className="sm:hidden">Progress</span>
+            <span className="hidden sm:inline">學生進度</span>
+            <span className="sm:hidden">進度</span>
           </TabsTrigger>
           <TabsTrigger value="quizzes" className="gap-1.5">
             <BookOpen className="h-4 w-4" />
-            <span className="hidden sm:inline">Quiz Results</span>
-            <span className="sm:hidden">Quizzes</span>
+            <span className="hidden sm:inline">測驗結果</span>
+            <span className="sm:hidden">測驗</span>
           </TabsTrigger>
           <TabsTrigger value="concepts" className="gap-1.5">
             <BarChart3 className="h-4 w-4" />
-            <span className="hidden sm:inline">Concept Checks</span>
-            <span className="sm:hidden">Concepts</span>
+            <span className="hidden sm:inline">概念檢測</span>
+            <span className="sm:hidden">概念</span>
           </TabsTrigger>
         </TabsList>
 
         <TabsContent value="progress" className="mt-4">
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg">Student Progress by Section</CardTitle>
+              <CardTitle className="text-lg">各區段學生進度</CardTitle>
             </CardHeader>
             <CardContent>{renderProgressTable()}</CardContent>
           </Card>
