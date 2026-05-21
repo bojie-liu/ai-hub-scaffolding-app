@@ -83,11 +83,18 @@ const SECTION_LABELS: Record<string, string> = {
   ilos: 'Learning Outcomes',
   preclass: 'Pre-Class',
   introduction: 'Introduction',
-  development: 'Activities',
+  'pollution-control': 'Pollution Control',
+  'waste-hierarchy': 'Waste Hierarchy',
+  'case-study': 'Case Study',
+  'peer-teaching': 'Peer Teaching',
+  'marine-workshop': 'Marine Workshop',
   synthesis: 'Synthesis',
   assessment: 'Assessment',
   alignment: 'Alignment',
   resources: 'Resources',
+  differentiation: 'Differentiation',
+  reflection: 'Reflection',
+  materials: 'Materials',
 };
 
 export default function TeacherDashboard() {
