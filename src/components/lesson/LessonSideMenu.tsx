@@ -69,7 +69,7 @@ export default function LessonSideMenu({ sections }: LessonSideMenuProps) {
   return (
     <aside className="hidden lg:block w-48 shrink-0">
       <nav className="sticky top-24 space-y-1">
-        <p className="px-3 mb-2 text-xs font-semibold text-slate-400 uppercase tracking-wider">Sections</p>
+        <p className="px-3 mb-2 text-xs font-semibold text-slate-400 uppercase tracking-wider">章節</p>
         {sections.map((s) => (
           <a
             key={s.id}

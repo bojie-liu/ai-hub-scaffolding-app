@@ -45,32 +45,32 @@ export function LoginForm() {
     <div className="flex items-center justify-center min-h-screen p-4 bg-gradient-to-br from-blue-50 to-indigo-100">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
-          <div className="mx-auto w-12 h-12 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold text-lg mb-2">AI</div>
-          <CardTitle className="text-2xl">AI in Software Engineering</CardTitle>
-          <CardDescription>Sign in to access the lesson plan</CardDescription>
+          <div className="mx-auto w-12 h-12 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold text-lg mb-2">KM</div>
+          <CardTitle className="text-2xl">知識管理與學校發展</CardTitle>
+          <CardDescription>登入以存取課程內容</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="username">Username</Label>
+              <Label htmlFor="username">用戶名</Label>
               <Input
                 id="username"
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                placeholder="Enter your username"
+                placeholder="請輸入用戶名"
                 required
                 disabled={loading}
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">密碼</Label>
               <Input
                 id="password"
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter your password"
+                placeholder="請輸入密碼"
                 required
                 disabled={loading}
               />
@@ -79,14 +79,14 @@ export function LoginForm() {
               <p className="text-sm text-red-600 bg-red-50 p-2 rounded">{error}</p>
             )}
             <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? 'Signing in...' : 'Sign In'}
+              {loading ? '登入中...' : '登入'}
             </Button>
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
                 <span className="w-full border-t" />
               </div>
               <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-card px-2 text-muted-foreground">or</span>
+                <span className="bg-card px-2 text-muted-foreground">或</span>
               </div>
             </div>
             <Button
@@ -99,7 +99,7 @@ export function LoginForm() {
                 router.push('/lesson');
               }}
             >
-              Continue as Guest
+              以訪客身份繼續
             </Button>
           </form>
         </CardContent>

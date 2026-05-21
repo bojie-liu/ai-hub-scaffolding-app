@@ -12,7 +12,7 @@ interface ConceptCheckProps {
   checkId: number;
   title: string;
   prompt: string;
-  checkType: 'thumbs' | 'scale' | 'text';
+  checkType: string;
   userId: number;
   userRole: string;
   existingResponse?: string | null;
@@ -28,9 +28,9 @@ export default function ConceptCheck({ checkId, title, prompt, checkType, userId
     const result = await submitConceptCheckResponse(checkId, userId, value);
     if (result.success) {
       setResponse(value);
-      toast.success('Response recorded');
+      toast.success('回應已記錄');
     } else {
-      toast.error('Failed to submit response');
+      toast.error('提交回應失敗');
     }
     setLoading(false);
   }
@@ -40,7 +40,7 @@ export default function ConceptCheck({ checkId, title, prompt, checkType, userId
       <Card className="bg-emerald-50 border-emerald-200">
         <CardContent className="pt-4">
           <p className="font-medium text-emerald-800 text-sm">{title}</p>
-          <p className="text-emerald-700 text-sm mt-1">Your response: <span className="font-medium">{response}</span></p>
+          <p className="text-emerald-700 text-sm mt-1">您的回應：<span className="font-medium">{response}</span></p>
         </CardContent>
       </Card>
     );
@@ -61,7 +61,7 @@ export default function ConceptCheck({ checkId, title, prompt, checkType, userId
               onClick={() => submit('up')}
               disabled={loading}
             >
-              <ThumbsUp className="h-5 w-5" /> Yes
+              <ThumbsUp className="h-5 w-5" /> 是
             </Button>
             <Button
               variant="outline"
@@ -70,7 +70,7 @@ export default function ConceptCheck({ checkId, title, prompt, checkType, userId
               onClick={() => submit('down')}
               disabled={loading}
             >
-              <ThumbsDown className="h-5 w-5" /> No
+              <ThumbsDown className="h-5 w-5" /> 否
             </Button>
           </div>
         )}
@@ -97,11 +97,11 @@ export default function ConceptCheck({ checkId, title, prompt, checkType, userId
             <Textarea
               value={textInput}
               onChange={(e) => setTextInput(e.target.value)}
-              placeholder="Type your response..."
+              placeholder="請輸入您的回應..."
               rows={3}
             />
             <Button size="sm" onClick={() => submit(textInput)} disabled={loading || !textInput.trim()}>
-              Submit
+              提交
             </Button>
           </div>
         )}

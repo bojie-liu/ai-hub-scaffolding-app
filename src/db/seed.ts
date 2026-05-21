@@ -1,30 +1,10 @@
 import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
 import { sql, eq } from 'drizzle-orm';
-import { readFileSync } from 'fs';
-import { resolve } from 'path';
 import bcrypt from 'bcryptjs';
 import * as schema from './schema';
 
-// // Load .env.local
-// try {
-//   const envPath = resolve(process.cwd(), '.env.local');
-//   const envContent = readFileSync(envPath, 'utf-8');
-//   for (const line of envContent.split('\n')) {
-//     const match = line.match(/^([^#=]+)=(.*)$/);
-//     if (match) {
-//       const key = match[1].trim();
-//       const value = match[2].trim().replace(/^["']|["']$/g, '');
-//       if (!process.env[key]) {
-//         process.env[key] = value;
-//       }
-//     }
-//   }
-// } catch {
-//   // .env.local not found, rely on existing env vars
-// }
-
-const SEED_VERSION = 'v1_initial';
+const SEED_VERSION = 'v2_lesson_content';
 
 async function seed() {
   const client = postgres(process.env.DATABASE_URL!);
@@ -54,19 +34,280 @@ async function seed() {
 
     // Run seed data within a transaction
     await db.transaction(async (tx) => {
+      // ── Admin user ──────────────────────────────────────────────
       const passwordHash = await bcrypt.hash(
         process.env.SEED_ADMIN_PASSWORD || 'changeme',
         10,
       );
 
-      await tx.insert(schema.users).values({
-        username: 'admin',
-        email: 'admin@example.com',
-        passwordHash,
-        role: 'TEACHER',
-        displayName: 'Admin User',
-      });
+      const [adminUser] = await tx
+        .insert(schema.users)
+        .values({
+          username: 'admin',
+          email: 'admin@example.com',
+          passwordHash,
+          role: 'TEACHER',
+          displayName: 'Admin User',
+        })
+        .returning({ id: schema.users.id });
 
+      // ── Slides ──────────────────────────────────────────────────
+      await tx.insert(schema.slides).values([
+        {
+          storageKey: 'slide:km-title',
+          slideOrder: 1,
+          title: '知識管理與學校發展',
+          content: '大學一年級課程教案',
+          slideType: 'title',
+        },
+        {
+          storageKey: 'slide:km-ilos',
+          slideOrder: 2,
+          title: '學習目標 (ILOs)',
+          content:
+            '- 分析資訊科技發展對知識管理的挑戰與機遇\n- 設計適用於學校知識共享機制的初步方案\n- 評估知識資本管理對學校持續發展的影響\n- 應用知識審計工具進行校本案例分析\n- 探討知識轉移策略對教師專業發展的作用',
+          slideType: 'content',
+        },
+        {
+          storageKey: 'slide:km-prep',
+          slideOrder: 3,
+          title: '課前準備',
+          content:
+            '- 必讀資料：Wikipedia知識管理條目中文版 + 教育局《校本知識管理指南》\n- 診斷測驗：知識管理基礎知識與前測 8題\n- 引導問題：描述學校知識分享流程、資訊工具限制、校本實務經驗',
+          slideType: 'content',
+        },
+        {
+          storageKey: 'slide:km-opening',
+          slideOrder: 4,
+          title: '開場活動 (20分鐘)',
+          content:
+            '- 熱身活動：互動投票「哪種知識流失最嚴重?」\n- 共識建立：展示PISA 2025教育科技報告摘要\n- 案例導入：某中學教師離職造成校本教案斷層事件',
+          slideType: 'activity',
+        },
+        {
+          storageKey: 'slide:km-block1',
+          slideOrder: 5,
+          title: '區塊一：概念建構 (45分鐘)',
+          content:
+            '- 動態講授結合知識流動示意動畫\n- 概念拼圖：知識轉移SECI模型分組配對活動\n- 即時問答：Padlet同步提交知識資本迷思概念',
+          slideType: 'activity',
+        },
+        {
+          storageKey: 'slide:km-block2',
+          slideOrder: 6,
+          title: '區塊二：案例研析 (60分鐘)',
+          content:
+            '- 情境工作坊：小組輪轉分析4個校園知識斷裂案例\n- 使用知識審計模板工具診斷問題\n- 制定知識保存優先級矩陣\n- 角色扮演：校長VS教師的知識共享辯論會',
+          slideType: 'activity',
+        },
+        {
+          storageKey: 'slide:km-block3',
+          slideOrder: 7,
+          title: '區塊三：方案設計 (45分鐘)',
+          content:
+            '- 設計思維：運用知識管理策略卡牌建構解決方案\n- 原型製作：以Canva模擬校本知識平台介面設計\n- 閃電演講：每組3分鐘精華版方案展示',
+          slideType: 'activity',
+        },
+        {
+          storageKey: 'slide:km-assessment',
+          slideOrder: 8,
+          title: '評估方式',
+          content:
+            '- 形成性評估：課堂參與度、小組成果互評、即時反饋問卷\n- 總結性評估：小組實作報告\n- 評量規準：問題診斷深度、策略可行性、創新性\n- 4星級制：從表象描述到跨領域知識遷移',
+          slideType: 'assessment',
+        },
+        {
+          storageKey: 'slide:km-alignment',
+          slideOrder: 9,
+          title: '對齊矩陣與資源需求',
+          content:
+            '- 學習成果→教學活動→評估方法三方對齊\n- 教學平台：Moodle課前資源包\n- 科技工具：Mentimeter即時投票、Padlet虛擬白板\n- 物理材料：知識管理策略卡牌\n- 支援影片：SECI模型動畫',
+          slideType: 'content',
+        },
+        {
+          storageKey: 'slide:km-differentiation',
+          slideOrder: 10,
+          title: '差異化策略與品質管控',
+          content:
+            '- 多元表達：簡報與文字雙版本教材\n- 深度支持：為資深教師設計延伸閱讀\n- 適應介面：含英漢術語對照表\n- 品質指標：課前後測試進步幅度 >60%\n- 反饋機制：課後24小時反思日記\n- 效能追蹤：3個月後追蹤策略落實情況',
+          slideType: 'content',
+        },
+      ]);
+
+      // ── Quiz (diagnostic) ────────────────────────────────────────
+      const [quiz] = await tx
+        .insert(schema.quizzes)
+        .values({
+          storageKey: 'quiz:diagnostic-km',
+          title: '知識管理基礎知識與前測',
+          description: '診斷測驗：測試您對知識管理的基本認識',
+          quizType: 'multiple_choice',
+        })
+        .returning({ id: schema.quizzes.id });
+
+      // ── Questions & Answers ──────────────────────────────────────
+      const quizQuestions = [
+        {
+          storageKey: 'question:km-core-goal',
+          questionText: '以下哪項是知識管理的核心目標？',
+          questionOrder: 1,
+          answers: [
+            { answerText: '促進知識的創造、分享與應用', isCorrect: true, answerOrder: 1 },
+            { answerText: '增加資料的存儲量', isCorrect: false, answerOrder: 2 },
+            { answerText: '減少組織的人力成本', isCorrect: false, answerOrder: 3 },
+            { answerText: '提升硬體設備效能', isCorrect: false, answerOrder: 4 },
+          ],
+        },
+        {
+          storageKey: 'question:seci-s',
+          questionText: 'SECI模型中的「S」代表什麼？',
+          questionOrder: 2,
+          answers: [
+            { answerText: '社會化 (Socialization)', isCorrect: true, answerOrder: 1 },
+            { answerText: '系統化 (Systematization)', isCorrect: false, answerOrder: 2 },
+            { answerText: '標準化 (Standardization)', isCorrect: false, answerOrder: 3 },
+            { answerText: '策略化 (Strategization)', isCorrect: false, answerOrder: 4 },
+          ],
+        },
+        {
+          storageKey: 'question:tacit-knowledge',
+          questionText: '隱性知識的特點是什麼？',
+          questionOrder: 3,
+          answers: [
+            { answerText: '難以用文字和語言明確表達', isCorrect: true, answerOrder: 1 },
+            { answerText: '可以輕易寫成手冊', isCorrect: false, answerOrder: 2 },
+            { answerText: '只存在於資料庫中', isCorrect: false, answerOrder: 3 },
+            { answerText: '與個人經驗無關', isCorrect: false, answerOrder: 4 },
+          ],
+        },
+        {
+          storageKey: 'question:knowledge-audit',
+          questionText: '知識審計的主要目的是什麼？',
+          questionOrder: 4,
+          answers: [
+            { answerText: '識別和評估組織的知識資產', isCorrect: true, answerOrder: 1 },
+            { answerText: '計算員工的知識考試成績', isCorrect: false, answerOrder: 2 },
+            { answerText: '審查財務報表的準確性', isCorrect: false, answerOrder: 3 },
+            { answerText: '評估學校的建築設施', isCorrect: false, answerOrder: 4 },
+          ],
+        },
+        {
+          storageKey: 'question:transfer-barrier',
+          questionText: '以下哪項不屬於知識轉移的障礙？',
+          questionOrder: 5,
+          answers: [
+            { answerText: '知識共享的文化氛圍', isCorrect: true, answerOrder: 1 },
+            { answerText: '員工離職造成的知識流失', isCorrect: false, answerOrder: 2 },
+            { answerText: '缺乏有效的知識記錄機制', isCorrect: false, answerOrder: 3 },
+            { answerText: '部門間的資訊孤島', isCorrect: false, answerOrder: 4 },
+          ],
+        },
+        {
+          storageKey: 'question:knowledge-capital',
+          questionText: '知識資本包含哪三個主要組成部分？',
+          questionOrder: 6,
+          answers: [
+            { answerText: '人力資本、結構資本、關係資本', isCorrect: true, answerOrder: 1 },
+            { answerText: '財務資本、物質資本、社會資本', isCorrect: false, answerOrder: 2 },
+            { answerText: '技術資本、文化資本、政治資本', isCorrect: false, answerOrder: 3 },
+            { answerText: '教育資本、研究資本、創新資本', isCorrect: false, answerOrder: 4 },
+          ],
+        },
+        {
+          storageKey: 'question:campus-sharing',
+          questionText: '在校園環境中，以下哪種做法最能促進知識共享？',
+          questionOrder: 7,
+          answers: [
+            { answerText: '建立教師學習社群和經驗分享平台', isCorrect: true, answerOrder: 1 },
+            { answerText: '限制教師間的交流以保護知識產權', isCorrect: false, answerOrder: 2 },
+            { answerText: '只依賴書面文件傳遞知識', isCorrect: false, answerOrder: 3 },
+            { answerText: '由管理層單方面制定所有教學策略', isCorrect: false, answerOrder: 4 },
+          ],
+        },
+        {
+          storageKey: 'question:5s-seiton',
+          questionText: '5S管理法中的「整頓」是指什麼？',
+          questionOrder: 8,
+          answers: [
+            { answerText: '將必要物品有序排列以便取用', isCorrect: true, answerOrder: 1 },
+            { answerText: '丟棄所有不需要的物品', isCorrect: false, answerOrder: 2 },
+            { answerText: '定期清潔工作環境', isCorrect: false, answerOrder: 3 },
+            { answerText: '制定嚴格的管理制度', isCorrect: false, answerOrder: 4 },
+          ],
+        },
+      ];
+
+      for (const q of quizQuestions) {
+        const [insertedQuestion] = await tx
+          .insert(schema.questions)
+          .values({
+            quizId: quiz.id,
+            storageKey: q.storageKey,
+            questionText: q.questionText,
+            questionOrder: q.questionOrder,
+            questionType: 'multiple_choice',
+          })
+          .returning({ id: schema.questions.id });
+
+        await tx.insert(schema.answers).values(
+          q.answers.map((a) => ({
+            questionId: insertedQuestion.id,
+            answerText: a.answerText,
+            isCorrect: a.isCorrect,
+            answerOrder: a.answerOrder,
+          })),
+        );
+      }
+
+      // ── Discussions ─────────────────────────────────────────────
+      await tx.insert(schema.discussions).values([
+        {
+          storageKey: 'discussion:km-sharing',
+          title: '知識分享的挑戰與機遇',
+          description: '請分享您在學校中遇到的知識分享挑戰，以及可能的解決方案',
+          createdBy: adminUser.id,
+        },
+        {
+          storageKey: 'discussion:seci-application',
+          title: 'SECI模型在學校的應用',
+          description: '探討SECI模型如何應用於學校的知識轉移過程',
+          createdBy: adminUser.id,
+        },
+      ]);
+
+      // ── Concept checks ──────────────────────────────────────────
+      await tx.insert(schema.conceptChecks).values([
+        {
+          storageKey: 'concept:ilo-understand',
+          title: '學習目標理解檢查',
+          prompt: '您是否理解本課程的五個學習目標？',
+          checkType: 'thumbs',
+          sectionKey: 'ilos',
+        },
+        {
+          storageKey: 'concept:seci-comprehension',
+          title: 'SECI模型理解',
+          prompt: '您是否理解SECI模型中社會化、外化、組合化、內化的含義？',
+          checkType: 'thumbs',
+          sectionKey: 'development',
+        },
+        {
+          storageKey: 'concept:audit-confidence',
+          title: '知識審計信心',
+          prompt: '您對使用知識審計工具進行校本案例分析有多大信心？',
+          checkType: 'scale',
+          sectionKey: 'development',
+        },
+        {
+          storageKey: 'concept:overall-reflection',
+          title: '課後反思',
+          prompt: '請簡述您今天學到的最重要的知識管理概念',
+          checkType: 'text',
+          sectionKey: 'assessment',
+        },
+      ]);
+
+      // ── Seed log ────────────────────────────────────────────────
       await tx.insert(schema.seedLog).values({
         seedVersion: SEED_VERSION,
       });

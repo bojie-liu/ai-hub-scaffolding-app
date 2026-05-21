@@ -37,7 +37,7 @@ export default function SlideNavigation({
 
       <div className="flex-1 flex flex-col items-center gap-1">
         <span className="text-sm font-medium">
-          Slide {currentSlide + 1} of {totalSlides}
+          投影片 {currentSlide + 1} / {totalSlides}
         </span>
         <Progress value={progress} className="h-1 w-full max-w-xs" />
       </div>
@@ -57,7 +57,7 @@ export default function SlideNavigation({
         size="sm"
         onClick={onToggleFullscreen}
         className="text-white hover:bg-white/10 ml-1"
-        title={isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'}
+        title={isFullscreen ? '退出全螢幕' : '全螢幕'}
       >
         {isFullscreen ? <Minimize className="h-5 w-5" /> : <Maximize className="h-5 w-5" />}
       </Button>

@@ -95,7 +95,7 @@ export default function EditableText({
   return (
     <Tag
       className={`${className} cursor-pointer rounded hover:outline hover:outline-2 hover:outline-blue-300 hover:outline-offset-2 transition-all ${isLoading ? 'opacity-50' : ''}`}
-      title="Click to edit"
+      title="點擊編輯"
       onClick={() => setEditing(true)}
     >
       {linkify(value)}
