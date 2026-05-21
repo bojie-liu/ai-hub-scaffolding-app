@@ -44,4 +44,5 @@ function runStepAllowFailure(name: string, command: string): void {
 
 runStepAllowFailure('DB: Migrate', 'npx tsx src/db/migrate.ts');
 runStepAllowFailure('DB: Seed', 'npx tsx src/db/seed.ts');
+runStepAllowFailure('DB: Lesson Content Seed', 'npx tsx src/db/seed-lesson.ts');
 runStep('Next.js Dev', 'npx next dev');
