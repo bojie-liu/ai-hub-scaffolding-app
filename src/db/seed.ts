@@ -1,30 +1,10 @@
 import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
 import { sql, eq } from 'drizzle-orm';
-import { readFileSync } from 'fs';
-import { resolve } from 'path';
 import bcrypt from 'bcryptjs';
 import * as schema from './schema';
 
-// // Load .env.local
-// try {
-//   const envPath = resolve(process.cwd(), '.env.local');
-//   const envContent = readFileSync(envPath, 'utf-8');
-//   for (const line of envContent.split('\n')) {
-//     const match = line.match(/^([^#=]+)=(.*)$/);
-//     if (match) {
-//       const key = match[1].trim();
-//       const value = match[2].trim().replace(/^["']|["']$/g, '');
-//       if (!process.env[key]) {
-//         process.env[key] = value;
-//       }
-//     }
-//   }
-// } catch {
-//   // .env.local not found, rely on existing env vars
-// }
-
-const SEED_VERSION = 'v1_initial';
+const SEED_VERSION = 'v2_constructivism_lesson';
 
 async function seed() {
   const client = postgres(process.env.DATABASE_URL!);
@@ -54,19 +34,538 @@ async function seed() {
 
     // Run seed data within a transaction
     await db.transaction(async (tx) => {
-      const passwordHash = await bcrypt.hash(
+      // --- Create users ---
+      const adminPasswordHash = await bcrypt.hash(
         process.env.SEED_ADMIN_PASSWORD || 'changeme',
         10,
       );
 
-      await tx.insert(schema.users).values({
+      const [teacher] = await tx.insert(schema.users).values({
         username: 'admin',
         email: 'admin@example.com',
-        passwordHash,
+        passwordHash: adminPasswordHash,
         role: 'TEACHER',
         displayName: 'Admin User',
-      });
+      }).returning();
 
+      const studentPasswordHash = await bcrypt.hash('student123', 10);
+
+      await tx.insert(schema.users).values({
+        username: 'student1',
+        email: 'student1@example.com',
+        passwordHash: studentPasswordHash,
+        role: 'STUDENT',
+        displayName: 'Alex Johnson',
+      }).returning();
+
+      const student2PasswordHash = await bcrypt.hash('student123', 10);
+      await tx.insert(schema.users).values({
+        username: 'student2',
+        email: 'student2@example.com',
+        passwordHash: student2PasswordHash,
+        role: 'STUDENT',
+        displayName: 'Sam Williams',
+      }).returning();
+
+      // --- Create Quizzes ---
+
+      // Pre-Test Quiz: Cognitive & Social Constructivism Basics
+      const [preTestQuiz] = await tx.insert(schema.quizzes).values({
+        storageKey: 'quiz:pre-test-constructivism',
+        title: 'Cognitive & Social Constructivism Basics',
+        description: 'Pre-test covering foundational concepts of Piaget and Vygotsky\'s constructivist theories.',
+        quizType: 'multiple_choice',
+      }).returning();
+
+      const preTestQuestions = [
+        {
+          storageKey: 'q:pre-1',
+          text: 'Who is primarily associated with cognitive constructivism?',
+          type: 'multiple_choice' as const,
+          explanation: 'Jean Piaget is the founder of cognitive constructivism, which emphasizes individual knowledge construction through schemas.',
+          answers: [
+            { text: 'Lev Vygotsky', correct: false },
+            { text: 'Jean Piaget', correct: true },
+            { text: 'Jerome Bruner', correct: false },
+            { text: 'John Dewey', correct: false },
+          ],
+        },
+        {
+          storageKey: 'q:pre-2',
+          text: 'What does ZPD stand for in Vygotsky\'s theory?',
+          type: 'multiple_choice' as const,
+          explanation: 'ZPD stands for Zone of Proximal Development — the gap between what a learner can do independently and what they can do with guidance.',
+          answers: [
+            { text: 'Zone of Primary Development', correct: false },
+            { text: 'Zone of Proximal Development', correct: true },
+            { text: 'Zone of Progressive Development', correct: false },
+            { text: 'Zone of Psychological Development', correct: false },
+          ],
+        },
+        {
+          storageKey: 'q:pre-3',
+          text: 'Assimilation and accommodation are key processes in which theory?',
+          type: 'multiple_choice' as const,
+          explanation: 'Assimilation (fitting new info into existing schemas) and accommodation (modifying schemas for new info) are central to Piaget\'s cognitive constructivism.',
+          answers: [
+            { text: 'Social constructivism', correct: false },
+            { text: 'Behaviorism', correct: false },
+            { text: 'Cognitive constructivism', correct: true },
+            { text: 'Connectivism', correct: false },
+          ],
+        },
+        {
+          storageKey: 'q:pre-4',
+          text: 'Which concept emphasizes the role of a "More Knowledgeable Other"?',
+          type: 'multiple_choice' as const,
+          explanation: 'The More Knowledgeable Other (MKO) is a Vygotskyan concept referring to anyone with more understanding than the learner.',
+          answers: [
+            { text: 'Piaget\'s equilibration', correct: false },
+            { text: 'Vygotsky\'s social constructivism', correct: true },
+            { text: 'Skinner\'s operant conditioning', correct: false },
+            { text: 'Bandura\'s social learning', correct: false },
+          ],
+        },
+        {
+          storageKey: 'q:pre-5',
+          text: 'According to Piaget, cognitive development occurs through:',
+          type: 'multiple_choice' as const,
+          explanation: 'Piaget proposed that children construct knowledge through interaction with their environment, building increasingly complex schemas.',
+          answers: [
+            { text: 'Observation of models', correct: false },
+            { text: 'Individual interaction with the environment', correct: true },
+            { text: 'Social negotiation of meaning', correct: false },
+            { text: 'Reinforcement and punishment', correct: false },
+          ],
+        },
+        {
+          storageKey: 'q:pre-6',
+          text: 'Scaffolding is most closely associated with which theorist?',
+          type: 'multiple_choice' as const,
+          explanation: 'While Vygotsky introduced ZPD, scaffolding was later developed by Bruner based on Vygotsky\'s ideas about guided learning.',
+          answers: [
+            { text: 'Jean Piaget', correct: false },
+            { text: 'B.F. Skinner', correct: false },
+            { text: 'Lev Vygotsky (and later Bruner)', correct: true },
+            { text: 'Albert Bandura', correct: false },
+          ],
+        },
+        {
+          storageKey: 'q:pre-7',
+          text: 'Which is a key difference between cognitive and social constructivism?',
+          type: 'multiple_choice' as const,
+          explanation: 'Cognitive constructivism (Piaget) views learning as individual construction, while social constructivism (Vygotsky) emphasizes social interaction as the primary driver.',
+          answers: [
+            { text: 'Cognitive constructivism denies development stages', correct: false },
+            { text: 'Social constructivism ignores individual cognition', correct: false },
+            { text: 'Cognitive constructivism focuses on individual discovery; social constructivism on social mediation', correct: true },
+            { text: 'They are identical theories with different names', correct: false },
+          ],
+        },
+        {
+          storageKey: 'q:pre-8',
+          text: 'Piaget\'s stages of development include sensorimotor, preoperational, concrete operational, and:',
+          type: 'multiple_choice' as const,
+          explanation: 'Piaget\'s four stages are: sensorimotor (0-2), preoperational (2-7), concrete operational (7-11), and formal operational (11+).',
+          answers: [
+            { text: 'Post-operational', correct: false },
+            { text: 'Formal operational', correct: true },
+            { text: 'Abstract operational', correct: false },
+            { text: 'Metacognitive operational', correct: false },
+          ],
+        },
+        {
+          storageKey: 'q:pre-9',
+          text: 'Egocentrism in Piaget\'s theory refers to:',
+          type: 'multiple_choice' as const,
+          explanation: 'In Piaget\'s theory, egocentrism is the inability to take another person\'s perspective, common in the preoperational stage.',
+          answers: [
+            { text: 'Selfish behavior in children', correct: false },
+            { text: 'The inability to see things from another\'s perspective', correct: true },
+            { text: 'A social interaction deficit', correct: false },
+            { text: 'An advanced form of self-awareness', correct: false },
+          ],
+        },
+        {
+          storageKey: 'q:pre-10',
+          text: 'Vygotsky believed that language development is:',
+          type: 'multiple_choice' as const,
+          explanation: 'Vygotsky viewed language as a social tool first (communicative) that later becomes internalized as inner speech for thinking.',
+          answers: [
+            { text: 'Entirely innate and biological', correct: false },
+            { text: 'Primarily a social tool that later becomes a thinking tool', correct: true },
+            { text: 'Unrelated to cognitive development', correct: false },
+            { text: 'Developed independently of social interaction', correct: false },
+          ],
+        },
+      ];
+
+      for (let qi = 0; qi < preTestQuestions.length; qi++) {
+        const q = preTestQuestions[qi];
+        const [question] = await tx.insert(schema.questions).values({
+          quizId: preTestQuiz.id,
+          storageKey: q.storageKey,
+          questionText: q.text,
+          questionOrder: qi,
+          questionType: q.type,
+          explanation: q.explanation,
+        }).returning();
+
+        for (let ai = 0; ai < q.answers.length; ai++) {
+          const a = q.answers[ai];
+          await tx.insert(schema.answers).values({
+            questionId: question.id,
+            answerText: a.text,
+            isCorrect: a.correct,
+            answerOrder: ai,
+          });
+        }
+      }
+
+      // Kahoot-style Formative Quiz: Constructivist Theory Quiz
+      const [kahootQuiz] = await tx.insert(schema.quizzes).values({
+        storageKey: 'quiz:kahoot-constructivism',
+        title: 'Constructivist Theory Quiz',
+        description: 'Formative assessment between activity rotations covering key concepts from both theories.',
+        quizType: 'multiple_choice',
+      }).returning();
+
+      const kahootQuestions = [
+        {
+          storageKey: 'q:kahoot-1',
+          text: 'When a child calls all four-legged animals "dog," this is an example of:',
+          type: 'multiple_choice' as const,
+          explanation: 'Assimilation occurs when new information is incorporated into existing schemas without changing the schema itself.',
+          answers: [
+            { text: 'Accommodation', correct: false },
+            { text: 'Assimilation', correct: true },
+            { text: 'Equilibration', correct: false },
+            { text: 'Scaffolding', correct: false },
+          ],
+        },
+        {
+          storageKey: 'q:kahoot-2',
+          text: 'A teacher providing temporary support that is gradually removed as students gain competence demonstrates:',
+          type: 'multiple_choice' as const,
+          explanation: 'Scaffolding is the temporary support provided by a more knowledgeable person that is gradually withdrawn as the learner becomes more competent.',
+          answers: [
+            { text: 'Behavioral conditioning', correct: false },
+            { text: 'Scaffolding', correct: true },
+            { text: 'Assimilation', correct: false },
+            { text: 'Rote learning', correct: false },
+          ],
+        },
+        {
+          storageKey: 'q:kahoot-3',
+          text: 'Which scenario best illustrates Vygotsky\'s ZPD?',
+          type: 'multiple_choice' as const,
+          explanation: 'The ZPD is the space between what a learner can do alone and what they can do with help. A child solving a puzzle with hints is within their ZPD.',
+          answers: [
+            { text: 'A child playing alone with blocks', correct: false },
+            { text: 'A child solving a puzzle with hints from a teacher', correct: true },
+            { text: 'A child memorizing multiplication tables', correct: false },
+            { text: 'A child watching TV silently', correct: false },
+          ],
+        },
+        {
+          storageKey: 'q:kahoot-4',
+          text: 'According to Piaget, when existing schemas cannot explain new experiences, the child experiences:',
+          type: 'multiple_choice' as const,
+          explanation: 'Disequilibrium occurs when new information conflicts with existing schemas, motivating accommodation to restore equilibrium.',
+          answers: [
+            { text: 'Disequilibrium', correct: true },
+            { text: 'Equilibrium', correct: false },
+            { text: 'Scaffolding', correct: false },
+            { text: 'Internalization', correct: false },
+          ],
+        },
+        {
+          storageKey: 'q:kahoot-5',
+          text: 'Private speech (talking to oneself while problem-solving) is viewed by Vygotsky as:',
+          type: 'multiple_choice' as const,
+          explanation: 'Vygotsky saw private speech as a transitional stage between social speech and inner speech, serving as a cognitive self-regulation tool.',
+          answers: [
+            { text: 'A sign of developmental delay', correct: false },
+            { text: 'A sign of egocentrism', correct: false },
+            { text: 'A self-regulation tool bridging social speech and inner thought', correct: true },
+            { text: 'Irrelevant to learning', correct: false },
+          ],
+        },
+        {
+          storageKey: 'q:kahoot-6',
+          text: 'A Montessori classroom where children independently choose activities is most aligned with:',
+          type: 'multiple_choice' as const,
+          explanation: 'Montessori\'s emphasis on individual exploration and self-directed learning aligns with Piaget\'s cognitive constructivism.',
+          answers: [
+            { text: 'Cognitive constructivism (Piaget)', correct: true },
+            { text: 'Social constructivism (Vygotsky)', correct: false },
+            { text: 'Behaviorism (Skinner)', correct: false },
+            { text: 'Neither theory', correct: false },
+          ],
+        },
+        {
+          storageKey: 'q:kahoot-7',
+          text: 'Collaborative group work in a classroom most directly reflects which theory?',
+          type: 'multiple_choice' as const,
+          explanation: 'Collaborative learning embodies Vygotsky\'s social constructivism, where knowledge is co-constructed through social interaction.',
+          answers: [
+            { text: 'Cognitive constructivism', correct: false },
+            { text: 'Social constructivism', correct: true },
+            { text: 'Behaviorism', correct: false },
+            { text: 'Cognitivism', correct: false },
+          ],
+        },
+        {
+          storageKey: 'q:kahoot-8',
+          text: 'What is the primary difference between assimilation and accommodation?',
+          type: 'multiple_choice' as const,
+          explanation: 'Assimilation adds new info to existing schemas without changing them, while accommodation modifies or creates schemas to fit new information.',
+          answers: [
+            { text: 'Assimilation creates new schemas; accommodation uses existing ones', correct: false },
+            { text: 'Assimilation fits new info into existing schemas; accommodation modifies schemas for new info', correct: true },
+            { text: 'They are the same process', correct: false },
+            { text: 'Accommodation is social; assimilation is individual', correct: false },
+          ],
+        },
+        {
+          storageKey: 'q:kahoot-9',
+          text: 'A debate-based lesson in a secondary classroom emphasizes which constructivist principle?',
+          type: 'multiple_choice' as const,
+          explanation: 'Debate requires social negotiation of meaning, which is central to Vygotsky\'s social constructivism.',
+          answers: [
+            { text: 'Individual schema construction', correct: false },
+            { text: 'Social negotiation of meaning', correct: true },
+            { text: 'Operant conditioning', correct: false },
+            { text: 'Memorization through repetition', correct: false },
+          ],
+        },
+        {
+          storageKey: 'q:kahoot-10',
+          text: 'Piaget\'s formal operational stage is characterized by:',
+          type: 'multiple_choice' as const,
+          explanation: 'The formal operational stage (11+) involves abstract thinking, hypothetical reasoning, and systematic problem-solving.',
+          answers: [
+            { text: 'Object permanence', correct: false },
+            { text: 'Symbolic thinking only', correct: false },
+            { text: 'Abstract and hypothetical reasoning', correct: true },
+            { text: 'Egocentric speech', correct: false },
+          ],
+        },
+        {
+          storageKey: 'q:kahoot-11',
+          text: 'Which of the following is NOT a characteristic of Vygotsky\'s theory?',
+          type: 'multiple_choice' as const,
+          explanation: 'Fixed developmental stages are a Piagetian concept. Vygotsky focused on the social and cultural context of learning, not universal stages.',
+          answers: [
+            { text: 'Zone of Proximal Development', correct: false },
+            { text: 'Scaffolding', correct: false },
+            { text: 'Fixed universal developmental stages', correct: true },
+            { text: 'More Knowledgeable Other', correct: false },
+          ],
+        },
+        {
+          storageKey: 'q:kahoot-12',
+          text: 'In the constructive alignment matrix, "peer metaphors" assess which learning outcome?',
+          type: 'multiple_choice' as const,
+          explanation: 'Creating metaphors for theories requires comparing them, demonstrating the ability to distinguish and relate key principles.',
+          answers: [
+            { text: 'Analyze case studies', correct: false },
+            { text: 'Compare theories', correct: true },
+            { text: 'Apply principles', correct: false },
+            { text: 'Evaluate effectiveness', correct: false },
+          ],
+        },
+        {
+          storageKey: 'q:kahoot-13',
+          text: 'Cultural tools (language, symbols, artifacts) play a central role in which theory?',
+          type: 'multiple_choice' as const,
+          explanation: 'Vygotsky emphasized that cultural tools mediate thinking and are the primary vehicles for cognitive development through social interaction.',
+          answers: [
+            { text: 'Cognitive constructivism', correct: false },
+            { text: 'Behaviorism', correct: false },
+            { text: 'Social constructivism', correct: true },
+            { text: 'Classical conditioning', correct: false },
+          ],
+        },
+        {
+          storageKey: 'q:kahoot-14',
+          text: 'The concept of "internalization" in Vygotsky\'s theory means:',
+          type: 'multiple_choice' as const,
+          explanation: 'Internalization is the process by which social activities and interactions become internal mental processes.',
+          answers: [
+            { text: 'Memorizing facts through repetition', correct: false },
+            { text: 'Transforming social processes into internal mental functions', correct: true },
+            { text: 'Isolating oneself to study', correct: false },
+            { text: 'Developing schemas through individual exploration', correct: false },
+          ],
+        },
+        {
+          storageKey: 'q:kahoot-15',
+          text: 'A teacher using "think-aloud" strategies to model problem-solving is applying:',
+          type: 'multiple_choice' as const,
+          explanation: 'Think-alouds are a form of scaffolding where the teacher makes their cognitive processes visible, aligned with Vygotsky\'s social constructivism.',
+          answers: [
+            { text: 'Behaviorist reinforcement', correct: false },
+            { text: 'Piaget\'s stage theory', correct: false },
+            { text: 'Social constructivist scaffolding', correct: true },
+            { text: 'Rote memorization technique', correct: false },
+          ],
+        },
+      ];
+
+      for (let qi = 0; qi < kahootQuestions.length; qi++) {
+        const q = kahootQuestions[qi];
+        const [question] = await tx.insert(schema.questions).values({
+          quizId: kahootQuiz.id,
+          storageKey: q.storageKey,
+          questionText: q.text,
+          questionOrder: qi,
+          questionType: q.type,
+          explanation: q.explanation,
+        }).returning();
+
+        for (let ai = 0; ai < q.answers.length; ai++) {
+          const a = q.answers[ai];
+          await tx.insert(schema.answers).values({
+            questionId: question.id,
+            answerText: a.text,
+            isCorrect: a.correct,
+            answerOrder: ai,
+          });
+        }
+      }
+
+      // --- Create Discussions ---
+      await tx.insert(schema.discussions).values({
+        storageKey: 'discussion:individual-vs-social',
+        title: 'Is learning primarily an individual or social process?',
+        description: 'Share your perspective on whether learning is fundamentally an individual cognitive process or a socially mediated activity. Reference Piaget or Vygotsky where relevant.',
+        createdBy: teacher.id,
+        isPinned: true,
+      }).returning();
+
+      await tx.insert(schema.discussions).values({
+        storageKey: 'discussion:learning-style-reflection',
+        title: 'Which theory better explains your personal learning style?',
+        description: 'Reflect on your own learning experiences. Does Piaget\'s individual knowledge construction or Vygotsky\'s social learning better describe how you learn? Provide a specific example.',
+        createdBy: teacher.id,
+        isPinned: false,
+      }).returning();
+
+      await tx.insert(schema.discussions).values({
+        storageKey: 'discussion:accommodation-experience',
+        title: 'Think-Pair-Share: A learning experience that required accommodation',
+        description: 'Identify a recent learning experience where you had to significantly change your understanding (accommodation) rather than simply add new information (assimilation). What triggered the change?',
+        createdBy: teacher.id,
+        isPinned: false,
+      }).returning();
+
+      // --- Create Concept Checks ---
+      const conceptChecks = [
+        { storageKey: 'cc:hook-debate', title: 'Learning Process Poll', prompt: 'Do you believe learning is primarily an individual or social process?', checkType: 'thumbs', sectionKey: 'introduction' },
+        { storageKey: 'cc:cognitive-understand', title: 'Cognitive Constructivism Check', prompt: 'Do you understand Piaget\'s concepts of assimilation and accommodation?', checkType: 'thumbs', sectionKey: 'development' },
+        { storageKey: 'cc:social-understand', title: 'Social Constructivism Check', prompt: 'Do you understand Vygotsky\'s Zone of Proximal Development?', checkType: 'thumbs', sectionKey: 'development' },
+        { storageKey: 'cc:case-study', title: 'Case Study Comprehension', prompt: 'Can you identify constructivist elements in classroom scenarios?', checkType: 'thumbs', sectionKey: 'development' },
+        { storageKey: 'cc:venn-understand', title: 'Venn Diagram Understanding', prompt: 'Do you understand the similarities and differences between the two theories?', checkType: 'thumbs', sectionKey: 'development' },
+        { storageKey: 'cc:exit-ticket', title: 'Exit Ticket', prompt: 'Explain one practical application of either constructivist theory in your own words.', checkType: 'text', sectionKey: 'assessment' },
+        { storageKey: 'cc:reflection', title: 'Self-Reflection', prompt: 'How well can you apply constructivist principles to design a lesson activity?', checkType: 'scale', sectionKey: 'synthesis' },
+      ];
+
+      for (const cc of conceptChecks) {
+        await tx.insert(schema.conceptChecks).values({
+          storageKey: cc.storageKey,
+          title: cc.title,
+          prompt: cc.prompt,
+          checkType: cc.checkType,
+          sectionKey: cc.sectionKey,
+        });
+      }
+
+      // --- Create 10 Slides ---
+      const slidesData = [
+        {
+          storageKey: 'slide:01-title',
+          slideOrder: 0,
+          title: 'Cognitive & Social Constructivism',
+          content: 'Understanding How We Construct Knowledge\nPiaget & Vygotsky',
+          slideType: 'title',
+        },
+        {
+          storageKey: 'slide:02-ilos',
+          slideOrder: 1,
+          title: 'Learning Outcomes',
+          content: '- Compare cognitive and social constructivism\n- Explain practical applications of both theories\n- Analyze case studies for constructivist elements\n- Evaluate effectiveness in different contexts\n- Design a constructivist-inspired activity',
+          slideType: 'content',
+        },
+        {
+          storageKey: 'slide:03-piaget',
+          slideOrder: 2,
+          title: 'Cognitive Constructivism — Piaget',
+          content: '- Knowledge constructed by individual learners\n- Schemas: mental frameworks for understanding\n- Assimilation: fitting new info into existing schemas\n- Accommodation: modifying schemas for new info\n- Equilibration: balancing assimilation & accommodation\n- Developmental stages: sensorimotor, preoperational, concrete operational, formal operational',
+          slideType: 'content',
+        },
+        {
+          storageKey: 'slide:04-vygotsky',
+          slideOrder: 3,
+          title: 'Social Constructivism — Vygotsky',
+          content: '- Knowledge constructed through social interaction\n- Zone of Proximal Development (ZPD)\n- Scaffolding: temporary support gradually removed\n- More Knowledgeable Other (MKO)\n- Cultural tools mediate thinking\n- Internalization: social processes become mental functions\n- Language as primary tool for thought',
+          slideType: 'content',
+        },
+        {
+          storageKey: 'slide:05-comparison',
+          slideOrder: 4,
+          title: 'Comparing the Two Theories',
+          content: '- Piaget: Individual discovery → Vygotsky: Social mediation\n- Piaget: Development drives learning → Vygotsky: Learning drives development\n- Piaget: Universal stages → Vygotsky: Culturally variable\n- Shared: Active knowledge construction, prior knowledge matters\n- Both reject passive reception of knowledge',
+          slideType: 'content',
+        },
+        {
+          storageKey: 'slide:06-case-study',
+          slideOrder: 5,
+          title: 'Case Study Analysis',
+          content: '- Case 1: Montessori classroom (cognitive focus)\n  Children independently choose activities, work at own pace\n- Case 2: Debate-based lesson (social emphasis)\n  Students co-construct meaning through argumentation\n- Identify: Which constructivist elements are present?\n- Compare: How does each approach reflect different theories?',
+          slideType: 'activity',
+        },
+        {
+          storageKey: 'slide:07-applications',
+          slideOrder: 6,
+          title: 'Practical Applications',
+          content: '- Piaget-inspired practices:\n  Discovery learning, hands-on activities, developmental readiness\n- Vygotsky-inspired practices:\n  Collaborative learning, peer tutoring, guided discovery\n- Blended approach:\n  Inquiry-based learning with social elements\n  Problem-based learning with scaffolding',
+          slideType: 'content',
+        },
+        {
+          storageKey: 'slide:08-assessment',
+          slideOrder: 7,
+          title: 'Assessment Methods',
+          content: '- Formative: Pre/Post tests, polls, concept checks\n- Summative: Written analysis assignment\n- Rubric criteria:\n  Theoretical Accuracy (4 pts)\n  Application Quality (4 pts)\n  Comparative Analysis (4 pts)\n- Constructive alignment: outcomes ↔ activities ↔ assessment',
+          slideType: 'assessment',
+        },
+        {
+          storageKey: 'slide:09-differentiation',
+          slideOrder: 8,
+          title: 'Differentiation & Resources',
+          content: '- Multimodal materials (text, audio, video)\n- Mixed-ability grouping with assigned roles\n- Extension: Advanced reading on critical perspectives\n- Accommodations: Captioning, extended time\n- Resources: LMS page, animated slides, case study videos\n  Digital flashcards (Quizlet), analysis rubric',
+          slideType: 'content',
+        },
+        {
+          storageKey: 'slide:10-closure',
+          slideOrder: 9,
+          title: 'Reflection & Next Steps',
+          content: '- Which theory better explains your learning style?\n- Success indicators: 70%+ post-test improvement\n- Next session: Constructivist classroom applications\n- Assignment: Analyze two lesson plans using rubric\n- References: Piaget (1954), Vygotsky (1978), Freeman et al. (2014)',
+          slideType: 'title',
+        },
+      ];
+
+      for (const s of slidesData) {
+        await tx.insert(schema.slides).values({
+          storageKey: s.storageKey,
+          slideOrder: s.slideOrder,
+          title: s.title,
+          content: s.content,
+          slideType: s.slideType,
+        });
+      }
+
+      // --- Mark seed as applied ---
       await tx.insert(schema.seedLog).values({
         seedVersion: SEED_VERSION,
       });

@@ -54,7 +54,13 @@ export default function QuizPageClient({ quizId, title, questions }: QuizPageCli
     <Quiz
       quizId={quizId}
       title={title}
-      questions={questions as any}
+      questions={questions as Array<{
+        id: number;
+        questionText: string;
+        questionType: 'multiple_choice' | 'true_false' | 'short_answer';
+        explanation: string | null;
+        answers: Array<{ id: number; answerText: string; isCorrect: boolean }>;
+      }>}
       userId={user.userId}
     />
   );
