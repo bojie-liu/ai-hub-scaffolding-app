@@ -856,6 +856,46 @@ import { db } from '@/db';
 
 ---
 
-## 12. SSL Certificates
+## 12. Common Problems & Pitfalls
+
+### Context providers must wrap their consumers
+React context hooks throw if the component calling them is not nested inside the matching provider. This project uses several contexts with the same pattern (`useContext` + undefined check → throw).
+
+| Hook | Required Provider | Rendered in |
+|---|---|---|
+| `useScrollRoot` | `ScrollRootProvider` | Lesson page (wraps `LessonContent`) |
+| `useUser` | `UserProvider` | `AppProvider` → root layout |
+| `useCourse` | `CourseProvider` | `AppProvider` → root layout |
+
+**Symptom**: Runtime error `"useX must be used within a XProvider"`.
+**Fix**: Ensure the provider appears above the consuming component in the React tree. For page-scoped providers (like `ScrollRootProvider`), add them to the page component that renders the consumer.
+
+### Token exchange failures on first load
+The app authenticates via token exchange with the AI Hub Server. If the external server is unreachable or the token is expired/invalid, `TokenGuard` blocks rendering and the user sees a blank page.
+
+**Symptom**: Blank page after loading in an iframe; console shows token exchange errors.
+**Fix**: Verify `AI_HUB_SERVER_HOST` is correct and reachable, and that the parent app passes a valid `?token=` param.
+
+### Guest mode limitations
+Guest users (`role: 'GUEST'`) exist only client-side — they are not in the database. Server actions that require a `userId > 0` will silently skip or return no data for guests.
+
+**Symptom**: Quizzes, concept checks, discussions, and progress features are hidden or non-functional for guest users.
+**Fix**: This is by design. Gate interactive features behind `userId > 0` checks and prompt guests to sign in.
+
+### Drizzle migrations during dev startup
+`npm run dev` runs migrations before seeding, and both steps are allowed to fail (the DB may not exist yet). If the DB is in an inconsistent state, migration failures are silently swallowed.
+
+**Symptom**: Schema changes aren't reflected; queries fail with "relation does not exist" errors.
+**Fix**: Run `npm run db:push` to force-sync the schema, or drop and recreate the database.
+
+### ScrollRootProvider double-ref conflict
+`ScrollRootProvider` attaches `scrollRootRef` to its own wrapper `<div>`. If a child component also sets `ref={scrollRootRef}` on a different element, the ref will point to the child's element instead of the provider's wrapper — breaking the IntersectionObserver in `LessonSideMenu`.
+
+**Symptom**: Sidebar section highlighting doesn't work or observes the wrong scroll container.
+**Fix**: Only attach `scrollRootRef` in the provider. Consumers should read the ref via `useScrollRoot()` but not set it on any element.
+
+---
+
+## 13. SSL Certificates
 - `certificates/localhost-key.pem` and `certificates/localhost.pem` for local HTTPS development
 - Used when the app runs as an iframe inside AI Hub Server (which requires HTTPS)
