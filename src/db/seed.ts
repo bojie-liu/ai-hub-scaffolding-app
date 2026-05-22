@@ -1,30 +1,11 @@
 import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
 import { sql, eq } from 'drizzle-orm';
-import { readFileSync } from 'fs';
-import { resolve } from 'path';
 import bcrypt from 'bcryptjs';
 import * as schema from './schema';
 
-// // Load .env.local
-// try {
-//   const envPath = resolve(process.cwd(), '.env.local');
-//   const envContent = readFileSync(envPath, 'utf-8');
-//   for (const line of envContent.split('\n')) {
-//     const match = line.match(/^([^#=]+)=(.*)$/);
-//     if (match) {
-//       const key = match[1].trim();
-//       const value = match[2].trim().replace(/^["']|["']$/g, '');
-//       if (!process.env[key]) {
-//         process.env[key] = value;
-//       }
-//     }
-//   }
-// } catch {
-//   // .env.local not found, rely on existing env vars
-// }
-
-const SEED_VERSION = 'v1_initial';
+const SEED_VERSION_INITIAL = 'v1_initial';
+const SEED_VERSION_LESSON = 'v2_lesson_content';
 
 async function seed() {
   const client = postgres(process.env.DATABASE_URL!);
@@ -40,39 +21,438 @@ async function seed() {
       )
     `);
 
-    // Check if seed already applied
-    const existing = await db
+    // === v1_initial: Create admin user ===
+    const existingV1 = await db
       .select()
       .from(schema.seedLog)
-      .where(eq(schema.seedLog.seedVersion, SEED_VERSION))
+      .where(eq(schema.seedLog.seedVersion, SEED_VERSION_INITIAL))
       .limit(1);
 
-    if (existing.length > 0) {
-      console.log(`Seed "${SEED_VERSION}" already applied. Skipping.`);
-      return;
+    if (existingV1.length === 0) {
+      await db.transaction(async (tx) => {
+        const passwordHash = await bcrypt.hash(
+          process.env.SEED_ADMIN_PASSWORD || 'changeme',
+          10,
+        );
+        await tx.insert(schema.users).values({
+          username: 'admin',
+          email: 'admin@example.com',
+          passwordHash,
+          role: 'TEACHER',
+          displayName: 'Admin User',
+        });
+        await tx.insert(schema.seedLog).values({ seedVersion: SEED_VERSION_INITIAL });
+      });
+      console.log(`Seed "${SEED_VERSION_INITIAL}" applied successfully.`);
+    } else {
+      console.log(`Seed "${SEED_VERSION_INITIAL}" already applied. Skipping.`);
     }
 
-    // Run seed data within a transaction
-    await db.transaction(async (tx) => {
-      const passwordHash = await bcrypt.hash(
-        process.env.SEED_ADMIN_PASSWORD || 'changeme',
-        10,
-      );
+    // === v2_lesson_content: Create lesson data ===
+    const existingV2 = await db
+      .select()
+      .from(schema.seedLog)
+      .where(eq(schema.seedLog.seedVersion, SEED_VERSION_LESSON))
+      .limit(1);
 
-      await tx.insert(schema.users).values({
-        username: 'admin',
-        email: 'admin@example.com',
-        passwordHash,
-        role: 'TEACHER',
-        displayName: 'Admin User',
+    if (existingV2.length === 0) {
+      // Get admin user for discussion createdBy
+      const adminUser = await db
+        .select()
+        .from(schema.users)
+        .where(eq(schema.users.username, 'admin'))
+        .limit(1);
+      const adminId = adminUser[0].id;
+
+      await db.transaction(async (tx) => {
+        // Create student user
+        const studentPasswordHash = await bcrypt.hash('changeme', 10);
+        await tx.insert(schema.users).values({
+          username: 'student',
+          email: 'student@example.com',
+          passwordHash: studentPasswordHash,
+          role: 'STUDENT',
+          displayName: 'Sample Student',
+        });
+
+        // --- SLIDES (10 slides) ---
+        const slidesData = [
+          {
+            storageKey: 'slide:1',
+            slideOrder: 1,
+            title: 'Cognitive & Social Constructivism Theory',
+            content: 'Introduction to Educational Psychology\n180-Minute Lesson | First-Year Undergraduates | Class Size: 90',
+            slideType: 'title',
+            backgroundColor: null,
+          },
+          {
+            storageKey: 'slide:2',
+            slideOrder: 2,
+            title: 'Learning Outcomes (ILOs)',
+            content: '- Compare key principles of cognitive constructivism (Piaget, Bruner) and social constructivism (Vygotsky, Bandura)\n- Apply scaffolding strategies to design a short lesson plan\n- Evaluate case studies to identify ZPD and peer mediation\n- Explain implications for inclusive education practices',
+            slideType: 'content',
+            backgroundColor: null,
+          },
+          {
+            storageKey: 'slide:3',
+            slideOrder: 3,
+            title: 'Pre-Class Preparation',
+            content: '- Watch: Theories of Cognitive Development - Piaget vs Vygotsky (CrashCourse)\n- Read: Reeve\'s Understanding Motivation and Emotion, Ch. 9\n- Complete the 5-question Pre-Test Quiz\n- Reflect on guiding questions about peer roles and inclusive practices',
+            slideType: 'content',
+            backgroundColor: null,
+          },
+          {
+            storageKey: 'slide:4',
+            slideOrder: 4,
+            title: 'Introduction: The Learning Hook',
+            content: 'Imagine three students solving a math problem:\n- One works alone for hours\n- One asks teachers questions\n- One debates solutions with classmates\n\nWhich "learns best"? Why?\n\nFinland\'s education system integrates constructivist principles — showing real-world impact.',
+            slideType: 'activity',
+            backgroundColor: null,
+          },
+          {
+            storageKey: 'slide:5',
+            slideOrder: 5,
+            title: 'Piaget vs Vygotsky: Key Principles',
+            content: 'Cognitive Constructivism (Piaget, Bruner):\n- Assimilation & Accommodation\n- Schemas and equilibration\n- Discovery learning (Bruner)\n\nSocial Constructivism (Vygotsky, Bandura):\n- Zone of Proximal Development (ZPD)\n- Cultural tools and mediation\n- Scaffolding and peer modeling\n- Social learning theory (Bandura)',
+            slideType: 'content',
+            backgroundColor: null,
+          },
+          {
+            storageKey: 'slide:6',
+            slideOrder: 6,
+            title: 'Evolution of Constructivist Theories',
+            content: '- Montessori\'s materials (early 1900s)\n- Piaget\'s stage theory (1920s-1950s)\n- Vygotsky\'s ZPD (1930s, published 1978)\n- Bruner\'s discovery learning (1960s)\n- Bandura\'s social learning (1977)\n- Situated Learning Theory (Lave & Wenger, 1991)\n- Neuroconstructivism (Karmiloff-Smith, 2000s)',
+            slideType: 'content',
+            backgroundColor: null,
+          },
+          {
+            storageKey: 'slide:7',
+            slideOrder: 7,
+            title: 'Case Study: Peer Tutoring in Math',
+            content: 'A 6th-grade classroom uses peer tutoring for fractions.\n\nYour task:\n1. Identify ZPD scaffolding in the interaction\n2. Propose adjustments using Bruner\'s discovery learning\n\nKey questions:\n- How does the tutor provide scaffolding?\n- Where is the ZPD in this interaction?\n- How could discovery learning enhance the experience?',
+            slideType: 'activity',
+            backgroundColor: null,
+          },
+          {
+            storageKey: 'slide:8',
+            slideOrder: 8,
+            title: 'Design Your Own Lesson',
+            content: 'Task: Design a 15-minute high school biology lesson\n\nChoose either:\n- Cognitive constructivism (Piaget/Bruner approach)\n- Social constructivism (Vygotsky/Bandura approach)\n\nInclude in your plan:\n- Learning objectives\n- ZPD integration\n- Cultural tools or materials\n- Scaffolding strategies',
+            slideType: 'activity',
+            backgroundColor: null,
+          },
+          {
+            storageKey: 'slide:9',
+            slideOrder: 9,
+            title: 'Assessment & Alignment',
+            content: 'Formative Assessment:\n- Exit ticket: Quality of ZPD examples\n- Quiz accuracy: 80%+ on ZPD definitions\n- Peer evaluations during case study\n\nSummative Assessment:\n- Lesson plan with justification (300 words)\n- Rubric: Application of theory + Scaffolding explanation\n\nAlignment: ILOs → Teaching Activities → Assessment Methods',
+            slideType: 'assessment',
+            backgroundColor: null,
+          },
+          {
+            storageKey: 'slide:10',
+            slideOrder: 10,
+            title: 'Reflection & Next Steps',
+            content: 'Success Indicators:\n- 80% post-test accuracy on theory comparisons\n- 70% of lesson plans include specific ZPD examples\n\nNext Session: Behaviorism vs Constructivism\n\nPre-reading assigned from textbook\n\nFeedback: Post-class survey via Google Forms',
+            slideType: 'content',
+            backgroundColor: null,
+          },
+        ];
+
+        for (const slide of slidesData) {
+          await tx.insert(schema.slides).values(slide);
+        }
+
+        // --- QUIZZES ---
+        // Pre-Test Quiz (5 true/false)
+        const [preTestQuiz] = await tx
+          .insert(schema.quizzes)
+          .values({
+            storageKey: 'quiz:pretest',
+            title: 'Pre-Test: Constructivism Basics',
+            description: '5-question true/false quiz to check your prior knowledge before the lesson.',
+            quizType: 'true_false',
+          })
+          .returning();
+
+        const preTestQuestions = [
+          {
+            storageKey: 'question:pretest-1',
+            questionText: 'Scaffolding is a strategy used only in cognitive constructivism.',
+            questionOrder: 1,
+            questionType: 'true_false',
+            explanation: 'Scaffolding is central to Vygotsky\'s social constructivism. It involves providing temporary support to help learners accomplish tasks they cannot yet do independently.',
+            answers: [
+              { answerText: 'True', isCorrect: false, answerOrder: 1 },
+              { answerText: 'False', isCorrect: true, answerOrder: 2 },
+            ],
+          },
+          {
+            storageKey: 'question:pretest-2',
+            questionText: 'Vygotsky believed that social interaction is essential for cognitive development.',
+            questionOrder: 2,
+            questionType: 'true_false',
+            explanation: 'Vygotsky\'s social constructivism emphasizes that learning occurs through social interaction, cultural tools, and language within the Zone of Proximal Development.',
+            answers: [
+              { answerText: 'True', isCorrect: true, answerOrder: 1 },
+              { answerText: 'False', isCorrect: false, answerOrder: 2 },
+            ],
+          },
+          {
+            storageKey: 'question:pretest-3',
+            questionText: 'Piaget\'s theory emphasizes the role of cultural tools in learning.',
+            questionOrder: 3,
+            questionType: 'true_false',
+            explanation: 'Cultural tools are central to Vygotsky\'s theory, not Piaget\'s. Piaget focused on biological maturation and individual exploration through assimilation and accommodation.',
+            answers: [
+              { answerText: 'True', isCorrect: false, answerOrder: 1 },
+              { answerText: 'False', isCorrect: true, answerOrder: 2 },
+            ],
+          },
+          {
+            storageKey: 'question:pretest-4',
+            questionText: 'The zone of proximal development refers to tasks a learner can do independently.',
+            questionOrder: 4,
+            questionType: 'true_false',
+            explanation: 'The ZPD refers to the gap between what a learner can do independently and what they can do with help. Tasks done independently are below the ZPD.',
+            answers: [
+              { answerText: 'True', isCorrect: false, answerOrder: 1 },
+              { answerText: 'False', isCorrect: true, answerOrder: 2 },
+            ],
+          },
+          {
+            storageKey: 'question:pretest-5',
+            questionText: 'Bruner\'s discovery learning encourages students to construct knowledge through exploration.',
+            questionOrder: 5,
+            questionType: 'true_false',
+            explanation: 'Bruner\'s discovery learning promotes active exploration and problem-solving, where students construct their own understanding rather than receiving information passively.',
+            answers: [
+              { answerText: 'True', isCorrect: true, answerOrder: 1 },
+              { answerText: 'False', isCorrect: false, answerOrder: 2 },
+            ],
+          },
+        ];
+
+        for (const q of preTestQuestions) {
+          const [question] = await tx
+            .insert(schema.questions)
+            .values({
+              quizId: preTestQuiz.id,
+              storageKey: q.storageKey,
+              questionText: q.questionText,
+              questionOrder: q.questionOrder,
+              questionType: q.questionType,
+              explanation: q.explanation,
+            })
+            .returning();
+          for (const a of q.answers) {
+            await tx.insert(schema.answers).values({
+              questionId: question.id,
+              answerText: a.answerText,
+              isCorrect: a.isCorrect,
+              answerOrder: a.answerOrder,
+            });
+          }
+        }
+
+        // Post-Test Quiz (5 multiple choice)
+        const [postTestQuiz] = await tx
+          .insert(schema.quizzes)
+          .values({
+            storageKey: 'quiz:posttest',
+            title: 'Post-Test: Cognitive vs Social Constructivism',
+            description: '5-question comparison quiz to assess your understanding after the lesson.',
+            quizType: 'multiple_choice',
+          })
+          .returning();
+
+        const postTestQuestions = [
+          {
+            storageKey: 'question:posttest-1',
+            questionText: 'Which theorist is most associated with the concept of the Zone of Proximal Development?',
+            questionOrder: 1,
+            questionType: 'multiple_choice',
+            explanation: 'Vygotsky introduced the ZPD as the gap between what a learner can do independently and what they can achieve with guidance.',
+            answers: [
+              { answerText: 'Piaget', isCorrect: false, answerOrder: 1 },
+              { answerText: 'Vygotsky', isCorrect: true, answerOrder: 2 },
+              { answerText: 'Bruner', isCorrect: false, answerOrder: 3 },
+              { answerText: 'Bandura', isCorrect: false, answerOrder: 4 },
+            ],
+          },
+          {
+            storageKey: 'question:posttest-2',
+            questionText: 'According to Piaget, what process occurs when new information is incorporated into existing schemas?',
+            questionOrder: 2,
+            questionType: 'multiple_choice',
+            explanation: 'Assimilation is the process of fitting new information into existing cognitive schemas, while accommodation involves modifying schemas to fit new information.',
+            answers: [
+              { answerText: 'Accommodation', isCorrect: false, answerOrder: 1 },
+              { answerText: 'Assimilation', isCorrect: true, answerOrder: 2 },
+              { answerText: 'Equilibration', isCorrect: false, answerOrder: 3 },
+              { answerText: 'Scaffolding', isCorrect: false, answerOrder: 4 },
+            ],
+          },
+          {
+            storageKey: 'question:posttest-3',
+            questionText: 'Which theory emphasizes cultural artifacts like language the most?',
+            questionOrder: 3,
+            questionType: 'multiple_choice',
+            explanation: 'Social constructivism (Vygotsky) places the greatest emphasis on cultural tools, especially language, as mediators of thinking and learning.',
+            answers: [
+              { answerText: 'Cognitive constructivism', isCorrect: false, answerOrder: 1 },
+              { answerText: 'Social constructivism', isCorrect: true, answerOrder: 2 },
+              { answerText: 'Behaviorism', isCorrect: false, answerOrder: 3 },
+              { answerText: 'Cognitivism', isCorrect: false, answerOrder: 4 },
+            ],
+          },
+          {
+            storageKey: 'question:posttest-4',
+            questionText: 'What is scaffolding in the context of constructivist learning?',
+            questionOrder: 4,
+            questionType: 'multiple_choice',
+            explanation: 'Scaffolding is the temporary support provided by a more knowledgeable person to help a learner accomplish a task within their ZPD. The support is gradually removed as competence grows.',
+            answers: [
+              { answerText: 'Building physical structures for learning', isCorrect: false, answerOrder: 1 },
+              { answerText: 'Temporary support to help learners accomplish tasks', isCorrect: true, answerOrder: 2 },
+              { answerText: 'A type of formal assessment', isCorrect: false, answerOrder: 3 },
+              { answerText: 'A behaviorist reinforcement technique', isCorrect: false, answerOrder: 4 },
+            ],
+          },
+          {
+            storageKey: 'question:posttest-5',
+            questionText: 'Which approach best represents Bruner\'s discovery learning?',
+            questionOrder: 5,
+            questionType: 'multiple_choice',
+            explanation: 'Bruner\'s discovery learning emphasizes guided exploration where students construct knowledge through problem-solving, rather than through direct instruction or memorization.',
+            answers: [
+              { answerText: 'Direct instruction from the teacher', isCorrect: false, answerOrder: 1 },
+              { answerText: 'Rote memorization of facts', isCorrect: false, answerOrder: 2 },
+              { answerText: 'Guided exploration and problem-solving', isCorrect: true, answerOrder: 3 },
+              { answerText: 'Passive listening to lectures', isCorrect: false, answerOrder: 4 },
+            ],
+          },
+        ];
+
+        for (const q of postTestQuestions) {
+          const [question] = await tx
+            .insert(schema.questions)
+            .values({
+              quizId: postTestQuiz.id,
+              storageKey: q.storageKey,
+              questionText: q.questionText,
+              questionOrder: q.questionOrder,
+              questionType: q.questionType,
+              explanation: q.explanation,
+            })
+            .returning();
+          for (const a of q.answers) {
+            await tx.insert(schema.answers).values({
+              questionId: question.id,
+              answerText: a.answerText,
+              isCorrect: a.isCorrect,
+              answerOrder: a.answerOrder,
+            });
+          }
+        }
+
+        // Exit Ticket Quiz (short answer)
+        const [exitTicketQuiz] = await tx
+          .insert(schema.quizzes)
+          .values({
+            storageKey: 'quiz:exitticket',
+            title: 'Exit Ticket: Piaget vs Vygotsky',
+            description: 'Summarize the difference between Piaget and Vygotsky in 2 tweets (280 characters each).',
+            quizType: 'short_answer',
+          })
+          .returning();
+
+        const exitTicketQuestions = [
+          {
+            storageKey: 'question:exit-1',
+            questionText: 'Tweet 1: Summarize Piaget\'s cognitive constructivism in 280 characters or less.',
+            questionOrder: 1,
+            questionType: 'short_answer',
+            explanation: 'Piaget emphasized individual cognitive development through stages, where learners actively construct knowledge via assimilation and accommodation, driven by biological maturation and exploration.',
+            answers: [],
+          },
+          {
+            storageKey: 'question:exit-2',
+            questionText: 'Tweet 2: Summarize Vygotsky\'s social constructivism in 280 characters or less.',
+            questionOrder: 2,
+            questionType: 'short_answer',
+            explanation: 'Vygotsky emphasized social interaction and cultural tools as drivers of learning, introducing concepts like the Zone of Proximal Development and scaffolding, where knowledge is co-constructed with others.',
+            answers: [],
+          },
+        ];
+
+        for (const q of exitTicketQuestions) {
+          await tx.insert(schema.questions).values({
+            quizId: exitTicketQuiz.id,
+            storageKey: q.storageKey,
+            questionText: q.questionText,
+            questionOrder: q.questionOrder,
+            questionType: q.questionType,
+            explanation: q.explanation,
+          });
+        }
+
+        // --- DISCUSSIONS ---
+        await tx.insert(schema.discussions).values({
+          storageKey: 'discussion:myths-vs-facts',
+          title: 'Constructivism Myths vs Facts',
+          description: 'Debunk common misconceptions about constructivist theories. Is all group work social constructivism? Share your thoughts and challenge assumptions.',
+          createdBy: adminId,
+          isPinned: true,
+        });
+
+        await tx.insert(schema.discussions).values({
+          storageKey: 'discussion:principle-adoption',
+          title: 'Which constructivist principle should be most widely adopted in schools today?',
+          description: 'Share your perspective on which constructivist principle would have the greatest impact if adopted more widely. Explain why.',
+          createdBy: adminId,
+          isPinned: false,
+        });
+
+        // --- CONCEPT CHECKS ---
+        await tx.insert(schema.conceptChecks).values({
+          storageKey: 'concept:understand-difference',
+          title: 'Understanding Check',
+          prompt: 'Do you understand the key differences between cognitive and social constructivism?',
+          checkType: 'thumbs',
+          sectionKey: 'development',
+        });
+
+        await tx.insert(schema.conceptChecks).values({
+          storageKey: 'concept:identify-zpd',
+          title: 'ZPD Identification',
+          prompt: 'Can you identify the Zone of Proximal Development in a classroom scenario?',
+          checkType: 'thumbs',
+          sectionKey: 'development',
+        });
+
+        await tx.insert(schema.conceptChecks).values({
+          storageKey: 'concept:lesson-design-confidence',
+          title: 'Lesson Design Confidence',
+          prompt: 'How confident are you in designing a constructivist lesson plan?',
+          checkType: 'scale',
+          sectionKey: 'development',
+        });
+
+        await tx.insert(schema.conceptChecks).values({
+          storageKey: 'concept:inclusive-practices',
+          title: 'Inclusive Practices Understanding',
+          prompt: 'Do you understand how constructivist theories can support inclusive education?',
+          checkType: 'thumbs',
+          sectionKey: 'differentiation',
+        });
+
+        await tx.insert(schema.seedLog).values({ seedVersion: SEED_VERSION_LESSON });
       });
-
-      await tx.insert(schema.seedLog).values({
-        seedVersion: SEED_VERSION,
-      });
-    });
-
-    console.log(`Seed "${SEED_VERSION}" applied successfully.`);
+      console.log(`Seed "${SEED_VERSION_LESSON}" applied successfully.`);
+    } else {
+      console.log(`Seed "${SEED_VERSION_LESSON}" already applied. Skipping.`);
+    }
   } catch (error) {
     console.error('Seeding failed:', error);
     throw error;

@@ -14,11 +14,10 @@ interface ConceptCheckProps {
   prompt: string;
   checkType: 'thumbs' | 'scale' | 'text';
   userId: number;
-  userRole: string;
   existingResponse?: string | null;
 }
 
-export default function ConceptCheck({ checkId, title, prompt, checkType, userId, userRole, existingResponse }: ConceptCheckProps) {
+export default function ConceptCheck({ checkId, title, prompt, checkType, userId, existingResponse }: ConceptCheckProps) {
   const [response, setResponse] = useState<string | null>(existingResponse ?? null);
   const [textInput, setTextInput] = useState('');
   const [loading, setLoading] = useState(false);

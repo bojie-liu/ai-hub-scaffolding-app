@@ -88,6 +88,8 @@ const SECTION_LABELS: Record<string, string> = {
   assessment: 'Assessment',
   alignment: 'Alignment',
   resources: 'Resources',
+  differentiation: 'Inclusivity',
+  reflection: 'Reflection',
 };
 
 export default function TeacherDashboard() {

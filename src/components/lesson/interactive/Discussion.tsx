@@ -34,7 +34,6 @@ interface DiscussionProps {
   description: string | null;
   posts: RawPost[];
   userId: number;
-  userRole: string;
 }
 
 function PostItem({ post, userId, discussionId, depth = 0 }: { post: DiscussionPost; userId: number; discussionId: number; depth?: number }) {
@@ -113,7 +112,7 @@ function buildPostTree(posts: RawPost[]): DiscussionPost[] {
   return roots;
 }
 
-export default function Discussion({ discussionId, title, description, posts: rawPosts, userId, userRole }: DiscussionProps) {
+export default function Discussion({ discussionId, title, description, posts: rawPosts, userId }: DiscussionProps) {
   const [newPost, setNewPost] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const router = useRouter();

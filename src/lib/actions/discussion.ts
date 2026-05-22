@@ -47,6 +47,65 @@ export async function getDiscussions() {
   }
 }
 
+export async function getDiscussionByStorageKey(storageKey: string) {
+  try {
+    const discussionRows = await db
+      .select()
+      .from(discussions)
+      .where(eq(discussions.storageKey, storageKey))
+      .limit(1);
+
+    if (discussionRows.length === 0) {
+      return { success: false, error: 'Discussion not found' };
+    }
+
+    const discussion = discussionRows[0];
+
+    const creatorRows = await db
+      .select({
+        id: users.id,
+        username: users.username,
+        displayName: users.displayName,
+        role: users.role,
+      })
+      .from(users)
+      .where(eq(users.id, discussion.createdBy))
+      .limit(1);
+
+    const creator = creatorRows[0] ?? null;
+
+    const posts = await db
+      .select({
+        id: discussionPosts.id,
+        discussionId: discussionPosts.discussionId,
+        parentPostId: discussionPosts.parentPostId,
+        authorId: discussionPosts.authorId,
+        content: discussionPosts.content,
+        createdAt: discussionPosts.createdAt,
+        updatedAt: discussionPosts.updatedAt,
+        authorUsername: users.username,
+        authorDisplayName: users.displayName,
+        authorRole: users.role,
+      })
+      .from(discussionPosts)
+      .leftJoin(users, eq(discussionPosts.authorId, users.id))
+      .where(eq(discussionPosts.discussionId, discussion.id))
+      .orderBy(discussionPosts.createdAt);
+
+    return {
+      success: true,
+      data: {
+        discussion,
+        creator,
+        posts,
+      },
+    };
+  } catch (error) {
+    console.error('Failed to fetch discussion by storageKey:', error);
+    return { success: false, error: 'Failed to fetch discussion' };
+  }
+}
+
 export async function getDiscussion(id: number) {
   try {
     const discussionRows = await db
