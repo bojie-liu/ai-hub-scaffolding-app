@@ -3,12 +3,11 @@
 import { useState } from 'react';
 import { submitQuizAttempt } from '@/lib/actions/quiz';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
+import { Card, CardContent, CardTitle } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 
-interface QuizQuestion {
+export interface QuizQuestion {
   id: number;
   questionText: string;
   questionType: 'multiple_choice' | 'true_false' | 'short_answer';

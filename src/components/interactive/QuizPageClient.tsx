@@ -1,7 +1,7 @@
 'use client';
 
 import { useUser } from '@/contexts/UserContext';
-import Quiz from '@/components/lesson/interactive/Quiz';
+import Quiz, { type QuizQuestion } from '@/components/lesson/interactive/Quiz';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ShieldAlert } from 'lucide-react';
 import Link from 'next/link';
@@ -54,7 +54,7 @@ export default function QuizPageClient({ quizId, title, questions }: QuizPageCli
     <Quiz
       quizId={quizId}
       title={title}
-      questions={questions as any}
+      questions={questions as QuizQuestion[]}
       userId={user.userId}
     />
   );

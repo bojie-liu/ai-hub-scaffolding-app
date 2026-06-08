@@ -1,6 +1,4 @@
 import { execSync } from 'child_process';
-import { readFileSync } from 'fs';
-import { resolve } from 'path';
 
 // // Load .env.local
 // try {

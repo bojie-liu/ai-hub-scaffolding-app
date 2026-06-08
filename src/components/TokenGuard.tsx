@@ -10,7 +10,7 @@ const TOKEN_KEY = 'auth_token';
 
 export function TokenGuard({ children }: { children: ReactNode }) {
   const searchParams = useSearchParams();
-  const { user, setUser, setTokenProcessed, tokenProcessed } = useUser();
+  const { setUser, setTokenProcessed, tokenProcessed } = useUser();
   const { setCourse } = useCourse();
   const hasInitialized = useRef(false);
 

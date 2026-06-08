@@ -88,6 +88,8 @@ const SECTION_LABELS: Record<string, string> = {
   assessment: 'Assessment',
   alignment: 'Alignment',
   resources: 'Resources',
+  differentiation: 'Inclusivity',
+  reflection: 'Reflection',
 };
 
 export default function TeacherDashboard() {
@@ -165,7 +167,6 @@ export default function TeacherDashboard() {
     0
   );
 
-  const activeDiscussions = 0; // Could be fetched separately if needed
 
   // --- Loading skeleton ---
 
@@ -395,7 +396,7 @@ export default function TeacherDashboard() {
                         </tr>
                       </thead>
                       <tbody>
-                        {results.map(({ attempt, user }, idx) => {
+                        {results.map(({ attempt, user }) => {
                           const pct = Math.round(
                             (attempt.score / attempt.totalQuestions) * 100
                           );
