@@ -42,8 +42,8 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-16">
         <div className="flex items-center gap-6">
           <Link href="/lesson" className="flex items-center gap-2 shrink-0">
-            <span className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold text-sm">AI</span>
-            <span className="font-semibold text-slate-800 text-sm hidden sm:block">AI in Software Engineering</span>
+            <span className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold text-sm">TP</span>
+            <span className="font-semibold text-slate-800 text-sm hidden sm:block">Teacher Professionalism</span>
           </Link>
           <div className="hidden sm:flex items-center gap-1">
             {visibleLinks.map((link) => {

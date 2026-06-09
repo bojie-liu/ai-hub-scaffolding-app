@@ -4,12 +4,11 @@ import { useState, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Separator } from '@/components/ui/separator';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Textarea } from '@/components/ui/textarea';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { createPost } from '@/lib/actions/discussion';
-import { MessageSquare, Reply, Send, Pin } from 'lucide-react';
+import { MessageSquare, Reply, Send } from 'lucide-react';
 import { toast } from 'sonner';
 
 interface Post {
@@ -31,7 +30,6 @@ interface DiscussionProps {
   description: string | null;
   posts: Post[];
   userId: number;
-  userRole: string;
 }
 
 export default function Discussion({
@@ -40,7 +38,6 @@ export default function Discussion({
   description,
   posts: initialPosts,
   userId,
-  userRole,
 }: DiscussionProps) {
   const [posts, setPosts] = useState(initialPosts);
   const [newPostContent, setNewPostContent] = useState('');

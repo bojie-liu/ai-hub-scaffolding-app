@@ -55,6 +55,55 @@ export async function getQuiz(id: number) {
   }
 }
 
+export async function getQuizByStorageKey(storageKey: string) {
+  try {
+    const quizRows = await db
+      .select()
+      .from(quizzes)
+      .where(eq(quizzes.storageKey, storageKey))
+      .limit(1);
+
+    if (quizRows.length === 0) {
+      return { success: false, error: 'Quiz not found' };
+    }
+
+    const quiz = quizRows[0];
+
+    const questionRows = await db
+      .select({
+        question: questions,
+        answer: answers,
+      })
+      .from(questions)
+      .leftJoin(answers, eq(questions.id, answers.questionId))
+      .where(eq(questions.quizId, quiz.id))
+      .orderBy(questions.questionOrder, answers.answerOrder);
+
+    const questionsMap = new Map<number, typeof questions.$inferSelect & { answers: typeof answers.$inferSelect[] }>();
+
+    for (const row of questionRows) {
+      const q = row.question;
+      if (!questionsMap.has(q.id)) {
+        questionsMap.set(q.id, { ...q, answers: [] });
+      }
+      if (row.answer) {
+        questionsMap.get(q.id)!.answers.push(row.answer);
+      }
+    }
+
+    return {
+      success: true,
+      data: {
+        quiz,
+        questions: Array.from(questionsMap.values()),
+      },
+    };
+  } catch (error) {
+    console.error('Failed to fetch quiz by storage key:', error);
+    return { success: false, error: 'Failed to fetch quiz' };
+  }
+}
+
 export async function getAllQuizzes() {
   try {
     const allQuizzes = await db

@@ -47,6 +47,27 @@ export async function getDiscussions() {
   }
 }
 
+export async function getDiscussionByStorageKey(storageKey: string) {
+  try {
+    const discussionRows = await db
+      .select()
+      .from(discussions)
+      .where(eq(discussions.storageKey, storageKey))
+      .limit(1);
+
+    if (discussionRows.length === 0) {
+      return { success: false, error: 'Discussion not found' };
+    }
+
+    const discussion = discussionRows[0];
+    const result = await getDiscussion(discussion.id);
+    return result;
+  } catch (error) {
+    console.error('Failed to fetch discussion by storage key:', error);
+    return { success: false, error: 'Failed to fetch discussion' };
+  }
+}
+
 export async function getDiscussion(id: number) {
   try {
     const discussionRows = await db

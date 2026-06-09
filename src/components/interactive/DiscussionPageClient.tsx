@@ -56,7 +56,6 @@ export default function DiscussionPageClient({
       description={description}
       posts={posts}
       userId={user.userId}
-      userRole={user.role}
     />
   );
 }
