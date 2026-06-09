@@ -2,7 +2,7 @@
 
 import { db } from '@/db';
 import { quizzes, questions, answers, quizAttempts, questionResponses } from '@/db/schema';
-import { eq, desc } from 'drizzle-orm';
+import { eq, desc, and } from 'drizzle-orm';
 import { revalidatePath } from 'next/cache';
 import { routes } from '@/lib/routes';
 
@@ -88,8 +88,7 @@ export async function submitQuizAttempt(
       const correctAnswers = await db
         .select({ id: answers.id })
         .from(answers)
-        .where(eq(answers.questionId, question.id))
-        .limit(1);
+        .where(and(eq(answers.questionId, question.id), eq(answers.isCorrect, true)));
 
       correctAnswerMap.set(question.id, correctAnswers.length > 0 ? correctAnswers[0].id : null);
     }

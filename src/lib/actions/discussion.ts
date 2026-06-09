@@ -108,6 +108,51 @@ export async function getDiscussion(id: number) {
   }
 }
 
+export async function getDiscussionByKey(storageKey: string) {
+  try {
+    const discussionRows = await db
+      .select()
+      .from(discussions)
+      .where(eq(discussions.storageKey, storageKey))
+      .limit(1);
+
+    if (discussionRows.length === 0) {
+      return { success: false, error: 'Discussion not found' };
+    }
+
+    const discussion = discussionRows[0];
+
+    const posts = await db
+      .select({
+        id: discussionPosts.id,
+        discussionId: discussionPosts.discussionId,
+        parentPostId: discussionPosts.parentPostId,
+        authorId: discussionPosts.authorId,
+        content: discussionPosts.content,
+        createdAt: discussionPosts.createdAt,
+        updatedAt: discussionPosts.updatedAt,
+        authorUsername: users.username,
+        authorDisplayName: users.displayName,
+        authorRole: users.role,
+      })
+      .from(discussionPosts)
+      .leftJoin(users, eq(discussionPosts.authorId, users.id))
+      .where(eq(discussionPosts.discussionId, discussion.id))
+      .orderBy(discussionPosts.createdAt);
+
+    return {
+      success: true,
+      data: {
+        discussion,
+        posts,
+      },
+    };
+  } catch (error) {
+    console.error('Failed to fetch discussion by key:', error);
+    return { success: false, error: 'Failed to fetch discussion by key' };
+  }
+}
+
 export async function createDiscussion(
   title: string,
   description: string,

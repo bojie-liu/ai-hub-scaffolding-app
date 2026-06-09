@@ -65,6 +65,23 @@ export async function getConceptCheckResults() {
   }
 }
 
+export async function getUserConceptCheckResponse(checkId: number, userId: number) {
+  try {
+    const result = await db
+      .select({ responseValue: conceptCheckResponses.responseValue })
+      .from(conceptCheckResponses)
+      .where(eq(conceptCheckResponses.checkId, checkId))
+      .orderBy(desc(conceptCheckResponses.createdAt))
+      .limit(1);
+
+    if (result.length === 0) return null;
+    return result[0].responseValue;
+  } catch (error) {
+    console.error('Failed to fetch user concept check response:', error);
+    return null;
+  }
+}
+
 export async function submitConceptCheckResponse(
   checkId: number,
   userId: number,

@@ -83,11 +83,14 @@ const SECTION_LABELS: Record<string, string> = {
   ilos: 'Learning Outcomes',
   preclass: 'Pre-Class',
   introduction: 'Introduction',
-  development: 'Activities',
-  synthesis: 'Synthesis',
+  segment1: 'Accounting Equation',
+  segment2: 'Transaction Analysis',
+  segment3: 'CapEx vs OpEx',
+  segment4: 'Dual Effect',
   assessment: 'Assessment',
-  alignment: 'Alignment',
+  'financial-impact': 'Financial Impact',
   resources: 'Resources',
+  alignment: 'Alignment',
 };
 
 export default function TeacherDashboard() {
