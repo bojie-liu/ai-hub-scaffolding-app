@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useCallback } from 'react';
 import { useUser } from '@/contexts/UserContext';
+import { ScrollRootProvider } from '@/contexts';
 import { AuthGuard } from '@/components/auth/AuthGuard';
 import Navbar from '@/components/common/Navbar';
 import LessonSideMenu from '@/components/lesson/LessonSideMenu';
@@ -191,7 +192,7 @@ export default function LessonPage() {
   }
 
   return (
-    <>
+    <ScrollRootProvider>
       <Navbar />
       <main className="max-w-7xl mx-auto px-4 py-6">
         <div className="flex gap-8">
@@ -945,6 +946,6 @@ export default function LessonPage() {
           </div>
         </div>
       </main>
-    </>
+    </ScrollRootProvider>
   );
 }
