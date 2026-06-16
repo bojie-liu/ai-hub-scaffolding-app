@@ -83,11 +83,15 @@ const SECTION_LABELS: Record<string, string> = {
   ilos: 'Learning Outcomes',
   preclass: 'Pre-Class',
   introduction: 'Introduction',
-  development: 'Activities',
-  synthesis: 'Synthesis',
+  'development-conceptual': 'Conceptual Framing',
+  'development-comparative': 'Comparative Analysis',
+  'development-ethical': 'Ethical Applications',
+  closure: 'Closure',
   assessment: 'Assessment',
-  alignment: 'Alignment',
+  alignment: 'Alignment Matrix',
   resources: 'Resources',
+  differentiation: 'Differentiation',
+  reflection: 'Reflection',
 };
 
 export default function TeacherDashboard() {

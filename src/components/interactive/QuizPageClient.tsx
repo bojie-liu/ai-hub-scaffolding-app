@@ -54,7 +54,7 @@ export default function QuizPageClient({ quizId, title, questions }: QuizPageCli
     <Quiz
       quizId={quizId}
       title={title}
-      questions={questions as any}
+      questions={questions.map(q => ({ ...q, questionType: q.questionType as 'multiple_choice' | 'true_false' | 'short_answer' }))}
       userId={user.userId}
     />
   );

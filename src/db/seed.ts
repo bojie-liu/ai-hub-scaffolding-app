@@ -1,30 +1,10 @@
 import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
 import { sql, eq } from 'drizzle-orm';
-import { readFileSync } from 'fs';
-import { resolve } from 'path';
 import bcrypt from 'bcryptjs';
 import * as schema from './schema';
 
-// // Load .env.local
-// try {
-//   const envPath = resolve(process.cwd(), '.env.local');
-//   const envContent = readFileSync(envPath, 'utf-8');
-//   for (const line of envContent.split('\n')) {
-//     const match = line.match(/^([^#=]+)=(.*)$/);
-//     if (match) {
-//       const key = match[1].trim();
-//       const value = match[2].trim().replace(/^["']|["']$/g, '');
-//       if (!process.env[key]) {
-//         process.env[key] = value;
-//       }
-//     }
-//   }
-// } catch {
-//   // .env.local not found, rely on existing env vars
-// }
-
-const SEED_VERSION = 'v1_initial';
+const SEED_VERSION = 'v2_lesson_plan';
 
 async function seed() {
   const client = postgres(process.env.DATABASE_URL!);
@@ -54,19 +34,471 @@ async function seed() {
 
     // Run seed data within a transaction
     await db.transaction(async (tx) => {
+      // 1. Create users
       const passwordHash = await bcrypt.hash(
         process.env.SEED_ADMIN_PASSWORD || 'changeme',
         10,
       );
 
-      await tx.insert(schema.users).values({
+      const [adminUser] = await tx.insert(schema.users).values({
         username: 'admin',
         email: 'admin@example.com',
         passwordHash,
         role: 'TEACHER',
         displayName: 'Admin User',
-      });
+      }).returning();
 
+      const studentPasswordHash = await bcrypt.hash('student123', 10);
+
+      await tx.insert(schema.users).values({
+        username: 'student',
+        email: 'student@example.com',
+        passwordHash: studentPasswordHash,
+        role: 'STUDENT',
+        displayName: 'Demo Student',
+      }).returning();
+
+      // 2. Create quizzes
+      // Pre-test quiz
+      const [preTestQuiz] = await tx.insert(schema.quizzes).values({
+        storageKey: 'quiz:pretest',
+        title: 'Pre-Test: Teacher Professionalism - Historical vs Modern Perspectives & Ethical Dilemmas',
+        description: 'Test your initial understanding of teacher professionalism concepts before the lesson begins.',
+        quizType: 'multiple_choice',
+      }).returning();
+
+      // Ethical applications quiz
+      const [ethicsQuiz] = await tx.insert(schema.quizzes).values({
+        storageKey: 'quiz:ethical-applications',
+        title: 'Ethical Applications: Case Study Analysis',
+        description: 'Apply EDB guidelines to real-world Hong Kong teaching scenarios.',
+        quizType: 'multiple_choice',
+      }).returning();
+
+      // Post-test quiz
+      const [postTestQuiz] = await tx.insert(schema.quizzes).values({
+        storageKey: 'quiz:posttest',
+        title: 'Post-Test: Teacher Professionalism Review',
+        description: 'Assess your understanding after completing the lesson on teacher professionalism.',
+        quizType: 'multiple_choice',
+      }).returning();
+
+      // 3. Create pre-test questions and answers
+      const preTestQuestions = [
+        {
+          storageKey: 'q:pretest-1',
+          questionText: 'Which of the following best describes the concept of teacher professionalism in the 21st century?',
+          questionOrder: 0,
+          questionType: 'multiple_choice',
+          explanation: 'Modern teacher professionalism encompasses both technical competence and ethical conduct across all aspects of a teacher\'s life, as reflected in the EDB guidelines.',
+          answers: [
+            { answerText: 'Only the technical skills required for classroom teaching', isCorrect: false, answerOrder: 0 },
+            { answerText: 'A combination of professional competence, ethical conduct, and public accountability', isCorrect: true, answerOrder: 1 },
+            { answerText: 'The ability to follow school administrative procedures', isCorrect: false, answerOrder: 2 },
+            { answerText: 'Academic qualifications and teaching certifications only', isCorrect: false, answerOrder: 3 },
+          ],
+        },
+        {
+          storageKey: 'q:pretest-2',
+          questionText: 'How does teacher professionalism in Hong Kong differ from Finland\'s self-driven model?',
+          questionOrder: 1,
+          questionType: 'multiple_choice',
+          explanation: 'Hong Kong relies on codified EDB guidelines and mandatory reporting, while Finland emphasizes teacher autonomy and self-regulation through professional trust.',
+          answers: [
+            { answerText: 'Hong Kong teachers have more autonomy than Finnish teachers', isCorrect: false, answerOrder: 0 },
+            { answerText: 'Hong Kong emphasizes codified guidelines and mandatory reporting, while Finland relies on professional autonomy and self-regulation', isCorrect: true, answerOrder: 1 },
+            { answerText: 'Finland has stricter government oversight of teachers', isCorrect: false, answerOrder: 2 },
+            { answerText: 'There is no significant difference between the two systems', isCorrect: false, answerOrder: 3 },
+          ],
+        },
+        {
+          storageKey: 'q:pretest-3',
+          questionText: 'True or False: Teacher professionalism only applies to conduct within school hours and on school premises.',
+          questionOrder: 2,
+          questionType: 'true_false',
+          explanation: 'Modern definitions of teacher professionalism extend to personal conduct outside school hours, especially regarding social media and public behavior, as outlined in EDB Guideline 2.7.',
+          answers: [
+            { answerText: 'True', isCorrect: false, answerOrder: 0 },
+            { answerText: 'False', isCorrect: true, answerOrder: 1 },
+          ],
+        },
+        {
+          storageKey: 'q:pretest-4',
+          questionText: 'Which societal factor most significantly shapes teacher expectations in Hong Kong?',
+          questionOrder: 3,
+          questionType: 'multiple_choice',
+          explanation: 'Hong Kong\'s Confucian cultural heritage places teachers in a position of moral authority, creating higher expectations for personal conduct compared to many Western contexts.',
+          answers: [
+            { answerText: 'The influence of American educational philosophy', isCorrect: false, answerOrder: 0 },
+            { answerText: 'Confucian cultural values placing teachers as moral role models', isCorrect: true, answerOrder: 1 },
+            { answerText: 'The city\'s colonial British educational legacy exclusively', isCorrect: false, answerOrder: 2 },
+            { answerText: 'International school accreditation requirements', isCorrect: false, answerOrder: 3 },
+          ],
+        },
+        {
+          storageKey: 'q:pretest-5',
+          questionText: 'What is the primary purpose of the EDB Guidelines on Professional Conduct for teachers?',
+          questionOrder: 4,
+          questionType: 'multiple_choice',
+          explanation: 'The EDB Guidelines serve to provide a clear framework of professional standards and ethical expectations that protect both students and the teaching profession\'s integrity.',
+          answers: [
+            { answerText: 'To punish teachers who make mistakes', isCorrect: false, answerOrder: 0 },
+            { answerText: 'To provide a framework of professional standards and ethical expectations for the teaching profession', isCorrect: true, answerOrder: 1 },
+            { answerText: 'To replace school-based codes of conduct', isCorrect: false, answerOrder: 2 },
+            { answerText: 'To limit teachers\' freedom of expression', isCorrect: false, answerOrder: 3 },
+          ],
+        },
+      ];
+
+      for (const q of preTestQuestions) {
+        const [insertedQ] = await tx.insert(schema.questions).values({
+          quizId: preTestQuiz.id,
+          storageKey: q.storageKey,
+          questionText: q.questionText,
+          questionOrder: q.questionOrder,
+          questionType: q.questionType,
+          explanation: q.explanation,
+        }).returning();
+
+        for (const a of q.answers) {
+          await tx.insert(schema.answers).values({
+            questionId: insertedQ.id,
+            answerText: a.answerText,
+            isCorrect: a.isCorrect,
+            answerOrder: a.answerOrder,
+          });
+        }
+      }
+
+      // 4. Create ethical applications quiz questions
+      const ethicsQuestions = [
+        {
+          storageKey: 'q:ethics-1',
+          questionText: 'Case 1 (2018 Yuen Long School Leak): Student exam paper photos appeared online. Under EDB Guideline 2.2, was the teacher\'s disciplinary action justified?',
+          questionOrder: 0,
+          questionType: 'multiple_choice',
+          explanation: 'EDB Guideline 2.2 addresses the duty of care and confidentiality. The teacher had a professional obligation to protect student assessment materials and privacy.',
+          answers: [
+            { answerText: 'No, the teacher was not directly responsible for the leak', isCorrect: false, answerOrder: 0 },
+            { answerText: 'Yes, the teacher violated the duty of care and confidentiality under Guideline 2.2', isCorrect: true, answerOrder: 1 },
+            { answerText: 'It depends on whether the teacher personally posted the photos', isCorrect: false, answerOrder: 2 },
+            { answerText: 'The guideline does not cover digital privacy issues', isCorrect: false, answerOrder: 3 },
+          ],
+        },
+        {
+          storageKey: 'q:ethics-2',
+          questionText: 'Case 2 (Cyberbullying): A parent complained about a teacher\'s critical social media post about a student\'s dress code violation. Which EDB guideline is most relevant?',
+          questionOrder: 1,
+          questionType: 'multiple_choice',
+          explanation: 'Guideline 2.7 specifically addresses social media conduct and requires teachers to maintain professional boundaries in digital spaces, even for conduct outside school hours.',
+          answers: [
+            { answerText: 'Guideline 1.1 on classroom management', isCorrect: false, answerOrder: 0 },
+            { answerText: 'Guideline 2.7 on professional conduct in social media spaces', isCorrect: true, answerOrder: 1 },
+            { answerText: 'Guideline 3.4 on mandatory reporting', isCorrect: false, answerOrder: 2 },
+            { answerText: 'No guideline applies to personal social media accounts', isCorrect: false, answerOrder: 3 },
+          ],
+        },
+        {
+          storageKey: 'q:ethics-3',
+          questionText: 'In the role-play scenario, an EDB Investigator should primarily assess:',
+          questionOrder: 2,
+          questionType: 'multiple_choice',
+          explanation: 'EDB investigators assess whether the teacher\'s conduct meets the professional standards outlined in the guidelines, focusing on the impact on students and the profession.',
+          answers: [
+            { answerText: 'Whether the teacher has good intentions regardless of actions', isCorrect: false, answerOrder: 0 },
+            { answerText: 'Whether the teacher\'s conduct aligns with the professional standards in the EDB guidelines', isCorrect: true, answerOrder: 1 },
+            { answerText: 'Public opinion about the teacher\'s behavior', isCorrect: false, answerOrder: 2 },
+            { answerText: 'The teacher\'s past performance reviews only', isCorrect: false, answerOrder: 3 },
+          ],
+        },
+        {
+          storageKey: 'q:ethics-4',
+          questionText: 'Should a teacher lose credentials for personal social media posts that criticize school policies?',
+          questionOrder: 3,
+          questionType: 'true_false',
+          explanation: 'This is a nuanced issue. While teachers have some freedom of expression, EDB guidelines require professional conduct even in personal digital spaces when it affects students or the profession\'s reputation.',
+          answers: [
+            { answerText: 'True - any criticism of school policies warrants credential revocation', isCorrect: false, answerOrder: 0 },
+            { answerText: 'False - it depends on the nature, impact, and whether it violates specific professional conduct guidelines', isCorrect: true, answerOrder: 1 },
+          ],
+        },
+      ];
+
+      for (const q of ethicsQuestions) {
+        const [insertedQ] = await tx.insert(schema.questions).values({
+          quizId: ethicsQuiz.id,
+          storageKey: q.storageKey,
+          questionText: q.questionText,
+          questionOrder: q.questionOrder,
+          questionType: q.questionType,
+          explanation: q.explanation,
+        }).returning();
+
+        for (const a of q.answers) {
+          await tx.insert(schema.answers).values({
+            questionId: insertedQ.id,
+            answerText: a.answerText,
+            isCorrect: a.isCorrect,
+            answerOrder: a.answerOrder,
+          });
+        }
+      }
+
+      // 5. Create post-test questions
+      const postTestQuestions = [
+        {
+          storageKey: 'q:posttest-1',
+          questionText: 'After this lesson, which statement best synthesizes the concept of teacher professionalism?',
+          questionOrder: 0,
+          questionType: 'multiple_choice',
+          explanation: 'Teacher professionalism is a dynamic, multifaceted concept that balances professional competence, ethical accountability, and societal expectations, varying across cultural contexts.',
+          answers: [
+            { answerText: 'A fixed set of rules that all teachers must follow uniformly', isCorrect: false, answerOrder: 0 },
+            { answerText: 'A dynamic concept encompassing professional competence, ethical accountability, and societal expectations that varies across cultural contexts', isCorrect: true, answerOrder: 1 },
+            { answerText: 'Primarily about maintaining discipline in the classroom', isCorrect: false, answerOrder: 2 },
+            { answerText: 'Only relevant for teachers in positions of authority', isCorrect: false, answerOrder: 3 },
+          ],
+        },
+        {
+          storageKey: 'q:posttest-2',
+          questionText: 'How have societal changes affected teacher professionalism in Hong Kong?',
+          questionOrder: 1,
+          questionType: 'multiple_choice',
+          explanation: 'Social media, globalization, and shifting cultural expectations have expanded the scope of teacher professionalism beyond classroom conduct to include personal digital behavior.',
+          answers: [
+            { answerText: 'Societal changes have had minimal impact on teacher professionalism', isCorrect: false, answerOrder: 0 },
+            { answerText: 'Social media and globalization have expanded professionalism expectations to include personal digital conduct', isCorrect: true, answerOrder: 1 },
+            { answerText: 'Technology has made teacher professionalism less important', isCorrect: false, answerOrder: 2 },
+            { answerText: 'Only parents\' expectations have changed, not professional standards', isCorrect: false, answerOrder: 3 },
+          ],
+        },
+        {
+          storageKey: 'q:posttest-3',
+          questionText: 'In comparing HK EDB guidelines with Ontario\'s OCT standards, a key similarity is:',
+          questionOrder: 2,
+          questionType: 'multiple_choice',
+          explanation: 'Both systems emphasize ethical conduct and duty of care as foundational to teacher professionalism, though they differ in enforcement and cultural context.',
+          answers: [
+            { answerText: 'Both use identical enforcement mechanisms', isCorrect: false, answerOrder: 0 },
+            { answerText: 'Both emphasize ethical conduct and duty of care as foundational principles', isCorrect: true, answerOrder: 1 },
+            { answerText: 'Both are entirely voluntary guidelines with no enforcement', isCorrect: false, answerOrder: 2 },
+            { answerText: 'Both originated from the same legal framework', isCorrect: false, answerOrder: 3 },
+          ],
+        },
+        {
+          storageKey: 'q:posttest-4',
+          questionText: 'The EDB guidelines may need updating to address emerging challenges such as:',
+          questionOrder: 3,
+          questionType: 'short_answer',
+          explanation: 'Emerging challenges include AI in education, deepfakes, virtual classrooms, data privacy, and the blurring of personal/professional boundaries in digital spaces.',
+        },
+        {
+          storageKey: 'q:posttest-5',
+          questionText: 'Cultural values in Hong Kong shape mandatory reporting requirements by:',
+          questionOrder: 4,
+          questionType: 'multiple_choice',
+          explanation: 'Collective cultural values emphasize communal responsibility and protecting students as a societal obligation, making mandatory reporting a reflection of broader cultural norms.',
+          answers: [
+            { answerText: 'Prioritizing individual teacher privacy over student welfare', isCorrect: false, answerOrder: 0 },
+            { answerText: 'Emphasizing communal responsibility and the obligation to protect students as a collective duty', isCorrect: true, answerOrder: 1 },
+            { answerText: 'Reducing the need for formal reporting structures', isCorrect: false, answerOrder: 2 },
+            { answerText: 'Making reporting optional based on personal judgment', isCorrect: false, answerOrder: 3 },
+          ],
+        },
+      ];
+
+      for (const q of postTestQuestions) {
+        const [insertedQ] = await tx.insert(schema.questions).values({
+          quizId: postTestQuiz.id,
+          storageKey: q.storageKey,
+          questionText: q.questionText,
+          questionOrder: q.questionOrder,
+          questionType: q.questionType,
+          explanation: q.explanation,
+        }).returning();
+
+        if (q.answers) {
+          for (const a of q.answers) {
+            await tx.insert(schema.answers).values({
+              questionId: insertedQ.id,
+              answerText: a.answerText,
+              isCorrect: a.isCorrect,
+              answerOrder: a.answerOrder,
+            });
+          }
+        }
+      }
+
+      // 6. Create discussions
+      await tx.insert(schema.discussions).values([
+        {
+          storageKey: 'discussion:think-pair-share',
+          title: 'Think-Pair-Share: Should teacher professionalism include personal conduct outside school hours?',
+          description: 'Debate whether a teacher\'s personal life should be subject to professional standards. Consider social media, community involvement, and personal relationships.',
+          createdBy: adminUser.id,
+          isPinned: true,
+        },
+        {
+          storageKey: 'discussion:comparative-analysis',
+          title: 'Comparative Analysis: HK EDB vs. Other Systems',
+          description: 'How do collective cultural values in HK shape mandatory reporting requirements? What conflicts arise for HK teachers in social media spaces per Guideline 2.7?',
+          createdBy: adminUser.id,
+          isPinned: false,
+        },
+        {
+          storageKey: 'discussion:case-study-yuen-long',
+          title: 'Case Study Discussion: 2018 Yuen Long School Leak',
+          description: 'Student exam paper photos appeared online. Was the teacher\'s disciplinary action justified per Guideline 2.2? Share your analysis.',
+          createdBy: adminUser.id,
+          isPinned: false,
+        },
+        {
+          storageKey: 'discussion:case-study-cyberbullying',
+          title: 'Case Study Discussion: Cyberbullying Scenario',
+          description: 'A parent complained about a teacher\'s critical social media post about a student\'s dress code violation. How should this be resolved using EDB guidelines?',
+          createdBy: adminUser.id,
+          isPinned: false,
+        },
+        {
+          storageKey: 'discussion:role-play-debrief',
+          title: 'Role-Play Debrief: Guideline-Based Resolutions',
+          description: 'After the role-play activity, share your reflections on how different perspectives (Principal, Teacher, Parent, EDB Investigator) approach the same ethical dilemma.',
+          createdBy: adminUser.id,
+          isPinned: false,
+        },
+      ]);
+
+      // 7. Create concept checks
+      await tx.insert(schema.conceptChecks).values([
+        {
+          storageKey: 'concept:intro-hook',
+          title: 'Opening Reflection',
+          prompt: 'Do you believe a teacher\'s social media activity should be considered part of their professional conduct?',
+          checkType: 'thumbs',
+          sectionKey: 'introduction',
+        },
+        {
+          storageKey: 'concept:professionalism-definition',
+          title: 'Concept Check: Professionalism Definition',
+          prompt: 'Can you define teacher professionalism in your own words after the interactive lecture?',
+          checkType: 'text',
+          sectionKey: 'development-conceptual',
+        },
+        {
+          storageKey: 'concept:timeline-understanding',
+          title: 'Timeline Comprehension',
+          prompt: 'Do you understand the evolution of teacher professionalism from medieval guilds to 21st-century HK guidelines?',
+          checkType: 'thumbs',
+          sectionKey: 'development-conceptual',
+        },
+        {
+          storageKey: 'concept:comparative-understanding',
+          title: 'Comparative Analysis Check',
+          prompt: 'On a scale of 1-5, how well do you understand the differences between HK EDB guidelines and other systems like Finland or Ontario?',
+          checkType: 'scale',
+          sectionKey: 'development-comparative',
+        },
+        {
+          storageKey: 'concept:ethical-application',
+          title: 'Ethical Application Check',
+          prompt: 'Can you apply EDB Guideline 2.2 to the Yuen Long School Leak case?',
+          checkType: 'thumbs',
+          sectionKey: 'development-ethical',
+        },
+        {
+          storageKey: 'concept:exit-ticket',
+          title: 'Exit Ticket: Emerging Tech Challenges',
+          prompt: 'How might the EDB guidelines need updating for emerging tech challenges? Write a brief reflection.',
+          checkType: 'text',
+          sectionKey: 'closure',
+        },
+      ]);
+
+      // 8. Create slides (10-slide presentation summarizing the lesson)
+      await tx.insert(schema.slides).values([
+        {
+          storageKey: 'slide:1-title',
+          slideOrder: 0,
+          title: 'Teacher Professionalism',
+          content: 'Understanding Professional Conduct in Hong Kong Education\nA Comparative & Ethical Analysis',
+          slideType: 'title',
+          backgroundColor: null,
+        },
+        {
+          storageKey: 'slide:2-ilos',
+          slideOrder: 1,
+          title: 'Learning Outcomes',
+          content: '- ILO 1: Synthesize teacher professionalism through comparative analysis\n- ILO 2: Evaluate HK teaching scenarios using EDB ethical guidelines\n- ILO 3: Critically analyze the evolving nature of teacher professionalism',
+          slideType: 'content',
+          backgroundColor: null,
+        },
+        {
+          storageKey: 'slide:3-evolution',
+          slideOrder: 2,
+          title: 'Evolution of Teacher Professionalism',
+          content: '- Medieval guilds: Craft-based expertise & apprenticeship\n- 19th century: Formal teacher training institutions emerge\n- 20th century: Professional codes & certification bodies\n- 21st century: Digital conduct, social media, global standards\n- HK Context: EDB Guidelines codify professional expectations',
+          slideType: 'content',
+          backgroundColor: null,
+        },
+        {
+          storageKey: 'slide:4-hk-guidelines',
+          slideOrder: 3,
+          title: 'HK EDB Guidelines Overview',
+          content: '- Section 1: Professional competence & dedication\n- Section 2: Conduct towards students & colleagues\n  - Guideline 2.2: Duty of care & confidentiality\n  - Guideline 2.7: Social media professional conduct\n- Section 3: Accountability & mandatory reporting\n  - Section 3.4: Mandatory reporting requirements\n- Based on Education Ordinance legal framework',
+          slideType: 'content',
+          backgroundColor: null,
+        },
+        {
+          storageKey: 'slide:5-comparative',
+          slideOrder: 4,
+          title: 'Comparative Analysis: HK vs. Other Systems',
+          content: '- Hong Kong: Codified guidelines, mandatory reporting\n  - Shaped by Confucian values & collective responsibility\n- Finland: Self-driven model, professional autonomy\n  - Built on high social trust & rigorous teacher education\n- Ontario (OCT): Standards of practice, ethical framework\n  - Similar emphasis on ethical conduct & duty of care\n- Key Question: How do cultural values shape professional expectations?',
+          slideType: 'activity',
+          backgroundColor: null,
+        },
+        {
+          storageKey: 'slide:6-case1',
+          slideOrder: 5,
+          title: 'Case Study 1: 2018 Yuen Long School Leak',
+          content: '- Incident: Student exam paper photos appeared online\n- Question: Was the teacher\'s disciplinary action justified?\n- Relevant Guideline: 2.2 - Duty of care & confidentiality\n- Analysis: Teacher violated professional obligation to protect assessment materials\n- Key principle: Teachers bear responsibility even for indirect privacy breaches',
+          slideType: 'assessment',
+          backgroundColor: null,
+        },
+        {
+          storageKey: 'slide:7-case2',
+          slideOrder: 6,
+          title: 'Case Study 2: Cyberbullying Scenario',
+          content: '- Incident: Teacher posted critical comments about student\'s dress code on social media\n- Parent complaint raised professional conduct questions\n- Relevant Guideline: 2.7 - Professional conduct in digital spaces\n- Key tension: Freedom of expression vs. professional responsibility\n- Discussion: Where should the line be drawn?',
+          slideType: 'assessment',
+          backgroundColor: null,
+        },
+        {
+          storageKey: 'slide:8-roleplay',
+          slideOrder: 7,
+          title: 'Role-Play Activity',
+          content: '- Group Roles: Principal, Affected Teacher, Parent Rep, EDB Investigator\n- Each role approaches the ethical dilemma differently\n- Practice guideline-based resolutions\n- Consider multiple stakeholder perspectives\n- Apply EDB guidelines systematically to each scenario',
+          slideType: 'activity',
+          backgroundColor: null,
+        },
+        {
+          storageKey: 'slide:9-alignment',
+          slideOrder: 8,
+          title: 'Constructive Alignment',
+          content: '- ILO 1 (Synthesize) → Comparative jigsaw, interactive lecture\n  → Written analysis: contextual awareness (30%)\n- ILO 2 (Evaluate) → Case study role-play, live polls\n  → Padlet contributions & ethical application (40%)\n- ILO 3 (Analyze) → Current case studies, exit ticket\n  → Final paper: policy critique (30%)',
+          slideType: 'content',
+          backgroundColor: null,
+        },
+        {
+          storageKey: 'slide:10-reflection',
+          slideOrder: 9,
+          title: 'Reflection & Next Steps',
+          content: '- Exit Ticket: How might EDB guidelines need updating for emerging tech?\n- Success Target: 80% improvement on ethics questions\n- Next Lesson: Evaluating teacher unions\' roles in professionalism standards\n- Key Takeaway: Teacher professionalism is dynamic, culturally shaped, and increasingly extends beyond the classroom',
+          slideType: 'content',
+          backgroundColor: null,
+        },
+      ]);
+
+      // 9. Record seed completion
       await tx.insert(schema.seedLog).values({
         seedVersion: SEED_VERSION,
       });
