@@ -1,30 +1,10 @@
 import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
 import { sql, eq } from 'drizzle-orm';
-import { readFileSync } from 'fs';
-import { resolve } from 'path';
 import bcrypt from 'bcryptjs';
 import * as schema from './schema';
 
-// // Load .env.local
-// try {
-//   const envPath = resolve(process.cwd(), '.env.local');
-//   const envContent = readFileSync(envPath, 'utf-8');
-//   for (const line of envContent.split('\n')) {
-//     const match = line.match(/^([^#=]+)=(.*)$/);
-//     if (match) {
-//       const key = match[1].trim();
-//       const value = match[2].trim().replace(/^["']|["']$/g, '');
-//       if (!process.env[key]) {
-//         process.env[key] = value;
-//       }
-//     }
-//   }
-// } catch {
-//   // .env.local not found, rely on existing env vars
-// }
-
-const SEED_VERSION = 'v1_initial';
+const SEED_VERSION = 'v2_lesson_ethics';
 
 async function seed() {
   const client = postgres(process.env.DATABASE_URL!);
@@ -54,19 +34,300 @@ async function seed() {
 
     // Run seed data within a transaction
     await db.transaction(async (tx) => {
-      const passwordHash = await bcrypt.hash(
-        process.env.SEED_ADMIN_PASSWORD || 'changeme',
-        10,
-      );
+      // 1. Create users
+      const adminHash = await bcrypt.hash(process.env.SEED_ADMIN_PASSWORD || 'changeme', 10);
+      const studentHash = await bcrypt.hash('student123', 10);
 
-      await tx.insert(schema.users).values({
-        username: 'admin',
-        email: 'admin@example.com',
-        passwordHash,
+      const [adminUser] = await tx.insert(schema.users).values({
+        username: 'teacher',
+        email: 'teacher@example.com',
+        passwordHash: adminHash,
         role: 'TEACHER',
-        displayName: 'Admin User',
-      });
+        displayName: 'Prof. Chan',
+      }).returning();
 
+      const [studentUser] = await tx.insert(schema.users).values({
+        username: 'student',
+        email: 'student@example.com',
+        passwordHash: studentHash,
+        role: 'STUDENT',
+        displayName: 'Alex Wong',
+      }).returning();
+
+      // 2. Create Pre-Test Quiz
+      const [preTestQuiz] = await tx.insert(schema.quizzes).values({
+        storageKey: 'quiz:pre-test',
+        title: 'Pre-Test: Teacher Professionalism',
+        description: 'Test your knowledge before the lesson begins.',
+        quizType: 'mixed',
+      }).returning();
+
+      // Pre-Test Questions
+      const [q1] = await tx.insert(schema.questions).values({
+        quizId: preTestQuiz.id,
+        storageKey: 'question:pre-1',
+        questionText: 'What are the four key domains of teacher professionalism in Hong Kong?',
+        questionOrder: 1,
+        questionType: 'multiple_choice',
+        explanation: 'The four key domains are: Professional Knowledge, Professional Skills, Professional Values, and Professional Commitment.',
+      }).returning();
+
+      await tx.insert(schema.answers).values([
+        { questionId: q1.id, answerText: 'Knowledge, Skills, Values, Commitment', isCorrect: true, answerOrder: 1 },
+        { questionId: q1.id, answerText: 'Teaching, Research, Administration, Service', isCorrect: false, answerOrder: 2 },
+        { questionId: q1.id, answerText: 'Pedagogy, Curriculum, Assessment, Leadership', isCorrect: false, answerOrder: 3 },
+        { questionId: q1.id, answerText: 'Planning, Delivery, Evaluation, Feedback', isCorrect: false, answerOrder: 4 },
+      ]);
+
+      const [q2] = await tx.insert(schema.questions).values({
+        quizId: preTestQuiz.id,
+        storageKey: 'question:pre-2',
+        questionText: 'Define "whole person development" in education.',
+        questionOrder: 2,
+        questionType: 'short_answer',
+        explanation: 'Whole person development refers to the holistic growth of students encompassing intellectual, physical, social, moral, aesthetic, and spiritual dimensions.',
+      }).returning();
+
+      const [q3] = await tx.insert(schema.questions).values({
+        quizId: preTestQuiz.id,
+        storageKey: 'question:pre-3',
+        questionText: 'Teacher accountability includes reporting unethical practices of colleagues.',
+        questionOrder: 3,
+        questionType: 'true_false',
+        explanation: 'According to EDB guidelines, teachers have a professional obligation to report unethical conduct of colleagues to uphold the integrity of the profession.',
+      }).returning();
+
+      await tx.insert(schema.answers).values([
+        { questionId: q3.id, answerText: 'True', isCorrect: true, answerOrder: 1 },
+        { questionId: q3.id, answerText: 'False', isCorrect: false, answerOrder: 2 },
+      ]);
+
+      // 3. Create Post-Test Quiz
+      const [postTestQuiz] = await tx.insert(schema.quizzes).values({
+        storageKey: 'quiz:post-test',
+        title: 'Post-Test: Professional Ethics Review',
+        description: 'Measure your learning gain after the lesson.',
+        quizType: 'multiple_choice',
+      }).returning();
+
+      const [pq1] = await tx.insert(schema.questions).values({
+        quizId: postTestQuiz.id,
+        storageKey: 'question:post-1',
+        questionText: 'What does EDB Guideline 2.3 emphasize?',
+        questionOrder: 1,
+        questionType: 'multiple_choice',
+        explanation: 'EDB Guideline 2.3 emphasizes the importance of maintaining professional integrity and avoiding conflicts of interest.',
+      }).returning();
+
+      await tx.insert(schema.answers).values([
+        { questionId: pq1.id, answerText: 'Professional integrity and avoiding conflicts of interest', isCorrect: true, answerOrder: 1 },
+        { questionId: pq1.id, answerText: 'Classroom management strategies', isCorrect: false, answerOrder: 2 },
+        { questionId: pq1.id, answerText: 'Student assessment methods', isCorrect: false, answerOrder: 3 },
+        { questionId: pq1.id, answerText: 'Parent communication protocols', isCorrect: false, answerOrder: 4 },
+      ]);
+
+      const [pq2] = await tx.insert(schema.questions).values({
+        quizId: postTestQuiz.id,
+        storageKey: 'question:post-2',
+        questionText: 'Which of the following best describes education equity?',
+        questionOrder: 2,
+        questionType: 'multiple_choice',
+        explanation: 'Education equity means providing resources according to individual needs, not necessarily the same resources for all.',
+      }).returning();
+
+      await tx.insert(schema.answers).values([
+        { questionId: pq2.id, answerText: 'Providing equal resources to all students', isCorrect: false, answerOrder: 1 },
+        { questionId: pq2.id, answerText: 'Providing resources according to individual needs to achieve fair outcomes', isCorrect: true, answerOrder: 2 },
+        { questionId: pq2.id, answerText: 'Eliminating all differences between schools', isCorrect: false, answerOrder: 3 },
+        { questionId: pq2.id, answerText: 'Focusing only on academic achievement', isCorrect: false, answerOrder: 4 },
+      ]);
+
+      const [pq3] = await tx.insert(schema.questions).values({
+        quizId: postTestQuiz.id,
+        storageKey: 'question:post-3',
+        questionText: 'A teacher discovers a colleague is altering student grades. According to EDB guidelines, the most appropriate action is:',
+        questionOrder: 3,
+        questionType: 'multiple_choice',
+        explanation: 'EDB guidelines require teachers to report unethical conduct through proper channels to protect student welfare and professional integrity.',
+      }).returning();
+
+      await tx.insert(schema.answers).values([
+        { questionId: pq3.id, answerText: 'Ignore it to maintain collegial harmony', isCorrect: false, answerOrder: 1 },
+        { questionId: pq3.id, answerText: 'Confront the colleague privately first, then report if unresolved', isCorrect: true, answerOrder: 2 },
+        { questionId: pq3.id, answerText: 'Post about it on social media', isCorrect: false, answerOrder: 3 },
+        { questionId: pq3.id, answerText: 'Wait until the end of the semester to act', isCorrect: false, answerOrder: 4 },
+      ]);
+
+      const [pq4] = await tx.insert(schema.questions).values({
+        quizId: postTestQuiz.id,
+        storageKey: 'question:post-4',
+        questionText: 'Whole person development in the HK context includes which dimensions?',
+        questionOrder: 4,
+        questionType: 'multiple_choice',
+        explanation: 'Whole person development encompasses intellectual, physical, social, moral, aesthetic, and spiritual dimensions according to EDB frameworks.',
+      }).returning();
+
+      await tx.insert(schema.answers).values([
+        { questionId: pq4.id, answerText: 'Academic and extracurricular only', isCorrect: false, answerOrder: 1 },
+        { questionId: pq4.id, answerText: 'Intellectual, physical, social, moral, aesthetic, and spiritual', isCorrect: true, answerOrder: 2 },
+        { questionId: pq4.id, answerText: 'Career skills and examination preparation', isCorrect: false, answerOrder: 3 },
+        { questionId: pq4.id, answerText: 'Physical education and arts only', isCorrect: false, answerOrder: 4 },
+      ]);
+
+      const [pq5] = await tx.insert(schema.questions).values({
+        quizId: postTestQuiz.id,
+        storageKey: 'question:post-5',
+        questionText: 'When balancing institutional rules against student welfare, a professional teacher should:',
+        questionOrder: 5,
+        questionType: 'multiple_choice',
+        explanation: 'Professional teachers must exercise ethical judgment, weighing institutional policies against student welfare while following EDB guidelines.',
+      }).returning();
+
+      await tx.insert(schema.answers).values([
+        { questionId: pq5.id, answerText: 'Always follow school rules without question', isCorrect: false, answerOrder: 1 },
+        { questionId: pq5.id, answerText: 'Always prioritize student preferences', isCorrect: false, answerOrder: 2 },
+        { questionId: pq5.id, answerText: 'Apply ethical judgment, considering EDB guidelines and student welfare', isCorrect: true, answerOrder: 3 },
+        { questionId: pq5.id, answerText: 'Defer all decisions to the principal', isCorrect: false, answerOrder: 4 },
+      ]);
+
+      // 4. Create Discussions
+      const [d1] = await tx.insert(schema.discussions).values({
+        storageKey: 'discussion:ethical-dilemmas-hk',
+        title: 'Ethical Dilemmas in Hong Kong Classrooms',
+        description: 'Share and discuss ethical challenges you have encountered or observed during your teaching practice in Hong Kong schools.',
+        createdBy: adminUser.id,
+        isPinned: true,
+      }).returning();
+
+      const [d2] = await tx.insert(schema.discussions).values({
+        storageKey: 'discussion:equity-vs-equality',
+        title: 'Equity vs. Equality in HK Education',
+        description: 'How do funding disparities between international and local schools affect education equity? Share your perspectives.',
+        createdBy: adminUser.id,
+      }).returning();
+
+      const [d3] = await tx.insert(schema.discussions).values({
+        storageKey: 'discussion:whole-person-development',
+        title: 'Whole Person Development: Theory vs. Practice',
+        description: 'How can schools practically implement whole person development while maintaining academic standards for DSE?',
+        createdBy: adminUser.id,
+      }).returning();
+
+      // 5. Create Concept Checks
+      await tx.insert(schema.conceptChecks).values([
+        {
+          storageKey: 'concept:intro-hook',
+          title: 'Hook Question Check',
+          prompt: 'Do you agree that withholding grades to encourage improvement can be ethical in some situations?',
+          checkType: 'thumbs',
+          sectionKey: 'introduction',
+        },
+        {
+          storageKey: 'concept:ethical-dilemma',
+          title: 'Ethical Dilemma Comprehension',
+          prompt: 'Do you understand the ethical implications of the SEN documentation falsification case?',
+          checkType: 'thumbs',
+          sectionKey: 'activity1',
+        },
+        {
+          storageKey: 'concept:professional-attributes',
+          title: 'Professional Teacher Attributes',
+          prompt: 'How confident are you in identifying the key attributes of a professional teacher?',
+          checkType: 'scale',
+          sectionKey: 'activity2',
+        },
+        {
+          storageKey: 'concept:whole-person',
+          title: 'Whole Person Development',
+          prompt: 'Can you explain how whole person development principles apply to the uniform policy scenario?',
+          checkType: 'thumbs',
+          sectionKey: 'activity3',
+        },
+        {
+          storageKey: 'concept:equity-debate',
+          title: 'Equity vs. Equality Understanding',
+          prompt: 'How well do you understand the difference between education equity and equality?',
+          checkType: 'scale',
+          sectionKey: 'activity4',
+        },
+      ]);
+
+      // 6. Create 10 Slides
+      const slideValues: typeof schema.slides.$inferInsert[] = [
+        {
+          storageKey: 'slide:1',
+          slideOrder: 1,
+          title: 'Professional Ethics in Teaching Practice',
+          content: 'Teacher Professionalism (Test 03)\nDuration: 150 minutes | Class Size: 40 students\nTarget: Year 4 Undergraduates\nContext: Hong Kong Education System',
+          slideType: 'title',
+        },
+        {
+          storageKey: 'slide:2',
+          slideOrder: 2,
+          title: 'Intended Learning Outcomes',
+          content: '- Analyze ethical dilemmas using EDB guidelines (Bloom: Analyze)\n- Evaluate attributes of a professional teacher (Bloom: Evaluate)\n- Apply whole person development principles (Bloom: Apply)\n- Critique education equity policies in HK (Bloom: Evaluate)',
+          slideType: 'content',
+        },
+        {
+          storageKey: 'slide:3',
+          slideOrder: 3,
+          title: 'Pre-Class Preparation',
+          content: '- Read: EDB Guidelines on Professional Conduct (Sections 2.1-2.3, 3.1)\n- Watch: Ethical Challenges in Hong Kong Classrooms\n- Complete the Pre-Test Online Quiz\n- Reflect on guiding questions about ethical issues in teaching practice',
+          slideType: 'content',
+        },
+        {
+          storageKey: 'slide:4',
+          slideOrder: 4,
+          title: 'Introduction: Ethical Hook',
+          content: '- Video: Hong Kong teacher whistleblowing on unfair grading\n- Provocative Question: "Is it ethical to withhold grades to encourage improvement?"\n- Pre-Test Discussion: Review quiz results via Mentimeter\n- Common misconceptions: Equality vs. Equity',
+          slideType: 'content',
+        },
+        {
+          storageKey: 'slide:5',
+          slideOrder: 5,
+          title: 'Activity 1: Ethical Dilemma Case Study',
+          content: '- Case: Parent falsifying SEN documentation for exam accommodations\n- Framework: Identify Stakeholders -> Legal/Ethical Implications -> EDB Guidelines\n- Small groups (4-5) discuss and present solutions\n- #EdEthicsHK peer critique\n- Brainteaser: Should teachers prioritize student well-being over school policies?',
+          slideType: 'activity',
+        },
+        {
+          storageKey: 'slide:6',
+          slideOrder: 6,
+          title: 'Activity 2: Role-Play Professional Attributes',
+          content: '- Role-play scenarios: handling parent complaints, addressing plagiarism\n- Self-assign roles: teacher, student, parent, principal\n- Reflect on EDB Guideline 3.1\n- Brainstorm: What traits define a "role model" teacher in HK multicultural schools?',
+          slideType: 'activity',
+        },
+        {
+          storageKey: 'slide:7',
+          slideOrder: 7,
+          title: 'Activity 3: Whole Person Development',
+          content: '- Critique mock school policy: mandatory uniforms vs. self-expression\n- Redesign policy aligning with EDB Life-Wide Learning Framework\n- Present using Padlet with visual aids\n- Brainteaser: How can DSE career guidance promote whole person development?',
+          slideType: 'activity',
+        },
+        {
+          storageKey: 'slide:8',
+          slideOrder: 8,
+          title: 'Activity 4: Equity vs. Equality Debate',
+          content: '- Analyze HK school funding disparities (International vs. Local)\n- Proponents: "funding equality" vs. "funding equity"\n- "Yes, But..." debate format\n- Brainteaser: Is providing free textbooks to all students equitable?',
+          slideType: 'activity',
+        },
+        {
+          storageKey: 'slide:9',
+          slideOrder: 9,
+          title: 'Assessment Methods',
+          content: '- Formative: Group discussion observation, role-play, exit tickets, post-test\n- Summative: Case Study Analysis (Individual Assignment)\n- Rubric: Analysis depth (30%), EDB guideline citation (25%), Practical solutions (30%), Clarity (15%)\n- Constructive Alignment: ILOs mapped to activities and assessments',
+          slideType: 'assessment',
+        },
+        {
+          storageKey: 'slide:10',
+          slideOrder: 10,
+          title: 'Reflection & Next Steps',
+          content: '- Exit Ticket: What ethical principle will you prioritize as a new teacher?\n- Success Indicators: 75% score 80%+ on post-test\n- Differentiation: Multilingual glossaries, advanced comparisons, alternative formats\n- Future: Guest lectures from EDB representatives and practicing teachers',
+          slideType: 'content',
+        },
+      ];
+      await tx.insert(schema.slides).values(slideValues);
+
+      // 7. Mark seed as applied
       await tx.insert(schema.seedLog).values({
         seedVersion: SEED_VERSION,
       });
