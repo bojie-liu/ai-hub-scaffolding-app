@@ -132,7 +132,7 @@ export async function submitQuizAttempt(
       .set({ score, completedAt: new Date() })
       .where(eq(quizAttempts.id, attempt.id));
 
-    revalidatePath(routes.quizzes);
+    revalidatePath(routes.lesson);
 
     return { success: true, data: { score, totalQuestions } };
   } catch (error) {

@@ -1,30 +1,10 @@
 import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
 import { sql, eq } from 'drizzle-orm';
-import { readFileSync } from 'fs';
-import { resolve } from 'path';
 import bcrypt from 'bcryptjs';
 import * as schema from './schema';
 
-// // Load .env.local
-// try {
-//   const envPath = resolve(process.cwd(), '.env.local');
-//   const envContent = readFileSync(envPath, 'utf-8');
-//   for (const line of envContent.split('\n')) {
-//     const match = line.match(/^([^#=]+)=(.*)$/);
-//     if (match) {
-//       const key = match[1].trim();
-//       const value = match[2].trim().replace(/^["']|["']$/g, '');
-//       if (!process.env[key]) {
-//         process.env[key] = value;
-//       }
-//     }
-//   }
-// } catch {
-//   // .env.local not found, rely on existing env vars
-// }
-
-const SEED_VERSION = 'v1_initial';
+const SEED_VERSION = 'v2_curriculum_design';
 
 async function seed() {
   const client = postgres(process.env.DATABASE_URL!);
@@ -54,6 +34,7 @@ async function seed() {
 
     // Run seed data within a transaction
     await db.transaction(async (tx) => {
+      // --- Admin user ---
       const passwordHash = await bcrypt.hash(
         process.env.SEED_ADMIN_PASSWORD || 'changeme',
         10,
@@ -66,6 +47,438 @@ async function seed() {
         role: 'TEACHER',
         displayName: 'Admin User',
       });
+
+      // --- Slides (10 summarized slides for presentation) ---
+      const slidesData = [
+        {
+          storageKey: 'slide:1-title',
+          slideOrder: 1,
+          title: 'Curriculum Design',
+          content: 'A comprehensive lesson on foundational principles, models, and frameworks for designing effective curricula.',
+          slideType: 'title',
+          backgroundColor: null,
+        },
+        {
+          storageKey: 'slide:2-ilos',
+          slideOrder: 2,
+          title: 'Intended Learning Outcomes',
+          content: '- Analyze foundational principles of curriculum design and their impact on educational outcomes\n- Evaluate different curriculum models (traditional, learner-centered, standards-based) against predefined criteria\n- Design a curriculum framework for a hypothetical secondary subject area that aligns with learning theories, goals, and assessment standards',
+          slideType: 'content',
+          backgroundColor: null,
+        },
+        {
+          storageKey: 'slide:3-preclass',
+          slideOrder: 3,
+          title: 'Pre-Class Preparation',
+          content: '- Pre-reading: "Understanding Curriculum Development" (Smith, 2020)\n- Video: Curriculum Design Models Explained\n- Pre-test: 8-question quiz on Moodle\n\nGuiding Questions:\n1. What factors influence curriculum design in your experiences?\n2. Strengths and weaknesses of learner-centered models?\n3. How might cultural context affect curriculum priorities?',
+          slideType: 'content',
+          backgroundColor: null,
+        },
+        {
+          storageKey: 'slide:4-intro',
+          slideOrder: 4,
+          title: 'Introduction & Hook',
+          content: 'Scenario: "You are tasked with redesigning a failing high school curriculum. What are your first steps?"\n\n- Pre-test Review: Word cloud of common misconceptions\n- Connection to Prior Learning: How does constructivism influence curriculum design?',
+          slideType: 'activity',
+          backgroundColor: null,
+        },
+        {
+          storageKey: 'slide:5-frameworks',
+          slideOrder: 5,
+          title: 'Curriculum Design Frameworks',
+          content: '- Traditional Model: Content-driven, sequential delivery\n- Backward Design (Wiggins & McTighe): Start with desired results, then assessments, then activities\n- Competency-Based Model: Focus on demonstrated competencies\n\nThink-Pair-Share: Which model best supports inclusive education? Why?',
+          slideType: 'content',
+          backgroundColor: null,
+        },
+        {
+          storageKey: 'slide:6-casestudy',
+          slideOrder: 6,
+          title: 'Case Study: STEM Integration',
+          content: 'A rural high school seeks to integrate STEM into its curriculum but lacks resources.\n\nGuided Questions:\n1. What contextual factors influence this curriculum redesign?\n2. Propose two alignment strategies between standards and classroom practice.\n\nScaffolding: DACUM (Developing A CUrriculum) method graphic organizer',
+          slideType: 'activity',
+          backgroundColor: null,
+        },
+        {
+          storageKey: 'slide:7-framework-design',
+          slideOrder: 7,
+          title: 'Curriculum Framework Design',
+          content: 'Task: Design a 4-week micro-curriculum for a secondary subject that:\n- Aligns with Bloom\'s Taxonomy\n- Incorporates formative and summative assessments\n- Addresses diversity (e.g., multilingual learners)\n\nTools: Digital whiteboard or poster paper\nGallery Walk: Present and receive peer feedback',
+          slideType: 'activity',
+          backgroundColor: null,
+        },
+        {
+          storageKey: 'slide:8-alignment',
+          slideOrder: 8,
+          title: 'Constructive Alignment Matrix',
+          content: 'Analyze curriculum principles -> Case study analysis -> Post-test, Summative proposal\n\nEvaluate curriculum models -> Think-pair-share and poll -> Formative quiz, Exit ticket themes\n\nDesign curriculum framework -> Framework design activity -> Summative proposal (peer feedback)',
+          slideType: 'content',
+          backgroundColor: null,
+        },
+        {
+          storageKey: 'slide:9-assessment',
+          slideOrder: 9,
+          title: 'Assessment Methods',
+          content: 'Formative:\n- Pre-/Post-Test Comparison\n- Peer Feedback with checklist\n- Exit Tickets from one-minute papers\n\nSummative (Due One Week Later):\n- Curriculum Proposal: 1500-word document\n- Rubric: 40% alignment, 30% equity & diversity, 30% theoretical justification',
+          slideType: 'assessment',
+          backgroundColor: null,
+        },
+        {
+          storageKey: 'slide:10-reflection',
+          slideOrder: 10,
+          title: 'Synthesis & Next Steps',
+          content: '- Post-Test: 3 mirrored questions from pre-test\n- Reflection: One-minute paper on "One challenge I foresee in curriculum design and how to overcome it"\n- Preview: Next session on assessment alignment\n- Explore: IB diploma programme as real-world curriculum example\n\nDifferentiation: Audio summaries for auditory learners; UNESCO Global Citizenship Education for advanced students',
+          slideType: 'content',
+          backgroundColor: null,
+        },
+      ];
+
+      for (const slide of slidesData) {
+        await tx.insert(schema.slides).values(slide);
+      }
+
+      // --- Pre-test Quiz ---
+      const [preTestQuiz] = await tx.insert(schema.quizzes).values({
+        storageKey: 'quiz:pre-test',
+        title: 'Pre-Class Quiz: Curriculum Design Foundations',
+        description: 'Test your understanding of curriculum design principles before the lesson begins.',
+        quizType: 'multiple_choice',
+      }).returning();
+
+      const preTestQuestions = [
+        {
+          storageKey: 'question:pre-1',
+          questionText: 'What is the backward design model?',
+          questionType: 'multiple_choice',
+          questionOrder: 1,
+          explanation: 'The backward design model, developed by Wiggins and McTighe, starts with identifying desired learning outcomes before planning assessments and activities.',
+          answers: [
+            { answerText: 'Starting with learning outcomes first, then designing assessments and activities', isCorrect: true, answerOrder: 1 },
+            { answerText: 'Designing activities first, then matching them to outcomes', isCorrect: false, answerOrder: 2 },
+            { answerText: 'Creating assessments first, then planning instruction around them', isCorrect: false, answerOrder: 3 },
+            { answerText: 'Following a fixed sequence of content delivery', isCorrect: false, answerOrder: 4 },
+          ],
+        },
+        {
+          storageKey: 'question:pre-2',
+          questionText: 'Which of the following is a key characteristic of learner-centered curriculum models?',
+          questionType: 'multiple_choice',
+          questionOrder: 2,
+          explanation: 'Learner-centered models prioritize student needs, interests, and active participation in the learning process.',
+          answers: [
+            { answerText: 'Strict adherence to a predetermined content sequence', isCorrect: false, answerOrder: 1 },
+            { answerText: 'Focus on student needs, interests, and active participation', isCorrect: true, answerOrder: 2 },
+            { answerText: 'Emphasis on standardized testing as the primary assessment', isCorrect: false, answerOrder: 3 },
+            { answerText: 'Teacher-led instruction with minimal student input', isCorrect: false, answerOrder: 4 },
+          ],
+        },
+        {
+          storageKey: 'question:pre-3',
+          questionText: 'What does DACUM stand for in curriculum development?',
+          questionType: 'multiple_choice',
+          questionOrder: 3,
+          explanation: 'DACUM stands for Developing A CUrriculum and is a method for occupational analysis in curriculum design.',
+          answers: [
+            { answerText: 'Designing And Creating Useful Materials', isCorrect: false, answerOrder: 1 },
+            { answerText: 'Developing A CUrriculum', isCorrect: true, answerOrder: 2 },
+            { answerText: 'Defining Assessment Criteria Using Methods', isCorrect: false, answerOrder: 3 },
+            { answerText: 'Documenting And Communicating Understanding Metrics', isCorrect: false, answerOrder: 4 },
+          ],
+        },
+        {
+          storageKey: 'question:pre-4',
+          questionText: 'Constructivism in curriculum design emphasizes:',
+          questionType: 'multiple_choice',
+          questionOrder: 4,
+          explanation: 'Constructivism emphasizes that learners actively construct knowledge through experiences and reflection.',
+          answers: [
+            { answerText: 'Passive absorption of information from experts', isCorrect: false, answerOrder: 1 },
+            { answerText: 'Learners actively constructing knowledge through experience and reflection', isCorrect: true, answerOrder: 2 },
+            { answerText: 'Memorization of established facts and procedures', isCorrect: false, answerOrder: 3 },
+            { answerText: 'Standardized delivery of content to all students', isCorrect: false, answerOrder: 4 },
+          ],
+        },
+        {
+          storageKey: 'question:pre-5',
+          questionText: 'Which curriculum model prioritizes demonstrated competencies over content coverage?',
+          questionType: 'multiple_choice',
+          questionOrder: 5,
+          explanation: 'Competency-based education focuses on learners demonstrating specific competencies rather than simply covering content.',
+          answers: [
+            { answerText: 'Traditional model', isCorrect: false, answerOrder: 1 },
+            { answerText: 'Backward design model', isCorrect: false, answerOrder: 2 },
+            { answerText: 'Competency-based model', isCorrect: true, answerOrder: 3 },
+            { answerText: 'Content-driven model', isCorrect: false, answerOrder: 4 },
+          ],
+        },
+        {
+          storageKey: 'question:pre-6',
+          questionText: 'Cultural context affects curriculum priorities by:',
+          questionType: 'multiple_choice',
+          questionOrder: 6,
+          explanation: 'Cultural context shapes what knowledge is valued, how learning is organized, and what outcomes are prioritized in curriculum design.',
+          answers: [
+            { answerText: 'Having no significant impact on curriculum design', isCorrect: false, answerOrder: 1 },
+            { answerText: 'Influencing what knowledge is valued and how learning is organized', isCorrect: true, answerOrder: 2 },
+            { answerText: 'Only affecting the language of instruction', isCorrect: false, answerOrder: 3 },
+            { answerText: 'Determining the physical layout of classrooms only', isCorrect: false, answerOrder: 4 },
+          ],
+        },
+        {
+          storageKey: 'question:pre-7',
+          questionText: 'What is the primary purpose of curriculum mapping?',
+          questionType: 'multiple_choice',
+          questionOrder: 7,
+          explanation: 'Curriculum mapping ensures alignment between learning objectives, instruction, and assessments across a program.',
+          answers: [
+            { answerText: 'To create decorative visual displays of course content', isCorrect: false, answerOrder: 1 },
+            { answerText: 'To ensure alignment between objectives, instruction, and assessments', isCorrect: true, answerOrder: 2 },
+            { answerText: 'To track student attendance and participation', isCorrect: false, answerOrder: 3 },
+            { answerText: 'To evaluate teacher performance exclusively', isCorrect: false, answerOrder: 4 },
+          ],
+        },
+        {
+          storageKey: 'question:pre-8',
+          questionText: 'Bloom\'s Taxonomy is useful in curriculum design because it:',
+          questionType: 'multiple_choice',
+          questionOrder: 8,
+          explanation: "Bloom's Taxonomy provides a hierarchy of cognitive skills that helps educators design learning objectives at various complexity levels.",
+          answers: [
+            { answerText: 'Provides a hierarchy of cognitive skills for designing learning objectives at various levels', isCorrect: true, answerOrder: 1 },
+            { answerText: 'Replaces the need for formal assessment', isCorrect: false, answerOrder: 2 },
+            { answerText: 'Is only applicable to science curricula', isCorrect: false, answerOrder: 3 },
+            { answerText: 'Focuses exclusively on memorization skills', isCorrect: false, answerOrder: 4 },
+          ],
+        },
+      ];
+
+      for (const q of preTestQuestions) {
+        const [insertedQ] = await tx.insert(schema.questions).values({
+          quizId: preTestQuiz.id,
+          storageKey: q.storageKey,
+          questionText: q.questionText,
+          questionType: q.questionType,
+          questionOrder: q.questionOrder,
+          explanation: q.explanation,
+        }).returning();
+
+        for (const a of q.answers) {
+          await tx.insert(schema.answers).values({
+            questionId: insertedQ.id,
+            answerText: a.answerText,
+            isCorrect: a.isCorrect,
+            answerOrder: a.answerOrder,
+          });
+        }
+      }
+
+      // --- Formative Quiz (in-class) ---
+      const [formativeQuiz] = await tx.insert(schema.quizzes).values({
+        storageKey: 'quiz:formative',
+        title: 'Formative Quiz: Curriculum Models & Alignment',
+        description: 'Quick comprehension check during the lesson on curriculum models and constructive alignment.',
+        quizType: 'multiple_choice',
+      }).returning();
+
+      const formativeQuestions = [
+        {
+          storageKey: 'question:formative-1',
+          questionText: 'Which model prioritizes learning outcomes first?',
+          questionType: 'multiple_choice',
+          questionOrder: 1,
+          explanation: 'The backward design model starts by identifying desired learning outcomes before planning assessments and activities.',
+          answers: [
+            { answerText: 'Traditional model', isCorrect: false, answerOrder: 1 },
+            { answerText: 'Backward design model', isCorrect: true, answerOrder: 2 },
+            { answerText: 'Content-driven model', isCorrect: false, answerOrder: 3 },
+          ],
+        },
+        {
+          storageKey: 'question:formative-2',
+          questionText: 'What is the purpose of curriculum mapping?',
+          questionType: 'multiple_choice',
+          questionOrder: 2,
+          explanation: 'Curriculum mapping ensures that objectives, instruction, and assessments are properly aligned across the curriculum.',
+          answers: [
+            { answerText: 'To decorate classrooms with visual aids', isCorrect: false, answerOrder: 1 },
+            { answerText: 'To ensure alignment between objectives, instruction, and assessments', isCorrect: true, answerOrder: 2 },
+            { answerText: 'To replace traditional lesson planning', isCorrect: false, answerOrder: 3 },
+          ],
+        },
+        {
+          storageKey: 'question:formative-3',
+          questionText: 'In the DACUM method, the first step is:',
+          questionType: 'multiple_choice',
+          questionOrder: 3,
+          explanation: 'The DACUM process begins with occupational analysis to identify the duties and tasks required for a job or role.',
+          answers: [
+            { answerText: 'Writing learning objectives', isCorrect: false, answerOrder: 1 },
+            { answerText: 'Conducting occupational analysis to identify duties and tasks', isCorrect: true, answerOrder: 2 },
+            { answerText: 'Creating assessment rubrics', isCorrect: false, answerOrder: 3 },
+          ],
+        },
+        {
+          storageKey: 'question:formative-4',
+          questionText: 'True or False: Competency-based curriculum models focus on time spent in class rather than demonstrated skills.',
+          questionType: 'true_false',
+          questionOrder: 4,
+          explanation: 'Competency-based models focus on demonstrated skills and competencies, not time spent in class.',
+          answers: [
+            { answerText: 'True', isCorrect: false, answerOrder: 1 },
+            { answerText: 'False', isCorrect: true, answerOrder: 2 },
+          ],
+        },
+      ];
+
+      for (const q of formativeQuestions) {
+        const [insertedQ] = await tx.insert(schema.questions).values({
+          quizId: formativeQuiz.id,
+          storageKey: q.storageKey,
+          questionText: q.questionText,
+          questionType: q.questionType,
+          questionOrder: q.questionOrder,
+          explanation: q.explanation,
+        }).returning();
+
+        for (const a of q.answers) {
+          await tx.insert(schema.answers).values({
+            questionId: insertedQ.id,
+            answerText: a.answerText,
+            isCorrect: a.isCorrect,
+            answerOrder: a.answerOrder,
+          });
+        }
+      }
+
+      // --- Post-test Quiz ---
+      const [postTestQuiz] = await tx.insert(schema.quizzes).values({
+        storageKey: 'quiz:post-test',
+        title: 'Post-Test: Curriculum Design Understanding',
+        description: 'Assess your learning gains after the lesson on curriculum design.',
+        quizType: 'multiple_choice',
+      }).returning();
+
+      const postTestQuestions: {
+        storageKey: string;
+        questionText: string;
+        questionType: string;
+        questionOrder: number;
+        explanation: string;
+        answers: { answerText: string; isCorrect: boolean; answerOrder: number }[];
+      }[] = [
+        {
+          storageKey: 'question:post-1',
+          questionText: 'Explain the backward design model and its implications for assessment.',
+          questionType: 'short_answer',
+          questionOrder: 1,
+          explanation: 'The backward design model starts with desired results (outcomes), then determines acceptable evidence (assessments), and finally plans learning experiences (activities). This ensures assessments are directly aligned with learning goals.',
+          answers: [],
+        },
+        {
+          storageKey: 'question:post-2',
+          questionText: 'How does cultural context influence curriculum priorities?',
+          questionType: 'short_answer',
+          questionOrder: 2,
+          explanation: 'Cultural context shapes what knowledge is valued, how learning is organized, what outcomes are prioritized, and whose perspectives are represented in the curriculum.',
+          answers: [],
+        },
+        {
+          storageKey: 'question:post-3',
+          questionText: 'Describe one strength and one weakness of learner-centered curriculum models.',
+          questionType: 'short_answer',
+          questionOrder: 3,
+          explanation: 'Strength: Promotes active engagement and addresses individual student needs. Weakness: Can be challenging to implement with large class sizes and may lack systematic content coverage.',
+          answers: [],
+        },
+      ];
+
+      for (const q of postTestQuestions) {
+        const [insertedQ] = await tx.insert(schema.questions).values({
+          quizId: postTestQuiz.id,
+          storageKey: q.storageKey,
+          questionText: q.questionText,
+          questionType: q.questionType,
+          questionOrder: q.questionOrder,
+          explanation: q.explanation,
+        }).returning();
+
+        for (const a of q.answers) {
+          await tx.insert(schema.answers).values({
+            questionId: insertedQ.id,
+            answerText: a.answerText,
+            isCorrect: a.isCorrect,
+            answerOrder: a.answerOrder,
+          });
+        }
+      }
+
+      // --- Discussions ---
+      const [caseStudyDiscussion] = await tx.insert(schema.discussions).values({
+        storageKey: 'discussion:case-study-stem',
+        title: 'Case Study: STEM Integration in Rural Schools',
+        description: 'A rural high school seeks to integrate STEM into its curriculum but lacks resources. What contextual factors influence this curriculum redesign? Propose two alignment strategies between standards and classroom practice.',
+        createdBy: 1,
+        isPinned: true,
+      }).returning();
+
+      const [thinkPairDiscussion] = await tx.insert(schema.discussions).values({
+        storageKey: 'discussion:think-pair-share',
+        title: 'Think-Pair-Share: Which Model Best Supports Inclusive Education?',
+        description: 'Consider traditional, backward design, and competency-based models. Which best supports inclusive education and why? Share your reasoning and respond to your peers.',
+        createdBy: 1,
+        isPinned: false,
+      }).returning();
+
+      const [reflectionDiscussion] = await tx.insert(schema.discussions).values({
+        storageKey: 'discussion:reflection',
+        title: 'Reflection: Challenges in Curriculum Design',
+        description: 'One-minute paper: Describe one challenge you foresee in curriculum design and how you would overcome it.',
+        createdBy: 1,
+        isPinned: false,
+      }).returning();
+
+      const [urbanDiscussion] = await tx.insert(schema.discussions).values({
+        storageKey: 'discussion:urban-case-study',
+        title: 'Case Study: Urban Math Curriculum Overhaul',
+        description: 'An urban school district aims to overhaul its math curriculum but faces resistance from teachers unfamiliar with new standards. What steps would you take to build teacher buy-in while ensuring curricular alignment?',
+        createdBy: 1,
+        isPinned: false,
+      }).returning();
+
+      // --- Concept Checks ---
+      const conceptChecksData = [
+        {
+          storageKey: 'concept:intro-hook',
+          title: 'Curriculum Redesign Hook',
+          prompt: 'Do you feel confident identifying the first steps in redesigning a failing curriculum?',
+          checkType: 'thumbs',
+          sectionKey: 'introduction',
+        },
+        {
+          storageKey: 'concept:frameworks-understand',
+          title: 'Framework Comprehension',
+          prompt: 'Do you understand the key differences between traditional, backward design, and competency-based models?',
+          checkType: 'thumbs',
+          sectionKey: 'development',
+        },
+        {
+          storageKey: 'concept:bloom-level',
+          title: 'Bloom\'s Taxonomy Application',
+          prompt: 'Rate your understanding of how to apply Bloom\'s Taxonomy in curriculum design (1=beginner, 5=expert):',
+          checkType: 'scale',
+          sectionKey: 'development',
+        },
+        {
+          storageKey: 'concept:alignment-check',
+          title: 'Constructive Alignment',
+          prompt: 'Can you explain how constructive alignment connects learning outcomes, teaching activities, and assessment methods?',
+          checkType: 'thumbs',
+          sectionKey: 'alignment',
+        },
+      ];
+
+      for (const cc of conceptChecksData) {
+        await tx.insert(schema.conceptChecks).values(cc);
+      }
 
       await tx.insert(schema.seedLog).values({
         seedVersion: SEED_VERSION,
