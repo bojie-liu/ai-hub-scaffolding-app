@@ -1,30 +1,10 @@
 import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
 import { sql, eq } from 'drizzle-orm';
-import { readFileSync } from 'fs';
-import { resolve } from 'path';
 import bcrypt from 'bcryptjs';
 import * as schema from './schema';
 
-// // Load .env.local
-// try {
-//   const envPath = resolve(process.cwd(), '.env.local');
-//   const envContent = readFileSync(envPath, 'utf-8');
-//   for (const line of envContent.split('\n')) {
-//     const match = line.match(/^([^#=]+)=(.*)$/);
-//     if (match) {
-//       const key = match[1].trim();
-//       const value = match[2].trim().replace(/^["']|["']$/g, '');
-//       if (!process.env[key]) {
-//         process.env[key] = value;
-//       }
-//     }
-//   }
-// } catch {
-//   // .env.local not found, rely on existing env vars
-// }
-
-const SEED_VERSION = 'v1_initial';
+const SEED_VERSION = 'v2_lesson_plan';
 
 async function seed() {
   const client = postgres(process.env.DATABASE_URL!);
@@ -54,19 +34,452 @@ async function seed() {
 
     // Run seed data within a transaction
     await db.transaction(async (tx) => {
-      const passwordHash = await bcrypt.hash(
-        process.env.SEED_ADMIN_PASSWORD || 'changeme',
-        10,
-      );
+      // --- Admin user (idempotent) ---
+      const existingAdmin = await tx
+        .select()
+        .from(schema.users)
+        .where(eq(schema.users.username, 'admin'))
+        .limit(1);
 
-      await tx.insert(schema.users).values({
-        username: 'admin',
-        email: 'admin@example.com',
-        passwordHash,
-        role: 'TEACHER',
-        displayName: 'Admin User',
-      });
+      if (existingAdmin.length === 0) {
+        const passwordHash = await bcrypt.hash(
+          process.env.SEED_ADMIN_PASSWORD || 'changeme',
+          10,
+        );
+        await tx.insert(schema.users).values({
+          username: 'admin',
+          email: 'admin@example.com',
+          passwordHash,
+          role: 'TEACHER',
+          displayName: 'Admin User',
+        });
+      }
 
+      // --- Quizzes ---
+
+      // Pre-Test Quiz (5 questions)
+      const [preTestQuiz] = await tx
+        .insert(schema.quizzes)
+        .values({
+          storageKey: 'quiz:pre-test',
+          title: 'Pre-Test: Learning Theories Foundations',
+          description: 'Assess your prior knowledge of learning theories before the lesson.',
+          quizType: 'mixed',
+        })
+        .returning();
+
+      // Q1: Role of reinforcement
+      const [q1] = await tx
+        .insert(schema.questions)
+        .values({
+          quizId: preTestQuiz.id,
+          storageKey: 'quiz:pre-test:q1',
+          questionText: 'What is the role of reinforcement in learning?',
+          questionOrder: 1,
+          questionType: 'multiple_choice',
+          explanation: 'Reinforcement strengthens behavior by providing consequences that increase the likelihood of the behavior recurring. Positive reinforcement adds a rewarding stimulus, while negative reinforcement removes an aversive one.',
+        })
+        .returning();
+
+      await tx.insert(schema.answers).values([
+        { questionId: q1.id, answerText: 'It punishes unwanted behaviors', isCorrect: false, answerOrder: 1 },
+        { questionId: q1.id, answerText: 'It strengthens behavior by increasing the likelihood of recurrence', isCorrect: true, answerOrder: 2 },
+        { questionId: q1.id, answerText: 'It has no significant role in learning', isCorrect: false, answerOrder: 3 },
+        { questionId: q1.id, answerText: 'It only works for adult learners', isCorrect: false, answerOrder: 4 },
+      ]);
+
+      // Q2: Intrinsic vs extrinsic motivation
+      const [q2] = await tx
+        .insert(schema.questions)
+        .values({
+          quizId: preTestQuiz.id,
+          storageKey: 'quiz:pre-test:q2',
+          questionText: 'What is the difference between intrinsic and extrinsic motivation?',
+          questionOrder: 2,
+          questionType: 'multiple_choice',
+          explanation: 'Intrinsic motivation comes from within the individual (personal interest, enjoyment), while extrinsic motivation comes from external rewards or pressures (grades, praise, avoiding punishment).',
+        })
+        .returning();
+
+      await tx.insert(schema.answers).values([
+        { questionId: q2.id, answerText: 'Intrinsic is about external rewards; extrinsic is about internal satisfaction', isCorrect: false, answerOrder: 1 },
+        { questionId: q2.id, answerText: 'Intrinsic comes from within (personal interest); extrinsic comes from external rewards or pressures', isCorrect: true, answerOrder: 2 },
+        { questionId: q2.id, answerText: 'There is no meaningful difference', isCorrect: false, answerOrder: 3 },
+        { questionId: q2.id, answerText: 'Extrinsic motivation is always more effective than intrinsic', isCorrect: false, answerOrder: 4 },
+      ]);
+
+      // Q3: Schema theory
+      const [q3] = await tx
+        .insert(schema.questions)
+        .values({
+          quizId: preTestQuiz.id,
+          storageKey: 'quiz:pre-test:q3',
+          questionText: 'Define schema theory.',
+          questionOrder: 3,
+          questionType: 'short_answer',
+          explanation: 'Schema theory proposes that knowledge is organized into mental frameworks (schemas) that help individuals process, interpret, and store new information by connecting it to existing knowledge structures.',
+        })
+        .returning();
+
+      await tx.insert(schema.answers).values([
+        { questionId: q3.id, answerText: 'Knowledge is organized into mental frameworks that help process and interpret information', isCorrect: true, answerOrder: 1 },
+      ]);
+
+      // Q4: Limitation of behaviorism
+      const [q4] = await tx
+        .insert(schema.questions)
+        .values({
+          quizId: preTestQuiz.id,
+          storageKey: 'quiz:pre-test:q4',
+          questionText: 'Which of the following is a limitation of behaviorism?',
+          questionOrder: 4,
+          questionType: 'multiple_choice',
+          explanation: 'A key limitation of behaviorism is that it ignores internal mental processes such as thinking, reasoning, and memory, focusing solely on observable behavior and environmental stimuli.',
+        })
+        .returning();
+
+      await tx.insert(schema.answers).values([
+        { questionId: q4.id, answerText: 'It places too much emphasis on critical thinking', isCorrect: false, answerOrder: 1 },
+        { questionId: q4.id, answerText: 'It ignores internal mental processes like thinking and reasoning', isCorrect: true, answerOrder: 2 },
+        { questionId: q4.id, answerText: 'It is only applicable to young children', isCorrect: false, answerOrder: 3 },
+        { questionId: q4.id, answerText: 'It requires too much technology to implement', isCorrect: false, answerOrder: 4 },
+      ]);
+
+      // Q5: Prior knowledge and learning
+      const [q5] = await tx
+        .insert(schema.questions)
+        .values({
+          quizId: preTestQuiz.id,
+          storageKey: 'quiz:pre-test:q5',
+          questionText: 'How does prior knowledge influence learning?',
+          questionOrder: 5,
+          questionType: 'multiple_choice',
+          explanation: 'Prior knowledge provides a foundation for constructing new understanding. Learners connect new information to existing schemas, making learning more meaningful and memorable. Without relevant prior knowledge, new information is harder to process and retain.',
+        })
+        .returning();
+
+      await tx.insert(schema.answers).values([
+        { questionId: q5.id, answerText: 'It has no effect on new learning', isCorrect: false, answerOrder: 1 },
+        { questionId: q5.id, answerText: 'It can hinder learning by creating bias', isCorrect: false, answerOrder: 2 },
+        { questionId: q5.id, answerText: 'It provides a foundation for constructing new understanding by connecting to existing schemas', isCorrect: true, answerOrder: 3 },
+        { questionId: q5.id, answerText: 'It only matters in mathematics', isCorrect: false, answerOrder: 4 },
+      ]);
+
+      // --- Post-Test Quiz ---
+      const [postTestQuiz] = await tx
+        .insert(schema.quizzes)
+        .values({
+          storageKey: 'quiz:post-test',
+          title: 'Post-Test: Learning Theories Review',
+          description: 'Review your understanding after the lesson. Includes questions from the pre-test plus an application question.',
+          quizType: 'mixed',
+        })
+        .returning();
+
+      // Post Q1: Reinforcement (repeat)
+      const [pq1] = await tx
+        .insert(schema.questions)
+        .values({
+          quizId: postTestQuiz.id,
+          storageKey: 'quiz:post-test:q1',
+          questionText: 'What is the role of reinforcement in learning?',
+          questionOrder: 1,
+          questionType: 'multiple_choice',
+          explanation: 'Reinforcement strengthens behavior by providing consequences that increase the likelihood of the behavior recurring.',
+        })
+        .returning();
+
+      await tx.insert(schema.answers).values([
+        { questionId: pq1.id, answerText: 'It punishes unwanted behaviors', isCorrect: false, answerOrder: 1 },
+        { questionId: pq1.id, answerText: 'It strengthens behavior by increasing the likelihood of recurrence', isCorrect: true, answerOrder: 2 },
+        { questionId: pq1.id, answerText: 'It has no significant role in learning', isCorrect: false, answerOrder: 3 },
+        { questionId: pq1.id, answerText: 'It only works for adult learners', isCorrect: false, answerOrder: 4 },
+      ]);
+
+      // Post Q2: Prior knowledge (repeat)
+      const [pq2] = await tx
+        .insert(schema.questions)
+        .values({
+          quizId: postTestQuiz.id,
+          storageKey: 'quiz:post-test:q2',
+          questionText: 'How does prior knowledge influence learning?',
+          questionOrder: 2,
+          questionType: 'multiple_choice',
+          explanation: 'Prior knowledge provides a foundation for constructing new understanding by connecting to existing schemas.',
+        })
+        .returning();
+
+      await tx.insert(schema.answers).values([
+        { questionId: pq2.id, answerText: 'It has no effect on new learning', isCorrect: false, answerOrder: 1 },
+        { questionId: pq2.id, answerText: 'It can hinder learning by creating bias', isCorrect: false, answerOrder: 2 },
+        { questionId: pq2.id, answerText: 'It provides a foundation for constructing new understanding by connecting to existing schemas', isCorrect: true, answerOrder: 3 },
+        { questionId: pq2.id, answerText: 'It only matters in mathematics', isCorrect: false, answerOrder: 4 },
+      ]);
+
+      // Post Q3: Apply theory
+      const [pq3] = await tx
+        .insert(schema.questions)
+        .values({
+          quizId: postTestQuiz.id,
+          storageKey: 'quiz:post-test:q3',
+          questionText: 'Design a classroom activity using one learning theory. Which theory emphasizes learning through social interaction and guided support?',
+          questionOrder: 3,
+          questionType: 'multiple_choice',
+          explanation: 'Constructivism (particularly Vygotsky\'s social constructivism) emphasizes learning through social interaction, with more knowledgeable others providing scaffolding within the zone of proximal development.',
+        })
+        .returning();
+
+      await tx.insert(schema.answers).values([
+        { questionId: pq3.id, answerText: 'Behaviorism', isCorrect: false, answerOrder: 1 },
+        { questionId: pq3.id, answerText: 'Cognitivism', isCorrect: false, answerOrder: 2 },
+        { questionId: pq3.id, answerText: 'Constructivism', isCorrect: true, answerOrder: 3 },
+        { questionId: pq3.id, answerText: 'None of the above', isCorrect: false, answerOrder: 4 },
+      ]);
+
+      // Post Q4: Theory comparison
+      const [pq4] = await tx
+        .insert(schema.questions)
+        .values({
+          quizId: postTestQuiz.id,
+          storageKey: 'quiz:post-test:q4',
+          questionText: 'Which learning theory focuses primarily on observable behavior and environmental stimuli?',
+          questionOrder: 4,
+          questionType: 'multiple_choice',
+          explanation: 'Behaviorism focuses exclusively on observable behavior and the role of environmental stimuli (reinforcement and punishment) in shaping behavior, without addressing internal mental processes.',
+        })
+        .returning();
+
+      await tx.insert(schema.answers).values([
+        { questionId: pq4.id, answerText: 'Behaviorism', isCorrect: true, answerOrder: 1 },
+        { questionId: pq4.id, answerText: 'Cognitivism', isCorrect: false, answerOrder: 2 },
+        { questionId: pq4.id, answerText: 'Constructivism', isCorrect: false, answerOrder: 3 },
+        { questionId: pq4.id, answerText: 'Humanism', isCorrect: false, answerOrder: 4 },
+      ]);
+
+      // Post Q5: True/False
+      const [pq5] = await tx
+        .insert(schema.questions)
+        .values({
+          quizId: postTestQuiz.id,
+          storageKey: 'quiz:post-test:q5',
+          questionText: 'Piaget\'s cognitive development theory is an example of constructivism.',
+          questionOrder: 5,
+          questionType: 'true_false',
+          explanation: 'Piaget\'s theory is classified under cognitivism, not constructivism. While Piaget acknowledged active construction of knowledge, his focus on stages of cognitive development and schemas makes his work primarily cognitive. Constructivism is more strongly associated with Vygotsky\'s social interaction emphasis.',
+        })
+        .returning();
+
+      await tx.insert(schema.answers).values([
+        { questionId: pq5.id, answerText: 'True', isCorrect: false, answerOrder: 1 },
+        { questionId: pq5.id, answerText: 'False', isCorrect: true, answerOrder: 2 },
+      ]);
+
+      // --- Flashcard Challenge Quiz ---
+      const [flashcardQuiz] = await tx
+        .insert(schema.quizzes)
+        .values({
+          storageKey: 'quiz:flashcard-challenge',
+          title: 'Flashcard Challenge: Learning Theory Terms',
+          description: 'Match key learning theory terms with their definitions. Compete with your group!',
+          quizType: 'multiple_choice',
+        })
+        .returning();
+
+      const flashcardTerms = [
+        { term: 'Operant Conditioning', definition: 'A learning process where behavior is modified by consequences (reinforcement or punishment)', wrongs: ['A theory of cognitive development through stages', 'Learning through observation of others', 'The process of acquiring knowledge through reading'] },
+        { term: 'Scaffolding', definition: 'Temporary support provided by a more knowledgeable person to help a learner accomplish a task', wrongs: ['A permanent structural framework for buildings', 'A behavior modification technique using rewards', 'An assessment method for measuring intelligence'] },
+        { term: 'Schema', definition: 'A mental framework that organizes and interprets information based on prior knowledge', wrongs: ['A type of reinforcement schedule', 'A method of classroom discipline', 'A physical diagram of brain structures'] },
+        { term: 'Intrinsic Motivation', definition: 'Engagement in an activity for its own sake, driven by internal satisfaction and interest', wrongs: ['Motivation driven by external rewards', 'Motivation based on avoiding punishment', 'Motivation that only occurs in young children'] },
+        { term: 'Extrinsic Motivation', definition: 'Engagement in an activity to earn external rewards or avoid punishment', wrongs: ['Motivation from personal curiosity', 'An innate biological drive', 'A cognitive dissonance reduction strategy'] },
+        { term: 'Constructivism', definition: 'A theory that learners actively construct knowledge through experience and reflection', wrongs: ['A theory that learning is passive absorption of information', 'A theory focused on reward and punishment', 'A method of standardized testing'] },
+        { term: 'Behaviorism', definition: 'A theory that learning is a change in observable behavior caused by external stimuli', wrongs: ['A theory centered on mental processes', 'A theory emphasizing social interaction', 'A theory about emotional intelligence'] },
+        { term: 'Cognitivism', definition: 'A theory that focuses on internal mental processes like thinking, memory, and problem-solving', wrongs: ['A theory focused only on observable behavior', 'A theory about physical skill development', 'A theory of group dynamics'] },
+        { term: 'Zone of Proximal Development', definition: 'The gap between what a learner can do independently and what they can do with guidance', wrongs: ['The area of the brain responsible for language', 'The maximum difficulty level a student can handle', 'A measurement of student attention span'] },
+        { term: 'Positive Reinforcement', definition: 'Adding a rewarding stimulus after a behavior to increase the likelihood of its recurrence', wrongs: ['Removing an unpleasant stimulus to decrease behavior', 'Punishing a behavior to eliminate it', 'Ignoring a behavior to let it extinguish'] },
+      ];
+
+      for (let i = 0; i < flashcardTerms.length; i++) {
+        const fc = flashcardTerms[i];
+        const [fcq] = await tx
+          .insert(schema.questions)
+          .values({
+            quizId: flashcardQuiz.id,
+            storageKey: `quiz:flashcard-challenge:q${i + 1}`,
+            questionText: `What does "${fc.term}" mean?`,
+            questionOrder: i + 1,
+            questionType: 'multiple_choice',
+            explanation: `${fc.term}: ${fc.definition}`,
+          })
+          .returning();
+
+        const allAnswers = [
+          { text: fc.definition, correct: true },
+          ...fc.wrongs.map((w) => ({ text: w, correct: false })),
+        ];
+        // Shuffle answers
+        const shuffled = allAnswers.sort(() => Math.random() - 0.5);
+
+        await tx.insert(schema.answers).values(
+          shuffled.map((a, j) => ({
+            questionId: fcq.id,
+            answerText: a.text,
+            isCorrect: a.correct,
+            answerOrder: j + 1,
+          }))
+        );
+      }
+
+      // --- Slides (10 slides) ---
+      const slideData = [
+        {
+          storageKey: 'slide:1',
+          order: 1,
+          title: 'Introduction to Learning Theories',
+          content: 'Duration: 90 minutes | Class Size: 43 students\nSubject: Education | Language: English\n\nExploring Behaviorism, Cognitivism, and Constructivism',
+          type: 'title',
+        },
+        {
+          storageKey: 'slide:2',
+          order: 2,
+          title: 'Intended Learning Outcomes',
+          content: 'By the end of this lesson, students will be able to:\n\n1. Analyze key principles of behaviorism, cognitivism, and constructivism\n2. Compare strengths and limitations of three learning theories\n3. Apply one learning theory to design a mini-lesson plan activity',
+          type: 'content',
+        },
+        {
+          storageKey: 'slide:3',
+          order: 3,
+          title: 'Pre-Class Preparation',
+          content: 'Reading: OpenStax Educational Psychology, Chapter 4 (Sections 4.1-4.3)\n\nPre-Test: 5 questions on foundational concepts\n\nGuiding Questions:\n- How might a teacher apply behaviorism in classroom management?\n- Can you recall a learning experience that felt more "cognitive" than "behavioral"?',
+          type: 'content',
+        },
+        {
+          storageKey: 'slide:4',
+          order: 4,
+          title: 'Three Learning Theories Overview',
+          content: 'Behaviorism (Skinner)\n- Learning as behavioral change through stimuli and response\n- Focus on observable behavior and reinforcement\n\nCognitivism (Piaget)\n- Learning as internal mental processes\n- Focus on schemas, memory, and information processing\n\nConstructivism (Vygotsky)\n- Learning as active construction of knowledge\n- Focus on social interaction and scaffolding',
+          type: 'content',
+        },
+        {
+          storageKey: 'slide:5',
+          order: 5,
+          title: 'Behaviorism in Depth',
+          content: 'Key Principles:\n- Operant conditioning: behavior shaped by consequences\n- Positive reinforcement strengthens desired behaviors\n- Negative reinforcement removes aversive stimuli\n\nStrengths: Effective for classroom management, clear measurable outcomes\n\nLimitations: Ignores internal mental processes, may not promote deep understanding',
+          type: 'content',
+        },
+        {
+          storageKey: 'slide:6',
+          order: 6,
+          title: 'Cognitivism in Depth',
+          content: 'Key Principles:\n- Schema theory: knowledge organized in mental frameworks\n- Information processing: input, processing, storage, retrieval\n- Metacognition: thinking about one\'s own thinking\n\nStrengths: Addresses internal mental processes, promotes meaningful learning\n\nLimitations: Can be difficult to measure, may overlook social factors',
+          type: 'content',
+        },
+        {
+          storageKey: 'slide:7',
+          order: 7,
+          title: 'Constructivism in Depth',
+          content: 'Key Principles:\n- Zone of Proximal Development (ZPD)\n- Scaffolding: guided support from knowledgeable others\n- Social construction of knowledge through collaboration\n\nStrengths: Promotes deep understanding, active engagement\n\nLimitations: Time-intensive, challenging with large groups, assessment difficulty',
+          type: 'content',
+        },
+        {
+          storageKey: 'slide:8',
+          order: 8,
+          title: 'Teaching Activities',
+          content: '1. Interactive Mini-Lecture (15 min)\n   - Animated infographic on three theories\n   - Think-Pair-Share reflection\n\n2. Case Study Analysis (25 min)\n   - 6 groups, unique cases per theory\n   - Identify theory, propose strategies, sketch lesson plan\n\n3. Digital Jigsaw (15 min)\n   - Theory expert clusters share solutions\n\n4. Flashcard Challenge (10 min)\n   - Quizlet Live competition with 10 key terms',
+          type: 'activity',
+        },
+        {
+          storageKey: 'slide:9',
+          order: 9,
+          title: 'Assessment & Alignment',
+          content: 'Formative Assessment:\n- Group observation, Padlet contributions, exit ticket\n\nSummative Assessment:\n- Written assignment: 1-hour lesson plan aligned with one theory\n- Rubric: Theory justification (30%), Activity alignment (40%), Applicability (30%)\n\nAlignment:\n- Analyze -> Mini-lecture + Flashcards -> Pre/Post-test\n- Compare -> Jigsaw case studies -> Group presentations\n- Apply -> Lesson plan assignment -> Rubric-scored submission',
+          type: 'assessment',
+        },
+        {
+          storageKey: 'slide:10',
+          order: 10,
+          title: 'Summary & Next Steps',
+          content: 'Key Takeaways:\n- Three theories offer different lenses for understanding learning\n- Each has strengths and limitations in educational practice\n- Effective teaching often integrates multiple approaches\n\nNext Session:\n- Social learning theory and technology integration\n\nReflection: Share one takeaway and one unanswered question',
+          type: 'content',
+        },
+      ];
+
+      for (const slide of slideData) {
+        await tx.insert(schema.slides).values({
+          storageKey: slide.storageKey,
+          slideOrder: slide.order,
+          title: slide.title,
+          content: slide.content,
+          slideType: slide.type,
+        });
+      }
+
+      // --- Discussions ---
+      // Get admin user ID for discussion creator
+      const adminUser = await tx
+        .select()
+        .from(schema.users)
+        .where(eq(schema.users.username, 'admin'))
+        .limit(1);
+
+      const adminId = adminUser[0]?.id ?? 1;
+
+      await tx.insert(schema.discussions).values([
+        {
+          storageKey: 'discussion:behaviorism-classroom',
+          title: 'How might a teacher apply behaviorism in classroom management?',
+          description: 'Share your thoughts on practical applications of behaviorist principles in the classroom. Consider both positive reinforcement strategies and potential pitfalls.',
+          createdBy: adminId,
+          isPinned: true,
+        },
+        {
+          storageKey: 'discussion:cognitive-vs-behavioral',
+          title: 'Can you recall a learning experience that felt more "cognitive" than "behavioral"?',
+          description: 'Reflect on a personal learning experience where internal mental processes (thinking, reasoning, problem-solving) played a larger role than external stimuli and rewards. What made it feel different?',
+          createdBy: adminId,
+          isPinned: false,
+        },
+      ]);
+
+      // --- Concept Checks ---
+      await tx.insert(schema.conceptChecks).values([
+        {
+          storageKey: 'concept:ilos',
+          title: 'Understanding Learning Outcomes',
+          prompt: 'Do you understand the three intended learning outcomes for this lesson?',
+          checkType: 'thumbs',
+          sectionKey: 'ilos',
+        },
+        {
+          storageKey: 'concept:preclass',
+          title: 'Pre-Class Reading Completion',
+          prompt: 'Have you completed the assigned reading from the OpenStax textbook (Chapter 4, Sections 4.1-4.3)?',
+          checkType: 'thumbs',
+          sectionKey: 'preclass',
+        },
+        {
+          storageKey: 'concept:theories',
+          title: 'Three Theories Comprehension',
+          prompt: 'Rate your understanding of the three learning theories (Behaviorism, Cognitivism, Constructivism).',
+          checkType: 'scale',
+          sectionKey: 'development',
+        },
+        {
+          storageKey: 'concept:apply',
+          title: 'Theory Application Confidence',
+          prompt: 'How confident are you in applying a learning theory to design a lesson plan activity?',
+          checkType: 'scale',
+          sectionKey: 'synthesis',
+        },
+        {
+          storageKey: 'concept:exit',
+          title: 'Exit Ticket: Overall Confidence',
+          prompt: 'Rate your confidence in applying learning theories to real teaching scenarios (1-5).',
+          checkType: 'scale',
+          sectionKey: 'assessment',
+        },
+      ]);
+
+      // Mark seed as applied
       await tx.insert(schema.seedLog).values({
         seedVersion: SEED_VERSION,
       });
