@@ -82,12 +82,12 @@ interface ConceptCheckResult {
 const SECTION_LABELS: Record<string, string> = {
   ilos: 'Learning Outcomes',
   preclass: 'Pre-Class',
-  introduction: 'Introduction',
-  development: 'Activities',
-  synthesis: 'Synthesis',
+  activities: 'Activities',
   assessment: 'Assessment',
   alignment: 'Alignment',
   resources: 'Resources',
+  differentiation: 'Differentiation',
+  reflection: 'Reflection',
 };
 
 export default function TeacherDashboard() {
