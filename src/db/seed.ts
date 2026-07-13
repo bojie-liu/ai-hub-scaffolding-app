@@ -1,10 +1,8 @@
-import { drizzle } from 'drizzle-orm/postgres-js';
-import postgres from 'postgres';
-import { sql, eq } from 'drizzle-orm';
-import { readFileSync } from 'fs';
-import { resolve } from 'path';
-import bcrypt from 'bcryptjs';
-import * as schema from './schema';
+import { drizzle } from "drizzle-orm/postgres-js";
+import postgres from "postgres";
+import { sql, eq } from "drizzle-orm";
+import bcrypt from "bcryptjs";
+import * as schema from "./schema";
 
 // // Load .env.local
 // try {
@@ -24,7 +22,8 @@ import * as schema from './schema';
 //   // .env.local not found, rely on existing env vars
 // }
 
-const SEED_VERSION = 'v1_initial';
+const V1_SEED_VERSION = "v1_initial";
+const V2_SEED_VERSION = "v2_lesson_data";
 
 async function seed() {
   const client = postgres(process.env.DATABASE_URL!);
@@ -40,41 +39,968 @@ async function seed() {
       )
     `);
 
-    // Check if seed already applied
-    const existing = await db
+    // ─── V1: Initial admin user ────────────────────────────────────────────
+    const v1Existing = await db
       .select()
       .from(schema.seedLog)
-      .where(eq(schema.seedLog.seedVersion, SEED_VERSION))
+      .where(eq(schema.seedLog.seedVersion, V1_SEED_VERSION))
       .limit(1);
 
-    if (existing.length > 0) {
-      console.log(`Seed "${SEED_VERSION}" already applied. Skipping.`);
-      return;
+    if (v1Existing.length > 0) {
+      console.log(`Seed "${V1_SEED_VERSION}" already applied. Skipping.`);
+    } else {
+      await db.transaction(async (tx) => {
+        const passwordHash = await bcrypt.hash(
+          process.env.SEED_ADMIN_PASSWORD || "changeme",
+          10,
+        );
+
+        await tx.insert(schema.users).values({
+          username: "admin",
+          email: "admin@example.com",
+          passwordHash,
+          role: "TEACHER",
+          displayName: "Admin User",
+        });
+
+        await tx.insert(schema.seedLog).values({
+          seedVersion: V1_SEED_VERSION,
+        });
+      });
+
+      console.log(`Seed "${V1_SEED_VERSION}" applied successfully.`);
     }
 
-    // Run seed data within a transaction
-    await db.transaction(async (tx) => {
-      const passwordHash = await bcrypt.hash(
-        process.env.SEED_ADMIN_PASSWORD || 'changeme',
-        10,
-      );
+    // ─── V2: Lesson plan data ──────────────────────────────────────────────
+    const v2Existing = await db
+      .select()
+      .from(schema.seedLog)
+      .where(eq(schema.seedLog.seedVersion, V2_SEED_VERSION))
+      .limit(1);
 
-      await tx.insert(schema.users).values({
-        username: 'admin',
-        email: 'admin@example.com',
-        passwordHash,
-        role: 'TEACHER',
-        displayName: 'Admin User',
+    if (v2Existing.length > 0) {
+      console.log(`Seed "${V2_SEED_VERSION}" already applied. Skipping.`);
+    } else {
+      await db.transaction(async (tx) => {
+        // ── Student test user ─────────────────────────────────────────────
+        const studentPasswordHash = await bcrypt.hash(
+          process.env.SEED_ADMIN_PASSWORD || "changeme",
+          10,
+        );
+
+        await tx.insert(schema.users).values({
+          username: "student",
+          email: "student@example.com",
+          passwordHash: studentPasswordHash,
+          role: "STUDENT",
+          displayName: "Demo Student",
+        });
+
+        // ── Get admin user ID for discussion createdBy ───────────────────
+        const [adminUser] = await tx
+          .select({ id: schema.users.id })
+          .from(schema.users)
+          .where(eq(schema.users.username, "admin"))
+          .limit(1);
+
+        const adminId = adminUser.id;
+
+        // ── Quizzes ──────────────────────────────────────────────────────
+
+        // Quiz 1: Pre-Test
+        const [preTestQuiz] = await tx
+          .insert(schema.quizzes)
+          .values({
+            storageKey: "quiz:pre-test",
+            title: "Pre-Test: Constructivism Basics",
+            description: "5-question pre-class quiz to assess prior knowledge",
+            quizType: "multiple_choice",
+          })
+          .returning({ id: schema.quizzes.id });
+
+        // Pre-Test Questions
+        const preTestQ1 = await tx
+          .insert(schema.questions)
+          .values({
+            quizId: preTestQuiz.id,
+            storageKey: "pre-q1",
+            questionText:
+              "Which theorist emphasized peer collaboration as essential for learning?",
+            questionOrder: 1,
+            questionType: "multiple_choice",
+            explanation:
+              "Vygotsky's social constructivism emphasizes the role of social interaction and collaboration in cognitive development.",
+          })
+          .returning({ id: schema.questions.id });
+
+        await tx.insert(schema.answers).values([
+          {
+            questionId: preTestQ1[0].id,
+            answerText: "Jean Piaget",
+            isCorrect: false,
+            answerOrder: 1,
+          },
+          {
+            questionId: preTestQ1[0].id,
+            answerText: "Lev Vygotsky",
+            isCorrect: true,
+            answerOrder: 2,
+          },
+          {
+            questionId: preTestQ1[0].id,
+            answerText: "B.F. Skinner",
+            isCorrect: false,
+            answerOrder: 3,
+          },
+          {
+            questionId: preTestQ1[0].id,
+            answerText: "John Watson",
+            isCorrect: false,
+            answerOrder: 4,
+          },
+        ]);
+
+        const preTestQ2 = await tx
+          .insert(schema.questions)
+          .values({
+            quizId: preTestQuiz.id,
+            storageKey: "pre-q2",
+            questionText: "What does ZPD stand for?",
+            questionOrder: 2,
+            questionType: "multiple_choice",
+            explanation:
+              "The Zone of Proximal Development is the gap between what a learner can do independently and with guidance.",
+          })
+          .returning({ id: schema.questions.id });
+
+        await tx.insert(schema.answers).values([
+          {
+            questionId: preTestQ2[0].id,
+            answerText: "Zone of Primary Development",
+            isCorrect: false,
+            answerOrder: 1,
+          },
+          {
+            questionId: preTestQ2[0].id,
+            answerText: "Zone of Proximal Development",
+            isCorrect: true,
+            answerOrder: 2,
+          },
+          {
+            questionId: preTestQ2[0].id,
+            answerText: "Zone of Psychological Development",
+            isCorrect: false,
+            answerOrder: 3,
+          },
+          {
+            questionId: preTestQ2[0].id,
+            answerText: "Zone of Progressive Development",
+            isCorrect: false,
+            answerOrder: 4,
+          },
+        ]);
+
+        const preTestQ3 = await tx
+          .insert(schema.questions)
+          .values({
+            quizId: preTestQuiz.id,
+            storageKey: "pre-q3",
+            questionText:
+              "Piaget's theory primarily focuses on social interaction as the driver of cognitive development.",
+            questionOrder: 3,
+            questionType: "true_false",
+            explanation:
+              "Piaget's cognitive constructivism focuses on individual exploration and adaptation (assimilation/accommodation), not social interaction.",
+          })
+          .returning({ id: schema.questions.id });
+
+        await tx.insert(schema.answers).values([
+          {
+            questionId: preTestQ3[0].id,
+            answerText: "True",
+            isCorrect: false,
+            answerOrder: 1,
+          },
+          {
+            questionId: preTestQ3[0].id,
+            answerText: "False",
+            isCorrect: true,
+            answerOrder: 2,
+          },
+        ]);
+
+        const preTestQ4 = await tx
+          .insert(schema.questions)
+          .values({
+            quizId: preTestQuiz.id,
+            storageKey: "pre-q4",
+            questionText:
+              "Which process involves modifying existing schemas to incorporate new information?",
+            questionOrder: 4,
+            questionType: "multiple_choice",
+            explanation:
+              "Accommodation modifies existing mental frameworks when new information doesn't fit, unlike assimilation which fits new info into existing schemas.",
+          })
+          .returning({ id: schema.questions.id });
+
+        await tx.insert(schema.answers).values([
+          {
+            questionId: preTestQ4[0].id,
+            answerText: "Assimilation",
+            isCorrect: false,
+            answerOrder: 1,
+          },
+          {
+            questionId: preTestQ4[0].id,
+            answerText: "Accommodation",
+            isCorrect: true,
+            answerOrder: 2,
+          },
+          {
+            questionId: preTestQ4[0].id,
+            answerText: "Scaffolding",
+            isCorrect: false,
+            answerOrder: 3,
+          },
+          {
+            questionId: preTestQ4[0].id,
+            answerText: "Internalisation",
+            isCorrect: false,
+            answerOrder: 4,
+          },
+        ]);
+
+        const preTestQ5 = await tx
+          .insert(schema.questions)
+          .values({
+            quizId: preTestQuiz.id,
+            storageKey: "pre-q5",
+            questionText: "What is scaffolding in education?",
+            questionOrder: 5,
+            questionType: "multiple_choice",
+            explanation:
+              "Scaffolding is the temporary support provided by a teacher or peer that is gradually withdrawn as the learner becomes more competent.",
+          })
+          .returning({ id: schema.questions.id });
+
+        await tx.insert(schema.answers).values([
+          {
+            questionId: preTestQ5[0].id,
+            answerText: "Building physical structures in the classroom",
+            isCorrect: false,
+            answerOrder: 1,
+          },
+          {
+            questionId: preTestQ5[0].id,
+            answerText: "Providing temporary support that is gradually removed",
+            isCorrect: true,
+            answerOrder: 2,
+          },
+          {
+            questionId: preTestQ5[0].id,
+            answerText:
+              "Testing students repeatedly until they memorize content",
+            isCorrect: false,
+            answerOrder: 3,
+          },
+          {
+            questionId: preTestQ5[0].id,
+            answerText: "Grouping students by ability level",
+            isCorrect: false,
+            answerOrder: 4,
+          },
+        ]);
+
+        // Quiz 2: Formative Assessment
+        const [formativeQuiz] = await tx
+          .insert(schema.quizzes)
+          .values({
+            storageKey: "quiz:formative",
+            title: "Formative Assessment: Constructivism Check",
+            description: "6-question Kahoot-style quiz with instant feedback",
+            quizType: "multiple_choice",
+          })
+          .returning({ id: schema.quizzes.id });
+
+        // Formative Q1
+        const formativeQ1 = await tx
+          .insert(schema.questions)
+          .values({
+            quizId: formativeQuiz.id,
+            storageKey: "formative-q1",
+            questionText: "Cognitive constructivism views learning as:",
+            questionOrder: 1,
+            questionType: "multiple_choice",
+            explanation:
+              "Cognitive constructivism (Piaget) emphasizes individual mental processes of assimilation and accommodation.",
+          })
+          .returning({ id: schema.questions.id });
+
+        await tx.insert(schema.answers).values([
+          {
+            questionId: formativeQ1[0].id,
+            answerText: "A social process of negotiation",
+            isCorrect: false,
+            answerOrder: 1,
+          },
+          {
+            questionId: formativeQ1[0].id,
+            answerText: "An individual process of mental construction",
+            isCorrect: true,
+            answerOrder: 2,
+          },
+          {
+            questionId: formativeQ1[0].id,
+            answerText: "A behaviour shaped by reinforcement",
+            isCorrect: false,
+            answerOrder: 3,
+          },
+          {
+            questionId: formativeQ1[0].id,
+            answerText: "A result of direct instruction",
+            isCorrect: false,
+            answerOrder: 4,
+          },
+        ]);
+
+        // Formative Q2
+        const formativeQ2 = await tx
+          .insert(schema.questions)
+          .values({
+            quizId: formativeQuiz.id,
+            storageKey: "formative-q2",
+            questionText:
+              "A teacher provides sentence starters and then gradually removes them as students improve. This is an example of:",
+            questionOrder: 2,
+            questionType: "multiple_choice",
+            explanation:
+              "Scaffolding involves providing temporary support that is gradually faded as competence develops.",
+          })
+          .returning({ id: schema.questions.id });
+
+        await tx.insert(schema.answers).values([
+          {
+            questionId: formativeQ2[0].id,
+            answerText: "Assimilation",
+            isCorrect: false,
+            answerOrder: 1,
+          },
+          {
+            questionId: formativeQ2[0].id,
+            answerText: "Equilibration",
+            isCorrect: false,
+            answerOrder: 2,
+          },
+          {
+            questionId: formativeQ2[0].id,
+            answerText: "Scaffolding",
+            isCorrect: true,
+            answerOrder: 3,
+          },
+          {
+            questionId: formativeQ2[0].id,
+            answerText: "Accommodation",
+            isCorrect: false,
+            answerOrder: 4,
+          },
+        ]);
+
+        // Formative Q3
+        const formativeQ3 = await tx
+          .insert(schema.questions)
+          .values({
+            quizId: formativeQuiz.id,
+            storageKey: "formative-q3",
+            questionText:
+              "Vygotsky believed that learning precedes development.",
+            questionOrder: 3,
+            questionType: "true_false",
+            explanation:
+              "Vygotsky argued that social learning precedes development — children learn through interaction before they internalise understanding.",
+          })
+          .returning({ id: schema.questions.id });
+
+        await tx.insert(schema.answers).values([
+          {
+            questionId: formativeQ3[0].id,
+            answerText: "True",
+            isCorrect: true,
+            answerOrder: 1,
+          },
+          {
+            questionId: formativeQ3[0].id,
+            answerText: "False",
+            isCorrect: false,
+            answerOrder: 2,
+          },
+        ]);
+
+        // Formative Q4
+        const formativeQ4 = await tx
+          .insert(schema.questions)
+          .values({
+            quizId: formativeQuiz.id,
+            storageKey: "formative-q4",
+            questionText:
+              "When a child calls all four-legged animals 'dog,' this is an example of:",
+            questionOrder: 4,
+            questionType: "multiple_choice",
+            explanation:
+              "Assimilation fits new information (all four-legged animals) into an existing schema (dog).",
+          })
+          .returning({ id: schema.questions.id });
+
+        await tx.insert(schema.answers).values([
+          {
+            questionId: formativeQ4[0].id,
+            answerText: "Accommodation",
+            isCorrect: false,
+            answerOrder: 1,
+          },
+          {
+            questionId: formativeQ4[0].id,
+            answerText: "Scaffolding",
+            isCorrect: false,
+            answerOrder: 2,
+          },
+          {
+            questionId: formativeQ4[0].id,
+            answerText: "Assimilation",
+            isCorrect: true,
+            answerOrder: 3,
+          },
+          {
+            questionId: formativeQ4[0].id,
+            answerText: "Disequilibrium",
+            isCorrect: false,
+            answerOrder: 4,
+          },
+        ]);
+
+        // Formative Q5
+        const formativeQ5 = await tx
+          .insert(schema.questions)
+          .values({
+            quizId: formativeQuiz.id,
+            storageKey: "formative-q5",
+            questionText: "Which concept is UNIQUE to Vygotsky's theory?",
+            questionOrder: 5,
+            questionType: "multiple_choice",
+            explanation:
+              "The ZPD is central to Vygotsky's social constructivism. Schema, assimilation, and equilibration are Piagetian concepts.",
+          })
+          .returning({ id: schema.questions.id });
+
+        await tx.insert(schema.answers).values([
+          {
+            questionId: formativeQ5[0].id,
+            answerText: "Schema",
+            isCorrect: false,
+            answerOrder: 1,
+          },
+          {
+            questionId: formativeQ5[0].id,
+            answerText: "Assimilation",
+            isCorrect: false,
+            answerOrder: 2,
+          },
+          {
+            questionId: formativeQ5[0].id,
+            answerText: "Zone of Proximal Development",
+            isCorrect: true,
+            answerOrder: 3,
+          },
+          {
+            questionId: formativeQ5[0].id,
+            answerText: "Equilibration",
+            isCorrect: false,
+            answerOrder: 4,
+          },
+        ]);
+
+        // Formative Q6
+        const formativeQ6 = await tx
+          .insert(schema.questions)
+          .values({
+            quizId: formativeQuiz.id,
+            storageKey: "formative-q6",
+            questionText: "A More Knowledgeable Other (MKO) can be:",
+            questionOrder: 6,
+            questionType: "multiple_choice",
+            explanation:
+              "An MKO is anyone or anything that has a better understanding than the learner — teachers, peers, parents, or even digital tools.",
+          })
+          .returning({ id: schema.questions.id });
+
+        await tx.insert(schema.answers).values([
+          {
+            questionId: formativeQ6[0].id,
+            answerText: "Only a teacher",
+            isCorrect: false,
+            answerOrder: 1,
+          },
+          {
+            questionId: formativeQ6[0].id,
+            answerText: "Only an adult",
+            isCorrect: false,
+            answerOrder: 2,
+          },
+          {
+            questionId: formativeQ6[0].id,
+            answerText:
+              "Anyone with more knowledge than the learner, including peers",
+            isCorrect: true,
+            answerOrder: 3,
+          },
+          {
+            questionId: formativeQ6[0].id,
+            answerText: "Only technology or tools",
+            isCorrect: false,
+            answerOrder: 4,
+          },
+        ]);
+
+        // Quiz 3: Post-Test
+        const [postTestQuiz] = await tx
+          .insert(schema.quizzes)
+          .values({
+            storageKey: "quiz:post-test",
+            title: "Post-Test: Constructivism Understanding",
+            description: "Assess your understanding after the lesson",
+            quizType: "multiple_choice",
+          })
+          .returning({ id: schema.quizzes.id });
+
+        // Post-Test Q1 (same as pre-test Q1)
+        const postTestQ1 = await tx
+          .insert(schema.questions)
+          .values({
+            quizId: postTestQuiz.id,
+            storageKey: "post-q1",
+            questionText:
+              "Which theorist emphasized peer collaboration as essential for learning?",
+            questionOrder: 1,
+            questionType: "multiple_choice",
+            explanation:
+              "Vygotsky's social constructivism emphasizes the role of social interaction and collaboration in cognitive development.",
+          })
+          .returning({ id: schema.questions.id });
+
+        await tx.insert(schema.answers).values([
+          {
+            questionId: postTestQ1[0].id,
+            answerText: "Jean Piaget",
+            isCorrect: false,
+            answerOrder: 1,
+          },
+          {
+            questionId: postTestQ1[0].id,
+            answerText: "Lev Vygotsky",
+            isCorrect: true,
+            answerOrder: 2,
+          },
+          {
+            questionId: postTestQ1[0].id,
+            answerText: "B.F. Skinner",
+            isCorrect: false,
+            answerOrder: 3,
+          },
+          {
+            questionId: postTestQ1[0].id,
+            answerText: "John Watson",
+            isCorrect: false,
+            answerOrder: 4,
+          },
+        ]);
+
+        // Post-Test Q2 (same as pre-test Q2)
+        const postTestQ2 = await tx
+          .insert(schema.questions)
+          .values({
+            quizId: postTestQuiz.id,
+            storageKey: "post-q2",
+            questionText: "What does ZPD stand for?",
+            questionOrder: 2,
+            questionType: "multiple_choice",
+            explanation:
+              "The Zone of Proximal Development is the gap between what a learner can do independently and with guidance.",
+          })
+          .returning({ id: schema.questions.id });
+
+        await tx.insert(schema.answers).values([
+          {
+            questionId: postTestQ2[0].id,
+            answerText: "Zone of Primary Development",
+            isCorrect: false,
+            answerOrder: 1,
+          },
+          {
+            questionId: postTestQ2[0].id,
+            answerText: "Zone of Proximal Development",
+            isCorrect: true,
+            answerOrder: 2,
+          },
+          {
+            questionId: postTestQ2[0].id,
+            answerText: "Zone of Psychological Development",
+            isCorrect: false,
+            answerOrder: 3,
+          },
+          {
+            questionId: postTestQ2[0].id,
+            answerText: "Zone of Progressive Development",
+            isCorrect: false,
+            answerOrder: 4,
+          },
+        ]);
+
+        // Post-Test Q3 (same as pre-test Q3)
+        const postTestQ3 = await tx
+          .insert(schema.questions)
+          .values({
+            quizId: postTestQuiz.id,
+            storageKey: "post-q3",
+            questionText:
+              "Piaget's theory primarily focuses on social interaction as the driver of cognitive development.",
+            questionOrder: 3,
+            questionType: "true_false",
+            explanation:
+              "Piaget's cognitive constructivism focuses on individual exploration and adaptation (assimilation/accommodation), not social interaction.",
+          })
+          .returning({ id: schema.questions.id });
+
+        await tx.insert(schema.answers).values([
+          {
+            questionId: postTestQ3[0].id,
+            answerText: "True",
+            isCorrect: false,
+            answerOrder: 1,
+          },
+          {
+            questionId: postTestQ3[0].id,
+            answerText: "False",
+            isCorrect: true,
+            answerOrder: 2,
+          },
+        ]);
+
+        // Post-Test Q4 (same as pre-test Q4)
+        const postTestQ4 = await tx
+          .insert(schema.questions)
+          .values({
+            quizId: postTestQuiz.id,
+            storageKey: "post-q4",
+            questionText:
+              "Which process involves modifying existing schemas to incorporate new information?",
+            questionOrder: 4,
+            questionType: "multiple_choice",
+            explanation:
+              "Accommodation modifies existing mental frameworks when new information doesn't fit, unlike assimilation which fits new info into existing schemas.",
+          })
+          .returning({ id: schema.questions.id });
+
+        await tx.insert(schema.answers).values([
+          {
+            questionId: postTestQ4[0].id,
+            answerText: "Assimilation",
+            isCorrect: false,
+            answerOrder: 1,
+          },
+          {
+            questionId: postTestQ4[0].id,
+            answerText: "Accommodation",
+            isCorrect: true,
+            answerOrder: 2,
+          },
+          {
+            questionId: postTestQ4[0].id,
+            answerText: "Scaffolding",
+            isCorrect: false,
+            answerOrder: 3,
+          },
+          {
+            questionId: postTestQ4[0].id,
+            answerText: "Internalisation",
+            isCorrect: false,
+            answerOrder: 4,
+          },
+        ]);
+
+        // Post-Test Q5 (same as pre-test Q5)
+        const postTestQ5 = await tx
+          .insert(schema.questions)
+          .values({
+            quizId: postTestQuiz.id,
+            storageKey: "post-q5",
+            questionText: "What is scaffolding in education?",
+            questionOrder: 5,
+            questionType: "multiple_choice",
+            explanation:
+              "Scaffolding is the temporary support provided by a teacher or peer that is gradually withdrawn as the learner becomes more competent.",
+          })
+          .returning({ id: schema.questions.id });
+
+        await tx.insert(schema.answers).values([
+          {
+            questionId: postTestQ5[0].id,
+            answerText: "Building physical structures in the classroom",
+            isCorrect: false,
+            answerOrder: 1,
+          },
+          {
+            questionId: postTestQ5[0].id,
+            answerText: "Providing temporary support that is gradually removed",
+            isCorrect: true,
+            answerOrder: 2,
+          },
+          {
+            questionId: postTestQ5[0].id,
+            answerText:
+              "Testing students repeatedly until they memorize content",
+            isCorrect: false,
+            answerOrder: 3,
+          },
+          {
+            questionId: postTestQ5[0].id,
+            answerText: "Grouping students by ability level",
+            isCorrect: false,
+            answerOrder: 4,
+          },
+        ]);
+
+        // Post-Test Q6 (short answer reflection)
+        await tx.insert(schema.questions).values({
+          quizId: postTestQuiz.id,
+          storageKey: "post-q6",
+          questionText:
+            "How would you explain the key difference between cognitive and social constructivism to a fellow student?",
+          questionOrder: 6,
+          questionType: "short_answer",
+          explanation:
+            "Consider whether you emphasised individual mental processes (Piaget) vs. social interaction (Vygotsky).",
+        });
+
+        // ── Discussions ──────────────────────────────────────────────────
+        await tx.insert(schema.discussions).values([
+          {
+            storageKey: "discussion:guiding-questions",
+            title: "Guiding Questions",
+            description: "Discuss the guiding questions for this lesson",
+            createdBy: adminId,
+            isPinned: false,
+          },
+          {
+            storageKey: "discussion:think-pair-share",
+            title:
+              "Think-Pair-Share: Which Theory Better Explains STEM Learning?",
+            description:
+              "Share your thoughts on whether cognitive or social constructivism better explains learning in STEM subjects",
+            createdBy: adminId,
+            isPinned: false,
+          },
+          {
+            storageKey: "discussion:peer-teaching",
+            title: "Peer Teaching Reflection",
+            description:
+              "Reflect on your mini-lesson and the constructivist methods you used",
+            createdBy: adminId,
+            isPinned: false,
+          },
+        ]);
+
+        // ── Concept Checks ───────────────────────────────────────────────
+        await tx.insert(schema.conceptChecks).values([
+          {
+            storageKey: "cc:ilo-understanding",
+            title: "ILO Understanding",
+            prompt: "Do you understand the learning outcomes?",
+            checkType: "thumbs",
+            sectionKey: "ilos",
+          },
+          {
+            storageKey: "cc:constructivism-understanding",
+            title: "Constructivism Understanding",
+            prompt: "Do you understand the key constructivist concepts?",
+            checkType: "thumbs",
+            sectionKey: "introduction",
+          },
+          {
+            storageKey: "cc:theory-comparison",
+            title: "Theory Comparison",
+            prompt:
+              "Can you distinguish between cognitive and social constructivism?",
+            checkType: "thumbs",
+            sectionKey: "lecture",
+          },
+          {
+            storageKey: "cc:case-study",
+            title: "Case Study Comprehension",
+            prompt:
+              "Can you apply constructivist principles to classroom scenarios?",
+            checkType: "thumbs",
+            sectionKey: "case-study",
+          },
+          {
+            storageKey: "cc:formative-check",
+            title: "Formative Check",
+            prompt: "How confident are you in your understanding?",
+            checkType: "scale",
+            sectionKey: "formative",
+          },
+          {
+            storageKey: "cc:confidence-rating",
+            title: "Confidence Rating",
+            prompt: "Rate your confidence applying these theories (1-5)",
+            checkType: "scale",
+            sectionKey: "synthesis",
+          },
+          {
+            storageKey: "cc:exit-ticket",
+            title: "Exit Ticket",
+            prompt: "One question I still have about constructivism",
+            checkType: "text",
+            sectionKey: "synthesis",
+          },
+        ]);
+
+        // ── Slides ───────────────────────────────────────────────────────
+        await tx.insert(schema.slides).values([
+          {
+            storageKey: "slide:1",
+            slideOrder: 1,
+            title: "Cognitive and Social Constructivism Theory",
+            content:
+              "A 90-Minute Lesson Plan\nExploring how learners construct knowledge\nThrough individual cognition and social interaction",
+            slideType: "title",
+            backgroundColor: null,
+          },
+          {
+            storageKey: "slide:2",
+            slideOrder: 2,
+            title: "Learning Outcomes",
+            content:
+              "By the end of this lesson, you will be able to:\n- Analyze differences between cognitive and social constructivism\n- Evaluate applications of Vygotsky's ZPD and Piaget's assimilation/accommodation\n- Create a concept map linking constructivist principles to teaching practices\n- Apply scaffolding strategies to classroom scenarios",
+            slideType: "content",
+            backgroundColor: null,
+          },
+          {
+            storageKey: "slide:3",
+            slideOrder: 3,
+            title: "Pre-Class Preparation",
+            content:
+              "Before class, complete:\n- Reading: Vygotsky's 'Mind in Society' pp. 75-82\n- Reading: Piaget's Cognitive Development Theory summary\n- Video: TED-Ed 'How kids learn through social interaction' (8 min)\n- Pre-Test: 5-question quiz on basic concepts\n- Consider: What role does the teacher play in each theory?",
+            slideType: "content",
+            backgroundColor: null,
+          },
+          {
+            storageKey: "slide:4",
+            slideOrder: 4,
+            title: "Introduction: Which Approach Works?",
+            content:
+              "Hook: Compare two classrooms\n- Scenario A: Teacher lectures for 60 minutes\n- Scenario B: Students work in groups on projects\n\nWhich aligns with constructivism?\nKey: Learning is ACTIVE, not passive\nReal-World: Maker spaces, peer tutoring, inquiry-based learning",
+            slideType: "content",
+            backgroundColor: null,
+          },
+          {
+            storageKey: "slide:5",
+            slideOrder: 5,
+            title: "Cognitive vs Social Constructivism",
+            content:
+              "Cognitive Constructivism (Piaget):\n- Learning as individual mental construction\n- Key concepts: Assimilation, Accommodation, Equilibration\n- Teacher role: Facilitator of discovery\n\nSocial Constructivism (Vygotsky):\n- Learning through social interaction\n- Key concepts: ZPD, Scaffolding, MKO\n- Teacher role: Guide and collaborative partner",
+            slideType: "content",
+            backgroundColor: null,
+          },
+          {
+            storageKey: "slide:6",
+            slideOrder: 6,
+            title: "Case Study Analysis",
+            content:
+              "Apply constructivist principles to 3 scenarios:\n- Teaching fractions to struggling students\n- Mixed-ability groups in science experiments\n- Supporting ESL students in discussions\n\nStructured Prompt:\nApply ZPD and Piagetian adaptation to create intervention strategies\nConsider: What scaffolding would you provide?",
+            slideType: "activity",
+            backgroundColor: null,
+          },
+          {
+            storageKey: "slide:7",
+            slideOrder: 7,
+            title: "Key Terminology",
+            content:
+              "15 essential terms to master:\n- Assimilation: Fitting new info into existing schemas\n- Accommodation: Modifying schemas for new info\n- Scaffolding: Temporary support, gradually removed\n- ZPD: Gap between independent and assisted performance\n- MKO: Anyone with more understanding than the learner\n- Disequilibrium: Cognitive conflict from contradictory info\n- Equilibration: Balancing assimilation and accommodation\n- Internalisation: Absorbing knowledge from social interactions",
+            slideType: "content",
+            backgroundColor: null,
+          },
+          {
+            storageKey: "slide:8",
+            slideOrder: 8,
+            title: "Peer Teaching Activity",
+            content:
+              "Groups create 3-minute mini-lessons:\n- Demonstrate constructivist teaching methods\n- Use scaffolding to teach a concept\n- Present using whiteboards\n\nReflect: What constructivist strategies did you use?\nHow did scaffolding help your 'students' learn?",
+            slideType: "activity",
+            backgroundColor: null,
+          },
+          {
+            storageKey: "slide:9",
+            slideOrder: 9,
+            title: "Assessment & Alignment",
+            content:
+              "Constructive Alignment Matrix:\n- Analyze theories → Case study & diagram → Pre/post-test\n- Evaluate applications → Peer teaching → Lesson plan rubric\n- Create concept maps → Whiteboard task → Peer evaluation\n- Apply strategies → Scenario analysis → Group work evaluation\n\nFormative: Polls, concept maps, exit tickets\nSummative: Design a constructivist lesson plan",
+            slideType: "assessment",
+            backgroundColor: null,
+          },
+          {
+            storageKey: "slide:10",
+            slideOrder: 10,
+            title: "Resources & Next Steps",
+            content:
+              "Required Resources:\n- LMS: Blackboard discussion boards\n- Interactive: Mentimeter, Padlet, Quizlet\n- Physical: Pre-printed scenario cards\n\nNext Session: Digital Learning & Constructivism\n- MinecraftEDU as constructivist tool\n- Technology-mediated scaffolding\n\nReflection: What surprised you most about your understanding?",
+            slideType: "content",
+            backgroundColor: null,
+          },
+        ]);
+
+        // ── Editable Content ─────────────────────────────────────────────
+        await tx.insert(schema.editableContent).values([
+          {
+            storageKey: "ilo-1",
+            content:
+              "Analyze fundamental differences between cognitive and social constructivism through comparative frameworks",
+          },
+          {
+            storageKey: "ilo-2",
+            content:
+              "Evaluate the practical applications of Vygotsky's ZPD and Piaget's assimilation/accommodation in educational settings",
+          },
+          {
+            storageKey: "ilo-3",
+            content:
+              "Create a concept map demonstrating relationships between constructivist principles and teaching practices",
+          },
+          {
+            storageKey: "ilo-4",
+            content:
+              "Apply scaffolding strategies to hypothetical classroom scenarios",
+          },
+          {
+            storageKey: "reading-1",
+            content:
+              "Excerpt from Vygotsky's 'Mind in Society' (pp. 75-82) on Zone of Proximal Development",
+          },
+          {
+            storageKey: "reading-2",
+            content:
+              "Piaget's Cognitive Development Theory summary (McInerney & McInerney, 2015)",
+          },
+        ]);
+
+        // ── Record v2 seed as applied ────────────────────────────────────
+        await tx.insert(schema.seedLog).values({
+          seedVersion: V2_SEED_VERSION,
+        });
       });
 
-      await tx.insert(schema.seedLog).values({
-        seedVersion: SEED_VERSION,
-      });
-    });
-
-    console.log(`Seed "${SEED_VERSION}" applied successfully.`);
+      console.log(`Seed "${V2_SEED_VERSION}" applied successfully.`);
+    }
   } catch (error) {
-    console.error('Seeding failed:', error);
+    console.error("Seeding failed:", error);
     throw error;
   } finally {
     await client.end();
