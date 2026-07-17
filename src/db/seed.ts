@@ -1,30 +1,10 @@
 import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
 import { sql, eq } from 'drizzle-orm';
-import { readFileSync } from 'fs';
-import { resolve } from 'path';
 import bcrypt from 'bcryptjs';
 import * as schema from './schema';
 
-// // Load .env.local
-// try {
-//   const envPath = resolve(process.cwd(), '.env.local');
-//   const envContent = readFileSync(envPath, 'utf-8');
-//   for (const line of envContent.split('\n')) {
-//     const match = line.match(/^([^#=]+)=(.*)$/);
-//     if (match) {
-//       const key = match[1].trim();
-//       const value = match[2].trim().replace(/^["']|["']$/g, '');
-//       if (!process.env[key]) {
-//         process.env[key] = value;
-//       }
-//     }
-//   }
-// } catch {
-//   // .env.local not found, rely on existing env vars
-// }
-
-const SEED_VERSION = 'v1_initial';
+const SEED_VERSION = 'v2_lesson_plan';
 
 async function seed() {
   const client = postgres(process.env.DATABASE_URL!);
@@ -52,24 +32,372 @@ async function seed() {
       return;
     }
 
-    // Run seed data within a transaction
+    // Also run v1_initial if not yet applied (creates admin user)
+    const v1Existing = await db
+      .select()
+      .from(schema.seedLog)
+      .where(eq(schema.seedLog.seedVersion, 'v1_initial'))
+      .limit(1);
+
     await db.transaction(async (tx) => {
-      const passwordHash = await bcrypt.hash(
-        process.env.SEED_ADMIN_PASSWORD || 'changeme',
-        10,
-      );
+      // --- Users ---
+      let adminId: number;
 
-      await tx.insert(schema.users).values({
-        username: 'admin',
-        email: 'admin@example.com',
-        passwordHash,
-        role: 'TEACHER',
-        displayName: 'Admin User',
+      if (v1Existing.length === 0) {
+        const passwordHash = await bcrypt.hash(
+          process.env.SEED_ADMIN_PASSWORD || 'changeme',
+          10,
+        );
+        const [admin] = await tx.insert(schema.users).values({
+          username: 'admin',
+          email: 'admin@example.com',
+          passwordHash,
+          role: 'TEACHER',
+          displayName: 'Admin User',
+        }).returning();
+        adminId = admin.id;
+
+        await tx.insert(schema.seedLog).values({ seedVersion: 'v1_initial' });
+      } else {
+        const adminRows = await tx.select().from(schema.users).where(eq(schema.users.username, 'admin')).limit(1);
+        adminId = adminRows[0].id;
+      }
+
+      // Demo student
+      const studentHash = await bcrypt.hash('student123', 10);
+      const [student] = await tx.insert(schema.users).values({
+        username: 'student',
+        email: 'student@example.com',
+        passwordHash: studentHash,
+        role: 'STUDENT',
+        displayName: 'Demo Student',
+      }).returning();
+      const studentId = student.id;
+
+      // --- Slides (10 slides) ---
+      const slidesData = [
+        {
+          storageKey: 'slide:title',
+          slideOrder: 1,
+          title: 'AI-Augmented Software Engineering & Pedagogical Integration',
+          content: 'Course: The Modern Software Developer\nDuration: 90 minutes\nPedagogy: TPACK Framework + Peer Assessment',
+          slideType: 'title',
+          backgroundColor: null,
+        },
+        {
+          storageKey: 'slide:ilos',
+          slideOrder: 2,
+          title: 'Intended Learning Outcomes (ILOs)',
+          content: '- Analyze the impact of AI tooling on software engineering workflows and pedagogical design (TPACK-CK+TK)\n- Apply TPACK components to design lesson prototypes integrating AI-assisted coding tools (TPACK-PK)\n- Evaluate peer-designed lessons using structured rubrics focused on content relevance and technological fluency\n- Collaborate to address misconceptions about AI democratization risks (Social Constructivism)',
+          slideType: 'content',
+          backgroundColor: null,
+        },
+        {
+          storageKey: 'slide:preclass',
+          slideOrder: 3,
+          title: 'Pre-Class Preparation (TPACK Foundation)',
+          content: '- Watch: "Democratizing Software: How AI is Reshaping Programming" (10-min video)\n- Read: "TPACK Framework for Tech Integration in Education"\n- Complete Pre-Test: 5 questions assessing baseline AI coding tools and TPACK understanding\n- Guiding Prompt: Which AI tools address traditional SE challenges?\n- Guiding Prompt: How can lesson objectives combine technical skills with critical thinking about AI ethics?',
+          slideType: 'content',
+          backgroundColor: null,
+        },
+        {
+          storageKey: 'slide:introduction',
+          slideOrder: 4,
+          title: 'Introduction (12 minutes)',
+          content: '- 2-minute montage: AI coding tools vs manual development\n- Live Poll: "Does AI coding tooling reduce creativity in software development?"\n- Pre-Test Review: Address misconceptions (e.g., "AI eliminates need for debugging")\n- Real-World Stats: Gartner reports 70% of devs use AI assistants\n- Risks: Data privacy issues with AI-generated code',
+          slideType: 'content',
+          backgroundColor: null,
+        },
+        {
+          storageKey: 'slide:activity1',
+          slideOrder: 5,
+          title: 'Activity 1: TPACK Lesson Design Sprint (35 min)',
+          content: '- Task: In pairs, design a 15-minute micro-lesson on AI-assisted debugging\n- CK: Core concepts (AI tool limitations)\n- TK: Tools selected (e.g., GitHub Copilot exercises)\n- PK: Pedagogical strategies (collaborative code reviews)\n- Deliverable: Miro board with lesson structure + interactive component\n- Scaffolding: TPACK graphic organizer with labeled CK/TK/PK circles\n- Template: Plan → AI generate → Peer evaluate → Iterate (PAIR)',
+          slideType: 'activity',
+          backgroundColor: null,
+        },
+        {
+          storageKey: 'slide:activity2',
+          slideOrder: 6,
+          title: 'Activity 2: Structured Peer Assessment (20 min)',
+          content: '- Exchange lesson plans via Peergrade.io\n- Rubric Criteria:\n  1. Integration of AI tools with pedagogy (CK-TK synergy)\n  2. Clarity of learning objectives\n  3. Ethical considerations (data bias, accessibility)\n- Process: Calibrate with model responses\n- Annotate lesson plans with constructive feedback\n- Example: "Your CK-TK alignment is strong, but the PK lacks scaffolding for beginners"',
+          slideType: 'activity',
+          backgroundColor: null,
+        },
+        {
+          storageKey: 'slide:activity3',
+          slideOrder: 7,
+          title: 'Activity 3: Collaborative Refinement (8 min)',
+          content: '- Revise lesson plans based on peer feedback\n- Submit final version to LMS portfolio\n- Reflection: Which TPACK component did your peer critiques most improve, and why?',
+          slideType: 'activity',
+          backgroundColor: null,
+        },
+        {
+          storageKey: 'slide:synthesis',
+          slideOrder: 8,
+          title: 'Synthesis & Closure (15 minutes)',
+          content: '- Post-Test: 3 conceptual application questions\n  "Evaluate how GitHub Copilot might affect code quality in legacy systems"\n- Peer-Teaching: In triads, summarize a peer\'s TPACK design\n- Next Session: LLM prompt engineering for AI tool customization',
+          slideType: 'content',
+          backgroundColor: null,
+        },
+        {
+          storageKey: 'slide:assessment',
+          slideOrder: 9,
+          title: 'Assessment Methods',
+          content: '- Formative: TPACK checkpoints during Activity 1\n- Formative: Peer feedback quality analysis\n- Formative: Confidence poll (Likert scale)\n- Summative: Portfolio Rubric\n  - TPACK Alignment (Exemplary/Developing/Needs Revision)\n  - Ethical Consideration\n  - Feedback Incorporation',
+          slideType: 'assessment',
+          backgroundColor: null,
+        },
+        {
+          storageKey: 'slide:alignment',
+          slideOrder: 10,
+          title: 'Constructive Alignment Matrix',
+          content: '- ILO1 (Analyze AI impact) → TPACK Lesson Design Sprint → Post-Test\n- ILO2 (Apply TPACK) → Miro TPACK Lesson Board → Portfolio Rubric\n- ILO3 (Evaluate peers) → Structured Rubric → Peer Feedback Quality\n- Resources: Miro, GitHub Classroom, Peergrade.io\n- AI Tools: GitHub Copilot Sandbox, Tabnine Code Completions',
+          slideType: 'content',
+          backgroundColor: null,
+        },
+      ];
+
+      for (const slide of slidesData) {
+        await tx.insert(schema.slides).values(slide);
+      }
+
+      // --- Quizzes ---
+      // Quiz 1: Pre-Test
+      const [preQuiz] = await tx.insert(schema.quizzes).values({
+        storageKey: 'quiz:pretest',
+        title: 'Pre-Test: AI Coding Tools & TPACK',
+        description: 'Assess your baseline understanding of AI coding tools and TPACK definitions before the lesson.',
+        quizType: 'multiple_choice',
+      }).returning();
+
+      const preQuestions = [
+        {
+          storageKey: 'quiz:pretest:q1',
+          questionText: 'What does TPACK stand for in educational technology?',
+          questionOrder: 1,
+          questionType: 'multiple_choice',
+          explanation: 'TPACK stands for Technological Pedagogical Content Knowledge — a framework for effective technology integration in teaching.',
+          answers: [
+            { answerText: 'Technological Pedagogical Content Knowledge', isCorrect: true, answerOrder: 1 },
+            { answerText: 'Technical Programming And Content Knowledge', isCorrect: false, answerOrder: 2 },
+            { answerText: 'Teaching Pedagogy And Computing Knowledge', isCorrect: false, answerOrder: 3 },
+            { answerText: 'Technology Processing And Content Kit', isCorrect: false, answerOrder: 4 },
+          ],
+        },
+        {
+          storageKey: 'quiz:pretest:q2',
+          questionText: 'Which of the following is a primary risk of over-relying on AI coding tools?',
+          questionOrder: 2,
+          questionType: 'multiple_choice',
+          explanation: 'Over-reliance on AI tools can lead to reduced critical thinking and debugging skills, as developers may accept AI-generated code without proper review.',
+          answers: [
+            { answerText: 'Faster code compilation', isCorrect: false, answerOrder: 1 },
+            { answerText: 'Reduced critical thinking and debugging skills', isCorrect: true, answerOrder: 2 },
+            { answerText: 'Increased team collaboration', isCorrect: false, answerOrder: 3 },
+            { answerText: 'Better code documentation', isCorrect: false, answerOrder: 4 },
+          ],
+        },
+        {
+          storageKey: 'quiz:pretest:q3',
+          questionText: 'In the TPACK framework, which component focuses on how to teach a subject effectively?',
+          questionOrder: 3,
+          questionType: 'multiple_choice',
+          explanation: 'Pedagogical Knowledge (PK) focuses on the methods and practices of teaching — how to sequence activities, scaffold learning, and assess understanding.',
+          answers: [
+            { answerText: 'Technological Knowledge (TK)', isCorrect: false, answerOrder: 1 },
+            { answerText: 'Content Knowledge (CK)', isCorrect: false, answerOrder: 2 },
+            { answerText: 'Pedagogical Knowledge (PK)', isCorrect: true, answerOrder: 3 },
+            { answerText: 'Contextual Knowledge', isCorrect: false, answerOrder: 4 },
+          ],
+        },
+        {
+          storageKey: 'quiz:pretest:q4',
+          questionText: 'According to Gartner research, approximately what percentage of developers use AI assistants?',
+          questionOrder: 4,
+          questionType: 'multiple_choice',
+          explanation: 'Gartner reports that approximately 70% of developers now use AI assistants in their workflow.',
+          answers: [
+            { answerText: '30%', isCorrect: false, answerOrder: 1 },
+            { answerText: '50%', isCorrect: false, answerOrder: 2 },
+            { answerText: '70%', isCorrect: true, answerOrder: 3 },
+            { answerText: '90%', isCorrect: false, answerOrder: 4 },
+          ],
+        },
+        {
+          storageKey: 'quiz:pretest:q5',
+          questionText: 'Which statement about AI-generated code is most accurate?',
+          questionOrder: 5,
+          questionType: 'multiple_choice',
+          explanation: 'AI-generated code can contain biases from training data and may not always follow best practices, making human review essential.',
+          answers: [
+            { answerText: 'AI-generated code is always optimized and secure', isCorrect: false, answerOrder: 1 },
+            { answerText: 'AI-generated code can contain biases and needs human review', isCorrect: true, answerOrder: 2 },
+            { answerText: 'AI-generated code eliminates the need for testing', isCorrect: false, answerOrder: 3 },
+            { answerText: 'AI-generated code never contains errors', isCorrect: false, answerOrder: 4 },
+          ],
+        },
+      ];
+
+      for (const q of preQuestions) {
+        const [insertedQ] = await tx.insert(schema.questions).values({
+          quizId: preQuiz.id,
+          storageKey: q.storageKey,
+          questionText: q.questionText,
+          questionOrder: q.questionOrder,
+          questionType: q.questionType,
+          explanation: q.explanation,
+        }).returning();
+
+        for (const a of q.answers) {
+          await tx.insert(schema.answers).values({
+            questionId: insertedQ.id,
+            answerText: a.answerText,
+            isCorrect: a.isCorrect,
+            answerOrder: a.answerOrder,
+          });
+        }
+      }
+
+      // Quiz 2: AI Tool Limitations - TPACK Alignment
+      const [tpackQuiz] = await tx.insert(schema.quizzes).values({
+        storageKey: 'quiz:tpack-alignment',
+        title: 'AI Tool Limitations - TPACK Alignment',
+        description: 'Test your understanding of how TPACK components align with AI tool usage in software engineering education.',
+        quizType: 'multiple_choice',
+      }).returning();
+
+      const tpackQuestions = [
+        {
+          storageKey: 'quiz:tpack:q1',
+          questionText: 'Which component of TPACK focuses on sequencing learning activities when using GitHub Copilot?',
+          questionOrder: 1,
+          questionType: 'multiple_choice',
+          explanation: 'Pedagogical Knowledge (PK) focuses on how to sequence and structure learning activities, including when and how to introduce AI tools like GitHub Copilot.',
+          answers: [
+            { answerText: 'Content Knowledge (CK)', isCorrect: false, answerOrder: 1 },
+            { answerText: 'Technological Knowledge (TK)', isCorrect: false, answerOrder: 2 },
+            { answerText: 'Pedagogical Knowledge (PK)', isCorrect: true, answerOrder: 3 },
+          ],
+        },
+        {
+          storageKey: 'quiz:tpack:q2',
+          questionText: 'Matching: GitHub Copilot\'s code suggestion capability belongs to which TPACK domain?',
+          questionOrder: 2,
+          questionType: 'multiple_choice',
+          explanation: 'GitHub Copilot\'s code suggestion feature is a technological tool, so it falls under Technological Knowledge (TK) — understanding what tools are available and how they work.',
+          answers: [
+            { answerText: 'Content Knowledge (CK)', isCorrect: false, answerOrder: 1 },
+            { answerText: 'Technological Knowledge (TK)', isCorrect: true, answerOrder: 2 },
+            { answerText: 'Pedagogical Knowledge (PK)', isCorrect: false, answerOrder: 3 },
+          ],
+        },
+        {
+          storageKey: 'quiz:tpack:q3',
+          questionText: 'What is a key risk of over-reliance on AI code generation?',
+          questionOrder: 3,
+          questionType: 'multiple_choice',
+          explanation: 'Over-reliance on AI code generation reduces critical thinking and debugging skills, as developers may become dependent on AI suggestions without understanding the underlying logic.',
+          answers: [
+            { answerText: 'Faster development speed', isCorrect: false, answerOrder: 1 },
+            { answerText: 'Reduced critical thinking and debugging skills', isCorrect: true, answerOrder: 2 },
+            { answerText: 'Better code documentation', isCorrect: false, answerOrder: 3 },
+          ],
+        },
+      ];
+
+      for (const q of tpackQuestions) {
+        const [insertedQ] = await tx.insert(schema.questions).values({
+          quizId: tpackQuiz.id,
+          storageKey: q.storageKey,
+          questionText: q.questionText,
+          questionOrder: q.questionOrder,
+          questionType: q.questionType,
+          explanation: q.explanation,
+        }).returning();
+
+        for (const a of q.answers) {
+          await tx.insert(schema.answers).values({
+            questionId: insertedQ.id,
+            answerText: a.answerText,
+            isCorrect: a.isCorrect,
+            answerOrder: a.answerOrder,
+          });
+        }
+      }
+
+      // --- Discussions ---
+      await tx.insert(schema.discussions).values({
+        storageKey: 'discussion:ai-creativity',
+        title: 'Does AI Coding Tooling Reduce Creativity in Software Development?',
+        description: 'Share your thoughts on whether AI assistants like GitHub Copilot enhance or diminish developer creativity. Consider both the efficiency gains and potential risks of over-reliance.',
+        createdBy: adminId,
+        isPinned: true,
       });
 
-      await tx.insert(schema.seedLog).values({
-        seedVersion: SEED_VERSION,
+      await tx.insert(schema.discussions).values({
+        storageKey: 'discussion:tpack-challenges',
+        title: 'Challenges in Integrating TPACK with AI Tools',
+        description: 'What challenges do you foresee in applying the TPACK framework when teaching with AI-assisted coding tools? How can these be addressed?',
+        createdBy: adminId,
+        isPinned: false,
       });
+
+      // --- Concept Checks ---
+      await tx.insert(schema.conceptChecks).values({
+        storageKey: 'conceptcheck:intro-understanding',
+        title: 'Introduction Understanding Check',
+        prompt: 'Do you understand the three components of TPACK and how they relate to AI tool integration?',
+        checkType: 'thumbs',
+        sectionKey: 'introduction',
+      });
+
+      await tx.insert(schema.conceptChecks).values({
+        storageKey: 'conceptcheck:activity1-readiness',
+        title: 'Activity 1 Readiness',
+        prompt: 'How confident are you in designing a lesson using the TPACK framework with AI tools?',
+        checkType: 'scale',
+        sectionKey: 'development',
+      });
+
+      await tx.insert(schema.conceptChecks).values({
+        storageKey: 'conceptcheck:peer-assessment',
+        title: 'Peer Assessment Reflection',
+        prompt: 'What is one key insight you gained from evaluating your peer\'s lesson plan?',
+        checkType: 'text',
+        sectionKey: 'synthesis',
+      });
+
+      // --- Editable Content (teacher-editable sections) ---
+      const editableSections = [
+        { storageKey: 'editable:ilos:heading', content: 'Intended Learning Outcomes (ILOs)' },
+        { storageKey: 'editable:ilos:description', content: 'By the end of the lesson, students will be able to analyze, apply, evaluate, and collaborate on AI-augmented software engineering topics through the TPACK framework.' },
+        { storageKey: 'editable:preclass:heading', content: 'Pre-Class Preparation (TPACK Foundation)' },
+        { storageKey: 'editable:preclass:description', content: 'Complete the pre-class materials including the video on AI in software development, the TPACK framework article, and the 5-question pre-test before attending the session.' },
+        { storageKey: 'editable:introduction:heading', content: 'Introduction (12 minutes)' },
+        { storageKey: 'editable:introduction:description', content: 'The session opens with a 2-minute montage comparing AI coding tools with manual development, followed by a live poll and pre-test review.' },
+        { storageKey: 'editable:development:heading', content: 'Development Activities (63 minutes)' },
+        { storageKey: 'editable:development:description', content: 'Three activities: TPACK Lesson Design Sprint (35 min), Structured Peer Assessment (20 min), and Collaborative Refinement (8 min).' },
+        { storageKey: 'editable:synthesis:heading', content: 'Synthesis & Closure (15 minutes)' },
+        { storageKey: 'editable:synthesis:description', content: 'Post-test assessment, peer-teaching in triads, and preview of the next session on LLM prompt engineering.' },
+        { storageKey: 'editable:assessment:heading', content: 'Assessment Methods' },
+        { storageKey: 'editable:assessment:description', content: 'Both formative and summative assessments are used, including TPACK checkpoints, peer feedback quality analysis, confidence polls, and a portfolio rubric.' },
+        { storageKey: 'editable:alignment:heading', content: 'Constructive Alignment Matrix' },
+        { storageKey: 'editable:alignment:description', content: 'Maps each learning outcome to teaching activities, assessment methods, and pedagogy links ensuring constructive alignment.' },
+        { storageKey: 'editable:resources:heading', content: 'Resources & Technology' },
+        { storageKey: 'editable:resources:description', content: 'TPACK Tools: Miro, GitHub Classroom. Peer Assessment: Peergrade.io. AI Tools: GitHub Copilot Sandbox, Tabnine Code Completions.' },
+        { storageKey: 'editable:differentiation:heading', content: 'Differentiation & Inclusivity' },
+        { storageKey: 'editable:differentiation:description', content: 'TPACK Scaffolds: Tiered templates for novice learners, advanced options with low-code/no-code platforms. Accessibility: Captioned videos, screen-reader-friendly templates. Inclusive Design: Global case studies.' },
+        { storageKey: 'editable:reflection:heading', content: 'Reflection & Improvement' },
+        { storageKey: 'editable:reflection:description', content: 'TPACK Metrics: Track lesson plan revisions from peer feedback. Student Voice: Qualtrics survey. Modification Strategy: Adjust based on peer assessment depth and TPACK component balance.' },
+      ];
+
+      for (const section of editableSections) {
+        await tx.insert(schema.editableContent).values(section);
+      }
+
+      // --- Mark seed as applied ---
+      await tx.insert(schema.seedLog).values({ seedVersion: SEED_VERSION });
     });
 
     console.log(`Seed "${SEED_VERSION}" applied successfully.`);

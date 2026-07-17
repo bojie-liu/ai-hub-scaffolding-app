@@ -10,7 +10,7 @@ interface Slide {
   slideOrder: number;
   title: string;
   content: string;
-  slideType: 'title' | 'content' | 'activity' | 'assessment';
+  slideType: string;
   backgroundColor: string | null;
 }
 
