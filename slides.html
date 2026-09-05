@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Presentation Slides - Place Value Lesson</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .slides-container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .slide {
+      background: white;
+      border-radius: 12px;
+      padding: 50px;
+      margin: 30px 0;
+      box-shadow: 0 4px 16px var(--shadow);
+      min-height: 400px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .slide h2 {
+      color: var(--primary);
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .slide h3 {
+      color: var(--text);
+      font-size: 1.8rem;
+      margin: 20px 0;
+    }
+    .slide-number {
+      background: var(--primary);
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+    .big-number {
+      font-size: 5rem;
+      font-weight: bold;
+      color: var(--primary);
+      text-align: center;
+      margin: 30px 0;
+    }
+    .example-box {
+      background: #dbeafe;
+      padding: 30px;
+      border-radius: 12px;
+      text-align: center;
+      font-size: 1.5rem;
+      margin: 20px 0;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>📽️ Place Value Presentation Slides</h1>
+      <div class="meta"><a href="index.html" style="color: white;">← Back to Home</a></div>
+    </div>
+  </header>
+
+  <div class="container slides-container">
+    <div class="role-switcher">
+      <div><span>Current Role: <span class="current-role">Student</span></span></div>
+      <div>
+        <button data-role="teacher" class="btn">Switch to Teacher</button>
+        <button data-role="student" class="btn btn-secondary">Switch to Student</button>
+      </div>
+    </div>
+
+    <!-- Slide 1 -->
+    <div class="slide">
+      <div class="slide-number">1</div>
+      <h2>📊 Place Value in Numbers</h2>
+      <p style="text-align: center; font-size: 1.3rem; margin-top: 20px;">
+        Primary 3 Mathematics<br>
+        Understanding Hundreds, Tens, and Ones
+      </p>
+      <div style="text-align: center; margin-top: 30px; color: var(--text-light);">
+        Duration: 60 minutes
+      </div>
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="slide">
+      <div class="slide-number">2</div>
+      <h2>🎯 Today's Mission</h2>
+      <p style="text-align: center; font-size: 1.5rem; margin: 30px 0;">
+        Become <strong>Place Value Detectives!</strong> 🕵️
+      </p>
+      <ul style="font-size: 1.2rem; line-height: 2;">
+        <li>✓ Identify place values in 3-digit numbers</li>
+        <li>✓ Build numbers with blocks and charts</li>
+        <li>✓ Compare and order numbers</li>
+        <li>✓ Solve real-world problems</li>
+        <li>✓ Explain our thinking using math words</li>
+      </ul>
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="slide">
+      <div class="slide-number">3</div>
+      <h2>🤔 Hook: What Does This Mean?</h2>
+      <div class="big-number">$245</div>
+      <p style="text-align: center; font-size: 1.3rem;">
+        What does the <strong style="color: var(--primary);">2</strong> really mean in this price?
+      </p>
+      <p style="text-align: center; margin-top: 30px; color: var(--text-light);">
+        Think about it... then share with your partner!
+      </p>
+    </div>
+
+    <!-- Slide 4 -->
+    <div class="slide">
+      <div class="slide-number">4</div>
+      <h2>📦 The Three Places</h2>
+      <div class="example-box">
+        <strong>Hundreds</strong> | <strong>Tens</strong> | <strong>Ones</strong>
+      </div>
+      <div style="display: flex; justify-content: space-around; margin-top: 40px; text-align: center;">
+        <div>
+          <div style="font-size: 3rem;">◼️</div>
+          <p>Hundreds<br>(Flat)</p>
+        </div>
+        <div>
+          <div style="font-size: 3rem;">📏</div>
+          <p>Tens<br>(Rod)</p>
+        </div>
+        <div>
+          <div style="font-size: 3rem;">•</div>
+          <p>Ones<br>(Unit)</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 5 -->
+    <div class="slide">
+      <div class="slide-number">5</div>
+      <h2>🔢 Example: Building 327</h2>
+      <div class="example-box">
+        <strong style="font-size: 2rem;">327</strong>
+      </div>
+      <div style="margin-top: 30px; font-size: 1.2rem;">
+        <p>◼️ ◼️ ◼️ = <strong>3 hundreds</strong> = 300</p>
+        <p style="margin-top: 15px;">📏 📏 = <strong>2 tens</strong> = 20</p>
+        <p style="margin-top: 15px;">• • • • • • • = <strong>7 ones</strong> = 7</p>
+      </div>
+      <p style="text-align: center; margin-top: 30px; font-size: 1.3rem; color: var(--primary);">
+        <strong>300 + 20 + 7 = 327</strong>
+      </p>
+    </div>
+
+    <!-- Slide 6 -->
+    <div class="slide">
+      <div class="slide-number">6</div>
+      <h2>🎨 Activity 1: Concrete Stage</h2>
+      <h3>Build with Base-10 Blocks</h3>
+      <p style="font-size: 1.2rem; margin-top: 20px;">
+        <strong>Your Turn!</strong> Work in pairs to build:
+      </p>
+      <ul style="font-size: 1.3rem; line-height: 2; margin-top: 20px;">
+        <li>215</li>
+        <li>460</li>
+        <li>808</li>
+      </ul>
+      <p style="margin-top: 30px; background: #fef3c7; padding: 15px; border-radius: 8px;">
+        Say: "I built ___ as ___ hundreds, ___ tens, and ___ ones."
+      </p>
+    </div>
+
+    <!-- Slide 7 -->
+    <div class="slide">
+      <div class="slide-number">7</div>
+      <h2>📊 Comparing Numbers</h2>
+      <h3>Which is bigger: 328 or 342?</h3>
+      <div style="margin-top: 30px; font-size: 1.2rem;">
+        <p>Step 1: Compare <strong>hundreds</strong> → Both have 3 ✓</p>
+        <p style="margin-top: 15px;">Step 2: Compare <strong>tens</strong> → 2 vs 4</p>
+        <p style="margin-top: 15px;">Step 3: Since 2 < 4...</p>
+      </div>
+      <div class="example-box" style="margin-top: 30px;">
+        <strong style="font-size: 2rem;">328 < 342</strong>
+      </div>
+    </div>
+
+    <!-- Slide 8 -->
+    <div class="slide">
+      <div class="slide-number">8</div>
+      <h2>🎪 Real-World Challenge</h2>
+      <h3>School Fair Bundle-Up!</h3>
+      <div style="background: #ecfdf5; padding: 30px; border-radius: 12px; margin-top: 20px;">
+        <p style="font-size: 1.2rem;">
+          Our class collected <strong style="color: var(--success);">287 pencils</strong> for prize packs.
+        </p>
+        <p style="font-size: 1.2rem; margin-top: 20px;">
+          Bundle them into: hundreds, tens, and ones.
+        </p>
+      </div>
+      <p style="text-align: center; margin-top: 30px; font-size: 1.2rem;">
+        How many of each bundle? 🤔
+      </p>
+    </div>
+
+    <!-- Slide 9 -->
+    <div class="slide">
+      <div class="slide-number">9</div>
+      <h2>🎬 Exit Ticket</h2>
+      <p style="font-size: 1.3rem; margin-top: 30px;">
+        On your sticky note, answer:
+      </p>
+      <div style="background: #fef2f2; padding: 30px; border-radius: 12px; margin-top: 30px;">
+        <p style="font-size: 1.2rem;"><strong>Question 1:</strong> Write the number shown by the base-10 blocks on the board</p>
+        <p style="font-size: 1.2rem; margin-top: 20px;"><strong>Question 2:</strong> Which is greater: 619 or 691? Explain why.</p>
+      </div>
+    </div>
+
+    <!-- Slide 10 -->
+    <div class="slide">
+      <div class="slide-number">10</div>
+      <h2>🌟 Great Work, Place Value Detectives!</h2>
+      <p style="text-align: center; font-size: 1.3rem; margin-top: 30px;">
+        Today you learned to:
+      </p>
+      <ul style="font-size: 1.2rem; line-height: 2; margin-top: 20px;">
+        <li>✓ Identify hundreds, tens, and ones</li>
+        <li>✓ Build and represent numbers</li>
+        <li>✓ Compare numbers using place value</li>
+        <li>✓ Solve real-world problems</li>
+      </ul>
+      <div style="background: #dbeafe; padding: 20px; border-radius: 12px; margin-top: 40px; text-align: center;">
+        <strong>Tomorrow:</strong> Place value problem solving with rounding! 🚀
+      </div>
+    </div>
+
+    <div class="card teacher-only" style="display: none;">
+      <h2>📋 Presentation Notes</h2>
+      <ul class="list-styled">
+        <li>Advance slides at your own pace — each corresponds to a lesson segment</li>
+        <li>Slides 1-3: Introduction (10 min)</li>
+        <li>Slides 4-6: Activities 1-2 (20 min)</li>
+        <li>Slide 7: Activity 3 (10 min)</li>
+        <li>Slide 8: Activity 4 (10 min)</li>
+        <li>Slides 9-10: Closure (10 min)</li>
+      </ul>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

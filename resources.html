@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resources & Technology - Place Value Lesson</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>🛠️ Resources & Technology</h1>
+      <div class="meta"><a href="index.html" style="color: white;">← Back to Home</a></div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="role-switcher">
+      <div><span>Current Role: <span class="current-role">Student</span></span></div>
+      <div>
+        <button data-role="teacher" class="btn">Switch to Teacher</button>
+        <button data-role="student" class="btn btn-secondary">Switch to Student</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>🧮 Manipulatives & Physical Materials</h2>
+      <ul class="list-styled">
+        <li>Base-10 blocks (hundreds flats, tens rods, ones units) — 10 sets for paired work</li>
+        <li>Laminated place value mats with labelled hundreds/tens/ones columns</li>
+        <li>Mini-whiteboards, markers, erasers (one per student)</li>
+        <li class="teacher-only" style="display: none;">Real objects: bundle of 100 sticks, bundles of 10 sticks, loose sticks for hook</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>💻 Technology Tools</h2>
+
+      <h3>Required</h3>
+      <ul class="list-styled">
+        <li>Interactive whiteboard or projector</li>
+        <li>Teacher laptop with presentation slides</li>
+      </ul>
+
+      <h3 style="margin-top: 20px;">External Tool Integration</h3>
+
+      <button class="collapsible">
+        📊 Mentimeter - Interactive Polling for Misconception Check
+      </button>
+      <div class="collapsible-content">
+        <p><strong>Purpose:</strong> Poll students on diagnostic quiz questions to identify common misconceptions</p>
+        <p><strong>Learning Objective:</strong> Assess prior knowledge and surface errors for discussion</p>
+
+        <p style="margin-top: 15px;"><strong>Step-by-Step Instructions:</strong></p>
+        <ol style="padding-left: 25px;">
+          <li>Go to <a href="https://www.mentimeter.com" target="_blank">Mentimeter.com</a> and create a free account</li>
+          <li>Click the "New presentation" button</li>
+          <li>Choose "Multiple Choice" question type</li>
+          <li>Enter question: "In the number 240, how many tens are there in total?"</li>
+          <li>Add options: (a) 2, (b) 4, (c) 24</li>
+          <li>Click "Present" and share the code with students</li>
+          <li>Students join at menti.com using the code</li>
+          <li>Display results live and discuss common misconception (choosing "4" instead of "24")</li>
+        </ol>
+      </div>
+
+      <button class="collapsible">
+        🎮 Kahoot - Gamified Ordering Quiz
+      </button>
+      <div class="collapsible-content">
+        <p><strong>Purpose:</strong> Quick comprehension check on comparing and ordering 3-digit numbers</p>
+        <p><strong>Learning Objective:</strong> Apply place value reasoning to order numbers correctly</p>
+
+        <p style="margin-top: 15px;"><strong>Step-by-Step Instructions:</strong></p>
+        <ol style="padding-left: 25px;">
+          <li>Go to <a href="https://www.kahoot.com" target="_blank">Kahoot.com</a> and create a free teacher account</li>
+          <li>Click "Create" in the top menu, then "New Kahoot"</li>
+          <li>Choose "Quiz" type</li>
+          <li>Add question: "Order these numbers from smallest to largest: 471, 417, 691, 174"</li>
+          <li>Set correct answer: "174, 417, 471, 691"</li>
+          <li>Set timer: 60 seconds</li>
+          <li>Click "Done" and then "Play"</li>
+          <li>Choose "Teach" mode and project the game PIN</li>
+          <li>Students join at kahoot.it and enter the PIN</li>
+          <li>Review leaderboard to identify students who need extra support</li>
+        </ol>
+      </div>
+
+      <button class="collapsible">
+        🎥 Khan Academy - Pre-Class Video
+      </button>
+      <div class="collapsible-content">
+        <p><strong>Purpose:</strong> Pre-lesson introduction to place value concepts (flipped classroom component)</p>
+        <p><strong>Learning Objective:</strong> Build foundational understanding before hands-on activities</p>
+
+        <p style="margin-top: 15px;"><strong>Step-by-Step Instructions for Students:</strong></p>
+        <ol style="padding-left: 25px;">
+          <li>Go to <a href="https://www.khanacademy.org/math/cc-2nd-grade-math/cc-2nd-place-value" target="_blank">Khan Academy Place Value</a></li>
+          <li>Watch "Place Value: Hundreds, Tens, and Ones" (3 minutes)</li>
+          <li>Take notes on key vocabulary: hundreds, tens, ones, place value</li>
+          <li>Complete the diagnostic quiz in your homework packet</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="card teacher-only" style="display: none;">
+      <h2>📄 Printables & Handouts</h2>
+      <ul class="list-styled">
+        <li>Diagnostic quiz sheets (pre-class)</li>
+        <li>Inequality number cards for Activity 3 (471, 417, 174)</li>
+        <li>"Place Value Comparison" graphic organisers</li>
+        <li>School Fair Bundle-Up Challenge question cards</li>
+        <li>Exit tickets (sticky notes or half-sheet paper)</li>
+      </ul>
+    </div>
+
+    <div class="card student-only">
+      <h2>📚 Additional Practice Resources</h2>
+      <p>Want extra practice at home? Try these:</p>
+      <ul class="list-styled">
+        <li><a href="https://www.khanacademy.org" target="_blank">Khan Academy</a> - More place value videos and exercises</li>
+        <li><a href="https://www.mathplayground.com" target="_blank">Math Playground</a> - Place value games</li>
+        <li>Practice with objects at home: Count large collections (buttons, coins) and bundle them into groups of 10 and 100</li>
+      </ul>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

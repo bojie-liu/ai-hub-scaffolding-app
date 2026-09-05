@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Assessment Methods - Place Value Lesson</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>📝 Assessment Methods</h1>
+      <div class="meta"><a href="index.html" style="color: white;">← Back to Home</a></div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="role-switcher">
+      <div><span>Current Role: <span class="current-role">Student</span></span></div>
+      <div>
+        <button data-role="teacher" class="btn">Switch to Teacher</button>
+        <button data-role="student" class="btn btn-secondary">Switch to Student</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>📊 Formative Assessment (During Class)</h2>
+      <p>These ongoing checks help track your learning throughout the lesson.</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Assessment</th>
+            <th>Purpose</th>
+            <th class="teacher-only" style="display: none;">Pedagogy Link</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Pre-test diagnostic quiz (5 items)</td>
+            <td>Identify what you already know and common mistakes</td>
+            <td class="teacher-only" style="display: none;">Scaffolded planning based on student readiness</td>
+          </tr>
+          <tr>
+            <td>Teacher observation during blocks</td>
+            <td>Check if you can build numbers correctly</td>
+            <td class="teacher-only" style="display: none;">Concrete stage of CPA; immediate support decisions</td>
+          </tr>
+          <tr>
+            <td>Mini-whiteboard checks</td>
+            <td>Show what you understand in real time</td>
+            <td class="teacher-only" style="display: none;">Continuous feedback loop within scaffold structure</td>
+          </tr>
+          <tr>
+            <td>Speaking in complete sentences</td>
+            <td>Practice using math vocabulary correctly</td>
+            <td class="teacher-only" style="display: none;">Language scaffolds embedded at each stage</td>
+          </tr>
+          <tr>
+            <td>Exit ticket (post-test)</td>
+            <td>Show what you learned today</td>
+            <td class="teacher-only" style="display: none;">Summative snapshot of scaffolded lesson closure</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2>✅ Summative Assessment</h2>
+      <p>End-of-unit quiz (after additional lessons on place value)</p>
+
+      <h3>Format</h3>
+      <ul class="list-styled">
+        <li>10 questions total</li>
+        <li>Multiple choice (place value identification)</li>
+        <li>Short answer (expanded form)</li>
+        <li>Ordering numbers</li>
+        <li>Two word problems involving bundling contexts</li>
+      </ul>
+
+      <h3 style="margin-top: 25px;">Grading Rubric</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Level</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Exceeding (4)</strong></td>
+            <td>Consistently explains place value reasoning using accurate mathematical language; independently solves multi-step application problems.</td>
+          </tr>
+          <tr>
+            <td><strong>Meeting (3)</strong></td>
+            <td>Correctly identifies, represents, and compares 3-digit numbers; applies place value in routine word problems.</td>
+          </tr>
+          <tr>
+            <td><strong>Developing (2)</strong></td>
+            <td>Identifies place value with teacher prompts; errors occur when comparing numbers involving zeros or renaming.</td>
+          </tr>
+          <tr>
+            <td><strong>Beginning (1)</strong></td>
+            <td>Requires significant scaffolding to identify place value; cannot yet consistently represent or compare 3-digit numbers.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card teacher-only" style="display: none;">
+      <h2>🎯 Success Targets</h2>
+      <ul class="list-styled">
+        <li>80% of students correctly answer exit ticket Q1 (identifying place value)</li>
+        <li>70% of students justify comparison on exit ticket Q2 using place-value language</li>
+        <li>Most students transition smoothly from concrete to pictorial representation</li>
+        <li>Student talk includes sentence frames and mathematical vocabulary</li>
+      </ul>
+    </div>
+
+    <div class="card student-only">
+      <h2>💪 Self-Assessment</h2>
+      <p>Rate your confidence using "Fist to Five":</p>
+      <div style="background: #dbeafe; padding: 20px; border-radius: 8px; margin-top: 15px;">
+        <p><strong>Fist (0):</strong> I'm very confused and need more help</p>
+        <p><strong>1-2 Fingers:</strong> I understand a little but need more practice</p>
+        <p><strong>3 Fingers:</strong> I understand most of it</p>
+        <p><strong>4-5 Fingers:</strong> I understand it well and can explain it to others!</p>
+      </div>
+      <p style="margin-top: 20px;">
+        <strong>Questions to ask yourself:</strong><br>
+        • Can I build numbers with base-10 blocks?<br>
+        • Can I compare numbers by looking at place value?<br>
+        • Can I explain my thinking using math words?
+      </p>
+    </div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>

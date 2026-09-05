@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pre-Class Preparation - Place Value Lesson</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>📖 Pre-Class Preparation</h1>
+      <div class="meta"><a href="index.html" style="color: white;">← Back to Home</a></div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="role-switcher">
+      <div><span>Current Role: <span class="current-role">Student</span></span></div>
+      <div>
+        <button data-role="teacher" class="btn">Switch to Teacher</button>
+        <button data-role="student" class="btn btn-secondary">Switch to Student</button>
+      </div>
+    </div>
+
+    <div class="card student-only">
+      <h2>🎥 Pre-Reading / Pre-Video</h2>
+      <p><strong>Watch before class:</strong> Place Value: Hundreds, Tens, and Ones (3 minutes)</p>
+      <p style="margin-top: 15px;">
+        📺 <a href="https://www.khanacademy.org/math/cc-2nd-grade-math/cc-2nd-place-value" target="_blank">
+          Khan Academy Place Value Video
+        </a>
+      </p>
+      <p style="margin-top: 15px; color: var(--text-light);">
+        This short video will help you understand how numbers are organized into hundreds, tens, and ones.
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>🧪 Diagnostic Quiz</h2>
+      <p>Complete this quiz to check your current understanding. Your teacher will review common mistakes in class.</p>
+
+      <div style="margin-top: 25px;" data-question="q1">
+        <h3>Question 1</h3>
+        <p>In the number 582, what does the digit 8 represent?</p>
+        <div class="quiz-option" data-option="a" onclick="checkAnswer('q1', 'a', 'b', 'The 8 is in the tens place, so it means 8 groups of 10 — that's 80!')">
+          (a) 8 ones
+        </div>
+        <div class="quiz-option" data-option="b" onclick="checkAnswer('q1', 'b', 'b', 'Correct! The 8 is in the tens place, so it means 8 groups of 10 — that's 80!')">
+          (b) 8 tens
+        </div>
+        <div class="quiz-option" data-option="c" onclick="checkAnswer('q1', 'c', 'b', 'The 8 is in the tens place, so it means 8 groups of 10 — that's 80!')">
+          (c) 8 hundreds
+        </div>
+        <div id="feedback-q1" class="feedback" style="display: none;"></div>
+      </div>
+
+      <div style="margin-top: 25px;" data-question="q2">
+        <h3>Question 2</h3>
+        <p>How many tens are in 240?</p>
+        <div class="quiz-option" data-option="a" onclick="checkAnswer('q2', 'a', 'c', 'Careful! 240 has 4 tens showing, but because there are 2 hundreds, that makes 24 groups of 10 in total.')">
+          (a) 2
+        </div>
+        <div class="quiz-option" data-option="b" onclick="checkAnswer('q2', 'b', 'c', 'Careful! 240 has 4 tens showing, but because there are 2 hundreds, that makes 24 groups of 10 in total.')">
+          (b) 4
+        </div>
+        <div class="quiz-option" data-option="c" onclick="checkAnswer('q2', 'c', 'c', 'Correct! 240 has 2 hundreds + 4 tens = 20 tens + 4 tens = 24 tens in total.')">
+          (c) 24
+        </div>
+        <div id="feedback-q2" class="feedback" style="display: none;"></div>
+      </div>
+
+      <div style="margin-top: 25px;" data-question="q3">
+        <h3>Question 3</h3>
+        <p>Which is bigger: 89 or 91?</p>
+        <div class="quiz-option" data-option="a" onclick="checkAnswer('q3', 'a', 'b', 'Compare the tens place first: 8 tens vs 9 tens. 9 tens is more, so 91 is bigger.')">
+          (a) 89
+        </div>
+        <div class="quiz-option" data-option="b" onclick="checkAnswer('q3', 'b', 'b', 'Correct! Compare the tens place first: 8 tens vs 9 tens. 9 tens is more, so 91 is bigger.')">
+          (b) 91
+        </div>
+        <div id="feedback-q3" class="feedback" style="display: none;"></div>
+      </div>
+
+      <div style="margin-top: 25px;">
+        <h3>Question 4</h3>
+        <p>Write 635 in expanded form:</p>
+        <input type="text" placeholder="___ + ___ + ___" style="width: 100%; padding: 10px; border: 2px solid var(--border); border-radius: 6px; font-size: 1rem;">
+        <p style="margin-top: 10px; color: var(--text-light);"><strong>Answer:</strong> 600 + 30 + 5</p>
+      </div>
+
+      <div style="margin-top: 25px;">
+        <h3>Question 5</h3>
+        <p>Draw a picture showing the number 147 using hundreds, tens, and ones blocks.</p>
+        <p style="color: var(--text-light);">(Draw this on paper and bring it to class)</p>
+      </div>
+    </div>
+
+    <div class="card student-only">
+      <h2>💡 Guiding Question</h2>
+      <p style="background: #dbeafe; padding: 15px; border-radius: 8px; border-left: 4px solid var(--primary);">
+        Bring to class one example of a number larger than 100 that you see in your daily life
+        (e.g., page numbers, prices, sports scores). Be ready to share!
+      </p>
+    </div>
+
+    <div class="card teacher-only" style="display: none;">
+      <h2>📊 Common Misconceptions to Address</h2>
+      <ul class="list-styled">
+        <li>Confusing "tens in a number" with "digit in tens place" (Q2)</li>
+        <li>Comparing ones before tens when ordering numbers (Q3)</li>
+        <li>Difficulty representing numbers with zeros (prepare reteach for 402, 308)</li>
+      </ul>
+    </div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
