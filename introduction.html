@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introduction - Place Value Lesson</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="back-link">← Back to Home</a>
+        <div class="nav-brand">Introduction (8 minutes)</div>
+    </nav>
+    <div class="container">
+        <header class="section-header">
+            <h1>Introduction Activity</h1>
+            <p class="subtitle">Duration: 8 minutes (13% of lesson time)</p>
+        </header>
+
+        <div class="activity-section">
+            <h2>🎯 Hook Activity</h2>
+            <div class="activity-card">
+                <h3>The Magic Number Challenge</h3>
+                <p><strong>Display on board:</strong> 9,999</p>
+                <div class="discussion-prompt">
+                    <p><strong>Ask students:</strong> "What would happen if I added 1 more? What would the number become?"</p>
+                    <div class="thinking-time">⏱️ Allow 30 seconds for think time</div>
+                </div>
+                <div class="reveal-answer">
+                    <button onclick="toggleReveal('hook')" class="btn btn-secondary">Show Expected Answer</button>
+                    <div id="hook" class="answer-box hidden">
+                        <p><strong>Expected answer:</strong> 10,000</p>
+                        <p><strong>Teaching point:</strong> Introduce the 5-digit number boundary. Explain how reaching 10,000 shows the power of place value – each position represents 10 times the value of the position to its right.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="activity-section">
+            <h2>📊 Pre-Test Review</h2>
+            <div class="review-card">
+                <p>Quickly go through the pre-test answers, focusing on common misconceptions.</p>
+                <div class="misconception-list">
+                    <div class="misconception-item">
+                        <strong>Common Misconception:</strong> "The 5 in 3,521 is just 5"
+                        <p class="correction">✓ <strong>Correction:</strong> The digit 5 is in the hundreds place, so its value is 500, not 5.</p>
+                    </div>
+                    <div class="misconception-item">
+                        <strong>Watch for:</strong> Students confusing the digit (5) with its value (500)
+                        <p class="correction">✓ <strong>Strategy:</strong> Use consistent language – "The digit 5 is in the hundreds place. Its value is 500."</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="activity-section">
+            <h2>🌍 Real-World Connection</h2>
+            <div class="real-world-card">
+                <h3>The $9,999.99 Receipt</h3>
+                <div class="receipt-display">
+                    <p>Show a sample receipt or image with total: <strong>$9,999.99</strong></p>
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 100'%3E%3Crect fill='%23fff' width='200' height='100'/%3E%3Ctext x='10' y='30' font-family='monospace' font-size='12'%3ERECEIPT%3C/text%3E%3Ctext x='10' y='60' font-family='monospace' font-size='14'%3ETOTAL: $9,999.99%3C/text%3E%3C/svg%3E" alt="Receipt showing $9,999.99">
+                </div>
+                <div class="discussion-prompt">
+                    <p><strong>Discussion:</strong> "How does each digit's place determine its value in this price?"</p>
+                    <ul>
+                        <li>The 9 in the thousands place = $9,000</li>
+                        <li>The 9 in the hundreds place = $900</li>
+                        <li>The 9 in the tens place = $90</li>
+                        <li>The 9 in the ones place = $9</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="teacher-tips">
+            <h3>👨‍🏫 Teacher Tips</h3>
+            <ul>
+                <li>Keep the pace brisk – this section is only 8 minutes</li>
+                <li>Use visual aids (number cards, slides) to maintain engagement</li>
+                <li>Invite 2-3 students to share their pre-test thinking</li>
+            </ul>
+        </div>
+
+        <div class="navigation-buttons">
+            <a href="pre-class.html" class="btn btn-secondary">← Pre-Class Preparation</a>
+            <a href="development.html" class="btn btn-primary">Next: Development Activities →</a>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

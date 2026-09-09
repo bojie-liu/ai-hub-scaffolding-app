@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pre-Class Preparation - Place Value Lesson</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="back-link">← Back to Home</a>
+        <div class="nav-brand">Pre-Class Preparation</div>
+    </nav>
+    <div class="container">
+        <header class="section-header">
+            <h1>Pre-Class Preparation</h1>
+            <p class="subtitle">Flipped Learning Component – Activator for understanding</p>
+        </header>
+
+        <div class="prep-section">
+            <h2>📹 Pre-Reading Material</h2>
+            <div class="video-card">
+                <h3>Place Value Song – Thousands</h3>
+                <p>Watch this short video before class to familiarize yourself with place value concepts.</p>
+                <div class="video-links">
+                    <a href="https://www.khanacademy.org/math/cc-third-grade-math/intro-to-place-value" target="_blank" class="btn btn-primary">Khan Academy Video</a>
+                    <a href="https://www.youtube.com/results?search_query=place+value+thousands+primary" target="_blank" class="btn btn-secondary">YouTube Alternative</a>
+                </div>
+                <div class="teacher-note">
+                    <strong>Teacher Note:</strong> Share the video link via Google Classroom at least 1 day before the lesson.
+                </div>
+            </div>
+        </div>
+
+        <div class="prep-section">
+            <h2>📝 Pre-Test</h2>
+            <p>Complete these 5 questions to check your understanding:</p>
+            <form id="preTestForm" class="quiz-form">
+                <div class="quiz-question">
+                    <label><strong>1. What is the value of the digit 5 in 3,521?</strong></label>
+                    <input type="text" id="q1" placeholder="Your answer">
+                    <div class="feedback" id="feedback1"></div>
+                </div>
+
+                <div class="quiz-question">
+                    <label><strong>2. How many tens are in 230?</strong></label>
+                    <input type="text" id="q2" placeholder="Your answer">
+                    <div class="feedback" id="feedback2"></div>
+                </div>
+
+                <div class="quiz-question">
+                    <label><strong>3. Write 4,089 in expanded form.</strong></label>
+                    <input type="text" id="q3" placeholder="e.g., 1000 + 200 + 30 + 4">
+                    <div class="feedback" id="feedback3"></div>
+                </div>
+
+                <div class="quiz-question">
+                    <label><strong>4. Circle the larger number: 1,234 or 1,243?</strong></label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="q4" value="1234"> 1,234</label>
+                        <label><input type="radio" name="q4" value="1243"> 1,243</label>
+                    </div>
+                    <div class="feedback" id="feedback4"></div>
+                </div>
+
+                <div class="quiz-question">
+                    <label><strong>5. Draw or describe a base‑10 block representation of 1,305.</strong></label>
+                    <textarea id="q5" rows="3" placeholder="Describe using: thousands cube, hundreds flats, tens rods, ones"></textarea>
+                    <div class="feedback" id="feedback5"></div>
+                </div>
+
+                <button type="button" onclick="checkPreTest()" class="btn btn-primary">Check Answers</button>
+            </form>
+        </div>
+
+        <div class="prep-section">
+            <h2>🤔 Guiding Question</h2>
+            <div class="reflection-card">
+                <p><strong>Think about one real-life example where you use place value.</strong></p>
+                <p class="hint">Examples: counting money, reading scores, measuring distances</p>
+                <textarea id="guidingQuestion" rows="4" placeholder="Write your answer here..."></textarea>
+                <button onclick="saveReflection()" class="btn btn-secondary">Save My Reflection</button>
+            </div>
+        </div>
+
+        <div class="navigation-buttons">
+            <a href="learning-outcomes.html" class="btn btn-secondary">← Learning Outcomes</a>
+            <a href="introduction.html" class="btn btn-primary">Next: Introduction →</a>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

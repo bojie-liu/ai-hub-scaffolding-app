@@ -1,16 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Basic HTML Project</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Place Value Lesson Plan - Primary 3 Mathematics</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="container">
-    <h1>Hello World!</h1>
-    <p>Welcome to your new project.</p>
-  </div>
-  <script src="script.js"></script>
+    <nav class="navbar">
+        <div class="nav-brand">Place Value in Numbers</div>
+        <div class="role-selector">
+            <label for="roleSelect">View as:</label>
+            <select id="roleSelect">
+                <option value="teacher">Teacher</option>
+                <option value="student">Student</option>
+            </select>
+        </div>
+    </nav>
+
+    <div class="container">
+        <section class="hero">
+            <h1>Place Value in Numbers (up to 10,000)</h1>
+            <p class="subtitle">Primary 3 Mathematics | 60-minute Lesson Plan</p>
+            <div class="lesson-meta">
+                <span class="badge">Scaffolded Instruction</span>
+                <span class="badge">Interactive</span>
+                <span class="badge">60 minutes</span>
+            </div>
+        </section>
+
+        <section class="overview-card">
+            <h2>Welcome</h2>
+            <p>This interactive lesson plan uses <strong>Scaffolded Instruction</strong> pedagogy (I do → We do → You do) and follows <strong>Constructive Alignment</strong> principles.</p>
+            
+            <div class="progress-indicator">
+                <strong>Your Progress:</strong> <span id="progressPercent">0%</span> complete
+                <div class="progress-bar">
+                    <div id="progressFill"></div>
+                </div>
+            </div>
+        </section>
+        <section class="navigation-grid">
+            <h2>Lesson Sections</h2>
+            <div class="card-grid">
+                <a href="learning-outcomes.html" class="nav-card" data-section="outcomes">
+                    <div class="card-icon">🎯</div>
+                    <h3>Learning Outcomes</h3>
+                    <p>Intended Learning Outcomes using Bloom's Taxonomy</p>
+                </a>
+                <a href="pre-class.html" class="nav-card" data-section="preclass">
+                    <div class="card-icon">📚</div>
+                    <h3>Pre-Class Preparation</h3>
+                    <p>Pre-reading, pre-test, and guiding questions</p>
+                </a>
+                <a href="introduction.html" class="nav-card" data-section="intro">
+                    <div class="card-icon">🚀</div>
+                    <h3>Introduction (8 min)</h3>
+                    <p>Hook activity and real-world connections</p>
+                </a>
+                <a href="development.html" class="nav-card" data-section="development">
+                    <div class="card-icon">⚙️</div>
+                    <h3>Development (42 min)</h3>
+                    <p>Scaffolded phases: I do → We do → You do</p>
+                </a>
+                <a href="synthesis.html" class="nav-card" data-section="synthesis">
+                    <div class="card-icon">✅</div>
+                    <h3>Synthesis & Closure (10 min)</h3>
+                    <p>Post-test, peer teaching, and preview</p>
+                </a>
+                <a href="assessment.html" class="nav-card" data-section="assessment">
+                    <div class="card-icon">📝</div>
+                    <h3>Assessment Methods</h3>
+                    <p>Formative and summative assessments with interactive quizzes</p>
+                </a>
+                <a href="alignment.html" class="nav-card" data-section="alignment">
+                    <div class="card-icon">🔗</div>
+                    <h3>Constructive Alignment</h3>
+                    <p>Alignment matrix linking outcomes, activities, and assessments</p>
+                </a>
+                <a href="resources.html" class="nav-card" data-section="resources">
+                    <div class="card-icon">🛠️</div>
+                    <h3>Resources & Technology</h3>
+                    <p>Required materials, digital tools, and external integrations</p>
+                </a>
+                <a href="differentiation.html" class="nav-card" data-section="differentiation">
+                    <div class="card-icon">🌟</div>
+                    <h3>Differentiation & Inclusivity</h3>
+                    <p>Support for diverse learners</p>
+                </a>
+                <a href="reflection.html" class="nav-card" data-section="reflection">
+                    <div class="card-icon">💭</div>
+                    <h3>Reflection & Improvement</h3>
+                    <p>Success indicators and modification strategies</p>
+                </a>
+                <a href="slides.html" class="nav-card" data-section="slides">
+                    <div class="card-icon">🎬</div>
+                    <h3>Presentation Slides</h3>
+                    <p>10-slide presentation for classroom use</p>
+                </a>
+            </div>
+        </section>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
 </body>
 </html>

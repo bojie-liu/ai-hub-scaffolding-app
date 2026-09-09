@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Development Activities - Place Value Lesson Plan</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">Place Value in Numbers</div>
+        <div class="back-link-container">
+            <a href="index.html" class="back-link">← Back to Home</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="phase-container">
+            <div class="phase-header phase-3">
+                <h2>Phase 3: "You Do" – Independent Practice</h2>
+                <span class="time-badge">12 minutes</span>
+            </div>
+            <div class="phase-content">
+                <div class="activity-card">
+                    <h3>✍️ Individual Work</h3>
+                    <div class="worksheet-section">
+                        <h4>Task 1: Expanded Form Practice</h4>
+                        <p>Write each number in expanded form:</p>
+                        <form id="independentPractice">
+                            <div class="practice-item">
+                                <label>1. 2,340 =</label>
+                                <input type="text" id="exp1" placeholder="e.g., 2000 + 300 + 40 + 0">
+                                <div class="feedback" id="expFeedback1"></div>
+                            </div>
+                            <div class="practice-item">
+                                <label>2. 5,678 =</label>
+                                <input type="text" id="exp2" placeholder="Your answer">
+                                <div class="feedback" id="expFeedback2"></div>
+                            </div>
+                            <div class="practice-item">
+                                <label>3. 1,009 =</label>
+                                <input type="text" id="exp3" placeholder="Your answer">
+                                <div class="feedback" id="expFeedback3"></div>
+                            </div>
+                            <div class="practice-item">
+                                <label>4. 8,520 =</label>
+                                <input type="text" id="exp4" placeholder="Your answer">
+                                <div class="feedback" id="expFeedback4"></div>
+                            </div>
+                            <div class="practice-item">
+                                <label>5. 3,407 =</label>
+                                <input type="text" id="exp5" placeholder="Your answer">
+                                <div class="feedback" id="expFeedback5"></div>
+                            </div>
+                            <button type="button" onclick="checkIndependent()" class="btn btn-primary">Check My Work</button>
+                        </form>
+                    </div>
+                    <div class="worksheet-section">
+                        <h4>Task 2: Create a Number Challenge</h4>
+                        <p><strong>Instructions:</strong> Create a 4-digit number with these conditions:</p>
+                        <ul>
+                            <li>7 in the tens place</li>
+                            <li>4 in the thousands place</li>
+                            <li>0 in the hundreds and ones places</li>
+                        </ul>
+                        <div class="creation-task">
+                            <label>My number:</label>
+                            <input type="text" id="createNum" maxlength="5" placeholder="____">
+                            <label>Expanded form:</label>
+                            <input type="text" id="createExp" placeholder="____ + ____ + ____ + ____">
+                            <button type="button" onclick="checkCreation()" class="btn btn-primary">Check My Number</button>
+                            <div class="feedback" id="createFeedback"></div>
+                        </div>
+                    </div>
+
+                    <div class="extension-section">
+                        <h4>🌟 Extension (for early finishers)</h4>
+                        <p><strong>Challenge:</strong> Write a number where:</p>
+                        <ul>
+                            <li>The hundreds digit is double the tens digit</li>
+                            <li>The ones digit is 5</li>
+                        </ul>
+                        <p>How many different numbers can you make? Write them all below:</p>
+                        <textarea id="extensionAnswer" rows="4" placeholder="List all possible numbers..."></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="phase-container">
+            <div class="phase-header phase-4">
+                <h2>Phase 4: Metacognitive Scaffold</h2>
+                <span class="time-badge">5 minutes</span>
+            </div>
+            <div class="phase-content">
+                <div class="reflection-card">
+                    <h3>🤔 Reflect on Your Learning</h3>
+                    <p><strong>Question:</strong> How did you decide where to place each digit?</p>
+                    <textarea id="metacogReflection" rows="4" placeholder="Explain your thinking strategy..."></textarea>
+                    <button onclick="saveMetacog()" class="btn btn-primary">Save My Reflection</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="navigation-buttons">
+            <a href="introduction.html" class="btn btn-secondary">← Introduction</a>
+            <a href="synthesis.html" class="btn btn-primary">Next: Synthesis & Closure →</a>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
