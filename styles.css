@@ -135,6 +135,17 @@ body {
 .checklist { margin-top: 15px; }
 .checklist label { display: block; margin: 10px 0; cursor: pointer; }
 .checklist input[type="checkbox"] { margin-right: 10px; }
+.worksheet-section { margin-bottom: 30px; padding: 20px; background: #f7fafc; border-radius: 10px; }
+.worksheet-section h4 { color: #2d3748; margin-bottom: 15px; }
+.practice-item { margin-bottom: 20px; }
+.practice-item label { display: block; font-weight: 600; color: #2d3748; margin-bottom: 8px; }
+.practice-item input[type="text"], .practice-item select { padding: 10px; border: 2px solid #e2e8f0; border-radius: 6px; font-size: 1rem; width: 200px; }
+.practice-item input:focus, .practice-item select:focus { outline: none; border-color: #667eea; }
+.creation-task { background: white; padding: 20px; border-radius: 8px; margin-top: 15px; }
+.creation-task label { display: block; font-weight: 600; margin: 10px 0 5px 0; }
+.creation-task input { padding: 10px; border: 2px solid #e2e8f0; border-radius: 6px; font-size: 1rem; width: 100%; max-width: 300px; }
+.extension-section { margin-top: 25px; padding: 20px; background: #fff7ed; border-radius: 10px; border-left: 5px solid #f59e0b; }
+.extension-section h4 { color: #c05621; margin-bottom: 15px; }
 
 /* Slides */
 .slideshow { position: relative; min-height: 500px; }

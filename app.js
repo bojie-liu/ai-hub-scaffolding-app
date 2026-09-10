@@ -383,6 +383,162 @@ function saveReflections() {
     alert('✓ Reflections saved!');
 }
 
+// Digit Value Quiz Check
+function checkDigitValue() {
+    // Q1: 6 in 6,823 = 6000
+    const dv1 = document.querySelector('input[name="dv1"]:checked');
+    const feedback1 = document.getElementById('dvFeedback1');
+    if (feedback1) {
+        if (dv1 && dv1.value === '6000') {
+            feedback1.textContent = '✓ Correct! 6 is in thousands place = 6,000';
+            feedback1.className = 'feedback correct';
+        } else {
+            feedback1.textContent = '✗ Incorrect. 6 is in the thousands place = 6,000';
+            feedback1.className = 'feedback incorrect';
+        }
+    }
+
+    // Q2: 4 in 2,145 = 40
+    const dv2 = document.querySelector('input[name="dv2"]:checked');
+    const feedback2 = document.getElementById('dvFeedback2');
+    if (feedback2) {
+        if (dv2 && dv2.value === '40') {
+            feedback2.textContent = '✓ Correct! 4 is in tens place = 40';
+            feedback2.className = 'feedback correct';
+        } else {
+            feedback2.textContent = '✗ Incorrect. 4 is in the tens place = 40';
+            feedback2.className = 'feedback incorrect';
+        }
+    }
+
+    // Q3: 9 in 7,309 = 9
+    const dv3 = document.getElementById('dv3')?.value.trim() || '';
+    const feedback3 = document.getElementById('dvFeedback3');
+    if (feedback3) {
+        if (dv3 === '9') {
+            feedback3.textContent = '✓ Correct! 9 is in ones place = 9';
+            feedback3.className = 'feedback correct';
+        } else {
+            feedback3.textContent = '✗ Incorrect. 9 is in the ones place = 9';
+            feedback3.className = 'feedback incorrect';
+        }
+    }
+}
+
+// Compare Numbers Check
+function checkCompare() {
+    // Q1: 3,456 < 3,465
+    const cmp1 = document.getElementById('cmp1')?.value || '';
+    const feedback1 = document.getElementById('cmpFeedback1');
+    if (feedback1) {
+        if (cmp1 === '<') {
+            feedback1.textContent = '✓ Correct! 3,456 < 3,465 (56 < 65)';
+            feedback1.className = 'feedback correct';
+        } else {
+            feedback1.textContent = '✗ Incorrect. Compare tens: 5 < 6, so 3,456 < 3,465';
+            feedback1.className = 'feedback incorrect';
+        }
+    }
+
+    // Q2: 8,902 < 8,920
+    const cmp2 = document.getElementById('cmp2')?.value || '';
+    const feedback2 = document.getElementById('cmpFeedback2');
+    if (feedback2) {
+        if (cmp2 === '<') {
+            feedback2.textContent = '✓ Correct! 8,902 < 8,920 (2 < 20)';
+            feedback2.className = 'feedback correct';
+        } else {
+            feedback2.textContent = '✗ Incorrect. Compare tens: 0 < 2, so 8,902 < 8,920';
+            feedback2.className = 'feedback incorrect';
+        }
+    }
+
+    // Q3: 5,000 > 4,999
+    const cmp3 = document.getElementById('cmp3')?.value || '';
+    const feedback3 = document.getElementById('cmpFeedback3');
+    if (feedback3) {
+        if (cmp3 === '>') {
+            feedback3.textContent = '✓ Correct! 5,000 > 4,999 (5 thousands > 4 thousands)';
+            feedback3.className = 'feedback correct';
+        } else {
+            feedback3.textContent = '✗ Incorrect. Compare thousands: 5 > 4, so 5,000 > 4,999';
+            feedback3.className = 'feedback incorrect';
+        }
+    }
+}
+
+// Word Problems Check
+function checkWordProblems() {
+    // Q1: 3 thousands, 2 hundreds, 0 tens, 8 ones = 3,208
+    const wp1 = document.getElementById('wp1')?.value.trim().replace(/,/g, '') || '';
+    const feedback1 = document.getElementById('wpFeedback1');
+    if (feedback1) {
+        if (wp1 === '3208') {
+            feedback1.textContent = '✓ Correct! 3,208';
+            feedback1.className = 'feedback correct';
+        } else {
+            feedback1.textContent = '✗ Incorrect. 3000 + 200 + 0 + 8 = 3,208';
+            feedback1.className = 'feedback incorrect';
+        }
+    }
+
+    // Q2: Hundreds digit in 6,427 = 4
+    const wp2 = document.getElementById('wp2')?.value.trim() || '';
+    const feedback2 = document.getElementById('wpFeedback2');
+    if (feedback2) {
+        if (wp2 === '4') {
+            feedback2.textContent = '✓ Correct! 4 is in the hundreds place';
+            feedback2.className = 'feedback correct';
+        } else {
+            feedback2.textContent = '✗ Incorrect. In 6,427, the hundreds digit is 4';
+            feedback2.className = 'feedback incorrect';
+        }
+    }
+
+    // Q3: 100 more than 4,567 = 4,667
+    const wp3 = document.getElementById('wp3')?.value.trim().replace(/,/g, '') || '';
+    const feedback3 = document.getElementById('wpFeedback3');
+    if (feedback3) {
+        if (wp3 === '4667') {
+            feedback3.textContent = '✓ Correct! 4,567 + 100 = 4,667';
+            feedback3.className = 'feedback correct';
+        } else {
+            feedback3.textContent = '✗ Incorrect. Add 1 to the hundreds place: 4,667';
+            feedback3.className = 'feedback incorrect';
+        }
+    }
+}
+
+// Extension Challenge Check
+function checkExtension() {
+    const largest = document.getElementById('extLargest')?.value.trim().replace(/,/g, '') || '';
+    const smallest = document.getElementById('extSmallest')?.value.trim().replace(/,/g, '') || '';
+    const feedback = document.getElementById('extFeedback');
+
+    if (feedback) {
+        let correct = 0;
+        let message = '';
+
+        if (largest === '9731') {
+            message += '✓ Largest correct! ';
+            correct++;
+        } else {
+            message += '✗ Largest should be 9,731 (arrange digits 9-7-3-1). ';
+        }
+
+        if (smallest === '1379') {
+            message += '✓ Smallest correct!';
+            correct++;
+        } else {
+            message += '✗ Smallest should be 1,379 (arrange digits 1-3-7-9).';
+        }
+
+        feedback.textContent = message;
+        feedback.className = correct === 2 ? 'feedback correct' : 'feedback incorrect';
+    }
+}
+
+
 // Slideshow Functions
 let currentSlide = 1;
 const totalSlides = 10;

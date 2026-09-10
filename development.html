@@ -73,15 +73,118 @@
                         </div>
                     </div>
 
+                    <div class="worksheet-section">
+                        <h4>Task 3: Digit Value Quiz</h4>
+                        <p>Identify the value of the highlighted digit:</p>
+                        <form id="digitValueQuiz">
+                            <div class="quiz-question">
+                                <label>1. What is the value of 6 in 6,823?</label>
+                                <div class="radio-group">
+                                    <label><input type="radio" name="dv1" value="6"> 6</label>
+                                    <label><input type="radio" name="dv1" value="60"> 60</label>
+                                    <label><input type="radio" name="dv1" value="600"> 600</label>
+                                    <label><input type="radio" name="dv1" value="6000"> 6,000</label>
+                                </div>
+                                <div class="feedback" id="dvFeedback1"></div>
+                            </div>
+                            <div class="quiz-question">
+                                <label>2. What is the value of 4 in 2,145?</label>
+                                <div class="radio-group">
+                                    <label><input type="radio" name="dv2" value="4"> 4</label>
+                                    <label><input type="radio" name="dv2" value="40"> 40</label>
+                                    <label><input type="radio" name="dv2" value="400"> 400</label>
+                                    <label><input type="radio" name="dv2" value="4000"> 4,000</label>
+                                </div>
+                                <div class="feedback" id="dvFeedback2"></div>
+                            </div>
+                            <div class="quiz-question">
+                                <label>3. What is the value of 9 in 7,309?</label>
+                                <input type="text" id="dv3" placeholder="Your answer">
+                                <div class="feedback" id="dvFeedback3"></div>
+                            </div>
+                            <button type="button" onclick="checkDigitValue()" class="btn btn-primary">Check Answers</button>
+                        </form>
+                    </div>
+
+                    <div class="worksheet-section">
+                        <h4>Task 4: Comparing Numbers</h4>
+                        <p>Use &gt;, &lt;, or = to compare the numbers:</p>
+                        <form id="compareQuiz">
+                            <div class="practice-item">
+                                <label>1. 3,456 ___ 3,465</label>
+                                <select id="cmp1">
+                                    <option value="">Choose</option>
+                                    <option value="<">&lt;</option>
+                                    <option value="=">=</option>
+                                    <option value=">">&gt;</option>
+                                </select>
+                                <div class="feedback" id="cmpFeedback1"></div>
+                            </div>
+                            <div class="practice-item">
+                                <label>2. 8,902 ___ 8,920</label>
+                                <select id="cmp2">
+                                    <option value="">Choose</option>
+                                    <option value="<">&lt;</option>
+                                    <option value="=">=</option>
+                                    <option value=">">&gt;</option>
+                                </select>
+                                <div class="feedback" id="cmpFeedback2"></div>
+                            </div>
+                            <div class="practice-item">
+                                <label>3. 5,000 ___ 4,999</label>
+                                <select id="cmp3">
+                                    <option value="">Choose</option>
+                                    <option value="<">&lt;</option>
+                                    <option value="=">=</option>
+                                    <option value=">">&gt;</option>
+                                </select>
+                                <div class="feedback" id="cmpFeedback3"></div>
+                            </div>
+                            <button type="button" onclick="checkCompare()" class="btn btn-primary">Check Answers</button>
+                        </form>
+                    </div>
+
+                    <div class="worksheet-section">
+                        <h4>Task 5: Place Value Word Problems</h4>
+                        <form id="wordProblems">
+                            <div class="quiz-question">
+                                <label>1. Sarah has 3 thousands blocks, 2 hundreds blocks, 0 tens blocks, and 8 ones blocks. What number does she have?</label>
+                                <input type="text" id="wp1" placeholder="Your answer">
+                                <div class="feedback" id="wpFeedback1"></div>
+                            </div>
+                            <div class="quiz-question">
+                                <label>2. Which digit is in the hundreds place in 6,427?</label>
+                                <input type="text" id="wp2" placeholder="Your answer" maxlength="1">
+                                <div class="feedback" id="wpFeedback2"></div>
+                            </div>
+                            <div class="quiz-question">
+                                <label>3. Write a number that is 100 more than 4,567.</label>
+                                <input type="text" id="wp3" placeholder="Your answer">
+                                <div class="feedback" id="wpFeedback3"></div>
+                            </div>
+                            <button type="button" onclick="checkWordProblems()" class="btn btn-primary">Check Answers</button>
+                        </form>
+                    </div>
+
                     <div class="extension-section">
                         <h4>🌟 Extension (for early finishers)</h4>
-                        <p><strong>Challenge:</strong> Write a number where:</p>
+                        <p><strong>Challenge 1:</strong> Write a number where:</p>
                         <ul>
                             <li>The hundreds digit is double the tens digit</li>
                             <li>The ones digit is 5</li>
                         </ul>
                         <p>How many different numbers can you make? Write them all below:</p>
-                        <textarea id="extensionAnswer" rows="4" placeholder="List all possible numbers..."></textarea>
+                        <textarea id="extensionAnswer" rows="3" placeholder="List all possible numbers..."></textarea>
+
+                        <p><strong>Challenge 2:</strong> Create the largest and smallest 4-digit numbers using the digits 3, 7, 1, 9 (use each digit exactly once):</p>
+                        <div class="practice-item">
+                            <label>Largest:</label>
+                            <input type="text" id="extLargest" placeholder="____">
+                            <label>Smallest:</label>
+                            <input type="text" id="extSmallest" placeholder="____">
+                            <button type="button" onclick="checkExtension()" class="btn btn-secondary">Check</button>
+                            <div class="feedback" id="extFeedback"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -106,10 +209,6 @@
             <a href="introduction.html" class="btn btn-secondary">← Introduction</a>
             <a href="synthesis.html" class="btn btn-primary">Next: Synthesis & Closure →</a>
         </div>
-    </div>
-    <script src="app.js"></script>
-</body>
-</html>
     </div>
     <script src="app.js"></script>
 </body>
