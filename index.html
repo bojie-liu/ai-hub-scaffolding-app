@@ -1,16 +1,2109 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Basic HTML Project</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Professionalism in Local and International Contexts</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .info-item {
+            background: rgba(255,255,255,0.2);
+            padding: 12px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        .info-item strong {
+            display: block;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+
+        .content {
+            padding: 40px 30px;
+        }
+
+        .nav-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .tab-btn {
+            padding: 12px 24px;
+            background: #f0f0f0;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .tab-btn:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .tab-btn.active {
+            background: #667eea;
+            color: white;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .tab-btn.completed::after {
+            content: '✓';
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #10b981;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+            transform: translateY(-2px);
+        }
+
+        .card h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.8em;
+            border-left: 5px solid #667eea;
+            padding-left: 15px;
+        }
+
+        .card h3 {
+            color: #764ba2;
+            margin: 20px 0 10px 0;
+            font-size: 1.3em;
+        }
+
+        .card h4 {
+            color: #555;
+            margin: 15px 0 10px 0;
+            font-size: 1.1em;
+        }
+
+        ul, ol {
+            margin-left: 25px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .highlight {
+            background: #fef3c7;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin: 3px;
+        }
+
+        .badge-blue { background: #dbeafe; color: #1d4ed8; }
+        .badge-green { background: #d1fae5; color: #065f46; }
+        .badge-purple { background: #ede9fe; color: #5b21b6; }
+        .badge-orange { background: #ffedd5; color: #9a3412; }
+        .badge-pink { background: #fce7f3; color: #9d174d; }
+
+        .timer-block {
+            background: linear-gradient(135deg, #667eea20, #764ba220);
+            border: 2px solid #667eea;
+            border-radius: 12px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .timer-block .timer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .timer-block h4 {
+            margin: 0;
+            color: #667eea;
+        }
+
+        .timer-display {
+            font-size: 2em;
+            font-weight: bold;
+            color: #667eea;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .timer-controls {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary { background: #667eea; color: white; }
+        .btn-primary:hover { background: #5a6fd6; transform: translateY(-1px); }
+        .btn-success { background: #10b981; color: white; }
+        .btn-success:hover { background: #059669; transform: translateY(-1px); }
+        .btn-danger { background: #ef4444; color: white; }
+        .btn-danger:hover { background: #dc2626; transform: translateY(-1px); }
+        .btn-warning { background: #f59e0b; color: white; }
+        .btn-warning:hover { background: #d97706; transform: translateY(-1px); }
+        .btn-secondary { background: #6b7280; color: white; }
+        .btn-secondary:hover { background: #4b5563; transform: translateY(-1px); }
+
+        .tool-card {
+            border: 2px dashed #667eea;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            background: #f8f7ff;
+        }
+
+        .tool-card .tool-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .tool-icon {
+            width: 45px;
+            height: 45px;
+            background: #667eea;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .tool-card h4 {
+            margin: 0;
+            color: #333;
+            font-size: 1.1em;
+        }
+
+        .tool-card a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .tool-card a:hover {
+            text-decoration: underline;
+        }
+
+        details {
+            margin: 10px 0;
+        }
+
+        details summary {
+            cursor: pointer;
+            padding: 10px 15px;
+            background: #f3f4f6;
+            border-radius: 8px;
+            font-weight: 600;
+            color: #374151;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+            transition: background 0.2s;
+        }
+
+        details summary::-webkit-details-marker { display: none; }
+
+        details summary::after {
+            content: '▼';
+            font-size: 0.8em;
+            transition: transform 0.3s;
+        }
+
+        details[open] summary::after {
+            transform: rotate(180deg);
+        }
+
+        details summary:hover { background: #e5e7eb; }
+
+        details .detail-content {
+            padding: 15px;
+            border: 1px solid #e5e7eb;
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+        }
+
+        .progress-bar-container {
+            background: #e5e7eb;
+            border-radius: 50px;
+            height: 12px;
+            margin: 20px 0;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #10b981);
+            border-radius: 50px;
+            transition: width 0.5s ease;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9em;
+            color: #6b7280;
+            margin-bottom: 5px;
+        }
+
+        .quiz-container { margin: 20px 0; }
+
+        .quiz-question {
+            background: #f9fafb;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .quiz-question p {
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #1f2937;
+        }
+
+        .quiz-options label {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 12px;
+            margin: 8px 0;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.95em;
+        }
+
+        .quiz-options label:hover {
+            border-color: #667eea;
+            background: #f0f0ff;
+        }
+
+        .quiz-options input[type="radio"] {
+            margin-top: 2px;
+            accent-color: #667eea;
+            flex-shrink: 0;
+        }
+
+        .quiz-options label.correct {
+            border-color: #10b981;
+            background: #d1fae5;
+        }
+
+        .quiz-options label.incorrect {
+            border-color: #ef4444;
+            background: #fee2e2;
+        }
+
+        .quiz-feedback {
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-top: 12px;
+            font-weight: 600;
+            display: none;
+        }
+
+        .quiz-feedback.show { display: block; }
+        .quiz-feedback.correct-fb { background: #d1fae5; color: #065f46; border: 1px solid #10b981; }
+        .quiz-feedback.incorrect-fb { background: #fee2e2; color: #991b1b; border: 1px solid #ef4444; }
+
+        .quiz-score {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .quiz-score h3 { font-size: 1.8em; margin-bottom: 10px; }
+        .quiz-score p { font-size: 1.1em; opacity: 0.9; }
+
+        .flashcard-container {
+            perspective: 1000px;
+            margin: 20px auto;
+            max-width: 600px;
+        }
+
+        .flashcard {
+            width: 100%;
+            min-height: 220px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s ease;
+            cursor: pointer;
+        }
+
+        .flashcard.flipped { transform: rotateY(180deg); }
+
+        .flashcard-front, .flashcard-back {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; min-height: 220px;
+            backface-visibility: hidden;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .flashcard-front {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .flashcard-back {
+            background: white;
+            border: 3px solid #667eea;
+            transform: rotateY(180deg);
+        }
+
+        .flashcard-front h3 { font-size: 2em; margin-bottom: 10px; }
+        .flashcard-front p { font-size: 0.9em; opacity: 0.8; }
+        .flashcard-back h4 { color: #667eea; margin-bottom: 10px; font-size: 1.2em; }
+        .flashcard-back .definition { color: #374151; margin-bottom: 10px; line-height: 1.7; }
+        .flashcard-back .example { color: #6b7280; font-style: italic; font-size: 0.9em; margin-bottom: 10px; }
+        .flashcard-back .discussion { background: #fef3c7; padding: 10px; border-radius: 8px; font-size: 0.88em; color: #92400e; }
+
+        .flashcard-nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .flashcard-counter {
+            font-weight: 600;
+            color: #667eea;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .case-study-card {
+            border-left: 5px solid #667eea;
+            padding: 20px;
+            background: #f8f7ff;
+            border-radius: 0 10px 10px 0;
+            margin: 15px 0;
+        }
+
+        .case-study-card.case-2 { border-color: #10b981; background: #f0fdf4; }
+        .case-study-card.case-3 { border-color: #f59e0b; background: #fffbeb; }
+
+        .case-study-card h4 { margin-bottom: 10px; }
+        .case-study-card .case-meta { font-size: 0.85em; color: #6b7280; margin-bottom: 10px; }
+
+        .reflection-box textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 12px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 0.95em;
+            resize: vertical;
+            transition: border-color 0.2s;
+        }
+
+        .reflection-box textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .reflection-box .save-note {
+            font-size: 0.85em;
+            color: #6b7280;
+            margin-top: 6px;
+        }
+
+        .saved-badge {
+            display: inline-block;
+            background: #d1fae5;
+            color: #065f46;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 600;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .saved-badge.show { opacity: 1; }
+
+        .table-container { overflow-x: auto; margin: 15px 0; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9em;
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 12px 15px;
+            text-align: left;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e5e7eb;
+            vertical-align: top;
+        }
+
+        tr:nth-child(even) td { background: #f9fafb; }
+        tr:hover td { background: #f3f4f6; }
+
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 10px;
+            border-radius: 8px;
+            margin: 6px 0;
+            transition: background 0.2s;
+        }
+
+        .checklist-item:hover { background: #f9fafb; }
+
+        .checklist-item input[type="checkbox"] {
+            margin-top: 2px;
+            width: 18px;
+            height: 18px;
+            accent-color: #667eea;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .checklist-item label {
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .checklist-item.checked label {
+            text-decoration: line-through;
+            color: #9ca3af;
+        }
+
+        .outcome-card {
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .outcome-card::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 0; bottom: 0;
+            width: 5px;
+        }
+
+        .outcome-card:nth-child(1)::before { background: #667eea; }
+        .outcome-card:nth-child(2)::before { background: #10b981; }
+        .outcome-card:nth-child(3)::before { background: #f59e0b; }
+        .outcome-card:nth-child(4)::before { background: #ef4444; }
+        .outcome-card:nth-child(5)::before { background: #8b5cf6; }
+
+        .outcome-num {
+            font-size: 0.8em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #6b7280;
+            margin-bottom: 8px;
+        }
+
+        .time-badge {
+            background: #667eea;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .activity-block {
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .activity-block .block-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .activity-block h3 { margin: 0; }
+
+        .jigsaw-diagram {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .jigsaw-step {
+            background: linear-gradient(135deg, #667eea20, #764ba220);
+            border: 2px solid #667eea;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .jigsaw-step .step-num {
+            background: #667eea;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .alert {
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .alert-info { background: #dbeafe; border: 1px solid #93c5fd; color: #1e40af; }
+        .alert-success { background: #d1fae5; border: 1px solid #6ee7b7; color: #065f46; }
+        .alert-warning { background: #fef3c7; border: 1px solid #fcd34d; color: #92400e; }
+        .alert-tip { background: #fce7f3; border: 1px solid #f9a8d4; color: #9d174d; }
+
+        .alert .alert-icon { font-size: 1.3em; flex-shrink: 0; margin-top: 2px; }
+
+        .rubric-grid {
+            display: grid;
+            grid-template-columns: 1fr repeat(3, 1fr);
+            gap: 2px;
+            margin: 15px 0;
+        }
+
+        .rubric-cell {
+            padding: 12px;
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            font-size: 0.9em;
+        }
+
+        .rubric-cell.rubric-header {
+            background: #667eea;
+            color: white;
+            font-weight: 700;
+        }
+
+        .rubric-cell.rubric-criterion {
+            background: #ede9fe;
+            font-weight: 600;
+            color: #5b21b6;
+        }
+
+        .exit-ticket-box {
+            background: linear-gradient(135deg, #fef3c7, #fff);
+            border: 2px solid #fcd34d;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+
+        .exit-ticket-box h3 {
+            color: #92400e;
+            margin-bottom: 15px;
+        }
+
+        .survey-item {
+            margin: 20px 0;
+        }
+
+        .survey-item label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #374151;
+        }
+
+        .likert-scale {
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .likert-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            flex: 1;
+            min-width: 50px;
+        }
+
+        .likert-option input[type="radio"] {
+            width: 20px;
+            height: 20px;
+            accent-color: #667eea;
+            cursor: pointer;
+        }
+
+        .likert-option span {
+            font-size: 0.8em;
+            color: #6b7280;
+            text-align: center;
+        }
+
+        .likert-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8em;
+            color: #6b7280;
+            margin-top: 5px;
+        }
+
+        .glossary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .glossary-item {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 15px;
+        }
+
+        .glossary-item .term {
+            font-weight: 700;
+            color: #667eea;
+            font-size: 1.05em;
+            margin-bottom: 8px;
+        }
+
+        .glossary-item .definition-text {
+            color: #374151;
+            font-size: 0.9em;
+            margin-bottom: 8px;
+        }
+
+        .glossary-item .example-text {
+            color: #6b7280;
+            font-size: 0.85em;
+            font-style: italic;
+            border-top: 1px solid #e5e7eb;
+            padding-top: 8px;
+            margin-top: 5px;
+        }
+
+        .sticky-nav {
+            position: sticky;
+            top: 0;
+            background: white;
+            padding: 15px 0;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .progress-section {
+            background: linear-gradient(135deg, #667eea10, #764ba210);
+            border: 2px solid #667eea40;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .progress-section h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #667eea;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            font-size: 1.3em;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+            display: none;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .scroll-top:hover {
+            background: #5a6fd6;
+            transform: translateY(-3px);
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .header h1 { font-size: 1.8em; }
+            .content { padding: 20px 15px; }
+            .nav-tabs { flex-direction: column; }
+            .tab-btn { width: 100%; text-align: left; border-radius: 10px; }
+            .flashcard { min-height: 280px; }
+            .flashcard-front, .flashcard-back { min-height: 280px; }
+            .rubric-grid { grid-template-columns: 1fr; }
+            .likert-scale { gap: 5px; }
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Hello World!</h1>
-    <p>Welcome to your new project.</p>
-  </div>
-  <script src="script.js"></script>
+    <div class="container">
+        <div class="header">
+            <h1>Teacher Professionalism in Local and International Contexts</h1>
+            <div class="header-info">
+                <div class="info-item">
+                    <strong>Duration</strong>
+                    120 minutes
+                </div>
+                <div class="info-item">
+                    <strong>Course/Subject</strong>
+                    Foundations of Education
+                </div>
+                <div class="info-item">
+                    <strong>Student Level</strong>
+                    Advanced University
+                </div>
+                <div class="info-item">
+                    <strong>Class Size</strong>
+                    30 students
+                </div>
+                <div class="info-item">
+                    <strong>Language</strong>
+                    English
+                </div>
+                <div class="info-item">
+                    <strong>Pedagogy</strong>
+                    Social Constructivism
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="progress-section">
+                <h3>Overall Progress</h3>
+                <div class="progress-info">
+                    <span id="progress-text">0 of 10 sections completed</span>
+                    <span id="progress-percent">0%</span>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="main-progress" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div class="sticky-nav">
+                <div class="nav-tabs" id="nav-tabs">
+                    <button class="tab-btn active" data-tab="outcomes">Learning Outcomes</button>
+                    <button class="tab-btn" data-tab="preclass">Pre-Class</button>
+                    <button class="tab-btn" data-tab="introduction">Introduction</button>
+                    <button class="tab-btn" data-tab="activities">Development</button>
+                    <button class="tab-btn" data-tab="synthesis">Synthesis</button>
+                    <button class="tab-btn" data-tab="assessment">Assessment</button>
+                    <button class="tab-btn" data-tab="alignment">Alignment</button>
+                    <button class="tab-btn" data-tab="resources">Resources</button>
+                    <button class="tab-btn" data-tab="differentiation">Differentiation</button>
+                    <button class="tab-btn" data-tab="materials">Materials</button>
+                </div>
+            </div>
+
+            <!-- Learning Outcomes Tab -->
+            <div class="tab-content active" id="outcomes">
+                <div class="card">
+                    <h2>Intended Learning Outcomes (ILOs)</h2>
+                    <p>By the end of this session, students will be able to:</p>
+
+                    <div class="outcome-card">
+                        <div class="outcome-num">Outcome 1</div>
+                        <h3><strong>Analyze</strong> the concept of teacher professionalism across different cultural and educational systems</h3>
+                        <p>Using collaborative discussion to identify shared and divergent dimensions</p>
+                        <div style="margin-top: 10px;">
+                            <span class="badge badge-blue">Bloom's: Analyze</span>
+                            <span class="badge badge-purple">Social Constructivism: co-construction of meaning</span>
+                        </div>
+                    </div>
+
+                    <div class="outcome-card">
+                        <div class="outcome-num">Outcome 2</div>
+                        <h3><strong>Compare</strong> local (e.g., national) standards for teacher professionalism with international frameworks</h3>
+                        <p>Through small-group inquiry (e.g., OECD, UNESCO)</p>
+                        <div style="margin-top: 10px;">
+                            <span class="badge badge-blue">Bloom's: Evaluate</span>
+                            <span class="badge badge-purple">Social Constructivism: peer negotiation</span>
+                        </div>
+                    </div>
+
+                    <div class="outcome-card">
+                        <div class="outcome-num">Outcome 3</div>
+                        <h3><strong>Construct</strong> a group-generated definition of "teacher professionalism"</h3>
+                        <p>That integrates multiple perspectives and reflects synthesized understanding</p>
+                        <div style="margin-top: 10px;">
+                            <span class="badge badge-green">Bloom's: Create</span>
+                            <span class="badge badge-purple">Social Constructivism: joint artifact</span>
+                        </div>
+                    </div>
+
+                    <div class="outcome-card">
+                        <div class="outcome-num">Outcome 4</div>
+                        <h3><strong>Critique</strong> real-world case studies of professional dilemmas</h3>
+                        <p>Using collaborative argumentation and evidence from research</p>
+                        <div style="margin-top: 10px;">
+                            <span class="badge badge-orange">Bloom's: Evaluate</span>
+                            <span class="badge badge-purple">Social Constructivism: peer critique</span>
+                        </div>
+                    </div>
+
+                    <div class="outcome-card">
+                        <div class="outcome-num">Outcome 5</div>
+                        <h3><strong>Reflect</strong> on personal assumptions about professionalism and growth areas</h3>
+                        <p>Through dialogic journaling with peer feedback</p>
+                        <div style="margin-top: 10px;">
+                            <span class="badge badge-pink">Bloom's: Evaluate</span>
+                            <span class="badge badge-purple">Social Constructivism: metacognitive dialogue</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pre-Class Preparation Tab -->
+            <div class="tab-content" id="preclass">
+                <div class="card">
+                    <h2>Pre-Class Preparation</h2>
+                    <p><em>Framed as a "shared foundation for dialogue" in Social Constructivism</em></p>
+
+                    <h3>📚 Pre-Reading Materials</h3>
+                    <ol>
+                        <li><strong>Hargreaves, A. (2000).</strong> <em>Four ages of professionalism and professional learning</em>. Teachers and Teaching, 6(2), 151-182.
+                            <ul><li>Focus on pages addressing local/international tensions (10 pages)</li></ul>
+                        </li>
+                        <li><strong>OECD (2019).</strong> <em>TALIS – The Teaching and Learning International Survey: Key findings on teacher professionalism</em>
+                            <ul><li>Infographic and 2-page summary</li></ul>
+                        </li>
+                    </ol>
+
+                    <h3>💭 Guiding Questions for Note-Taking</h3>
+                    <p><em>Bring your notes to class to facilitate discussion:</em></p>
+                    <div class="reflection-box">
+                        <ol>
+                            <li>What are the components of teacher professionalism that seem universal?</li>
+                            <li>What aspects appear to be culturally specific?</li>
+                            <li>Find one example from your own educational experience that illustrates a tension between local expectations and international trends.</li>
+                        </ol>
+                        <textarea id="preclass-notes" placeholder="Type your reflections here. Your notes are automatically saved locally."></textarea>
+                        <div class="save-note">💾 Auto-saved locally <span class="saved-badge" id="preclass-saved">Saved!</span></div>
+                    </div>
+
+                    <h3>📊 Pre-Class Poll</h3>
+                    <div class="tool-card">
+                        <div class="tool-header">
+                            <div class="tool-icon">📊</div>
+                            <div>
+                                <h4>Padlet Baseline Poll</h4>
+                                <p>"On a scale of 1-5, how well-defined is 'teacher professionalism' in your country? Explain briefly."</p>
+                            </div>
+                        </div>
+                        <details>
+                            <summary>How to Access and Use Padlet for This Activity</summary>
+                            <div class="detail-content">
+                                <ol>
+                                    <li>Go to <a href="https://padlet.com" target="_blank">Padlet.com</a> (or use the link provided by your instructor)</li>
+                                    <li>Join the class Padlet board using the access code shared via your LMS</li>
+                                    <li>Click the <strong>+ (Plus)</strong> button to add your response</li>
+                                    <li>Rate teacher professionalism in your country on a scale of 1-5</li>
+                                    <li>Write a brief explanation (2-3 sentences) justifying your rating</li>
+                                    <li>Submit your post – you can also read and comment on peers' responses</li>
+                                </ol>
+                                <p><strong>Purpose:</strong> This poll serves as a baseline for collaborative comparison during class and helps surface diverse viewpoints on what "professionalism" means across contexts.</p>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Introduction Tab -->
+            <div class="tab-content" id="introduction">
+                <div class="card">
+                    <h2>Introduction</h2>
+                    <div class="time-badge">⏰ 15 minutes (12.5% of class time)</div>
+
+                    <div class="activity-block">
+                        <div class="block-header">
+                            <h3>🔥 Pedagogy-Aligned Hook</h3>
+                            <span class="badge badge-purple">Dyad Discussion</span>
+                        </div>
+
+                        <div class="alert alert-tip">
+                            <div class="alert-icon">💡</div>
+                            <div>
+                                <strong>Provocative Statement:</strong>
+                                <p>"A professional teacher is the same everywhere – the only difference is the pay."</p>
+                            </div>
+                        </div>
+
+                        <p><strong>Activity (2 minutes):</strong></p>
+                        <ol>
+                            <li>Form <strong>pairs (dyads)</strong> with the person next to you</li>
+                            <li>Discuss: Do you agree or disagree with this statement? Why?</li>
+                            <li>Each pair shares one key point with the whole class</li>
+                        </ol>
+                        <p><em>Social Constructivism: immediate peer interaction</em></p>
+
+                        <div class="timer-block">
+                            <div class="timer-header">
+                                <h4>Discussion Timer</h4>
+                            </div>
+                            <div class="timer-display" id="intro-timer-display">02:00</div>
+                            <div class="timer-controls">
+                                <button class="btn btn-success" onclick="startTimer('intro', 120)">Start</button>
+                                <button class="btn btn-danger" onclick="pauseTimer('intro')">Pause</button>
+                                <button class="btn btn-secondary" onclick="resetTimer('intro', 120)">Reset</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="activity-block">
+                        <div class="block-header">
+                            <h3>📊 Pre-Test Review with Misconception Analysis</h3>
+                        </div>
+                        <ul>
+                            <li>Display aggregated results from the pre-class Padlet poll</li>
+                            <li>Identify common misconceptions (e.g., "professionalism is only about qualifications")</li>
+                            <li>Guide whole-class discussion to surface diverse viewpoints</li>
+                        </ul>
+                    </div>
+
+                    <div class="activity-block">
+                        <div class="block-header">
+                            <h3>🌍 Real-World Connection</h3>
+                            <span class="badge badge-blue">Video Analysis</span>
+                        </div>
+                        <p><strong>Show a 2-minute video clip</strong> of teachers in different countries (Japan vs. Finland vs. Ghana) performing similar tasks (e.g., lesson planning, parent communication).</p>
+
+                        <div class="alert alert-info">
+                            <div class="alert-icon">❓</div>
+                            <div>
+                                <strong>Discussion Question:</strong>
+                                <p>"What does 'professionalism' look like in each context? Why might it differ?"</p>
+                            </div>
+                        </div>
+
+                        <p><strong>Suggested video sources:</strong> YouTube documentaries on education systems</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Development Activities Tab -->
+            <div class="tab-content" id="activities">
+                <div class="card">
+                    <h2>Development Activities</h2>
+                    <div class="time-badge">⏰ 85 minutes (71% of class time)</div>
+
+                    <!-- Activity Block 1 -->
+                    <div class="activity-block">
+                        <div class="block-header">
+                            <h3>Activity Block 1: Collaborative Concept Mapping</h3>
+                            <span class="time-badge">⏰ 25 minutes</span>
+                        </div>
+
+                        <p><strong>Objective:</strong> Groups of 4-5 students create a <strong>concept map</strong> that organizes the key dimensions of teacher professionalism from the pre-reading. Groups must reach consensus on categories.</p>
+
+                        <h4>Instructions:</h4>
+                        <ol>
+                            <li><strong>Form groups of 4-5 students</strong></li>
+                            <li>Create a concept map using physical poster/markers or digital tools (Miro or Google Jamboard)</li>
+                            <li>Organize dimensions such as: knowledge, autonomy, ethics, accountability</li>
+                            <li>Select and connect at least 6 components from the provided list, plus add 2 of your own</li>
+                            <li>After 15 minutes, <strong>pair with another group</strong> to compare maps, identify gaps, and merge ideas</li>
+                        </ol>
+
+                        <div class="alert alert-success">
+                            <div class="alert-icon">📝</div>
+                            <div>
+                                <strong>Provided Components (select at least 6):</strong>
+                                <ul style="margin-top: 8px;">
+                                    <li>Code of ethics</li>
+                                    <li>Continuing education</li>
+                                    <li>Collegial collaboration</li>
+                                    <li>Public trust</li>
+                                    <li>Professional autonomy</li>
+                                    <li>Accountability</li>
+                                    <li>Subject knowledge</li>
+                                    <li>Pedagogical expertise</li>
+                                    <li>Reflective practice</li>
+                                    <li>Cultural responsiveness</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="tool-card">
+                            <div class="tool-header">
+                                <div class="tool-icon">🎨</div>
+                                <div>
+                                    <h4>Digital Tool: Miro or Google Jamboard</h4>
+                                </div>
+                            </div>
+                            <details>
+                                <summary>How to Use Miro for Concept Mapping</summary>
+                                <div class="detail-content">
+                                    <ol>
+                                        <li>Go to <a href="https://miro.com" target="_blank">Miro.com</a> or use the class board link</li>
+                                        <li>Create a new board or access the shared class board</li>
+                                        <li>Use <strong>sticky notes</strong> to represent each component of teacher professionalism</li>
+                                        <li>Drag and drop to organize components into categories</li>
+                                        <li>Use <strong>connector lines</strong> to show relationships between components</li>
+                                        <li>Add text boxes to label categories (e.g., "Knowledge Domain," "Ethical Practice")</li>
+                                        <li>Invite your group members to collaborate in real-time</li>
+                                        <li>Use different colors for components vs. categories</li>
+                                    </ol>
+                                    <p><strong>Purpose:</strong> Visual mapping helps groups negotiate meaning and surface divergent perspectives on professionalism components.</p>
+                                </div>
+                            </details>
+                        </div>
+
+                        <div class="timer-block">
+                            <div class="timer-header">
+                                <h4>Concept Mapping Timer</h4>
+                            </div>
+                            <div class="timer-display" id="mapping-timer-display">25:00</div>
+                            <div class="timer-controls">
+                                <button class="btn btn-success" onclick="startTimer('mapping', 1500)">Start</button>
+                                <button class="btn btn-danger" onclick="pauseTimer('mapping')">Pause</button>
+                                <button class="btn btn-secondary" onclick="resetTimer('mapping', 1500)">Reset</button>
+                            </div>
+                        </div>
+
+                        <p><em>Social Constructivism: socially constructed knowledge through group consensus</em></p>
+                    </div>
+
+                    <!-- Activity Block 2 -->
+                    <div class="activity-block">
+                        <div class="block-header">
+                            <h3>Activity Block 2: Case Study Jigsaw</h3>
+                            <span class="time-badge">⏰ 35 minutes</span>
+                        </div>
+
+                        <p><strong>Objective:</strong> Analyze three professional dilemmas across different contexts using the Jigsaw protocol</p>
+
+                        <h4>The Three Case Studies:</h4>
+
+                        <div class="case-study-card">
+                            <div class="case-meta">Case 1 | Local Urban School</div>
+                            <h4>Grade Inflation Pressure</h4>
+                            <p>Ms. Chen teaches mathematics at an urban high school. At the end of the semester, her principal calls her into the office and pressures her to "reconsider" the failing grades she assigned to several students, suggesting that the school's performance metrics will suffer. The principal hints that her contract renewal might depend on "being a team player." Ms. Chen believes her grades accurately reflect student performance and that inflating them would compromise her professional integrity. However, she needs this job and worries about the students' futures if they fail.</p>
+                            <p><strong>Dilemma:</strong> Should professional autonomy override institutional pressure? What standards are at stake?</p>
+                        </div>
+
+                        <div class="case-study-card case-2">
+                            <div class="case-meta">Case 2 | International School Abroad</div>
+                            <h4>Cultural Discipline Clash</h4>
+                            <p>Mr. Rodriguez, from Spain, teaches at an international school in Singapore. He uses a collaborative, informal approach to classroom management that worked well in Europe. However, parents complain that he is "too lenient" and doesn't enforce strict discipline, which conflicts with local expectations for teacher authority. The school administration suggests he adopt more traditional, hierarchical methods. Mr. Rodriguez feels this would undermine his pedagogical beliefs about student agency and democratic classrooms, but he's also new to this cultural context.</p>
+                            <p><strong>Dilemma:</strong> How do culturally different views of authority shape teacher professionalism? Should he adapt or advocate?</p>
+                        </div>
+
+                        <div class="case-study-card case-3">
+                            <div class="case-meta">Case 3 | Online Teaching Environment</div>
+                            <h4>Digital Surveillance vs. Academic Integrity</h4>
+                            <p>Dr. Patel teaches an online university course. During exams, the university's proctoring software monitors students' screens and webcams, flagging "suspicious" behavior. Dr. Patel reviews the flags and finds many false positives—students looking away to think, accessing permitted notes, or having family members in the background. The software disproportionately flags international students in small apartments. Dr. Patel questions whether this surveillance is professional or ethical, but the university insists it's necessary to maintain academic integrity in online settings.</p>
+                            <p><strong>Dilemma:</strong> Does professionalism require prioritizing academic integrity over student privacy? What are the equity implications?</p>
+                        </div>
+
+                        <h4>Jigsaw Protocol:</h4>
+                        <div class="jigsaw-diagram">
+                            <div class="jigsaw-step">
+                                <div class="step-num">1</div>
+                                <strong>Home Groups</strong>
+                                <p>Original groups of 4-5. Each member becomes "expert" on one case (5 min reading)</p>
+                            </div>
+                            <div class="jigsaw-step">
+                                <div class="step-num">2</div>
+                                <strong>Expert Groups</strong>
+                                <p>All students with same case meet. Discuss dilemmas, define standards violated, propose solutions (10 min)</p>
+                            </div>
+                            <div class="jigsaw-step">
+                                <div class="step-num">3</div>
+                                <strong>Return to Home</strong>
+                                <p>Each expert teaches their case & solution (3 min each = 12 min total)</p>
+                            </div>
+                            <div class="jigsaw-step">
+                                <div class="step-num">4</div>
+                                <strong>Synthesize</strong>
+                                <p>Group identifies common professionalism principles across cases (8 min)</p>
+                            </div>
+                        </div>
+
+                        <div class="tool-card">
+                            <div class="tool-header">
+                                <div class="tool-icon">📌</div>
+                                <div>
+                                    <h4>Digital Tool: Padlet for Case Proposals</h4>
+                                </div>
+                            </div>
+                            <details>
+                                <summary>How to Use Padlet for Case Study Sharing</summary>
+                                <div class="detail-content">
+                                    <ol>
+                                        <li>Access the class Padlet board via the link shared by your instructor</li>
+                                        <li>Three columns will be set up: Case 1, Case 2, Case 3</li>
+                                        <li>After your home group synthesis, post your group's key findings in the relevant column</li>
+                                        <li>Include: (a) Standards violated, (b) Proposed solution, (c) Common principle identified</li>
+                                        <li>Browse other groups' posts to see different perspectives</li>
+                                        <li>Use the comment feature to ask clarifying questions or add insights</li>
+                                    </ol>
+                                    <p><strong>Purpose:</strong> Making all group proposals visible enables cross-group learning and comparison of solutions.</p>
+                                </div>
+                            </details>
+                        </div>
+
+                        <div class="timer-block">
+                            <div class="timer-header">
+                                <h4>Jigsaw Activity Timer</h4>
+                            </div>
+                            <div class="timer-display" id="jigsaw-timer-display">35:00</div>
+                            <div class="timer-controls">
+                                <button class="btn btn-success" onclick="startTimer('jigsaw', 2100)">Start</button>
+                                <button class="btn btn-danger" onclick="pauseTimer('jigsaw')">Pause</button>
+                                <button class="btn btn-secondary" onclick="resetTimer('jigsaw', 2100)">Reset</button>
+                            </div>
+                        </div>
+
+                        <p><em>Social Constructivism: peer teaching and co-construction of comparative understanding</em></p>
+                    </div>
+
+                    <!-- Activity Block 3 -->
+                    <div class="activity-block">
+                        <div class="block-header">
+                            <h3>Activity Block 3: Collaborative Definition Construction</h3>
+                            <span class="time-badge">⏰ 25 minutes</span>
+                        </div>
+
+                        <p><strong>Objective:</strong> The whole class collectively constructs one sentence definition of teacher professionalism that is context-sensitive yet robust</p>
+
+                        <h4>Process:</h4>
+                        <ol>
+                            <li><strong>Post Principles (5 min):</strong> Each home group posts their synthesized list of common principles on the board</li>
+                            <li><strong>Structured Debate (10 min):</strong> Facilitate discussion: "Which principle is most contested across contexts?" (e.g., autonomy vs. accountability)</li>
+                            <li><strong>Collective Writing (7 min):</strong> Using the emerging list, the class constructs ONE sentence definition</li>
+                            <li><strong>Peer Critique (3 min):</strong> "Does this definition work for all three case contexts? What might a teacher in [country X] add?"</li>
+                        </ol>
+
+                        <div class="tool-card">
+                            <div class="tool-header">
+                                <div class="tool-icon">📄</div>
+                                <div>
+                                    <h4>Digital Tool: Google Docs for Co-Construction</h4>
+                                </div>
+                            </div>
+                            <details>
+                                <summary>How to Use Google Docs for Collaborative Writing</summary>
+                                <div class="detail-content">
+                                    <ol>
+                                        <li>Access the shared Google Doc via the link provided by your instructor</li>
+                                        <li>The instructor will share editing access with all students</li>
+                                        <li>Groups contribute their principles in bullet points at the top</li>
+                                        <li>As the class discusses, the instructor (or designated scribe) drafts the definition in real-time</li>
+                                        <li>Students can use <strong>Suggesting mode</strong> to propose edits to the definition</li>
+                                        <li>Use the <strong>comment feature</strong> to flag concerns or propose alternatives</li>
+                                        <li>Watch the definition evolve collaboratively in real-time</li>
+                                        <li>Final version is saved and shared with all students</li>
+                                    </ol>
+                                    <p><strong>Purpose:</strong> Real-time collaborative writing makes the negotiation of meaning visible and participatory.</p>
+                                </div>
+                            </details>
+                        </div>
+
+                        <div class="reflection-box">
+                            <h4>Draft Your Own Definition First:</h4>
+                            <p>Before the class discussion, write your own one-sentence definition:</p>
+                            <textarea id="definition-draft" placeholder="Teacher professionalism is..."></textarea>
+                            <div class="save-note">💾 Auto-saved locally <span class="saved-badge" id="definition-saved">Saved!</span></div>
+                        </div>
+
+                        <div class="timer-block">
+                            <div class="timer-header">
+                                <h4>Definition Construction Timer</h4>
+                            </div>
+                            <div class="timer-display" id="definition-timer-display">25:00</div>
+                            <div class="timer-controls">
+                                <button class="btn btn-success" onclick="startTimer('definition', 1500)">Start</button>
+                                <button class="btn btn-danger" onclick="pauseTimer('definition')">Pause</button>
+                                <button class="btn btn-secondary" onclick="resetTimer('definition', 1500)">Reset</button>
+                            </div>
+                        </div>
+
+                        <p><em>Social Constructivism: joint artifact creation; consensus building through dialogue</em></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Synthesis & Closure Tab -->
+            <div class="tab-content" id="synthesis">
+                <div class="card">
+                    <h2>Synthesis & Closure</h2>
+                    <div class="time-badge">⏰ 20 minutes (16.5% of class time)</div>
+
+                    <div class="activity-block">
+                        <div class="block-header">
+                            <h3>📊 Post-Test Diagnostic Quiz</h3>
+                        </div>
+
+                        <div class="tool-card">
+                            <div class="tool-header">
+                                <div class="tool-icon">📊</div>
+                                <div>
+                                    <h4>Mentimeter Interactive Quiz</h4>
+                                    <p>Quick 5-item multiple-choice quiz framed as "Are you ready to apply this?"</p>
+                                </div>
+                            </div>
+                            <details>
+                                <summary>How to Use Mentimeter for the Post-Quiz</summary>
+                                <div class="detail-content">
+                                    <ol>
+                                        <li>Go to <a href="https://www.menti.com" target="_blank">www.menti.com</a></li>
+                                        <li>Enter the code displayed on the instructor's screen</li>
+                                        <li>Answer 5 multiple-choice questions about teacher professionalism</li>
+                                        <li>Questions test your ability to transfer concepts to new scenarios</li>
+                                        <li>After each question, the instructor will show the class distribution</li>
+                                        <li>Discuss with a partner why correct answers are context-sensitive</li>
+                                        <li>Follow-up prompt: "In your pair, agree on one alternative option that would also be defensible in a different context"</li>
+                                    </ol>
+                                    <p><strong>Purpose:</strong> Transforms a quiz into a collaborative reflection tool by prompting peer discussion about context-sensitivity.</p>
+                                </div>
+                            </details>
+                        </div>
+
+                        <div class="alert alert-info">
+                            <div class="alert-icon">💡</div>
+                            <div>
+                                <p>Sample quiz questions test ability to transfer to new scenarios (e.g., "Which scenario below best illustrates teacher professionalism as defined by the class?")</p>
+                                <p>Show results and discuss why correct answers are context-sensitive.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="activity-block">
+                        <div class="block-header">
+                            <h3>👥 Peer-Teaching Summary</h3>
+                            <span class="badge badge-purple">Pair Work</span>
+                        </div>
+
+                        <ol>
+                            <li>In pairs, students take <strong>2 minutes each</strong> to explain the "most surprising insight" about international professionalism to their partner</li>
+                            <li><strong>Two volunteers</strong> synthesize for the whole class</li>
+                        </ol>
+
+                        <div class="timer-block">
+                            <div class="timer-header">
+                                <h4>Peer Summary Timer</h4>
+                            </div>
+                            <div class="timer-display" id="summary-timer-display">04:00</div>
+                            <div class="timer-controls">
+                                <button class="btn btn-success" onclick="startTimer('summary', 240)">Start</button>
+                                <button class="btn btn-danger" onclick="pauseTimer('summary')">Pause</button>
+                                <button class="btn btn-secondary" onclick="resetTimer('summary', 240)">Reset</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="activity-block">
+                        <div class="block-header">
+                            <h3>🔮 Preview of Next Session</h3>
+                        </div>
+
+                        <div class="alert alert-success">
+                            <div class="alert-icon">➡️</div>
+                            <div>
+                                <p><strong>Next Session:</strong> "Next time we move from defining professionalism to <strong>enacting</strong> it – we'll apply these ideas to design a professional learning plan using the TPACK framework."</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="exit-ticket-box">
+                        <h3>🎫 Exit Ticket</h3>
+                        <p><strong>Prompt:</strong> "Name one principle of teacher professionalism that you now see differently because of a peer's contribution."</p>
+                        <div class="reflection-box">
+                            <textarea id="exit-ticket" placeholder="Write your exit ticket response here..."></textarea>
+                            <div class="save-note">💾 Auto-saved locally <span class="saved-badge" id="exit-saved">Saved!</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Assessment Tab -->
+            <div class="tab-content" id="assessment">
+                <div class="card">
+                    <h2>Assessment Methods</h2>
+
+                    <h3>📋 Formative Assessment (During Class)</h3>
+
+                    <div style="background: #f9fafb; border: 2px solid #e5e7eb; border-radius: 12px; padding: 20px; margin: 20px 0;">
+                        <h4>1. Observations of Group Dynamics</h4>
+                        <p>Instructor notes which groups integrate multiple perspectives (Social Constructivism indicator) using a checklist</p>
+
+                        <h4 style="margin-top: 20px;">Observation Checklist:</h4>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="check1" onchange="saveCheckbox('check1')">
+                            <label for="check1">All group members participate actively in discussion</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="check2" onchange="saveCheckbox('check2')">
+                            <label for="check2">Group negotiates different viewpoints rather than accepting first suggestion</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="check3" onchange="saveCheckbox('check3')">
+                            <label for="check3">Students reference pre-reading and peers' contributions</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="check4" onchange="saveCheckbox('check4')">
+                            <label for="check4">Group product shows synthesis of multiple perspectives</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="check5" onchange="saveCheckbox('check5')">
+                            <label for="check5">Students ask clarifying questions to peers</label>
+                        </div>
+                    </div>
+
+                    <div style="background: #f9fafb; border: 2px solid #e5e7eb; border-radius: 12px; padding: 20px; margin: 20px 0;">
+                        <h4>2. Case Study Jigsaw Peer Assessment</h4>
+                        <p>Simple peer-assessment rubric (1-3 scale) completed by home group members for each expert:</p>
+
+                        <table style="margin-top: 15px;">
+                            <thead>
+                                <tr>
+                                    <th>Criterion</th>
+                                    <th>1 (Needs Work)</th>
+                                    <th>2 (Good)</th>
+                                    <th>3 (Excellent)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Clarity of explanation</strong></td>
+                                    <td>Unclear or incomplete</td>
+                                    <td>Clear main points</td>
+                                    <td>Very clear and detailed</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Connection to evidence</strong></td>
+                                    <td>Little/no evidence</td>
+                                    <td>Some evidence used</td>
+                                    <td>Strong evidence from readings</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Constructive Alignment Tab -->
+            <div class="tab-content" id="alignment">
+                <div class="card">
+                    <h2>Constructive Alignment Matrix</h2>
+                    <p>Showing the coherent linkage between Learning Outcomes, Teaching Activities, Assessment Methods, and Pedagogy</p>
+
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Learning Outcome</th>
+                                    <th>Teaching Activity</th>
+                                    <th>Assessment Method</th>
+                                    <th>Pedagogy Link</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>1. Analyze</strong> dimensions of professionalism across contexts</td>
+                                    <td>Pre-reading; Concept mapping; Jigsaw expert groups</td>
+                                    <td>Instructor observation; Peer validation during mapping</td>
+                                    <td>Social Constructivism: collaborative analysis of multiple sources; peer negotiation of categories</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>2. Compare</strong> local vs international frameworks</td>
+                                    <td>Case study jigsaw (expert discussion); Concept map comparison between groups</td>
+                                    <td>Expert group peer assessment; Group synthesis notes</td>
+                                    <td>Social Constructivism: peer teaching; co-construction of comparative understanding</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>3. Construct</strong> a group definition</td>
+                                    <td>Whole-class collaborative writing; Structured debate</td>
+                                    <td>Exit ticket (how peer changed view); Draft definition on shared doc</td>
+                                    <td>Social Constructivism: joint artifact creation; consensus building through dialogue</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>4. Critique</strong> professional dilemmas using evidence</td>
+                                    <td>Case study analysis in expert groups; Home group synthesis</td>
+                                    <td>Case-based peer feedback; Post-test scenario questions</td>
+                                    <td>Social Constructivism: argumentation with peers; using evidence from diverse contexts</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>5. Reflect</strong> on personal assumptions</td>
+                                    <td>Dialogic journaling (pre-class notes + exit ticket); Pair sharing during closure</td>
+                                    <td>Exit ticket; Reflection paper (summative)</td>
+                                    <td>Social Constructivism: metacognitive dialogue; self in relation to others</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resources Tab -->
+            <div class="tab-content" id="resources">
+                <div class="card">
+                    <h2>Required Resources & Technology</h2>
+
+                    <div style="background: #dbeafe; border: 2px solid #93c5fd; border-radius: 12px; padding: 20px; margin: 20px 0;">
+                        <h3>📚 Learning Management System</h3>
+                        <p>Moodle/Blackboard/Canvas for pre-reading and pre-class poll</p>
+                    </div>
+
+                    <div style="background: #d1fae5; border: 2px solid #6ee7b7; border-radius: 12px; padding: 20px; margin: 20px 0;">
+                        <h3>💻 Collaborative Digital Tools</h3>
+                        <ul>
+                            <li><strong><a href="https://miro.com" target="_blank">Miro</a> or <a href="https://jamboard.google.com" target="_blank">Google Jamboard</a></strong> for concept mapping (free)</li>
+                            <li><strong><a href="https://padlet.com" target="_blank">Padlet</a></strong> for case study proposals and pre-class poll</li>
+                            <li><strong><a href="https://docs.google.com" target="_blank">Google Docs</a></strong> for co-constructed definition</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Differentiation Tab -->
+            <div class="tab-content" id="differentiation">
+                <div class="card">
+                    <h2>Differentiation & Inclusivity</h2>
+                    <p><em>Social Constructivism tailored supports</em></p>
+
+                    <div class="activity-block">
+                        <h3>🎯 Multiple Entry Points</h3>
+                        <p>Case studies range from familiar (local school) to novel (online surveillance) – students can choose which to become expert on based on interest/experience</p>
+                    </div>
+
+                    <div class="activity-block">
+                        <h3>📈 Tiered Questioning</h3>
+                        <p>During concept mapping, groups that finish early receive an extension:</p>
+                        <div class="alert alert-tip">
+                            <div class="alert-icon">💡</div>
+                            <div>
+                                <p><strong>Extension Question:</strong> "Identify a dimension that is often invisible (e.g., emotional labour) and add it to your map with justification."</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="activity-block">
+                        <h3>👥 Peer Mentoring</h3>
+                        <p>Assign a "dialogue buddy" for English language learners – more fluent peers help scaffold academic vocabulary during discussions</p>
+                    </div>
+
+                    <div class="activity-block">
+                        <h3>♿ Accessibility Supports</h3>
+                        <ul>
+                            <li><strong>Readings:</strong> All readings available in accessible PDF with text-to-speech compatibility</li>
+                            <li><strong>Case studies:</strong> Provided in writing AND as audio recordings (pre-recorded by instructor)</li>
+                            <li><strong>Digital tools:</strong> Miro/Padlet can be used with screen readers; provide captioned explanations</li>
+                            <li><strong>Kinesthetic option:</strong> Concept maps can be built with physical objects (cards, string) for tactile learners</li>
+                            <li><strong>Visual supports:</strong> Color-coding for case studies; visual timers displayed</li>
+                            <li><strong>Processing time:</strong> Allow "think time" before pair/group discussions; option to write responses before speaking</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Materials Tab -->
+            <div class="tab-content" id="materials">
+                <div class="card">
+                    <h2>Interactive Materials & Tools</h2>
+
+                    <!-- Mentimeter Quiz -->
+                    <div class="activity-block">
+                        <div class="block-header">
+                            <h3>📊 Tool 1: Mentimeter Quiz - Teacher Professionalism Standards</h3>
+                            <span class="badge badge-blue">Social Constructivism</span>
+                        </div>
+
+                        <p><strong>Description:</strong> A 10-item multiple-choice quiz embedded in Mentimeter to use at the start and end. Questions target common misconceptions. After the post-quiz, results are shared, and students in pairs discuss why they chose a particular answer, then suggest a better question. This turns a quiz into a collaborative reflection tool.</p>
+
+                        <div class="tool-card">
+                            <div class="tool-header">
+                                <div class="tool-icon">📊</div>
+                                <div>
+                                    <h4>How to Set Up Mentimeter</h4>
+                                </div>
+                            </div>
+                            <details>
+                                <summary>Step-by-Step Mentimeter Instructions</summary>
+                                <div class="detail-content">
+                                    <h4>For Instructors:</h4>
+                                    <ol>
+                                        <li>Go to <a href="https://www.mentimeter.com" target="_blank">www.mentimeter.com</a> and sign up/log in (free for up to 50 responses)</li>
+                                        <li>Click <strong>"Create presentation"</strong> and add a new slide</li>
+                                        <li>Select <strong>"Multiple Choice"</strong> question type</li>
+                                        <li>Enter the question and 4 answer options</li>
+                                        <li>Mark the correct answer by clicking the checkmark</li>
+                                        <li>Enable <strong>"Show results"</strong> to display class distribution after each question</li>
+                                        <li>Create 10 questions total (see sample questions below)</li>
+                                        <li>Click <strong>"Present"</strong> and share the code with students</li>
+                                    </ol>
+
+                                    <h4>For Students:</h4>
+                                    <ol>
+                                        <li>Go to <a href="https://www.menti.com" target="_blank">www.menti.com</a> on your device</li>
+                                        <li>Enter the 6-digit code shown on the instructor's screen</li>
+                                        <li>Answer each question by selecting your choice</li>
+                                        <li>View the class results after each question</li>
+                                        <li>Discuss with your pair why certain answers are context-sensitive</li>
+                                    </ol>
+
+                                    <p><strong>Follow-up Discussion Prompt:</strong> "In your pair, agree on one alternative option that would also be defensible in a different context."</p>
+                                </div>
+                            </details>
+                        </div>
+
+                        <h4>Sample Quiz Questions:</h4>
+                        <div class="quiz-container">
+                            <div class="quiz-question">
+                                <p><strong>Q1:</strong> Which of the following is NOT considered a universal dimension of teacher professionalism?</p>
+                                <div class="quiz-options">
+                                    <label><input type="radio" name="q1" value="a"> A) Subject knowledge</label>
+                                    <label><input type="radio" name="q1" value="b"> B) Adherence to a specific religious code</label>
+                                    <label><input type="radio" name="q1" value="c"> C) Ethical conduct</label>
+                                    <label><input type="radio" name="q1" value="d"> D) Commitment to student learning</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Flashcards -->
+                    <div class="activity-block">
+                        <div class="block-header">
+                            <h3>🎴 Tool 2: Flashcards - Teacher Professionalism Key Terms</h3>
+                            <span class="badge badge-green">Interactive Learning</span>
+                        </div>
+
+                        <p><strong>Description:</strong> A set of 12 digital flashcards covering essential terms. Each card includes a definition, an example from a specific country, and a "peer discussion question" that prompts reflection on how the term applies differently in local vs. international settings.</p>
+
+                        <div class="flashcard-container">
+                            <div class="flashcard" id="flashcard" onclick="flipCard()">
+                                <div class="flashcard-front">
+                                    <h3 id="card-term">Autonomy</h3>
+                                    <p>Click to see definition and example</p>
+                                </div>
+                                <div class="flashcard-back">
+                                    <h4 id="card-term-back">Autonomy</h4>
+                                    <div class="definition" id="card-definition">The degree of professional independence teachers have in making decisions about curriculum, pedagogy, and assessment.</div>
+                                    <div class="example" id="card-example"><strong>Example (Finland):</strong> Finnish teachers design their own curricula within broad national guidelines and are trusted as autonomous professionals.</div>
+                                    <div class="discussion" id="card-discussion"><strong>Discussion:</strong> How does teacher autonomy differ in your educational context? What are the benefits and challenges?</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flashcard-nav">
+                            <button class="btn btn-secondary" onclick="prevCard()">← Previous</button>
+                            <span class="flashcard-counter" id="card-counter">1 / 12</span>
+                            <button class="btn btn-secondary" onclick="nextCard()">Next →</button>
+                        </div>
+
+                        <details style="margin-top: 20px;">
+                            <summary>View All 12 Key Terms</summary>
+                            <div class="detail-content">
+                                <div class="glossary-grid">
+                                    <div class="glossary-item">
+                                        <div class="term">Autonomy</div>
+                                        <div class="definition-text">Professional independence in decision-making</div>
+                                    </div>
+                                    <div class="glossary-item">
+                                        <div class="term">Accountability</div>
+                                        <div class="definition-text">Responsibility to stakeholders for outcomes</div>
+                                    </div>
+                                    <div class="glossary-item">
+                                        <div class="term">Ethical Framework</div>
+                                        <div class="definition-text">Code of conduct guiding professional behavior</div>
+                                    </div>
+                                    <div class="glossary-item">
+                                        <div class="term">Collegiality</div>
+                                        <div class="definition-text">Collaborative relationships among educators</div>
+                                    </div>
+                                    <div class="glossary-item">
+                                        <div class="term">Professional Learning Community</div>
+                                        <div class="definition-text">Ongoing collaborative learning among teachers</div>
+                                    </div>
+                                    <div class="glossary-item">
+                                        <div class="term">Contextual Knowledge</div>
+                                        <div class="definition-text">Understanding of local cultural and social factors</div>
+                                    </div>
+                                    <div class="glossary-item">
+                                        <div class="term">Performativity</div>
+                                        <div class="definition-text">Emphasis on measurable outcomes and standards</div>
+                                    </div>
+                                    <div class="glossary-item">
+                                        <div class="term">Policy Borrowing</div>
+                                        <div class="definition-text">Adopting education policies from other countries</div>
+                                    </div>
+                                    <div class="glossary-item">
+                                        <div class="term">Indigenous Professionalism</div>
+                                        <div class="definition-text">Locally-developed professional standards</div>
+                                    </div>
+                                    <div class="glossary-item">
+                                        <div class="term">Licensure</div>
+                                        <div class="definition-text">Official certification to practice teaching</div>
+                                    </div>
+                                    <div class="glossary-item">
+                                        <div class="term">Public Trust</div>
+                                        <div class="definition-text">Societal confidence in teachers' competence</div>
+                                    </div>
+                                    <div class="glossary-item">
+                                        <div class="term">Reflective Practice</div>
+                                        <div class="definition-text">Systematic examination of one's teaching</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            </div>
+
+        </div> <!-- end content -->
+    </div> <!-- end container -->
+
+    <button class="scroll-top" id="scroll-top" onclick="scrollToTop()">↑</button>
+
+    <script>
+        // Tab navigation
+        const tabs = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const targetTab = tab.getAttribute('data-tab');
+
+                tabs.forEach(t => t.classList.remove('active'));
+                tabContents.forEach(tc => tc.classList.remove('active'));
+
+                tab.classList.add('active');
+                document.getElementById(targetTab).classList.add('active');
+
+                markTabCompleted(tab);
+                updateProgress();
+
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+
+        // Mark tab as completed
+        function markTabCompleted(tab) {
+            const tabId = tab.getAttribute('data-tab');
+            localStorage.setItem('completed_' + tabId, 'true');
+            if (!tab.classList.contains('completed')) {
+                tab.classList.add('completed');
+            }
+        }
+
+        // Load completed status
+        function loadCompletedStatus() {
+            tabs.forEach(tab => {
+                const tabId = tab.getAttribute('data-tab');
+                if (localStorage.getItem('completed_' + tabId) === 'true') {
+                    tab.classList.add('completed');
+                }
+            });
+        }
+
+        // Update progress
+        function updateProgress() {
+            const total = tabs.length;
+            const completed = document.querySelectorAll('.tab-btn.completed').length;
+            const percent = Math.round((completed / total) * 100);
+
+            document.getElementById('progress-text').textContent = `${completed} of ${total} sections completed`;
+            document.getElementById('progress-percent').textContent = `${percent}%`;
+            document.getElementById('main-progress').style.width = `${percent}%`;
+        }
+
+        // Timer functionality
+        const timers = {};
+
+        function startTimer(id, duration) {
+            if (timers[id]) {
+                clearInterval(timers[id].interval);
+            }
+
+            const savedTime = localStorage.getItem(`timer_${id}`);
+            let timeLeft = savedTime ? parseInt(savedTime) : duration;
+
+            timers[id] = {
+                timeLeft: timeLeft,
+                interval: setInterval(() => {
+                    timeLeft--;
+                    timers[id].timeLeft = timeLeft;
+                    localStorage.setItem(`timer_${id}`, timeLeft);
+                    updateTimerDisplay(id, timeLeft);
+
+                    if (timeLeft <= 0) {
+                        clearInterval(timers[id].interval);
+                        alert(`Timer ${id} finished!`);
+                        localStorage.removeItem(`timer_${id}`);
+                    }
+                }, 1000)
+            };
+        }
+
+        function pauseTimer(id) {
+            if (timers[id]) {
+                clearInterval(timers[id].interval);
+            }
+        }
+
+        function resetTimer(id, duration) {
+            if (timers[id]) {
+                clearInterval(timers[id].interval);
+            }
+            localStorage.removeItem(`timer_${id}`);
+            updateTimerDisplay(id, duration);
+        }
+
+        function updateTimerDisplay(id, seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            const display = `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+            const element = document.getElementById(`${id}-timer-display`);
+            if (element) {
+                element.textContent = display;
+            }
+        }
+
+        // Auto-save reflections
+        function setupAutoSave(textareaId, savedBadgeId) {
+            const textarea = document.getElementById(textareaId);
+            if (!textarea) return;
+
+            const saved = localStorage.getItem('reflection_' + textareaId);
+            if (saved) textarea.value = saved;
+
+            let saveTimeout;
+            textarea.addEventListener('input', () => {
+                clearTimeout(saveTimeout);
+                saveTimeout = setTimeout(() => {
+                    localStorage.setItem('reflection_' + textareaId, textarea.value);
+                    const badge = document.getElementById(savedBadgeId);
+                    if (badge) {
+                        badge.classList.add('show');
+                        setTimeout(() => badge.classList.remove('show'), 2000);
+                    }
+                }, 800);
+            });
+        }
+
+        // Checkbox persistence
+        function saveCheckbox(id) {
+            const checkbox = document.getElementById(id);
+            localStorage.setItem('checkbox_' + id, checkbox.checked);
+            const item = checkbox.closest('.checklist-item');
+            if (item) {
+                item.classList.toggle('checked', checkbox.checked);
+            }
+        }
+
+        function loadCheckboxes() {
+            ['check1','check2','check3','check4','check5'].forEach(id => {
+                const saved = localStorage.getItem('checkbox_' + id);
+                const checkbox = document.getElementById(id);
+                if (checkbox && saved === 'true') {
+                    checkbox.checked = true;
+                    const item = checkbox.closest('.checklist-item');
+                    if (item) item.classList.add('checked');
+                }
+            });
+        }
+
+        // Flashcard data
+        const flashcards = [
+            {
+                term: 'Autonomy',
+                definition: 'The degree of professional independence teachers have in making decisions about curriculum, pedagogy, and assessment.',
+                example: 'Example (Finland): Finnish teachers design their own curricula within broad national guidelines and are trusted as autonomous professionals.',
+                discussion: 'Discussion: How does teacher autonomy differ in your educational context? What are the benefits and challenges?'
+            },
+            {
+                term: 'Accountability',
+                definition: 'The obligation of teachers and schools to demonstrate responsibility and effectiveness to stakeholders including students, parents, and governments.',
+                example: 'Example (USA): High-stakes standardized testing and teacher evaluation systems hold teachers directly accountable for student outcomes.',
+                discussion: 'Discussion: Who should teachers be most accountable to — students, parents, or the state? Does your answer differ across cultures?'
+            },
+            {
+                term: 'Ethical Framework',
+                definition: 'A structured set of principles and values that guide teachers\' professional conduct, relationships, and decision-making.',
+                example: 'Example (UK): The Teachers\' Standards outline both teaching practice expectations and personal conduct requirements, forming an ethical code.',
+                discussion: 'Discussion: Can a single ethical code apply to teachers globally, or must it be adapted to cultural norms? Give a specific example.'
+            },
+            {
+                term: 'Collegiality',
+                definition: 'A culture of cooperative and mutually supportive relationships among teachers, characterized by sharing resources, ideas, and collective responsibility.',
+                example: 'Example (Japan): "Lesson study" (jugyou kenkyuu) is a formal practice of collaborative teaching observation and improvement among Japanese teachers.',
+                discussion: 'Discussion: How does your own educational system encourage or discourage collegiality? What barriers exist?'
+            },
+            {
+                term: 'Professional Learning Community',
+                definition: 'A structured group of educators who engage in ongoing, collaborative professional development aimed at improving student learning outcomes.',
+                example: 'Example (Singapore): Singapore\'s Ministry of Education formally supports PLCs within schools with dedicated time and structured inquiry protocols.',
+                discussion: 'Discussion: What makes a PLC effective? How might a PLC function differently in a high-resource vs. low-resource school context?'
+            },
+            {
+                term: 'Contextual Knowledge',
+                definition: 'Teacher understanding of the social, cultural, economic, and political context of their school community and how it shapes teaching decisions.',
+                example: 'Example (Ghana): Teachers in rural Ghana often navigate multi-grade classrooms with limited resources, requiring strong contextual adaptation skills.',
+                discussion: 'Discussion: How do you account for contextual knowledge in international teacher education frameworks like TPACK or TALIS?'
+            },
+            {
+                term: 'Performativity',
+                definition: 'A culture in which teachers\' worth and identity are measured primarily by measurable outputs, performance indicators, and compliance with external standards.',
+                example: 'Example (Australia): NAPLAN testing and school ranking systems have been critiqued for promoting a performativity culture that narrows the curriculum.',
+                discussion: 'Discussion: What are the costs of performativity for teacher professionalism? How does Hargreaves\' framework relate to this concept?'
+            },
+            {
+                term: 'Policy Borrowing',
+                definition: 'The practice of adopting educational policies, practices, or frameworks from other countries, often without full consideration of contextual fit.',
+                example: 'Example (International): Many countries have adopted Finland\'s education model without accounting for Finland\'s unique cultural, social, and historical conditions.',
+                discussion: 'Discussion: When is policy borrowing productive? When does it undermine indigenous professionalism? Cite a real example from your context.'
+            },
+            {
+                term: 'Indigenous Professionalism',
+                definition: 'Locally developed conceptions of what it means to be a professional teacher, grounded in the specific cultural, historical, and social values of a community.',
+                example: 'Example (New Zealand): Māori-medium schools (kura kaupapa Māori) define teacher professionalism through tikanga Māori, including whanaungatanga (relationships) and kaitiakitanga (guardianship).',
+                discussion: 'Discussion: How can international frameworks respect indigenous professionalism while still enabling cross-cultural comparison?'
+            },
+            {
+                term: 'Licensure',
+                definition: 'The formal certification process by which teachers are officially authorized to practice the profession, typically regulated by the state or professional body.',
+                example: 'Example (South Korea): Korean teachers must pass a national teacher certification exam (임용고시) — one of the most competitive processes globally.',
+                discussion: 'Discussion: Does a stricter licensure process lead to higher professionalism? Consider evidence from TALIS 2019 in your response.'
+            },
+            {
+                term: 'Public Trust',
+                definition: 'The degree to which the general public views teachers as competent, ethical, and trustworthy professionals worthy of respect and autonomy.',
+                example: 'Example (Finland): Finnish teachers enjoy very high public trust, which translates into significant professional autonomy and reduced external oversight.',
+                discussion: 'Discussion: What factors influence public trust in teachers? How does it vary in your country compared to international contexts?'
+            },
+            {
+                term: 'Reflective Practice',
+                definition: 'The systematic, deliberate process by which teachers examine their own teaching practices, beliefs, and assumptions in order to improve.',
+                example: 'Example (International): Schön\'s (1983) concepts of "reflection-in-action" and "reflection-on-action" are widely embedded in teacher education programs worldwide.',
+                discussion: 'Discussion: Is reflective practice a universal professional value, or does it carry different meanings in different cultural and institutional contexts?'
+            }
+        ];
+
+        let currentCard = 0;
+        let isFlipped = false;
+
+        function updateFlashcard() {
+            const card = flashcards[currentCard];
+            document.getElementById('card-term').textContent = card.term;
+            document.getElementById('card-term-back').textContent = card.term;
+            document.getElementById('card-definition').textContent = card.definition;
+            document.getElementById('card-example').innerHTML = card.example;
+            document.getElementById('card-discussion').innerHTML = '<strong>Peer Discussion:</strong> ' + card.discussion.replace('Discussion: ', '');
+            document.getElementById('card-counter').textContent = `${currentCard + 1} / ${flashcards.length}`;
+
+            const fc = document.getElementById('flashcard');
+            if (fc) fc.classList.remove('flipped');
+            isFlipped = false;
+        }
+
+        function flipCard() {
+            const fc = document.getElementById('flashcard');
+            if (!fc) return;
+            isFlipped = !isFlipped;
+            fc.classList.toggle('flipped', isFlipped);
+        }
+
+        function nextCard() {
+            currentCard = (currentCard + 1) % flashcards.length;
+            updateFlashcard();
+        }
+
+        function prevCard() {
+            currentCard = (currentCard - 1 + flashcards.length) % flashcards.length;
+            updateFlashcard();
+        }
+
+        // Scroll to top button
+        window.addEventListener('scroll', () => {
+            const btn = document.getElementById('scroll-top');
+            if (btn) btn.style.display = window.scrollY > 300 ? 'block' : 'none';
+        });
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', () => {
+            loadCompletedStatus();
+            updateProgress();
+            loadCheckboxes();
+            setupAutoSave('preclass-notes', 'preclass-saved');
+            setupAutoSave('definition-draft', 'definition-saved');
+            setupAutoSave('exit-ticket', 'exit-saved');
+        });
+    </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
