@@ -30,7 +30,7 @@ This interactive HTML website presents a comprehensive 120-minute university-lev
 
 ### Interactive Elements
 - **Collapsible sections** for external tool instructions
-- **Interactive quiz** with instant feedback (5 questions on ZPD and scaffolding)
+- **Interactive quiz** with instant feedback (10 questions on ZPD and scaffolding)
 - **Progress tracking** - localStorage-based progress bar
 - **Slide presentation** - Full 10-slide deck with keyboard navigation
 
