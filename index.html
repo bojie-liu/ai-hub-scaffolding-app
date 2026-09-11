@@ -1,16 +1,825 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Basic HTML Project</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Generative AI Works - Interactive Animation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 1200px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .animation-canvas {
+            padding: 40px;
+            min-height: 500px;
+            position: relative;
+        }
+
+        canvas {
+            width: 100%;
+            height: 500px;
+            border-radius: 10px;
+            background: #f8f9fa;
+        }
+
+        .controls {
+            padding: 30px;
+            background: #f8f9fa;
+            border-top: 2px solid #e9ecef;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #e9ecef;
+            color: #495057;
+        }
+
+        .btn-secondary:hover {
+            background: #dee2e6;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .speed-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .speed-control input {
+            width: 120px;
+        }
+
+        .stage-indicator {
+            padding: 20px 30px;
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            margin: 20px 30px;
+            border-radius: 8px;
+        }
+
+        .stage-indicator h3 {
+            color: #856404;
+            margin-bottom: 8px;
+        }
+
+        .stage-indicator p {
+            color: #856404;
+            line-height: 1.6;
+        }
+
+        .info-panel {
+            padding: 20px 30px;
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            margin: 20px 30px;
+            border-radius: 8px;
+        }
+
+        .info-panel h4 {
+            color: #1976D2;
+            margin-bottom: 8px;
+        }
+
+        .info-panel p {
+            color: #0d47a1;
+            line-height: 1.6;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Hello World!</h1>
-    <p>Welcome to your new project.</p>
-  </div>
-  <script src="script.js"></script>
+    <div class="container">
+        <header>
+            <h1>How Generative AI Works</h1>
+            <p class="subtitle">An Interactive Visual Explanation for Education Technology Students</p>
+        </header>
+
+        <div class="stage-indicator" id="stageIndicator">
+            <h3 id="stageName">Stage 1: Input & Tokenization</h3>
+            <p id="stageDescription">Breaking down text into processable tokens</p>
+        </div>
+
+        <div class="animation-canvas">
+            <canvas id="mainCanvas"></canvas>
+        </div>
+
+        <div class="info-panel" id="infoPanel">
+            <h4 id="infoTitle">Getting Started</h4>
+            <p id="infoText">Click "Play" to begin the animation. Use controls to pause, adjust speed, or step through each stage.</p>
+        </div>
+
+        <div class="controls">
+            <button class="btn btn-primary" id="playBtn">▶ Play</button>
+            <button class="btn btn-secondary" id="pauseBtn" disabled>⏸ Pause</button>
+            <button class="btn btn-secondary" id="resetBtn">↻ Reset</button>
+            <button class="btn btn-secondary" id="prevBtn">⏮ Previous</button>
+            <button class="btn btn-secondary" id="nextBtn">⏭ Next</button>
+
+            <div class="speed-control">
+                <label for="speedSlider">Speed:</label>
+                <input type="range" id="speedSlider" min="0.5" max="2" step="0.1" value="1">
+                <span id="speedValue">1.0x</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('mainCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Set canvas size
+        function resizeCanvas() {
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width * window.devicePixelRatio;
+            canvas.height = rect.height * window.devicePixelRatio;
+            ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        // Animation state
+        let currentStage = 0;
+        let stageProgress = 0;
+        let isPlaying = false;
+        let animationSpeed = 1;
+        let animationFrame;
+
+        // Define animation stages
+        const stages = [
+            {
+                name: "Stage 1: Input & Tokenization",
+                description: "Text input is broken down into tokens - the basic units that AI models process.",
+                info: "Tokenization splits text into subwords or characters. For example, 'learning' might become ['learn', '##ing']."
+            },
+            {
+                name: "Stage 2: Embedding",
+                description: "Tokens are converted into numerical vectors that capture semantic meaning.",
+                info: "Each token becomes a high-dimensional vector (e.g., 768 or 1024 dimensions) that encodes its meaning in mathematical space."
+            },
+            {
+                name: "Stage 3: Attention Mechanism",
+                description: "The model analyzes relationships between all tokens to understand context.",
+                info: "Self-attention allows each token to 'attend' to every other token, computing which ones are most relevant for understanding meaning."
+            },
+            {
+                name: "Stage 4: Transformer Layers",
+                description: "Multiple layers of neural networks process and refine the understanding.",
+                info: "Modern models like GPT-4 have dozens of transformer layers, each learning increasingly abstract representations."
+            },
+            {
+                name: "Stage 5: Next Token Prediction",
+                description: "The model predicts the most likely next token based on all previous context.",
+                info: "The model outputs a probability distribution over all possible tokens. Sampling techniques (temperature, top-k, top-p) determine which token is chosen."
+            },
+            {
+                name: "Stage 6: Iterative Generation",
+                description: "The process repeats, generating one token at a time until completion.",
+                info: "Each generated token is fed back as input, allowing the model to generate coherent sequences of any length."
+            }
+        ];
+
+        // UI Elements
+        const playBtn = document.getElementById('playBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const speedSlider = document.getElementById('speedSlider');
+        const speedValue = document.getElementById('speedValue');
+        const stageName = document.getElementById('stageName');
+        const stageDescription = document.getElementById('stageDescription');
+        const infoTitle = document.getElementById('infoTitle');
+        const infoText = document.getElementById('infoText');
+
+        // Event Listeners
+        playBtn.addEventListener('click', play);
+        pauseBtn.addEventListener('click', pause);
+        resetBtn.addEventListener('click', reset);
+        prevBtn.addEventListener('click', previousStage);
+        nextBtn.addEventListener('click', nextStage);
+        speedSlider.addEventListener('input', (e) => {
+            animationSpeed = parseFloat(e.target.value);
+            speedValue.textContent = animationSpeed.toFixed(1) + 'x';
+        });
+
+        // Control functions
+        function play() {
+            isPlaying = true;
+            playBtn.disabled = true;
+            pauseBtn.disabled = false;
+            animate();
+        }
+
+        function pause() {
+            isPlaying = false;
+            playBtn.disabled = false;
+            pauseBtn.disabled = true;
+            if (animationFrame) {
+                cancelAnimationFrame(animationFrame);
+            }
+        }
+
+        function reset() {
+            pause();
+            currentStage = 0;
+            stageProgress = 0;
+            updateStageInfo();
+            draw();
+        }
+
+        function previousStage() {
+            if (currentStage > 0) {
+                currentStage--;
+                stageProgress = 0;
+                updateStageInfo();
+                draw();
+            }
+        }
+
+        function nextStage() {
+            if (currentStage < stages.length - 1) {
+                currentStage++;
+                stageProgress = 0;
+                updateStageInfo();
+                draw();
+            }
+        }
+
+        function updateStageInfo() {
+            const stage = stages[currentStage];
+            stageName.textContent = stage.name;
+            stageDescription.textContent = stage.description;
+            infoTitle.textContent = stage.name.replace('Stage ' + (currentStage + 1) + ': ', '');
+            infoText.textContent = stage.info;
+        }
+
+        // Animation loop
+        function animate() {
+            if (!isPlaying) return;
+
+            stageProgress += 0.01 * animationSpeed;
+
+            if (stageProgress >= 1) {
+                stageProgress = 0;
+                currentStage++;
+
+                if (currentStage >= stages.length) {
+                    currentStage = stages.length - 1;
+                    pause();
+                    return;
+                }
+                updateStageInfo();
+            }
+
+            draw();
+            animationFrame = requestAnimationFrame(animate);
+        }
+
+        // Drawing functions for each stage
+        function draw() {
+            const w = canvas.width / window.devicePixelRatio;
+            const h = canvas.height / window.devicePixelRatio;
+
+            // Clear canvas
+            ctx.fillStyle = '#f8f9fa';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Draw based on current stage
+            switch(currentStage) {
+                case 0: drawTokenization(w, h, stageProgress); break;
+                case 1: drawEmbedding(w, h, stageProgress); break;
+                case 2: drawAttention(w, h, stageProgress); break;
+                case 3: drawTransformer(w, h, stageProgress); break;
+                case 4: drawPrediction(w, h, stageProgress); break;
+                case 5: drawGeneration(w, h, stageProgress); break;
+            }
+        }
+
+        // Stage 1: Tokenization
+        function drawTokenization(w, h, progress) {
+            const text = "AI learns patterns";
+            const tokens = ["AI", "learn", "s", "pattern", "s"];
+
+            ctx.font = 'bold 24px Arial';
+            ctx.fillStyle = '#333';
+            ctx.textAlign = 'center';
+            ctx.fillText('Input Text:', w/2, 80);
+
+            // Draw input text
+            ctx.font = '20px Arial';
+            ctx.fillStyle = '#667eea';
+            ctx.fillText(text, w/2, 120);
+
+            // Animate arrow
+            if (progress > 0.2) {
+                drawArrow(w/2, 140, w/2, 180, '#333');
+                ctx.fillStyle = '#333';
+                ctx.font = '14px Arial';
+                ctx.fillText('Tokenize', w/2 + 40, 160);
+            }
+
+            // Draw tokens
+            if (progress > 0.4) {
+                ctx.font = 'bold 20px Arial';
+                ctx.fillStyle = '#333';
+                ctx.fillText('Tokens:', w/2, 220);
+
+                const tokenY = 260;
+                const spacing = 120;
+                const startX = w/2 - (tokens.length * spacing) / 2 + spacing/2;
+
+                tokens.forEach((token, i) => {
+                    const x = startX + i * spacing;
+                    const alpha = Math.min(1, (progress - 0.4 - i * 0.1) * 5);
+
+                    if (alpha > 0) {
+                        ctx.globalAlpha = alpha;
+                        ctx.fillStyle = '#667eea';
+                        roundRect(x - 45, tokenY - 15, 90, 40, 8);
+                        ctx.fillStyle = 'white';
+                        ctx.fillText(token, x, tokenY + 10);
+                        ctx.globalAlpha = 1;
+
+                        // Token ID
+                        ctx.font = '12px Arial';
+                        ctx.fillStyle = '#666';
+                        ctx.fillText(`ID: ${1000 + i}`, x, tokenY + 40);
+                    }
+                });
+            }
+
+            ctx.font = '16px Arial';
+            ctx.fillStyle = '#666';
+            ctx.textAlign = 'center';
+            if (progress > 0.8) {
+                ctx.fillText('Each token represents a piece of the input that the model can process', w/2, h - 60);
+            }
+        }
+
+        // Stage 2: Embedding
+        function drawEmbedding(w, h, progress) {
+            ctx.textAlign = 'center';
+            ctx.font = 'bold 20px Arial';
+            ctx.fillStyle = '#333';
+
+            // Show token
+            ctx.fillText('Token: "learn"', w/4, 80);
+            ctx.fillStyle = '#667eea';
+            roundRect(w/4 - 60, 100, 120, 40, 8);
+            ctx.fillStyle = 'white';
+            ctx.fillText('learn', w/4, 128);
+
+            // Arrow
+            if (progress > 0.3) {
+                drawArrow(w/4 + 70, 120, w/2 - 80, 120, '#333');
+                ctx.fillStyle = '#333';
+                ctx.font = '14px Arial';
+                ctx.fillText('Embedding', w/4 + 120, 100);
+                ctx.fillText('Layer', w/4 + 120, 115);
+            }
+
+            // Vector representation
+            if (progress > 0.5) {
+                ctx.fillStyle = '#333';
+                ctx.font = 'bold 20px Arial';
+                ctx.fillText('Vector (768 dimensions)', 3*w/4, 80);
+
+                const vectorValues = [0.23, -0.45, 0.89, 0.12, -0.67, 0.34, 0.78, -0.23];
+                const startY = 110;
+                const boxHeight = 35;
+
+                vectorValues.forEach((val, i) => {
+                    const y = startY + i * (boxHeight + 5);
+                    const alpha = Math.min(1, (progress - 0.5 - i * 0.05) * 5);
+
+                    if (alpha > 0) {
+                        ctx.globalAlpha = alpha;
+                        const color = val > 0 ? '#4CAF50' : '#f44336';
+                        ctx.fillStyle = color;
+                        roundRect(3*w/4 - 80, y, 160, boxHeight, 4);
+                        ctx.fillStyle = 'white';
+                        ctx.font = '16px monospace';
+                        ctx.fillText(val.toFixed(2), 3*w/4, y + 22);
+                        ctx.globalAlpha = 1;
+                    }
+                });
+
+                if (progress > 0.8) {
+                    ctx.font = '14px Arial';
+                    ctx.fillStyle = '#666';
+                    ctx.fillText('... (760 more dimensions)', 3*w/4, startY + vectorValues.length * (boxHeight + 5) + 20);
+                }
+            }
+
+            if (progress > 0.9) {
+                ctx.font = '16px Arial';
+                ctx.fillStyle = '#666';
+                ctx.fillText('Captures semantic meaning in mathematical space', w/2, h - 60);
+            }
+        }
+
+        // Stage 3: Attention Mechanism
+        function drawAttention(w, h, progress) {
+            const tokens = ["AI", "learn", "pattern"];
+            const positions = [
+                {x: w/4, y: h/3},
+                {x: w/2, y: h/3},
+                {x: 3*w/4, y: h/3}
+            ];
+
+            ctx.textAlign = 'center';
+            ctx.font = 'bold 20px Arial';
+            ctx.fillStyle = '#333';
+            ctx.fillText('Self-Attention: Understanding Context', w/2, 60);
+
+            // Draw tokens
+            tokens.forEach((token, i) => {
+                const pos = positions[i];
+                ctx.fillStyle = '#667eea';
+                ctx.beginPath();
+                ctx.arc(pos.x, pos.y, 40, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.fillStyle = 'white';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText(token, pos.x, pos.y + 5);
+            });
+
+            // Draw attention connections
+            if (progress > 0.3) {
+                const connectionProgress = (progress - 0.3) / 0.7;
+
+                positions.forEach((from, i) => {
+                    positions.forEach((to, j) => {
+                        if (i !== j) {
+                            const delay = (i * positions.length + j) * 0.1;
+                            const lineProgress = Math.max(0, Math.min(1, (connectionProgress - delay) * 5));
+
+                            if (lineProgress > 0) {
+                                const weight = 0.3 + Math.random() * 0.4;
+                                ctx.globalAlpha = lineProgress * weight;
+                                ctx.strokeStyle = '#764ba2';
+                                ctx.lineWidth = 2 + weight * 3;
+                                ctx.beginPath();
+                                ctx.moveTo(from.x, from.y);
+                                ctx.lineTo(to.x, to.y);
+                                ctx.stroke();
+                                ctx.globalAlpha = 1;
+                            }
+                        }
+                    });
+                });
+
+                // Attention scores
+                if (connectionProgress > 0.7) {
+                    ctx.fillStyle = '#333';
+                    ctx.font = '14px Arial';
+                    ctx.fillText('Attention weights determine relevance', w/2, h - 100);
+                    ctx.fillText('Each token attends to all others', w/2, h - 80);
+                }
+            }
+
+            if (progress > 0.9) {
+                ctx.font = '16px Arial';
+                ctx.fillStyle = '#666';
+                ctx.fillText('This allows the model to understand relationships and context', w/2, h - 50);
+            }
+        }
+
+        // Stage 4: Transformer Layers
+        function drawTransformer(w, h, progress) {
+            ctx.textAlign = 'center';
+            ctx.font = 'bold 20px Arial';
+            ctx.fillStyle = '#333';
+            ctx.fillText('Transformer Layers Process Information', w/2, 60);
+
+            const layers = 6;
+            const layerHeight = 50;
+            const layerWidth = 300;
+            const startY = 100;
+            const centerX = w/2;
+
+            for (let i = 0; i < layers; i++) {
+                const y = startY + i * (layerHeight + 20);
+                const alpha = Math.min(1, Math.max(0, (progress - i * 0.15) * 3));
+
+                if (alpha > 0) {
+                    ctx.globalAlpha = alpha;
+
+                    // Layer box
+                    const gradient = ctx.createLinearGradient(centerX - layerWidth/2, y, centerX + layerWidth/2, y);
+                    gradient.addColorStop(0, '#667eea');
+                    gradient.addColorStop(1, '#764ba2');
+                    ctx.fillStyle = gradient;
+                    roundRect(centerX - layerWidth/2, y, layerWidth, layerHeight, 8);
+
+                    // Layer label
+                    ctx.fillStyle = 'white';
+                    ctx.font = 'bold 16px Arial';
+                    ctx.fillText(`Layer ${i + 1}`, centerX, y + 20);
+                    ctx.font = '12px Arial';
+                    ctx.fillText('Attention + Feed Forward', centerX, y + 38);
+
+                    ctx.globalAlpha = 1;
+
+                    // Arrow to next layer
+                    if (i < layers - 1 && alpha > 0.5) {
+                        drawArrow(centerX, y + layerHeight, centerX, y + layerHeight + 20, '#333');
+                    }
+                }
+            }
+
+            if (progress > 0.9) {
+                ctx.font = '16px Arial';
+                ctx.fillStyle = '#666';
+                ctx.fillText('Each layer refines the representation', w/2, h - 40);
+            }
+        }
+
+        // Stage 5: Next Token Prediction
+        function drawPrediction(w, h, progress) {
+            ctx.textAlign = 'center';
+            ctx.font = 'bold 20px Arial';
+            ctx.fillStyle = '#333';
+            ctx.fillText('Predicting the Next Token', w/2, 60);
+
+            // Input context
+            ctx.font = '18px Arial';
+            ctx.fillStyle = '#667eea';
+            ctx.fillText('Context: "AI learns"', w/2, 110);
+
+            // Arrow down
+            if (progress > 0.2) {
+                drawArrow(w/2, 130, w/2, 170, '#333');
+            }
+
+            // Model processing
+            if (progress > 0.4) {
+                ctx.fillStyle = '#764ba2';
+                roundRect(w/2 - 100, 180, 200, 50, 8);
+                ctx.fillStyle = 'white';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Transformer Model', w/2, 210);
+            }
+
+            // Arrow down
+            if (progress > 0.6) {
+                drawArrow(w/2, 240, w/2, 280, '#333');
+            }
+
+            // Probability distribution
+            if (progress > 0.7) {
+                ctx.font = 'bold 18px Arial';
+                ctx.fillStyle = '#333';
+                ctx.fillText('Probability Distribution:', w/2, 310);
+
+                const predictions = [
+                    {token: 'patterns', prob: 0.45},
+                    {token: 'quickly', prob: 0.25},
+                    {token: 'from', prob: 0.15},
+                    {token: 'data', prob: 0.10},
+                    {token: 'well', prob: 0.05}
+                ];
+
+                const barStartY = 340;
+                const barHeight = 30;
+                const maxBarWidth = 250;
+
+                predictions.forEach((pred, i) => {
+                    const y = barStartY + i * (barHeight + 10);
+                    const barProgress = Math.min(1, Math.max(0, (progress - 0.7 - i * 0.05) * 5));
+
+                    if (barProgress > 0) {
+                        // Token label
+                        ctx.textAlign = 'right';
+                        ctx.font = '14px Arial';
+                        ctx.fillStyle = '#333';
+                        ctx.fillText(pred.token, w/2 - maxBarWidth/2 - 10, y + 20);
+
+                        // Probability bar
+                        ctx.fillStyle = i === 0 ? '#4CAF50' : '#667eea';
+                        const barWidth = pred.prob * maxBarWidth * barProgress;
+                        roundRect(w/2 - maxBarWidth/2, y, barWidth, barHeight, 4);
+
+                        // Probability percentage
+                        ctx.textAlign = 'left';
+                        ctx.fillStyle = '#333';
+                        ctx.fillText((pred.prob * 100).toFixed(0) + '%', w/2 + maxBarWidth/2 + 10, y + 20);
+                    }
+                });
+
+                ctx.textAlign = 'center';
+            }
+
+            if (progress > 0.95) {
+                ctx.font = '16px Arial';
+                ctx.fillStyle = '#666';
+                ctx.fillText('Highest probability token is selected: "patterns"', w/2, h - 40);
+            }
+        }
+
+        // Stage 6: Iterative Generation
+        function drawGeneration(w, h, progress) {
+            ctx.textAlign = 'center';
+            ctx.font = 'bold 20px Arial';
+            ctx.fillStyle = '#333';
+            ctx.fillText('Iterative Text Generation', w/2, 60);
+
+            const generationSteps = [
+                {input: 'AI', output: 'learns'},
+                {input: 'AI learns', output: 'patterns'},
+                {input: 'AI learns patterns', output: 'from'},
+                {input: 'AI learns patterns from', output: 'data'}
+            ];
+
+            const stepHeight = 90;
+            const startY = 110;
+
+            generationSteps.forEach((step, i) => {
+                const y = startY + i * stepHeight;
+                const stepProgress = Math.max(0, Math.min(1, (progress - i * 0.2) * 5));
+
+                if (stepProgress > 0) {
+                    ctx.globalAlpha = stepProgress;
+
+                    // Input box
+                    ctx.fillStyle = '#e3f2fd';
+                    roundRect(w/4 - 100, y, 200, 40, 8);
+                    ctx.fillStyle = '#333';
+                    ctx.font = '14px Arial';
+                    ctx.fillText(step.input, w/4, y + 25);
+
+                    // Arrow
+                    drawArrow(w/4 + 110, y + 20, w/2 - 110, y + 20, '#333');
+
+                    // Model
+                    ctx.fillStyle = '#764ba2';
+                    roundRect(w/2 - 50, y + 5, 100, 30, 6);
+                    ctx.fillStyle = 'white';
+                    ctx.font = 'bold 12px Arial';
+                    ctx.fillText('Model', w/2, y + 25);
+
+                    // Arrow
+                    drawArrow(w/2 + 60, y + 20, 3*w/4 - 110, y + 20, '#333');
+
+                    // Output box (new token)
+                    ctx.fillStyle = '#c8e6c9';
+                    roundRect(3*w/4 - 100, y, 200, 40, 8);
+                    ctx.fillStyle = '#2e7d32';
+                    ctx.font = 'bold 14px Arial';
+                    ctx.fillText(step.output, 3*w/4, y + 25);
+
+                    ctx.globalAlpha = 1;
+
+                    // Feedback arrow (new token becomes input)
+                    if (i < generationSteps.length - 1 && stepProgress > 0.7) {
+                        ctx.strokeStyle = '#FF9800';
+                        ctx.lineWidth = 2;
+                        ctx.setLineDash([5, 5]);
+                        ctx.beginPath();
+                        ctx.moveTo(3*w/4, y + 45);
+                        ctx.lineTo(3*w/4, y + 60);
+                        ctx.lineTo(w/4, y + 60);
+                        ctx.lineTo(w/4, y + 85);
+                        ctx.stroke();
+                        ctx.setLineDash([]);
+                    }
+                }
+            });
+
+            if (progress > 0.9) {
+                ctx.font = '16px Arial';
+                ctx.fillStyle = '#666';
+                ctx.fillText('Each generated token is fed back as input for the next prediction', w/2, h - 40);
+            }
+        }
+
+        // Helper function to draw rounded rectangles
+        function roundRect(x, y, width, height, radius) {
+            ctx.beginPath();
+            ctx.moveTo(x + radius, y);
+            ctx.lineTo(x + width - radius, y);
+            ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+            ctx.lineTo(x + width, y + height - radius);
+            ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+            ctx.lineTo(x + radius, y + height);
+            ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+            ctx.lineTo(x, y + radius);
+            ctx.quadraticCurveTo(x, y, x + radius, y);
+            ctx.closePath();
+            ctx.fill();
+        }
+
+        // Helper function to draw arrows
+        function drawArrow(fromX, fromY, toX, toY, color) {
+            const headLength = 10;
+            const angle = Math.atan2(toY - fromY, toX - fromX);
+
+            ctx.strokeStyle = color;
+            ctx.fillStyle = color;
+            ctx.lineWidth = 2;
+
+            // Draw line
+            ctx.beginPath();
+            ctx.moveTo(fromX, fromY);
+            ctx.lineTo(toX, toY);
+            ctx.stroke();
+
+            // Draw arrowhead
+            ctx.beginPath();
+            ctx.moveTo(toX, toY);
+            ctx.lineTo(
+                toX - headLength * Math.cos(angle - Math.PI / 6),
+                toY - headLength * Math.sin(angle - Math.PI / 6)
+            );
+            ctx.lineTo(
+                toX - headLength * Math.cos(angle + Math.PI / 6),
+                toY - headLength * Math.sin(angle + Math.PI / 6)
+            );
+            ctx.closePath();
+            ctx.fill();
+        }
+
+        // Initialize
+        updateStageInfo();
+        draw();
+    </script>
 </body>
 </html>

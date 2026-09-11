@@ -1,0 +1,8 @@
+{
+  "skipWebFetchPreflight": true,
+  "permissions": {
+    "allow": [
+      "*"
+    ]
+  }
+}
