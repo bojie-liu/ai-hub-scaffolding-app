@@ -1,16 +1,923 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Basic HTML Project</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Professionalism in Local and International Contexts</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        .header-info {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .info-item strong {
+            font-weight: 600;
+        }
+        .progress-bar {
+            background: rgba(255,255,255,0.2);
+            height: 8px;
+            border-radius: 4px;
+            margin-top: 20px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            background: white;
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+        .content {
+            padding: 40px;
+        }
+        .card {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            border-color: #667eea;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+        }
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2d3748;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .card-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        .toggle-btn {
+            background: #f7fafc;
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+        .toggle-btn:hover {
+            background: #edf2f7;
+        }
+        .card-content {
+            margin-top: 20px;
+            display: none;
+        }
+        .card-content.active {
+            display: block;
+        }
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+        .badge-primary {
+            background: #ebf4ff;
+            color: #3182ce;
+        }
+        .badge-success {
+            background: #f0fff4;
+            color: #38a169;
+        }
+        .badge-warning {
+            background: #fffaf0;
+            color: #dd6b20;
+        }
+        .badge-info {
+            background: #e6fffa;
+            color: #319795;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        th {
+            background: #f7fafc;
+            font-weight: 600;
+            color: #2d3748;
+        }
+        ul, ol {
+            margin-left: 24px;
+            margin-top: 12px;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+        .activity-box {
+            background: #f7fafc;
+            border-left: 4px solid #667eea;
+            padding: 16px;
+            margin: 16px 0;
+            border-radius: 4px;
+        }
+        .tool-card {
+            background: #ebf4ff;
+            border: 2px solid #3182ce;
+            border-radius: 8px;
+            padding: 16px;
+            margin: 12px 0;
+        }
+        .tool-card h4 {
+            color: #2c5282;
+            margin-bottom: 8px;
+        }
+        .tool-card a {
+            color: #3182ce;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .tool-card a:hover {
+            text-decoration: underline;
+        }
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: #f7fafc;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            transition: all 0.3s ease;
+        }
+        .checkbox-item:hover {
+            background: #edf2f7;
+        }
+        .checkbox-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+        .checkbox-item.completed {
+            opacity: 0.7;
+            background: #f0fff4;
+        }
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.75rem;
+            }
+            .header-info {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .content {
+                padding: 20px;
+            }
+            .card {
+                padding: 16px;
+            }
+            table {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Hello World!</h1>
-    <p>Welcome to your new project.</p>
-  </div>
-  <script src="script.js"></script>
+    <div class="container">
+        <div class="header">
+            <h1>Teacher Professionalism in Local and International Contexts</h1>
+            <div class="header-info">
+                <div class="info-item"><strong>Duration:</strong> 90 minutes</div>
+                <div class="info-item"><strong>Level:</strong> Undergraduate (Year 3/4)</div>
+                <div class="info-item"><strong>Class Size:</strong> 30 students</div>
+                <div class="info-item"><strong>Pedagogy:</strong> Critical Inquiry Seminar</div>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <div class="content">
+            <!-- Section 1: Learning Outcomes -->
+            <div class="card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <div class="card-title">
+                        <div class="card-icon">1</div>
+                        Intended Learning Outcomes (ILOs)
+                    </div>
+                    <button class="toggle-btn">+</button>
+                </div>
+                <div class="card-content">
+                    <p style="margin-bottom: 16px;">After this session, students will be able to:</p>
+                    <ol>
+                        <li><strong>Analyse</strong> the key dimensions of teacher professionalism (e.g., ethical standards, autonomy, ongoing learning) as they are conceptualised in at least two different national/international frameworks.</li>
+                        <li><strong>Compare and contrast</strong> local (e.g., Hong Kong/UK/US) definitions of professional conduct with those from an international context (e.g., OECD Teaching and Learning International Survey [TALIS] indicators, UNESCO recommendations).</li>
+                        <li><strong>Critique</strong> hidden assumptions in dominant professionalism discourses (e.g., the "ideal teacher" construct, performativity vs. autonomy).</li>
+                        <li><strong>Construct</strong> a well‑reasoned argument for how teacher professionalism should be re‑imagined in a globalised, culturally diverse classroom.</li>
+                        <li><strong>Synthesise</strong> peer perspectives and scholarly sources into a shared, inquiry‑driven understanding of professionalism's tensions and possibilities.</li>
+                    </ol>
+                    <div style="margin-top: 16px; padding: 12px; background: #ebf4ff; border-radius: 8px;">
+                        <strong>Alignment:</strong> ILOs 1–3 reflect <strong>analysis</strong> and <strong>evaluation</strong> (Bloom's Taxonomy); ILOs 4–5 involve <strong>creation</strong> and <strong>synthesis</strong> of collaborative inquiry. The entire set is tightly linked to the <strong>Critical Inquiry Seminar</strong> pedagogy, which demands questioning, comparing, and debating.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 2: Pre-Class Preparation -->
+            <div class="card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <div class="card-title">
+                        <div class="card-icon">2</div>
+                        Pre-Class Preparation
+                    </div>
+                    <button class="toggle-btn">+</button>
+                </div>
+                <div class="card-content">
+                    <p><em>The Critical Inquiry Seminar model does not require pre‑class reading, but a short pre‑reading in the previous week is recommended to ensure baseline knowledge.</em></p>
+                    <ul style="margin-top: 16px;">
+                        <li><strong>Reading:</strong> Whitty, G. (2006). "Teacher professionalism in a new era." <em>General Teaching Council for Northern Ireland</em>. (4 pages) – focusing on the shift from "old" to "new" professionalism.</li>
+                        <li><strong>Guiding question</strong> (posted on discussion board): <em>"Which aspect of teacher professionalism in your own experience most needs re‑examination? Bring one example to class."</em></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Section 3: Teaching & Learning Activities -->
+            <div class="card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <div class="card-title">
+                        <div class="card-icon">3</div>
+                        Teaching & Learning Activities
+                    </div>
+                    <button class="toggle-btn">+</button>
+                </div>
+                <div class="card-content">
+                    <h3 style="color: #667eea; margin-bottom: 16px;">Introduction (15 minutes) – Critical Inquiry Hook</h3>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>Activity</th>
+                                <th>Pedagogy Link</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>0–5</td>
+                                <td><strong>Provocative Opening:</strong> Display two headlines: <em>"Teachers should be accountable to measurable outcomes"</em> vs. <em>"Professionalism is about teacher autonomy and trust."</em> Ask students to stand on one side of the room representing their initial stance.</td>
+                                <td><strong>Critical Inquiry:</strong> Polarising issue forces students to surface assumptions.</td>
+                            </tr>
+                            <tr>
+                                <td>5–10</td>
+                                <td><strong>Think‑Pair‑Share:</strong> In pairs, students discuss <em>why</em> they chose that side. Teacher circulates, noting key points of tension.</td>
+                                <td>Encourages articulation of pre‑existing beliefs.</td>
+                            </tr>
+                            <tr>
+                                <td>10–15</td>
+                                <td><strong>Share whole‑class</strong> – teacher maps emerging themes on board (e.g., "accountability vs. trust", "local vs. global standards").</td>
+                                <td>Sets the inquiry agenda for the session.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="tool-card">
+                        <h4>🔧 Tool: Poll for Initial Stance</h4>
+                        <p>Use <a href="https://www.mentimeter.com" target="_blank">Mentimeter</a> to create a digital poll for visualising the class split:</p>
+                        <ol>
+                            <li>Go to <a href="https://www.mentimeter.com" target="_blank">Mentimeter.com</a> and create a free account</li>
+                            <li>Click "New presentation" and select "Scales" question type</li>
+                            <li>Enter the question: "Should teacher professionalism be globally standardised?"</li>
+                            <li>Set 5 options: ① Strongly yes – ② Somewhat yes – ③ Neutral – ④ Somewhat no – ⑤ Strongly no</li>
+                            <li>Display results as a bar chart to stimulate discussion</li>
+                            <li>Share the voting code with students via projector</li>
+                        </ol>
+                        <p><strong>Purpose:</strong> Quickly visualise diverse perspectives and create an immediate hook for critical inquiry.</p>
+                    </div>
+
+                    <h3 style="color: #667eea; margin: 32px 0 16px 0;">Development Activities (65 minutes)</h3>
+
+                    <div class="activity-box">
+                        <h4 style="margin-bottom: 12px;">Activity 1: Comparative Document Analysis (20 min)</h4>
+                        <p>Students are divided into 6 groups of 5. Each group receives <strong>two documents</strong> (print or digital):</p>
+                        <ul>
+                            <li><strong>Document A:</strong> Local teaching council's Code of Conduct (e.g., Hong Kong's "Code for the Education Profession")</li>
+                            <li><strong>Document B:</strong> Extract from OECD's TALIS 2018 report on professionalism indicators (e.g., autonomy, collaborative culture, professional development)</li>
+                        </ul>
+                        <p style="margin-top: 12px;"><strong>Task:</strong> Use a Venn diagram (on A3 paper) to identify <strong>similarities, differences, and contradictions</strong> between the two frameworks.</p>
+                        <p style="margin-top: 12px;"><strong>Critical Inquiry prompts:</strong></p>
+                        <ul>
+                            <li><em>What assumptions about "good teaching" underlie each document?</em></li>
+                            <li><em>Whose interests are served by these definitions?</em></li>
+                            <li><em>Are there any voices missing?</em></li>
+                        </ul>
+                    </div>
+
+                    <table style="margin-top: 16px;">
+                        <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>Activity</th>
+                                <th>Pedagogy Link</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>15–20</td>
+                                <td>Initial reading and annotation.</td>
+                                <td>Independent analysis – builds evidence base.</td>
+                            </tr>
+                            <tr>
+                                <td>20–35</td>
+                                <td>Group discussion and diagram creation.</td>
+                                <td>Collaborative inquiry – students challenge each other's interpretations.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="activity-box" style="margin-top: 24px;">
+                        <h4 style="margin-bottom: 12px;">Activity 2: Structured Debate (25 min)</h4>
+                        <ul>
+                            <li>Each group presents one key "contradiction" they discovered (2 min per group).</li>
+                            <li>Teacher facilitates a <strong>whole‑class debate</strong> around the question: <em>"Should teacher professionalism be globally standardised or locally determined?"</em></li>
+                            <li>Two "expert panels" (3 students each) are volunteer‑assigned to argue <strong>for</strong> and <strong>against</strong> standardisation, using evidence from the documents and their own experiences.</li>
+                            <li>Remaining students act as "critical jury" – they note persuasive points and later vote.</li>
+                        </ul>
+                    </div>
+
+                    <table style="margin-top: 16px;">
+                        <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>Activity</th>
+                                <th>Pedagogy Link</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>35–40</td>
+                                <td>Group presentations.</td>
+                                <td>Sharing diverse findings.</td>
+                            </tr>
+                            <tr>
+                                <td>40–55</td>
+                                <td>Panel debate + jury observations.</td>
+                                <td><strong>Critical Inquiry</strong> – argumentation, respectful disagreement, evidence use.</td>
+                            </tr>
+                            <tr>
+                                <td>55–60</td>
+                                <td>Vote and brief reflection: "What new questions do you have?"</td>
+                                <td>Metacognitive closure of inquiry.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="tool-card" style="margin-top: 16px;">
+                        <h4>🔧 Tool: Interactive Debate with Kahoot</h4>
+                        <p>Use <a href="https://kahoot.com" target="_blank">Kahoot!</a> to collect jury votes and reflect on the debate:</p>
+                        <ol>
+                            <li>Create a free account at <a href="https://kahoot.com" target="_blank">Kahoot.com</a></li>
+                            <li>Select "Survey" mode (not quiz mode)</li>
+                            <li>Add questions:
+                                <ul style="margin-left: 20px; margin-top: 8px;">
+                                    <li>"Which panel presented more convincing evidence?"</li>
+                                    <li>"Has your initial position changed?" (Yes/No/Partially)</li>
+                                    <li>"What new question do you now have about professionalism?"</li>
+                                </ul>
+                            </li>
+                            <li>Launch the survey and display the game PIN on the projector</li>
+                            <li>Students join via kahoot.it on their devices</li>
+                            <li>Review aggregate results to guide closing discussion</li>
+                        </ol>
+                        <p><strong>Learning Objective:</strong> Encourage metacognitive reflection on how evidence shifts perspectives.</p>
+                    </div>
+
+                    <div class="activity-box" style="margin-top: 24px;">
+                        <h4 style="margin-bottom: 12px;">Activity 3: Collaborative Synthesis (20 min)</h4>
+                        <p>In the same groups, students co‑create a <strong>"Principled Framework for Teacher Professionalism in a Globalised World"</strong> (poster or digital slide). They must incorporate:</p>
+                        <ul>
+                            <li>At least two dimensions from the local doc</li>
+                            <li>At least two from the international doc</li>
+                            <li>One idea that challenges both (e.g., "cultural responsiveness as a core component")</li>
+                        </ul>
+                        <p style="margin-top: 12px;"><strong>Template provided:</strong> Core principles | Rationale | Examples from practice</p>
+                    </div>
+
+                    <table style="margin-top: 16px;">
+                        <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>Activity</th>
+                                <th>Pedagogy Link</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>60–70</td>
+                                <td>Group work on framework.</td>
+                                <td>Creation and synthesis – higher‑order thinking.</td>
+                            </tr>
+                            <tr>
+                                <td>70–80</td>
+                                <td>Gallery walk: groups view others' frameworks and leave sticky‑note questions/comments.</td>
+                                <td>Peer critique – further inquiry.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="tool-card" style="margin-top: 16px;">
+                        <h4>🔧 Tool: Digital Gallery Walk with Padlet</h4>
+                        <p>Use <a href="https://padlet.com" target="_blank">Padlet</a> for a digital gallery walk where students can post frameworks and comment:</p>
+                        <ol>
+                            <li>Create a free <a href="https://padlet.com" target="_blank">Padlet</a> account</li>
+                            <li>Choose "Gallery" layout for visual framework display</li>
+                            <li>Set title: "Frameworks for Teacher Professionalism in a Globalised World"</li>
+                            <li>Enable commenting and reactions</li>
+                            <li>Each group uploads their framework (photo or digital slide)</li>
+                            <li>Groups navigate to view other frameworks and leave comments using the guiding questions</li>
+                            <li>Share the Padlet link via QR code or shortened URL</li>
+                        </ol>
+                        <p><strong>Learning Objective:</strong> Foster peer learning through constructive critique and identification of common themes.</p>
+                    </div>
+
+                    <h3 style="color: #667eea; margin: 32px 0 16px 0;">Synthesis & Closure (10 minutes)</h3>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>Activity</th>
+                                <th>Pedagogy Link</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>80–85</td>
+                                <td><strong>Exit Ticket:</strong> "One assumption about professionalism that I now question is… because…"</td>
+                                <td>Formative check on critical thinking shift.</td>
+                            </tr>
+                            <tr>
+                                <td>85–90</td>
+                                <td>Teacher summarises key tensions uncovered; links to next session's topic (e.g., teacher identity in multicultural classrooms).</td>
+                                <td>Preview and agenda setting for continued inquiry.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="tool-card" style="margin-top: 16px;">
+                        <h4>🔧 Tool: Exit Ticket with Google Forms</h4>
+                        <p>Collect reflective exit tickets digitally using <a href="https://forms.google.com" target="_blank">Google Forms</a>:</p>
+                        <ol>
+                            <li>Go to <a href="https://forms.google.com" target="_blank">Google Forms</a> and create a new form</li>
+                            <li>Title: "Exit Ticket: Teacher Professionalism"</li>
+                            <li>Add a short answer question: "One assumption about professionalism that I now question is..."</li>
+                            <li>Add a second short answer: "...because..."</li>
+                            <li>Optional: Add a scale question (1-5): "How much did this session challenge your thinking?"</li>
+                            <li>Set responses to be anonymous or identifiable (based on your assessment needs)</li>
+                            <li>Share the link via QR code displayed on screen</li>
+                            <li>Review responses after class to inform next session</li>
+                        </ol>
+                        <p><strong>Learning Objective:</strong> Capture individual conceptual shifts for formative assessment and instructional adjustment.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 4: Assessment Methods -->
+            <div class="card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <div class="card-title">
+                        <div class="card-icon">4</div>
+                        Assessment Methods
+                    </div>
+                    <button class="toggle-btn">+</button>
+                </div>
+                <div class="card-content">
+                    <h3 style="color: #667eea; margin-bottom: 16px;">Formative Assessment (During Class)</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Method</th>
+                                <th>Pedagogy Link</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Observations:</strong> Teacher notes depth of group discussion, use of evidence, and ability to challenge assumptions.</td>
+                                <td>Critical Inquiry values quality of questioning.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Exit Ticket:</strong> One question/assumption challenge – tickets are reviewed after class to gauge conceptual shifts.</td>
+                                <td>Directly assesses ILO 3 (critique) and ILO 5 (synthesis).</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Peer review</strong> on gallery walk (sticky‑note comments) – students assess each other's frameworks for depth and balance.</td>
+                                <td>Encourages critical reading of peers' reasoning.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3 style="color: #667eea; margin: 32px 0 16px 0;">Summative Assessment (Post‑session)</h3>
+                    <p style="margin-bottom: 16px;"><strong>Individual Reflective Essay</strong> (due one week later, 800–1000 words):</p>
+                    <p style="margin-bottom: 16px; padding: 16px; background: #f7fafc; border-radius: 8px;"><em>Prompt:</em> "Drawing on the class activity and at least three scholarly sources, argue how teacher professionalism should be both locally rooted and globally informed. Use specific examples from the documents we analysed."</p>
+                    <p style="margin-bottom: 12px;"><strong>Rubric</strong> (weighted 40% analysis, 30% argumentation, 20% critical reflection, 10% use of peer perspectives):</p>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Criterion</th>
+                                <th>Excellent</th>
+                                <th>Good</th>
+                                <th>Developing</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Analysis of contexts</strong></td>
+                                <td>Compares local & int'l with nuance, identifies hidden assumptions</td>
+                                <td>Clear comparison with some critical insight</td>
+                                <td>Descriptive, minimal critique</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Argument construction</strong></td>
+                                <td>Coherent, evidence‑based, considers counterarguments</td>
+                                <td>Logical with evidence</td>
+                                <td>Weak evidence or structure</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Reflection on own inquiry</strong></td>
+                                <td>Explicitly mentions how own thinking changed</td>
+                                <td>Some reflection</td>
+                                <td>Little or no reflection</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Section 5: Constructive Alignment Matrix -->
+            <div class="card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <div class="card-title">
+                        <div class="card-icon">5</div>
+                        Constructive Alignment Matrix
+                    </div>
+                    <button class="toggle-btn">+</button>
+                </div>
+                <div class="card-content">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Learning Outcome</th>
+                                <th>Teaching Activity</th>
+                                <th>Assessment Method</th>
+                                <th>Pedagogy Link</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>ILO1: Analyse dimensions of professionalism</td>
+                                <td>Comparative document analysis with Venn diagram</td>
+                                <td>Observation of group work; exit ticket mentions specific dimensions</td>
+                                <td>Critical Inquiry – breaking down two texts reveals underlying assumptions.</td>
+                            </tr>
+                            <tr>
+                                <td>ILO2: Compare local & international contexts</td>
+                                <td>Document analysis + gallery walk</td>
+                                <td>Summative essay requires explicit comparison</td>
+                                <td>Inquiry‑driven comparison without prescribed answer.</td>
+                            </tr>
+                            <tr>
+                                <td>ILO3: Critique hidden assumptions</td>
+                                <td>Debate and exit ticket</td>
+                                <td>Exit ticket captures one assumption challenged</td>
+                                <td>Central to Critical Inquiry – questioning taken‑for‑granted ideas.</td>
+                            </tr>
+                            <tr>
+                                <td>ILO4: Construct an argument for re‑imagined professionalism</td>
+                                <td>Group framework creation + gallery walk</td>
+                                <td>Summative essay (argument)</td>
+                                <td>Creation of framework is a collaborative inquiry product.</td>
+                            </tr>
+                            <tr>
+                                <td>ILO5: Synthesise peer perspectives</td>
+                                <td>Gallery walk comments, whole‑class debate</td>
+                                <td>Summative essay (must integrate peer ideas)</td>
+                                <td>Peer perspectives are treated as evidence to be evaluated.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Section 6: Required Resources & Technology -->
+            <div class="card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <div class="card-title">
+                        <div class="card-icon">6</div>
+                        Required Resources & Technology
+                    </div>
+                    <button class="toggle-btn">+</button>
+                </div>
+                <div class="card-content">
+                    <h3 style="color: #667eea; margin-bottom: 16px;">Documents</h3>
+                    <ul>
+                        <li>Local Code of Conduct (e.g., from Education Bureau/Teaching Council)</li>
+                        <li>OECD (2019). <em>TALIS 2018 Results (Volume I)</em> – excerpt on professionalism indicators (pp. 170–175)</li>
+                    </ul>
+
+                    <h3 style="color: #667eea; margin: 24px 0 16px 0;">Materials</h3>
+                    <ul>
+                        <li>A3 paper / markers for Venn diagrams</li>
+                        <li>Sticky notes for gallery walk</li>
+                        <li>Projector/slides with debate prompts and templates</li>
+                    </ul>
+
+                    <h3 style="color: #667eea; margin: 24px 0 16px 0;">Technology</h3>
+                    <ul>
+                        <li>LMS (Moodle/Canvas) for posting readings and essay submission</li>
+                        <li>Optional: Padlet for real‑time sharing of "one new question" during closure</li>
+                    </ul>
+
+                    <div class="tool-card" style="margin-top: 16px;">
+                        <h4>📚 Document Access</h4>
+                        <p>Access OECD TALIS reports:</p>
+                        <ol>
+                            <li>Visit the <a href="https://www.oecd.org/education/talis/" target="_blank">OECD TALIS website</a></li>
+                            <li>Navigate to "TALIS 2018 Results"</li>
+                            <li>Download Volume I (PDF available for free)</li>
+                            <li>Extract pages 170-175 focusing on professionalism indicators</li>
+                            <li>Print or share digitally with students</li>
+                        </ol>
+                        <p><strong>Purpose:</strong> Provide internationally comparable data on teacher professionalism for critical analysis.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 7: Differentiation & Inclusivity -->
+            <div class="card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <div class="card-title">
+                        <div class="card-icon">7</div>
+                        Differentiation & Inclusivity
+                    </div>
+                    <button class="toggle-btn">+</button>
+                </div>
+                <div class="card-content">
+                    <h3 style="color: #667eea; margin-bottom: 16px;">Multiple Entry Points</h3>
+                    <ul>
+                        <li>Provide bullet‑point summaries of the two documents for students who need scaffolding.</li>
+                        <li>Offer a choice in the debate role: speaker, evidence‑gatherer, or critical observer.</li>
+                    </ul>
+
+                    <h3 style="color: #667eea; margin: 24px 0 16px 0;">Extension for Advanced Learners</h3>
+                    <ul>
+                        <li>Assign a third document (e.g., a scholarly article critiquing professionalism from a post‑colonial perspective) and ask them to incorporate it into group framework.</li>
+                    </ul>
+
+                    <h3 style="color: #667eea; margin: 24px 0 16px 0;">Accessibility</h3>
+                    <ul>
+                        <li>Large‑print versions of documents.</li>
+                        <li>Captioned videos if any (none used here).</li>
+                        <li>Allow oral presentation of group framework instead of written for students with language difficulties.</li>
+                    </ul>
+
+                    <h3 style="color: #667eea; margin: 24px 0 16px 0;">Cultural Responsiveness</h3>
+                    <ul>
+                        <li>Acknowledge that "professionalism" may carry different values in different cultural contexts – groups are encouraged to reflect their own cultural backgrounds.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Section 8: Reflection & Improvement -->
+            <div class="card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <div class="card-title">
+                        <div class="card-icon">8</div>
+                        Reflection & Improvement
+                    </div>
+                    <button class="toggle-btn">+</button>
+                </div>
+                <div class="card-content">
+                    <h3 style="color: #667eea; margin-bottom: 16px;">Success Indicators (Specific to Critical Inquiry)</h3>
+                    <ul>
+                        <li>Number of students who change their initial stance after the debate (measured by re‑poll or exit ticket).</li>
+                        <li>Quality of questions on gallery wall (e.g., "Why is autonomy assumed to be universal?").</li>
+                        <li>Depth of assumption‑challenge in exit tickets.</li>
+                    </ul>
+
+                    <h3 style="color: #667eea; margin: 24px 0 16px 0;">Student Feedback</h3>
+                    <ul>
+                        <li>Quick survey on LMS (1–5 scale): "This session helped me question my own assumptions about professionalism."</li>
+                        <li>Open‑ended: "What aspect of the inquiry was most/least engaging?"</li>
+                    </ul>
+
+                    <h3 style="color: #667eea; margin: 24px 0 16px 0;">Modification Strategies Based on Theory</h3>
+                    <ul>
+                        <li>If students struggled with critique, next session could include a direct instruction on "how to identify hidden assumptions" (scaffolded inquiry).</li>
+                        <li>If debate was too adversarial, shift to a "structured controversy" format with mandatory reflection after each argument.</li>
+                        <li>If documents were too dense, use shorter excerpts with guiding questions.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Section 9: Session Checklist -->
+            <div class="card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <div class="card-title">
+                        <div class="card-icon">✓</div>
+                        Session Preparation Checklist
+                    </div>
+                    <button class="toggle-btn">+</button>
+                </div>
+                <div class="card-content">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="check1" onchange="updateProgress()">
+                        <label for="check1">Print or prepare digital copies of local Code of Conduct</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="check2" onchange="updateProgress()">
+                        <label for="check2">Print or prepare OECD TALIS excerpt (pp. 170-175)</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="check3" onchange="updateProgress()">
+                        <label for="check3">Prepare A3 paper and markers for Venn diagrams</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="check4" onchange="updateProgress()">
+                        <label for="check4">Prepare sticky notes for gallery walk</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="check5" onchange="updateProgress()">
+                        <label for="check5">Set up Mentimeter poll for initial stance</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="check6" onchange="updateProgress()">
+                        <label for="check6">Create Kahoot survey for debate reflection</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="check7" onchange="updateProgress()">
+                        <label for="check7">Set up Padlet for digital gallery walk (optional)</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="check8" onchange="updateProgress()">
+                        <label for="check8">Create Google Forms exit ticket</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="check9" onchange="updateProgress()">
+                        <label for="check9">Prepare slides with provocative headlines and inquiry prompts</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="check10" onchange="updateProgress()">
+                        <label for="check10">Prepare framework template (Core principles | Rationale | Examples)</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="check11" onchange="updateProgress()">
+                        <label for="check11">Review pre-class discussion board responses</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="check12" onchange="updateProgress()">
+                        <label for="check12">Test projector and display equipment</label>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // Toggle card content
+        function toggleCard(header) {
+            const content = header.nextElementSibling;
+            const btn = header.querySelector('.toggle-btn');
+
+            if (content.classList.contains('active')) {
+                content.classList.remove('active');
+                btn.textContent = '+';
+            } else {
+                content.classList.add('active');
+                btn.textContent = '−';
+            }
+        }
+
+        // Update progress bar
+        function updateProgress() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            const checked = document.querySelectorAll('input[type="checkbox"]:checked').length;
+            const total = checkboxes.length;
+            const percentage = (checked / total) * 100;
+
+            document.getElementById('progressFill').style.width = percentage + '%';
+
+            // Update checkbox item styling
+            checkboxes.forEach(checkbox => {
+                const item = checkbox.parentElement;
+                if (checkbox.checked) {
+                    item.classList.add('completed');
+                } else {
+                    item.classList.remove('completed');
+                }
+            });
+
+            // Save to localStorage
+            saveProgress();
+        }
+
+        // Save progress to localStorage
+        function saveProgress() {
+            const checkboxStates = {};
+            document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                checkboxStates[checkbox.id] = checkbox.checked;
+            });
+            localStorage.setItem('lessonPlanProgress', JSON.stringify(checkboxStates));
+        }
+
+        // Load progress from localStorage
+        function loadProgress() {
+            const saved = localStorage.getItem('lessonPlanProgress');
+            if (saved) {
+                const checkboxStates = JSON.parse(saved);
+                Object.keys(checkboxStates).forEach(id => {
+                    const checkbox = document.getElementById(id);
+                    if (checkbox) {
+                        checkbox.checked = checkboxStates[id];
+                    }
+                });
+                updateProgress();
+            }
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProgress();
+
+            // Open first card by default
+            const firstCard = document.querySelector('.card');
+            if (firstCard) {
+                const firstContent = firstCard.querySelector('.card-content');
+                const firstBtn = firstCard.querySelector('.toggle-btn');
+                if (firstContent && firstBtn) {
+                    firstContent.classList.add('active');
+                    firstBtn.textContent = '−';
+                }
+            }
+        });
+    </script>
 </body>
 </html>
