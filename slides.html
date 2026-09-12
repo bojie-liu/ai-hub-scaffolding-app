@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Presentation Slides - Teacher Professionalism</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .slide-container {
+      max-width: 900px;
+      margin: 2rem auto;
+      background: white;
+      border-radius: 12px;
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+    }
+    .slide {
+      padding: 3rem;
+      min-height: 500px;
+      display: none;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+    .slide.active {
+      display: block;
+    }
+    .slide h2 {
+      color: white;
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+    .slide h3 {
+      color: #fef3c7;
+      font-size: 1.8rem;
+      margin: 1.5rem 0 1rem;
+    }
+    .slide ul, .slide ol {
+      font-size: 1.2rem;
+      line-height: 1.8;
+      margin-left: 2rem;
+    }
+    .slide p {
+      font-size: 1.2rem;
+      line-height: 1.8;
+    }
+    .slide-controls {
+      display: flex;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      background: var(--bg-color);
+    }
+    .slide-number {
+      text-align: center;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-container">
+      <h1>Teacher Professionalism in Local and International Contexts</h1>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="learning-outcomes.html">Learning Outcomes</a>
+        <a href="pre-class-preparation.html">Pre-Class</a>
+        <a href="teaching-activities.html">Activities</a>
+        <a href="assessment.html">Assessment</a>
+        <a href="resources.html">Resources</a>
+        <a href="slides.html">Slides</a>
+      </div>
+      <button id="roleToggle" class="role-toggle" onclick="toggleRole()">Role: Student</button>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="card">
+      <h2>Presentation Slides</h2>
+      <p>Use arrow keys or buttons below to navigate through the slides.</p>
+    </div>
+
+    <div class="slide-container">
+      <!-- Slide 1: Title -->
+      <div class="slide active">
+        <h2>Teacher Professionalism</h2>
+        <h3 style="text-align: center;">Local and International Contexts</h3>
+        <p style="text-align: center; margin-top: 3rem; font-size: 1.4rem;">
+          Comparative Education / Foundations of Teaching<br>
+          Duration: 120 minutes<br>
+          Pedagogy: Social Constructivism
+        </p>
+      </div>
+
+      <!-- Slide 2: Learning Outcomes -->
+      <div class="slide">
+        <h2>Intended Learning Outcomes</h2>
+        <p>By the end of this lesson, you will be able to:</p>
+        <ol>
+          <li>Analyze characteristics of teacher professionalism in two contexts</li>
+          <li>Compare and contrast local and international frameworks</li>
+          <li>Construct a shared conceptual map through peer dialogue</li>
+          <li>Critique a professionalism dilemma using multiple norms</li>
+          <li>Reflect on how context shapes teaching identity</li>
+        </ol>
+      </div>
+
+      <!-- Slide 3: Hook Question -->
+      <div class="slide">
+        <h2>Opening Question</h2>
+        <h3 style="text-align: center; margin-top: 3rem;">Which teacher looks more professional?</h3>
+        <p style="text-align: center; margin-top: 2rem; font-size: 1.3rem;">
+          Teacher A: Highly regulated system (Korea)<br>
+          vs.<br>
+          Teacher B: Deregulated system (Charter school)
+        </p>
+        <p style="text-align: center; margin-top: 2rem; font-style: italic;">
+          Think → Pair → Share
+        </p>
+      </div>
+
+      <!-- Slide 4: What is Professionalism? -->
+      <div class="slide">
+        <h2>What is Teacher Professionalism?</h2>
+        <ul>
+          <li><strong>Professional Knowledge:</strong> Expertise in content and pedagogy</li>
+          <li><strong>Autonomy:</strong> Freedom to make pedagogical decisions</li>
+          <li><strong>Accountability:</strong> Responsibility for student outcomes</li>
+          <li><strong>Ethics:</strong> Moral principles guiding conduct</li>
+          <li><strong>Professional Development:</strong> Continuous learning and growth</li>
+        </ul>
+      </div>
+
+      <!-- Slide 5: Professional Capital -->
+      <div class="slide">
+        <h2>Professional Capital</h2>
+        <h3>Hargreaves & Fullan (2012)</h3>
+        <ul>
+          <li><strong>Human Capital:</strong> Individual teacher's knowledge and skills</li>
+          <li><strong>Social Capital:</strong> Collaborative relationships and networks</li>
+          <li><strong>Decisional Capital:</strong> Professional judgment and expertise</li>
+        </ul>
+        <p style="margin-top: 2rem; font-style: italic;">
+          All three working together = Professional Capital
+        </p>
+      </div>
+
+      <!-- Slide 6: Jigsaw Activity -->
+      <div class="slide">
+        <h2>Activity 1: Jigsaw Reading</h2>
+        <h3>Expert Groups (25 minutes)</h3>
+        <ul>
+          <li><strong>Group A:</strong> Professional Knowledge & Standards</li>
+          <li><strong>Group B:</strong> Autonomy and Accountability</li>
+          <li><strong>Group C:</strong> Ethical Codes and Conduct</li>
+          <li><strong>Group D:</strong> Professional Development & Career</li>
+          <li><strong>Group E:</strong> Teacher Identity & Status</li>
+        </ul>
+        <p style="margin-top: 1.5rem;">Create a Jamboard: Key Points + Example + Question</p>
+      </div>
+
+      <!-- Slide 7: Case Study -->
+      <div class="slide">
+        <h2>Case Study: Ms. Lam's Dilemma</h2>
+        <p style="font-size: 1.1rem; line-height: 1.7;">
+          Ms. Lam, a new teacher in an international school in Hong Kong, is asked by her principal to adopt a scripted curriculum to ensure standardisation. However, she feels it undermines her professional judgment and reduces her ability to respond to students' diverse needs.
+        </p>
+        <p style="margin-top: 1.5rem; font-weight: bold;">
+          Meanwhile, her colleague from Finland says teachers there have almost complete autonomy over pedagogy.
+        </p>
+        <h3 style="margin-top: 2rem;">What would you advise Ms. Lam?</h3>
+      </div>
+
+      <!-- Slide 8: Contextual Influences -->
+      <div class="slide">
+        <h2>How Context Shapes Professionalism</h2>
+        <ul>
+          <li><strong>Cultural values:</strong> Collectivism vs. individualism</li>
+          <li><strong>Policy frameworks:</strong> Centralized vs. decentralized systems</li>
+          <li><strong>Social status:</strong> Teacher prestige varies globally</li>
+          <li><strong>Economic factors:</strong> Funding, salaries, resources</li>
+          <li><strong>Historical traditions:</strong> Education system evolution</li>
+        </ul>
+      </div>
+
+      <!-- Slide 9: Comparative Examples -->
+      <div class="slide">
+        <h2>Comparative Perspectives</h2>
+        <h3>Finland vs. USA</h3>
+        <p><strong>Finland:</strong></p>
+        <ul>
+          <li>High teacher autonomy</li>
+          <li>Master's degree required</li>
+          <li>High social status</li>
+        </ul>
+        <p style="margin-top: 1.5rem;"><strong>USA:</strong></p>
+        <ul>
+          <li>Varying autonomy by state/district</li>
+          <li>Standards and accountability emphasis</li>
+          <li>Diverse certification pathways</li>
+        </ul>
+      </div>
+
+      <!-- Slide 10: Key Takeaways -->
+      <div class="slide">
+        <h2>Key Takeaways</h2>
+        <ul>
+          <li>Teacher professionalism is <strong>context-dependent</strong></li>
+          <li>It involves balancing <strong>autonomy and accountability</strong></li>
+          <li>Professional capital = human + social + decisional capital</li>
+          <li>Understanding multiple perspectives enriches our own practice</li>
+          <li>Professionalism evolves through <strong>continuous reflection and dialogue</strong></li>
+        </ul>
+        <p style="text-align: center; margin-top: 2rem; font-size: 1.5rem;">
+          Thank you! 🎓
+        </p>
+      </div>
+
+      <div class="slide-controls">
+        <button class="btn btn-primary" onclick="changeSlide(-1)">← Previous</button>
+        <div class="slide-number">
+          <span id="currentSlide">1</span> / <span id="totalSlides">10</span>
+        </div>
+        <button class="btn btn-primary" onclick="changeSlide(1)">Next →</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+  <script>
+    let currentSlideIndex = 0;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+
+    document.getElementById('totalSlides').textContent = totalSlides;
+
+    function showSlide(index) {
+      slides.forEach(slide => slide.classList.remove('active'));
+      slides[index].classList.add('active');
+      document.getElementById('currentSlide').textContent = index + 1;
+    }
+
+    function changeSlide(direction) {
+      currentSlideIndex += direction;
+      if (currentSlideIndex < 0) currentSlideIndex = 0;
+      if (currentSlideIndex >= totalSlides) currentSlideIndex = totalSlides - 1;
+      showSlide(currentSlideIndex);
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'ArrowLeft') changeSlide(-1);
+      if (e.key === 'ArrowRight') changeSlide(1);
+    });
+  </script>
+</body>
+</html>

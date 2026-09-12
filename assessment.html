@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Assessment - Teacher Professionalism</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <nav>
+    <div class="nav-container">
+      <h1>Teacher Professionalism in Local and International Contexts</h1>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="learning-outcomes.html">Learning Outcomes</a>
+        <a href="pre-class-preparation.html">Pre-Class</a>
+        <a href="teaching-activities.html">Activities</a>
+        <a href="assessment.html">Assessment</a>
+        <a href="resources.html">Resources</a>
+        <a href="slides.html">Slides</a>
+      </div>
+      <button id="roleToggle" class="role-toggle" onclick="toggleRole()">Role: Student</button>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="card">
+      <h2>Assessment Methods</h2>
+      <p>Assessment in this lesson follows Social Constructivism principles: focusing on collaborative products, peer negotiation, and reflective growth.</p>
+    </div>
+
+    <!-- FORMATIVE ASSESSMENT -->
+    <div class="card">
+      <h2>✅ Formative Assessment (During Class)</h2>
+
+      <div class="activity-card">
+        <h3>1. Jigsaw Group Product (Jamboard)</h3>
+        <p><strong>Assessed for:</strong> Completeness and depth of ideas</p>
+        <p><strong>Teacher observation:</strong> Does the Jamboard show evidence of multiple perspectives and negotiated meaning?</p>
+        <span class="badge badge-teacher">Teacher View</span>
+      </div>
+
+      <div class="activity-card">
+        <h3>2. Gallery Walk Observations</h3>
+        <p><strong>Assessed for:</strong> Quality of questions raised and insights noted</p>
+        <p><strong>Teacher notes:</strong> Which groups asked probing questions? Which made connections?</p>
+        <span class="badge badge-teacher">Teacher View</span>
+      </div>
+
+      <div class="activity-card">
+        <h3>3. Peer Discussion (Case Study)</h3>
+        <p><strong>Assessed for:</strong> Negotiation skills and application of frameworks</p>
+        <p><strong>Informal observation:</strong> Are students using evidence from readings and activities?</p>
+        <span class="badge badge-teacher">Teacher View</span>
+      </div>
+
+      <div class="activity-card">
+        <h3>4. Concept Map (Collective)</h3>
+        <p><strong>Assessed for:</strong> Completeness and individual contribution</p>
+        <p><strong>Requirement:</strong> Each student must contribute at least one element to the shared map</p>
+        <span class="badge badge-student">All Students</span>
+      </div>
+
+      <div class="activity-card">
+        <h3>5. Exit Ticket (Post-Test Reflection)</h3>
+        <p><strong>Assessed for:</strong> Shift in understanding from pre-test to post-test</p>
+        <p>Complete the post-test below to gauge your learning progress.</p>
+        <span class="badge badge-student">All Students</span>
+      </div>
+    </div>
+
+    <!-- POST-TEST -->
+    <div class="card">
+      <h2>📝 Post-Test</h2>
+      <p>Complete the same 5 MCQ as the pre-test, plus two open-ended reflection questions.</p>
+
+      <form id="quiz-posttest" class="quiz-container">
+        <div class="quiz-question" data-correct="b">
+          <p><strong>Question 1:</strong> What is the primary definition of teacher professionalism?</p>
+          <div class="quiz-options">
+            <label><input type="radio" name="q1" value="a"> Following school rules without question</label>
+            <label><input type="radio" name="q1" value="b"> A combination of knowledge, autonomy, ethics, and accountability</label>
+            <label><input type="radio" name="q1" value="c"> Dressing formally and maintaining authority</label>
+            <label><input type="radio" name="q1" value="d"> Having advanced degrees and certifications</label>
+          </div>
+        </div>
+
+        <div class="quiz-question" data-correct="b">
+          <p><strong>Question 2:</strong> Which statement about teacher professionalism is TRUE?</p>
+          <div class="quiz-options">
+            <label><input type="radio" name="q2" value="a"> Professionalism is the same everywhere around the world</label>
+            <label><input type="radio" name="q2" value="b"> Professionalism varies based on cultural and institutional contexts</label>
+            <label><input type="radio" name="q2" value="c"> Professionalism only applies to experienced teachers</label>
+            <label><input type="radio" name="q2" value="d"> Professionalism means avoiding collaboration with colleagues</label>
+          </div>
+        </div>
+
+        <div class="quiz-question" data-correct="c">
+          <p><strong>Question 3:</strong> What is "professional capital" according to Hargreaves & Fullan?</p>
+          <div class="quiz-options">
+            <label><input type="radio" name="q3" value="a"> The salary and benefits teachers receive</label>
+            <label><input type="radio" name="q3" value="b"> The number of teaching certifications held</label>
+            <label><input type="radio" name="q3" value="c"> Human, social, and decisional capital working together</label>
+            <label><input type="radio" name="q3" value="d"> The prestige of the school where one teaches</label>
+          </div>
+        </div>
+
+        <div class="quiz-question" data-correct="a">
+          <p><strong>Question 4:</strong> Which country is known for giving teachers high levels of professional autonomy?</p>
+          <div class="quiz-options">
+            <label><input type="radio" name="q4" value="a"> Finland</label>
+            <label><input type="radio" name="q4" value="b"> South Korea</label>
+            <label><input type="radio" name="q4" value="c"> Singapore</label>
+            <label><input type="radio" name="q4" value="d"> All countries give equal autonomy</label>
+          </div>
+        </div>
+
+        <div class="quiz-question" data-correct="b">
+          <p><strong>Question 5:</strong> Teacher professionalism includes which of the following?</p>
+          <div class="quiz-options">
+            <label><input type="radio" name="q5" value="a"> Only following prescribed curriculum</label>
+            <label><input type="radio" name="q5" value="b"> Balancing autonomy with accountability</label>
+            <label><input type="radio" name="q5" value="c"> Avoiding professional development</label>
+            <label><input type="radio" name="q5" value="d"> Working in isolation from colleagues</label>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit Quiz</button>
+      </form>
+
+      <div style="margin-top: 2rem; padding: 1.5rem; background: #f0f9ff; border-radius: 8px;">
+        <h3>Reflection Questions</h3>
+        <p><strong>Question 6:</strong> How did your understanding of professionalism change after today's discussion?</p>
+        <textarea style="width: 100%; padding: 0.75rem; border: 2px solid var(--border-color); border-radius: 8px; font-family: inherit; margin-top: 0.5rem;" rows="4" placeholder="Type your reflection here..."></textarea>
+
+        <p style="margin-top: 1.5rem;"><strong>Question 7:</strong> Describe one way that context shapes professionalism differently than you assumed.</p>
+        <textarea style="width: 100%; padding: 0.75rem; border: 2px solid var(--border-color); border-radius: 8px; font-family: inherit; margin-top: 0.5rem;" rows="4" placeholder="Type your reflection here..."></textarea>
+      </div>
+    </div>
+
+    <!-- SUMMATIVE ASSESSMENT -->
+    <div class="card">
+      <h2>📄 Summative Assessment (End of Unit)</h2>
+      <p><em>Due one week after the lesson</em></p>
+
+      <div class="activity-card">
+        <h3>Individual Reflective Essay</h3>
+        <p><strong>Topic:</strong> "Compare and contrast teacher professionalism in your home educational context with one international model. Use at least two sources from class and one from your own research. Reflect on how these comparisons have shaped your vision of professional practice."</p>
+
+        <p><strong>Length:</strong> 1500-2000 words</p>
+        <p><strong>Format:</strong> Academic essay with proper citations</p>
+
+        <h4>Assessment Rubric (Social Constructivism Aligned)</h4>
+        <table>
+          <thead>
+            <tr>
+              <th>Criteria</th>
+              <th>Weight</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Depth of Comparative Analysis</td>
+              <td>30%</td>
+              <td>Clear comparison of at least two contexts; identifies key similarities and differences; uses specific examples</td>
+            </tr>
+            <tr>
+              <td>Use of Evidence from Multiple Perspectives</td>
+              <td>30%</td>
+              <td>Integrates at least 3 sources; shows awareness of diverse viewpoints; connects theory to practice</td>
+            </tr>
+            <tr>
+              <td>Reflection on Co-constructed Knowledge</td>
+              <td>20%</td>
+              <td>Discusses how peer discussion influenced understanding; acknowledges multiple perspectives; shows metacognitive awareness</td>
+            </tr>
+            <tr>
+              <td>Clarity and Structure</td>
+              <td>20%</td>
+              <td>Well-organized; clear thesis; logical flow; proper grammar and citations</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- CONSTRUCTIVE ALIGNMENT -->
+    <div class="card teacher-only">
+      <h2>🎓 Constructive Alignment Matrix</h2>
+      <p><em>How learning outcomes, activities, and assessments align</em></p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Learning Outcome</th>
+            <th>Teaching Activity</th>
+            <th>Assessment Method</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1. Analyze characteristics in two contexts</td>
+            <td>Jigsaw expert groups; Jamboard creation</td>
+            <td>Jamboard content; post-test MCQ</td>
+          </tr>
+          <tr>
+            <td>2. Compare & contrast frameworks</td>
+            <td>Cross-pollination gallery; whole-class debrief</td>
+            <td>Gallery walk sticky notes; case study recommendation</td>
+          </tr>
+          <tr>
+            <td>3. Construct shared conceptual map</td>
+            <td>Collaborative concept mapping (Miro/whiteboard)</td>
+            <td>Completed map; individual contribution</td>
+          </tr>
+          <tr>
+            <td>4. Critique case study</td>
+            <td>Pair discussion of Ms. Lam dilemma; class vote</td>
+            <td>Written recommendation paragraph; oral sharing</td>
+          </tr>
+          <tr>
+            <td>5. Reflect on teaching identity</td>
+            <td>Post-test open-ended questions; peer summaries</td>
+            <td>Exit ticket / post-test reflection; final essay</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="text-align: center; margin-top: 2rem;">
+      <button class="btn btn-success" onclick="markComplete('assessment')">Mark Complete</button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

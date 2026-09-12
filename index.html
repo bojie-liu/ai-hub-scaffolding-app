@@ -3,14 +3,90 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Basic HTML Project</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Teacher Professionalism: Local and International Contexts</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <nav>
+    <div class="nav-container">
+      <h1>Teacher Professionalism in Local and International Contexts</h1>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="learning-outcomes.html">Learning Outcomes</a>
+        <a href="pre-class-preparation.html">Pre-Class</a>
+        <a href="teaching-activities.html">Activities</a>
+        <a href="assessment.html">Assessment</a>
+        <a href="resources.html">Resources</a>
+        <a href="slides.html">Slides</a>
+      </div>
+      <button id="roleToggle" class="role-toggle" onclick="toggleRole()">Role: Student</button>
+    </div>
+  </nav>
+
   <div class="container">
-    <h1>Hello World!</h1>
-    <p>Welcome to your new project.</p>
+    <div class="card">
+      <h2>Welcome to the Lesson</h2>
+      <p><strong>Course:</strong> Comparative Education / Foundations of Teaching</p>
+      <p><strong>Duration:</strong> 120 minutes</p>
+      <p><strong>Student Level:</strong> Advanced undergraduates or graduate students (Education)</p>
+      <p><strong>Class Size:</strong> 25</p>
+      <p><strong>Pedagogy:</strong> Social Constructivism</p>
+
+      <div style="margin-top: 1.5rem;">
+        <h3>Progress</h3>
+        <div class="progress-bar">
+          <div id="progressFill" class="progress-fill" style="width: 0%"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Course Overview</h2>
+      <p>This lesson explores teacher professionalism from both local (Hong Kong/Singapore) and international (Finland/USA) perspectives. Through collaborative activities grounded in <strong>Social Constructivism</strong>, you will analyze, compare, and construct shared understanding of how context shapes professional expectations.</p>
+    </div>
+
+    <div class="card">
+      <h2>Lesson Structure</h2>
+      <div class="grid-2">
+        <div class="activity-card">
+          <h3>📚 Pre-Class Preparation</h3>
+          <p>Complete readings, watch videos, and take the diagnostic quiz before class.</p>
+          <a href="pre-class-preparation.html"><button class="btn btn-primary">Go to Pre-Class</button></a>
+        </div>
+
+        <div class="activity-card">
+          <h3>🎯 Learning Outcomes</h3>
+          <p>Understand what you will be able to do by the end of this lesson.</p>
+          <a href="learning-outcomes.html"><button class="btn btn-primary">View Outcomes</button></a>
+        </div>
+
+        <div class="activity-card">
+          <h3>🎨 Teaching Activities</h3>
+          <p>Engage in collaborative jigsaw reading, case studies, and concept mapping.</p>
+          <a href="teaching-activities.html"><button class="btn btn-primary">Start Activities</button></a>
+        </div>
+
+        <div class="activity-card">
+          <h3>✅ Assessment</h3>
+          <p>Complete formative and summative assessments to demonstrate learning.</p>
+          <a href="assessment.html"><button class="btn btn-primary">View Assessment</button></a>
+        </div>
+
+        <div class="activity-card">
+          <h3>📖 Resources</h3>
+          <p>Access readings, technology tools, and support materials.</p>
+          <a href="resources.html"><button class="btn btn-primary">Browse Resources</button></a>
+        </div>
+
+        <div class="activity-card">
+          <h3>📊 Slides</h3>
+          <p>View presentation slides for the lesson.</p>
+          <a href="slides.html"><button class="btn btn-primary">Open Slides</button></a>
+        </div>
+      </div>
+    </div>
   </div>
-  <script src="script.js"></script>
+
+  <script src="app.js"></script>
 </body>
 </html>
