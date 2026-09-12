@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teacher Professionalism: Local & International Contexts</title>
+    <title>Teacher Professionalism in Local and International Contexts</title>
     <style>
         * {
             margin: 0;
@@ -12,25 +12,23 @@
         }
 
         :root {
-            --primary: #2563eb;
-            --primary-dark: #1e40af;
-            --secondary: #7c3aed;
-            --success: #059669;
-            --warning: #d97706;
-            --danger: #dc2626;
-            --bg-main: #f8fafc;
-            --bg-card: #ffffff;
-            --text-primary: #1e293b;
-            --text-secondary: #64748b;
-            --border: #e2e8f0;
-            --shadow: rgba(0, 0, 0, 0.1);
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+            --bg-color: #ecf0f1;
+            --card-bg: #ffffff;
+            --text-color: #2c3e50;
+            --border-color: #bdc3c7;
+            --shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: var(--bg-main);
-            color: var(--text-primary);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
         }
 
         .container {
@@ -39,72 +37,110 @@
             padding: 20px;
         }
 
-        .header {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
             padding: 40px 20px;
-            border-radius: 12px;
+            text-align: center;
+            border-radius: 10px;
             margin-bottom: 30px;
-            box-shadow: 0 4px 6px var(--shadow);
+            box-shadow: var(--shadow);
         }
 
-        .header h1 {
+        header h1 {
             font-size: 2.5em;
             margin-bottom: 10px;
-            font-weight: 700;
         }
 
-        .header-meta {
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .lesson-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .info-badge {
+            background: rgba(255,255,255,0.2);
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .progress-bar {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .progress-label {
             display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            margin-top: 20px;
-            font-size: 0.95em;
-        }
-
-        .meta-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .meta-item::before {
-            content: "•";
+            justify-content: space-between;
+            margin-bottom: 10px;
             font-weight: bold;
         }
 
-        .nav-tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-            background: var(--bg-card);
-            padding: 15px;
-            border-radius: 12px;
-            box-shadow: 0 2px 4px var(--shadow);
+        .progress-track {
+            height: 30px;
+            background: var(--bg-color);
+            border-radius: 15px;
+            overflow: hidden;
         }
 
-        .nav-tab {
-            padding: 12px 20px;
-            background: var(--bg-main);
-            border: 2px solid var(--border);
-            border-radius: 8px;
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--secondary-color), var(--success-color));
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        nav {
+            background: var(--card-bg);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 20px;
+            z-index: 100;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        nav button {
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-weight: 500;
-            color: var(--text-primary);
+            font-size: 1em;
         }
 
-        .nav-tab:hover {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
+        nav button:hover {
+            background: var(--primary-color);
+            transform: translateY(-2px);
         }
 
-        .nav-tab.active {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
+        nav button.active {
+            background: var(--accent-color);
         }
 
         .section {
@@ -116,1258 +152,1443 @@
         }
 
         .card {
-            background: var(--bg-card);
-            border-radius: 12px;
-            padding: 25px;
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 30px;
             margin-bottom: 20px;
-            box-shadow: 0 2px 4px var(--shadow);
-            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .card h2 {
-            color: var(--primary);
+            color: var(--primary-color);
             margin-bottom: 15px;
-            font-size: 1.8em;
-            font-weight: 600;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--secondary-color);
         }
 
         .card h3 {
-            color: var(--text-primary);
+            color: var(--secondary-color);
             margin: 20px 0 10px 0;
-            font-size: 1.3em;
-            font-weight: 600;
         }
 
-        .card h4 {
-            color: var(--text-primary);
-            margin: 15px 0 8px 0;
-            font-size: 1.1em;
-            font-weight: 600;
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.85em;
-            font-weight: 600;
-            margin-right: 8px;
-            margin-bottom: 8px;
-        }
-
-        .badge-primary {
-            background: #dbeafe;
-            color: var(--primary-dark);
-        }
-
-        .badge-success {
-            background: #d1fae5;
-            color: var(--success);
-        }
-
-        .badge-warning {
-            background: #fed7aa;
-            color: var(--warning);
-        }
-
-        .badge-secondary {
-            background: #e9d5ff;
-            color: var(--secondary);
-        }
-
-        .ilo-list {
+        .outcome-list, .activity-list {
             list-style: none;
+            margin: 15px 0;
+        }
+
+        .outcome-list li, .activity-list li {
+            background: var(--bg-color);
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 4px solid var(--secondary-color);
+            border-radius: 5px;
+        }
+
+        .quiz-container {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 10px;
+            padding: 25px;
             margin: 20px 0;
         }
 
-        .ilo-item {
-            padding: 15px;
-            margin-bottom: 12px;
-            background: #f1f5f9;
-            border-left: 4px solid var(--primary);
-            border-radius: 6px;
+        .quiz-question {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
-        .ilo-item strong {
-            color: var(--primary);
+        .quiz-question h4 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
         }
 
-        .ilo-item em {
-            color: var(--text-secondary);
-            font-size: 0.9em;
+        .quiz-options {
+            list-style: none;
+        }
+
+        .quiz-options li {
+            margin: 10px 0;
+        }
+
+        .quiz-options label {
             display: block;
-            margin-top: 5px;
+            padding: 12px;
+            background: var(--bg-color);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-options label:hover {
+            background: var(--secondary-color);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .quiz-options input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        .quiz-feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .quiz-feedback.show {
+            display: block;
+        }
+
+        .quiz-feedback.correct {
+            background: #d4edda;
+            color: #155724;
+            border-left: 4px solid var(--success-color);
+        }
+
+        .quiz-feedback.incorrect {
+            background: #f8d7da;
+            color: #721c24;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .btn {
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            margin: 10px 5px;
+        }
+
+        .btn:hover {
+            background: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .btn-success {
+            background: var(--success-color);
+        }
+
+        .btn-danger {
+            background: var(--accent-color);
         }
 
         .collapsible {
-            background: var(--bg-main);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            margin-bottom: 12px;
-            overflow: hidden;
-        }
-
-        .collapsible-header {
-            padding: 15px 20px;
+            background: var(--secondary-color);
+            color: white;
             cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: 600;
-            color: var(--text-primary);
-            transition: background 0.3s ease;
+            padding: 15px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 1.1em;
+            border-radius: 5px;
+            margin: 10px 0;
+            transition: 0.3s;
         }
 
-        .collapsible-header:hover {
-            background: #e2e8f0;
+        .collapsible:hover {
+            background: var(--primary-color);
         }
 
-        .collapsible-icon {
-            transition: transform 0.3s ease;
+        .collapsible:after {
+            content: '\002B';
+            color: white;
+            font-weight: bold;
+            float: right;
+            margin-left: 5px;
         }
 
-        .collapsible.open .collapsible-icon {
-            transform: rotate(180deg);
+        .collapsible.active:after {
+            content: "\2212";
         }
 
         .collapsible-content {
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.3s ease;
+            transition: max-height 0.3s ease-out;
+            background: white;
+            border-radius: 0 0 5px 5px;
         }
 
-        .collapsible.open .collapsible-content {
-            max-height: 5000px;
-        }
-
-        .collapsible-content-inner {
+        .collapsible-content.show {
             padding: 20px;
+            border: 1px solid var(--border-color);
+            border-top: none;
         }
 
-        .timeline {
-            position: relative;
-            padding-left: 30px;
-        }
-
-        .timeline::before {
-            content: "";
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 3px;
-            background: var(--primary);
-        }
-
-        .timeline-item {
-            position: relative;
-            margin-bottom: 25px;
-            padding-left: 20px;
-        }
-
-        .timeline-item::before {
-            content: "";
-            position: absolute;
-            left: -37px;
-            top: 5px;
-            width: 15px;
-            height: 15px;
-            border-radius: 50%;
-            background: var(--primary);
-            border: 3px solid var(--bg-card);
-        }
-
-        .timeline-duration {
+        .resource-link {
             display: inline-block;
-            background: var(--primary);
+            color: var(--secondary-color);
+            text-decoration: none;
+            padding: 8px 15px;
+            border: 2px solid var(--secondary-color);
+            border-radius: 5px;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .resource-link:hover {
+            background: var(--secondary-color);
             color: white;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.85em;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-
-        .info-box {
-            background: #eff6ff;
-            border-left: 4px solid var(--primary);
-            padding: 15px 20px;
-            border-radius: 6px;
-            margin: 15px 0;
-        }
-
-        .info-box.warning {
-            background: #fef3c7;
-            border-left-color: var(--warning);
-        }
-
-        .info-box.success {
-            background: #d1fae5;
-            border-left-color: var(--success);
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
             margin: 20px 0;
-            background: var(--bg-card);
-            border-radius: 8px;
-            overflow: hidden;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
         }
 
         th {
-            background: var(--primary);
+            background: var(--primary-color);
             color: white;
-            padding: 12px;
-            text-align: left;
-            font-weight: 600;
-        }
-
-        td {
-            padding: 12px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        tr:last-child td {
-            border-bottom: none;
         }
 
         tr:hover {
-            background: #f8fafc;
+            background: var(--bg-color);
         }
 
-        ul, ol {
-            margin: 15px 0;
-            padding-left: 30px;
-        }
-
-        li {
-            margin: 8px 0;
-        }
-
-        .tool-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 500;
-            padding: 4px 8px;
-            border-radius: 4px;
-            transition: all 0.2s ease;
-        }
-
-        .tool-link:hover {
-            background: #dbeafe;
-            text-decoration: underline;
-        }
-
-        .tool-link::before {
-            content: "🔗";
-        }
-
-        .checkbox-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            padding: 10px;
-            margin: 8px 0;
-            background: var(--bg-main);
-            border-radius: 6px;
-            cursor: pointer;
-            transition: background 0.2s ease;
-        }
-
-        .checkbox-item:hover {
-            background: #e2e8f0;
-        }
-
-        .checkbox-item input[type="checkbox"] {
-            margin-top: 4px;
-            width: 18px;
-            height: 18px;
-            cursor: pointer;
-        }
-
-        .checkbox-item.completed {
-            opacity: 0.7;
-        }
-
-        .checkbox-item.completed label {
-            text-decoration: line-through;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: var(--border);
-            border-radius: 10px;
-            overflow: hidden;
-            margin: 15px 0;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            transition: width 0.3s ease;
-        }
-
-        .progress-text {
-            text-align: center;
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
             font-size: 0.9em;
-            color: var(--text-secondary);
-            margin-top: 5px;
+            font-weight: bold;
+            margin: 5px;
+        }
+
+        .badge-primary { background: var(--primary-color); color: white; }
+        .badge-secondary { background: var(--secondary-color); color: white; }
+        .badge-success { background: var(--success-color); color: white; }
+        .badge-warning { background: var(--warning-color); color: white; }
+        .badge-danger { background: var(--accent-color); color: white; }
+
+        .alert {
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+
+        .alert-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border-left: 4px solid #17a2b8;
+        }
+
+        .alert-warning {
+            background: #fff3cd;
+            color: #856404;
+            border-left: 4px solid var(--warning-color);
+        }
+
+        .tool-instruction {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+
+        .tool-instruction h4 {
+            margin-bottom: 10px;
+        }
+
+        .tool-instruction ol {
+            margin-left: 20px;
+        }
+
+        .tool-instruction a {
+            color: #ffd700;
+            font-weight: bold;
         }
 
         @media (max-width: 768px) {
-            .header h1 {
-                font-size: 1.8em;
-            }
-
-            .header-meta {
-                flex-direction: column;
-                gap: 10px;
-            }
-
-            .nav-tabs {
-                flex-direction: column;
-            }
-
-            .nav-tab {
-                width: 100%;
-            }
-
-            .card {
-                padding: 15px;
-            }
-
-            table {
-                font-size: 0.9em;
-            }
-
-            th, td {
-                padding: 8px;
-            }
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 10px 20px;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            text-decoration: none;
-        }
-
-        .btn:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px var(--shadow);
-        }
-
-        .btn-secondary {
-            background: var(--secondary);
-        }
-
-        .btn-secondary:hover {
-            background: #6d28d9;
+            header h1 { font-size: 1.8em; }
+            .lesson-info { grid-template-columns: 1fr; }
+            nav ul { flex-direction: column; }
+            nav button { width: 100%; }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
+        <header>
             <h1>Teacher Professionalism in Local and International Contexts</h1>
-            <div class="header-meta">
-                <div class="meta-item">Duration: 90 minutes</div>
-                <div class="meta-item">Level: Second-year undergraduates</div>
-                <div class="meta-item">Class Size: 30 students</div>
-                <div class="meta-item">Pedagogy: Social Constructivism</div>
+            <p>A Social Constructivist Approach to Professional Learning</p>
+            <div class="lesson-info">
+                <div class="info-badge"><strong>Duration:</strong> 90 minutes</div>
+                <div class="info-badge"><strong>Level:</strong> Second-year Undergraduates</div>
+                <div class="info-badge"><strong>Class Size:</strong> 30 students</div>
+                <div class="info-badge"><strong>Pedagogy:</strong> Social Constructivism</div>
+            </div>
+        </header>
+
+        <div class="progress-bar">
+            <div class="progress-label">
+                <span>Lesson Progress</span>
+                <span id="progress-percent">0%</span>
+            </div>
+            <div class="progress-track">
+                <div class="progress-fill" id="progress-fill" style="width: 0%">0%</div>
             </div>
         </div>
 
-        <div class="card">
-            <div class="progress-bar">
-                <div class="progress-fill" id="overallProgress" style="width: 0%;"></div>
-            </div>
-            <div class="progress-text">
-                <span id="progressText">0% Complete</span>
-            </div>
-        </div>
+        <nav>
+            <ul>
+                <li><button onclick="showSection('overview')" class="active">Overview</button></li>
+                <li><button onclick="showSection('outcomes')">Learning Outcomes</button></li>
+                <li><button onclick="showSection('preclass')">Pre-Class</button></li>
+                <li><button onclick="showSection('introduction')">Introduction</button></li>
+                <li><button onclick="showSection('activities')">Activities</button></li>
+                <li><button onclick="showSection('synthesis')">Synthesis</button></li>
+                <li><button onclick="showSection('assessment')">Assessment</button></li>
+                <li><button onclick="showSection('resources')">Resources</button></li>
+            </ul>
+        </nav>
 
-        <div class="nav-tabs">
-            <button class="nav-tab active" onclick="showSection('overview')">Overview</button>
-            <button class="nav-tab" onclick="showSection('outcomes')">Learning Outcomes</button>
-            <button class="nav-tab" onclick="showSection('preclass')">Pre-Class</button>
-            <button class="nav-tab" onclick="showSection('activities')">Class Activities</button>
-            <button class="nav-tab" onclick="showSection('assessment')">Assessment</button>
-            <button class="nav-tab" onclick="showSection('resources')">Resources</button>
-            <button class="nav-tab" onclick="showSection('differentiation')">Differentiation</button>
-        </div>
-
+        <!-- Overview Section -->
         <div id="overview" class="section active">
             <div class="card">
-                <h2>Lesson Overview</h2>
-                <div class="info-box success">
-                    <strong>Pedagogical Framework: Social Constructivism</strong>
-                    <p>This lesson treats knowledge about professionalism as socially negotiated, culturally situated, and co-constructed through dialogue, comparative inquiry, and collaborative problem-solving.</p>
+                <h2>📚 Lesson Overview</h2>
+                <div class="alert alert-info">
+                    <strong>Pedagogical Framework:</strong> This lesson uses <strong>Social Constructivism</strong> as its central pedagogical framework. Knowledge about professionalism is treated as socially negotiated, culturally situated, and co-constructed through dialogue, comparative inquiry, and collaborative problem-solving.
                 </div>
 
                 <h3>Course Context</h3>
-                <ul>
-                    <li><strong>Course:</strong> Foundations of Education / Teacher Professionalism</li>
-                    <li><strong>Topic:</strong> Teacher Professionalism in Local and International Contexts</li>
-                    <li><strong>Duration:</strong> 90 minutes</li>
-                    <li><strong>Student Level:</strong> Second-year undergraduates</li>
-                    <li><strong>Class Size:</strong> 30 students</li>
-                    <li><strong>Language:</strong> English</li>
-                </ul>
+                <p><strong>Course:</strong> Foundations of Education / Teacher Professionalism</p>
+                <p><strong>Topic:</strong> Teacher Professionalism in Local and International Contexts</p>
 
-                <h3>Constructive Alignment Principle</h3>
-                <p>All outcomes, teaching activities, and assessments in this lesson reinforce one another. Students engage in authentic tasks that mirror the complexity of real professional contexts.</p>
+                <h3>Design Principles</h3>
+                <ul class="activity-list">
+                    <li><strong>Constructive Alignment:</strong> Outcomes, teaching activities, and assessments reinforce one another</li>
+                    <li><strong>Dialogue & Negotiation:</strong> Knowledge co-constructed through structured conversation</li>
+                    <li><strong>Cultural Context:</strong> Professional standards viewed as culturally situated, not universal</li>
+                    <li><strong>Authentic Tasks:</strong> Real-world dilemmas and collaborative charter creation</li>
+                </ul>
             </div>
         </div>
 
+        <!-- Learning Outcomes Section -->
         <div id="outcomes" class="section">
             <div class="card">
-                <h2>Intended Learning Outcomes (ILOs)</h2>
+                <h2>🎯 Intended Learning Outcomes (ILOs)</h2>
                 <p>By the end of this 90-minute lesson, students will be able to:</p>
-
-                <ul class="ilo-list">
-                    <li class="ilo-item">
-                        <strong>ILO 1:</strong> Analyze competing definitions of teacher professionalism in local and international policy contexts using collaborative inquiry.
-                        <em>(Analyze; Social Constructivism: co-construction of meaning)</em>
+                <ul class="outcome-list">
+                    <li>
+                        <strong>ILO 1 - Analyze:</strong> Analyze competing definitions of teacher professionalism in local and international policy contexts using collaborative inquiry.
+                        <br><span class="badge badge-secondary">Social Constructivism: co-construction of meaning</span>
                     </li>
-                    <li class="ilo-item">
-                        <strong>ILO 2:</strong> Compare and contrast at least two professional standards/frameworks (e.g., UNESCO, OECD-TALIS, national/local standards) and identify the contextual values embedded in each.
-                        <em>(Analyze/Evaluate; Social Constructivism: multiple perspectives)</em>
+                    <li>
+                        <strong>ILO 2 - Compare:</strong> Compare and contrast at least two professional standards/frameworks (e.g., UNESCO, OECD-TALIS, national/local standards) and identify the contextual values embedded in each.
+                        <br><span class="badge badge-secondary">Social Constructivism: multiple perspectives</span>
                     </li>
-                    <li class="ilo-item">
-                        <strong>ILO 3:</strong> Evaluate ethical dilemmas in teacher professionalism through structured dialogue, weighing local cultural expectations against international professional norms.
-                        <em>(Evaluate; Social Constructivism: dialogic negotiation)</em>
+                    <li>
+                        <strong>ILO 3 - Evaluate:</strong> Evaluate ethical dilemmas in teacher professionalism through structured dialogue, weighing local cultural expectations against international professional norms.
+                        <br><span class="badge badge-secondary">Social Constructivism: dialogic negotiation</span>
                     </li>
-                    <li class="ilo-item">
-                        <strong>ILO 4:</strong> Create a collaboratively produced "Contextually Responsive Professionalism Charter" that synthesizes international principles and local realities.
-                        <em>(Create; Social Constructivism: collective knowledge production)</em>
+                    <li>
+                        <strong>ILO 4 - Create:</strong> Create a collaboratively produced "Contextually Responsive Professionalism Charter" that synthesizes international principles and local realities.
+                        <br><span class="badge badge-secondary">Social Constructivism: collective knowledge production</span>
                     </li>
                 </ul>
+                <button class="btn btn-success" onclick="markSectionComplete('outcomes')">Mark as Complete</button>
             </div>
         </div>
 
+        <!-- Pre-Class Section -->
         <div id="preclass" class="section">
             <div class="card">
-                <h2>Pre-Class Preparation</h2>
-                <div class="info-box">
-                    <strong>Note:</strong> These are preparatory social-constructivist tasks, not full flipped learning. Students engage with materials to activate prior knowledge before collaborative inquiry begins.
-                </div>
+                <h2>📖 Pre-Class Preparation</h2>
+                <p><em>Preparatory social-constructivist tasks to activate prior knowledge and establish shared foundations.</em></p>
 
-                <h3>Pre-Reading Materials</h3>
-                <ul>
-                    <li>OECD (2019). <em>TALIS 2018 Results (Volume I): Teachers and School Leaders as Lifelong Learners</em>. <a href="https://doi.org/10.1787/1d0bc92a-en" target="_blank" class="tool-link">Access OECD Report</a></li>
-                    <li>UNESCO (1966/2016). <em>Recommendation concerning the Status of Teachers</em>. <a href="https://unesdoc.unesco.org/ark:/48223/pf0000244956" target="_blank" class="tool-link">Access UNESCO Document</a></li>
-                    <li>Hargreaves, A. (2000). <em>Four Ages of Professionalism and Professional Learning</em>. Teachers and Teaching, 6(2), 151–182. <a href="https://doi.org/10.1080/713698714" target="_blank" class="tool-link">Access Article</a></li>
-                    <li><strong>Local professional standards document</strong> — Insert your institution's / country's official teacher professional standards or code of ethics.</li>
+                <h3>Required Pre-Reading Materials</h3>
+                <ul class="activity-list">
+                    <li>
+                        <strong>OECD (2019).</strong> <em>TALIS 2018 Results (Volume I): Teachers and School Leaders as Lifelong Learners.</em>
+                        <br><a href="https://doi.org/10.1787/1d0bc92a-en" target="_blank" class="resource-link">Access OECD Report</a>
+                    </li>
+                    <li>
+                        <strong>UNESCO (1966/2016).</strong> <em>Recommendation concerning the Status of Teachers.</em>
+                        <br><a href="https://unesdoc.unesco.org/ark:/48223/pf0000244956" target="_blank" class="resource-link">Access UNESCO Document</a>
+                    </li>
+                    <li>
+                        <strong>Hargreaves, A. (2000).</strong> <em>Four Ages of Professionalism and Professional Learning.</em> Teachers and Teaching, 6(2), 151–182.
+                        <br><a href="https://doi.org/10.1080/713698714" target="_blank" class="resource-link">Access Article</a>
+                    </li>
+                    <li>
+                        <strong>Local Professional Standards Document</strong> — Your institution's or country's official teacher professional standards or code of ethics.
+                    </li>
                 </ul>
 
-                <div class="collapsible">
-                    <div class="collapsible-header" onclick="toggleCollapsible(this)">
-                        <span><strong>Diagnostic Pre-Test Quiz</strong></span>
-                        <span class="collapsible-icon">▼</span>
-                    </div>
-                    <div class="collapsible-content">
-                        <div class="collapsible-content-inner">
-                            <p><strong>Tool:</strong> <a href="https://www.mentimeter.com" target="_blank" class="tool-link">Mentimeter</a> or Moodle Quiz with adaptive feedback</p>
-
-                            <h4>How to Set Up the Quiz:</h4>
-                            <ol>
-                                <li>Visit <a href="https://www.mentimeter.com" target="_blank" class="tool-link">Mentimeter</a> and create a free account</li>
-                                <li>Create a new presentation and add 5-7 quiz questions</li>
-                                <li>For each question, enable the "Show correct answer" feature</li>
-                                <li>Add adaptive feedback explanations for common misconceptions</li>
-                                <li>Share the quiz code with students via LMS before class</li>
-                            </ol>
-
-                            <h4>Example Quiz Items:</h4>
-                            <ol>
-                                <li><strong>Statement:</strong> "Professionalism is mainly about having a teaching qualification."
-                                    <br><em>Adaptive feedback if "Agree":</em> "Many people think this, but qualifications are only one dimension. In this course, we explore professionalism as practice, ethics, and context."
-                                </li>
-                                <li><strong>Statement:</strong> "International teacher standards should always override local cultural norms."
-                                    <br><em>Adaptive feedback if "Agree":</em> "This is a common tension. In our session, we will examine when and why such an assumption may be problematic."
-                                </li>
-                                <li><strong>Statement:</strong> "Teacher professionalism is an individual achievement rather than a collective responsibility."
-                                    <br><em>Adaptive feedback if "Agree":</em> "Social constructivist views of professionalism emphasize collegial dialogue, school culture, and shared norms."
-                                </li>
-                                <li><strong>Statement:</strong> "Professionalism looks the same in every country."
-                                    <br><em>Adaptive feedback if "Disagree":</em> "Good! Your experience may already reflect the importance of local context."
-                                </li>
-                            </ol>
-                        </div>
-                    </div>
-                </div>
-
                 <h3>Pre-Class Guiding Questions</h3>
-                <p>Post these on the LMS discussion forum before class:</p>
+                <div class="alert alert-warning">
+                    <strong>Post to LMS Discussion Forum:</strong> Students should reflect on these questions before class.
+                </div>
                 <ol>
                     <li>What does "professionalism" mean in <strong>your local educational context</strong>? Where do those meanings come from—policy, culture, history, media, teachers themselves?</li>
                     <li>Find <strong>one real-world example</strong> of a teacher professionalism dilemma (news story, personal experience, film) that could be viewed differently in two cultural or national contexts.</li>
                     <li>Bring a <strong>question</strong> about professionalism that you hope the class will help you answer.</li>
                 </ol>
             </div>
+
+            <!-- Diagnostic Pre-Test Quiz -->
+            <div class="card">
+                <h2>🧪 Diagnostic Pre-Test: Professionalism Beliefs</h2>
+                <p><strong>Purpose:</strong> This diagnostic quiz helps identify your initial beliefs about teacher professionalism. There are no "wrong" answers—we use your responses to tailor our discussion.</p>
+
+                <div class="tool-instruction">
+                    <h4>🔗 External Tool: Mentimeter or Moodle Quiz</h4>
+                    <p>This diagnostic assessment can be implemented using:</p>
+                    <ol>
+                        <li>Go to <a href="https://www.mentimeter.com" target="_blank">Mentimeter</a> or your institution's Moodle</li>
+                        <li>Create a new quiz with adaptive feedback enabled</li>
+                        <li>Import the questions below with their corresponding feedback</li>
+                        <li>Share the quiz link with students 2-3 days before class</li>
+                        <li>Review aggregated results to identify common misconceptions</li>
+                    </ol>
+                </div>
+
+                <div class="quiz-container" id="diagnostic-quiz">
+                    <h3>Complete the Diagnostic Quiz Below:</h3>
+
+                    <!-- Question 1 -->
+                    <div class="quiz-question">
+                        <h4>Question 1: Professionalism is mainly about having a teaching qualification.</h4>
+                        <ul class="quiz-options">
+                            <li><label><input type="radio" name="q1" value="agree" onchange="checkAnswer('q1', 'agree')"> Strongly Agree</label></li>
+                            <li><label><input type="radio" name="q1" value="somewhat" onchange="checkAnswer('q1', 'somewhat')"> Somewhat Agree</label></li>
+                            <li><label><input type="radio" name="q1" value="disagree" onchange="checkAnswer('q1', 'disagree')"> Disagree</label></li>
+                            <li><label><input type="radio" name="q1" value="unsure" onchange="checkAnswer('q1', 'unsure')"> Not Sure</label></li>
+                        </ul>
+                        <div id="feedback-q1" class="quiz-feedback"></div>
+                    </div>
+
+                    <!-- Question 2 -->
+                    <div class="quiz-question">
+                        <h4>Question 2: International teacher standards should always override local cultural norms.</h4>
+                        <ul class="quiz-options">
+                            <li><label><input type="radio" name="q2" value="agree" onchange="checkAnswer('q2', 'agree')"> Strongly Agree</label></li>
+                            <li><label><input type="radio" name="q2" value="somewhat" onchange="checkAnswer('q2', 'somewhat')"> Somewhat Agree</label></li>
+                            <li><label><input type="radio" name="q2" value="disagree" onchange="checkAnswer('q2', 'disagree')"> Disagree</label></li>
+                            <li><label><input type="radio" name="q2" value="unsure" onchange="checkAnswer('q2', 'unsure')"> Not Sure</label></li>
+                        </ul>
+                        <div id="feedback-q2" class="quiz-feedback"></div>
+                    </div>
+
+                    <!-- Question 3 -->
+                    <div class="quiz-question">
+                        <h4>Question 3: Teacher professionalism is an individual achievement rather than a collective responsibility.</h4>
+                        <ul class="quiz-options">
+                            <li><label><input type="radio" name="q3" value="agree" onchange="checkAnswer('q3', 'agree')"> Strongly Agree</label></li>
+                            <li><label><input type="radio" name="q3" value="somewhat" onchange="checkAnswer('q3', 'somewhat')"> Somewhat Agree</label></li>
+                            <li><label><input type="radio" name="q3" value="disagree" onchange="checkAnswer('q3', 'disagree')"> Disagree</label></li>
+                            <li><label><input type="radio" name="q3" value="unsure" onchange="checkAnswer('q3', 'unsure')"> Not Sure</label></li>
+                        </ul>
+                        <div id="feedback-q3" class="quiz-feedback"></div>
+                    </div>
+
+                    <!-- Question 4 -->
+                    <div class="quiz-question">
+                        <h4>Question 4: Professionalism looks the same in every country.</h4>
+                        <ul class="quiz-options">
+                            <li><label><input type="radio" name="q4" value="agree" onchange="checkAnswer('q4', 'agree')"> Strongly Agree</label></li>
+                            <li><label><input type="radio" name="q4" value="somewhat" onchange="checkAnswer('q4', 'somewhat')"> Somewhat Agree</label></li>
+                            <li><label><input type="radio" name="q4" value="disagree" onchange="checkAnswer('q4', 'disagree')"> Disagree</label></li>
+                            <li><label><input type="radio" name="q4" value="unsure" onchange="checkAnswer('q4', 'unsure')"> Not Sure</label></li>
+                        </ul>
+                        <div id="feedback-q4" class="quiz-feedback"></div>
+                    </div>
+
+                    <!-- Question 5 -->
+                    <div class="quiz-question">
+                        <h4>Question 5: Teacher autonomy and accountability are always in conflict.</h4>
+                        <ul class="quiz-options">
+                            <li><label><input type="radio" name="q5" value="agree" onchange="checkAnswer('q5', 'agree')"> Strongly Agree</label></li>
+                            <li><label><input type="radio" name="q5" value="somewhat" onchange="checkAnswer('q5', 'somewhat')"> Somewhat Agree</label></li>
+                            <li><label><input type="radio" name="q5" value="disagree" onchange="checkAnswer('q5', 'disagree')"> Disagree</label></li>
+                            <li><label><input type="radio" name="q5" value="unsure" onchange="checkAnswer('q5', 'unsure')"> Not Sure</label></li>
+                        </ul>
+                        <div id="feedback-q5" class="quiz-feedback"></div>
+                    </div>
+
+                    <!-- Question 6 -->
+                    <div class="quiz-question">
+                        <h4>Question 6: Professional behavior is defined by formal codes of conduct rather than cultural context.</h4>
+                        <ul class="quiz-options">
+                            <li><label><input type="radio" name="q6" value="agree" onchange="checkAnswer('q6', 'agree')"> Strongly Agree</label></li>
+                            <li><label><input type="radio" name="q6" value="somewhat" onchange="checkAnswer('q6', 'somewhat')"> Somewhat Agree</label></li>
+                            <li><label><input type="radio" name="q6" value="disagree" onchange="checkAnswer('q6', 'disagree')"> Disagree</label></li>
+                            <li><label><input type="radio" name="q6" value="unsure" onchange="checkAnswer('q6', 'unsure')"> Not Sure</label></li>
+                        </ul>
+                        <div id="feedback-q6" class="quiz-feedback"></div>
+                    </div>
+
+                    <!-- Question 7 -->
+                    <div class="quiz-question">
+                        <h4>Question 7: A professional teacher must prioritize international standards over parent and community expectations.</h4>
+                        <ul class="quiz-options">
+                            <li><label><input type="radio" name="q7" value="agree" onchange="checkAnswer('q7', 'agree')"> Strongly Agree</label></li>
+                            <li><label><input type="radio" name="q7" value="somewhat" onchange="checkAnswer('q7', 'somewhat')"> Somewhat Agree</label></li>
+                            <li><label><input type="radio" name="q7" value="disagree" onchange="checkAnswer('q7', 'disagree')"> Disagree</label></li>
+                            <li><label><input type="radio" name="q7" value="unsure" onchange="checkAnswer('q7', 'unsure')"> Not Sure</label></li>
+                        </ul>
+                        <div id="feedback-q7" class="quiz-feedback"></div>
+                    </div>
+
+                    <!-- Question 8 -->
+                    <div class="quiz-question">
+                        <h4>Question 8: Continuous professional development is more important than initial teacher qualifications.</h4>
+                        <ul class="quiz-options">
+                            <li><label><input type="radio" name="q8" value="agree" onchange="checkAnswer('q8', 'agree')"> Strongly Agree</label></li>
+                            <li><label><input type="radio" name="q8" value="somewhat" onchange="checkAnswer('q8', 'somewhat')"> Somewhat Agree</label></li>
+                            <li><label><input type="radio" name="q8" value="disagree" onchange="checkAnswer('q8', 'disagree')"> Disagree</label></li>
+                            <li><label><input type="radio" name="q8" value="unsure" onchange="checkAnswer('q8', 'unsure')"> Not Sure</label></li>
+                        </ul>
+                        <div id="feedback-q8" class="quiz-feedback"></div>
+                    </div>
+
+                    <button class="btn btn-success" onclick="submitDiagnosticQuiz()">Submit Diagnostic Quiz</button>
+                    <div id="quiz-score" style="display:none; margin-top:20px; padding:15px; background:#d4edda; border-radius:5px;"></div>
+                </div>
+                <button class="btn btn-success" onclick="markSectionComplete('preclass')">Mark Pre-Class as Complete</button>
+            </div>
         </div>
 
+        <!-- Introduction Section -->
+        <div id="introduction" class="section">
+            <div class="card">
+                <h2>🚀 Introduction (15 minutes)</h2>
+
+                <h3>Hook Activity: Professionalism Across Borders</h3>
+                <div class="tool-instruction">
+                    <h4>🔗 External Tool: Mentimeter Poll</h4>
+                    <ol>
+                        <li>Visit <a href="https://www.mentimeter.com" target="_blank">Mentimeter</a> to create a new poll</li>
+                        <li>Enter the question: "A truly professional teacher should follow the same ethical and professional standards anywhere in the world."</li>
+                        <li>Add response options: Agree / Disagree / Not sure</li>
+                        <li>Share the voting link with students</li>
+                        <li>Display results in real-time for class discussion</li>
+                    </ol>
+                </div>
+
+                <div class="alert alert-info">
+                    <strong>Think-Pair-Share Activity:</strong> After seeing the poll results, students discuss with a partner:
+                    <ul>
+                        <li>Why did you choose this option?</li>
+                        <li>What experience or assumption influenced you?</li>
+                    </ul>
+                </div>
+
+                <h3>Misconception Analysis</h3>
+                <p>Review the diagnostic quiz results and identify common misconceptions:</p>
+                <ul class="activity-list">
+                    <li>"Professionalism is just compliance with rules."</li>
+                    <li>"International frameworks are neutral and culture-free."</li>
+                    <li>"Local context is a barrier to professionalism, not a resource."</li>
+                </ul>
+
+                <h3>Real-World Scenario</h3>
+                <div class="alert alert-warning">
+                    <strong>Dilemma:</strong> A teacher who trained in one country moves to an international school in another country. Students' parents expect frequent communication and gifts; the school's code of conduct forbids gifts and limits teacher–parent contact. How should the teacher act?
+                </div>
+
+                <button class="btn btn-success" onclick="markSectionComplete('introduction')">Mark as Complete</button>
+            </div>
+        </div>
+
+        <!-- Development Activities Section -->
         <div id="activities" class="section">
             <div class="card">
-                <h2>Teaching & Learning Activities (90 minutes)</h2>
+                <h2>🎨 Development Activities (60 minutes)</h2>
 
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <span class="timeline-duration">15 minutes</span>
-                        <h3>Introduction</h3>
+                <button class="collapsible">Activity 1: Social Constructivist Jigsaw - Framing Professionalism (20 min)</button>
+                <div class="collapsible-content">
+                    <h3>Expert Groups</h3>
+                    <p>Divide students into 5 expert groups:</p>
+                    <table>
+                        <tr>
+                            <th>Group</th>
+                            <th>Source / Focus</th>
+                        </tr>
+                        <tr>
+                            <td>Group A</td>
+                            <td>Local professional standards / code of ethics</td>
+                        </tr>
+                        <tr>
+                            <td>Group B</td>
+                            <td>OECD-TALIS conceptualization of teacher professionalism</td>
+                        </tr>
+                        <tr>
+                            <td>Group C</td>
+                            <td>UNESCO Recommendation concerning the Status of Teachers</td>
+                        </tr>
+                        <tr>
+                            <td>Group D</td>
+                            <td>Hargreaves' "Four Ages of Professionalism"</td>
+                        </tr>
+                        <tr>
+                            <td>Group E</td>
+                            <td>Case study of an international school's framework</td>
+                        </tr>
+                    </table>
 
-                        <div class="collapsible">
-                            <div class="collapsible-header" onclick="toggleCollapsible(this)">
-                                <span><strong>3.1 Pedagogy-Aligned Hook (5 min)</strong></span>
-                                <span class="collapsible-icon">▼</span>
-                            </div>
-                            <div class="collapsible-content">
-                                <div class="collapsible-content-inner">
-                                    <p><strong>Tool:</strong> <a href="https://www.mentimeter.com" target="_blank" class="tool-link">Mentimeter Poll</a></p>
-
-                                    <h4>Setup Instructions:</h4>
-                                    <ol>
-                                        <li>Create a new Mentimeter poll with the question: "A truly professional teacher should follow the same ethical and professional standards anywhere in the world."</li>
-                                        <li>Add three options: Agree / Disagree / Not sure</li>
-                                        <li>Display results in real-time as students vote</li>
-                                        <li>After voting, students do a quick <strong>think-pair-share</strong> with a partner</li>
-                                    </ol>
-
-                                    <h4>Discussion Prompts:</h4>
-                                    <ul>
-                                        <li>"Why did you choose this option?"</li>
-                                        <li>"What experience or assumption influenced you?"</li>
-                                    </ul>
-
-                                    <div class="info-box">
-                                        <strong>Social Constructivism Note:</strong> The hook introduces divergent perspectives and creates cognitive dissonance—an essential starting point for co-constructed inquiry.
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="collapsible">
-                            <div class="collapsible-header" onclick="toggleCollapsible(this)">
-                                <span><strong>3.2 Pre-Test Review with Misconception Analysis (7 min)</strong></span>
-                                <span class="collapsible-icon">▼</span>
-                            </div>
-                            <div class="collapsible-content">
-                                <div class="collapsible-content-inner">
-                                    <p>Display the diagnostic quiz results anonymously. Highlight common misconceptions:</p>
-                                    <ul>
-                                        <li>"Professionalism is just compliance with rules."</li>
-                                        <li>"International frameworks are neutral and culture-free."</li>
-                                        <li>"Local context is a barrier to professionalism, not a resource."</li>
-                                    </ul>
-                                    <p><strong>Activity:</strong> In pairs, students <strong>challenge or refine</strong> one statement using examples from their own lives.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="collapsible">
-                            <div class="collapsible-header" onclick="toggleCollapsible(this)">
-                                <span><strong>3.3 Real-World Connection (3 min)</strong></span>
-                                <span class="collapsible-icon">▼</span>
-                            </div>
-                            <div class="collapsible-content">
-                                <div class="collapsible-content-inner">
-                                    <div class="info-box warning">
-                                        <strong>Scenario:</strong> "A teacher who trained in one country moves to an international school in another country. Students' parents expect frequent communication and gifts; the school's code of conduct forbids gifts and limits teacher–parent contact. How should the teacher act?"
-                                    </div>
-                                    <p>Explain that this lesson will give students <strong>conceptual tools</strong> to understand and respond to such dilemmas.</p>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="tool-instruction">
+                        <h4>🔗 External Tool: Padlet Board</h4>
+                        <ol>
+                            <li>Go to <a href="https://padlet.com" target="_blank">Padlet</a> and create a new board</li>
+                            <li>Set up 5 columns, one for each expert group</li>
+                            <li>Have groups post their findings using sticky notes, images, or audio</li>
+                            <li>Share the Padlet link: <code>[Insert your Padlet URL here]</code></li>
+                        </ol>
                     </div>
 
-                    <div class="timeline-item">
-                        <span class="timeline-duration">60 minutes</span>
-                        <h3>Development Activities</h3>
+                    <h4>Expert Group Questions:</h4>
+                    <ul>
+                        <li>What <strong>core values</strong> are emphasized?</li>
+                        <li>What <strong>contextual assumptions</strong> are embedded?</li>
+                        <li>What would this framework say about the "gift-giving" dilemma?</li>
+                    </ul>
 
-                        <div class="collapsible">
-                            <div class="collapsible-header" onclick="toggleCollapsible(this)">
-                                <span><strong>Activity 1: Social Constructivist Jigsaw (20 min)</strong></span>
-                                <span class="collapsible-icon">▼</span>
-                            </div>
-                            <div class="collapsible-content">
-                                <div class="collapsible-content-inner">
-                                    <p><strong>Tool:</strong> <a href="https://padlet.com" target="_blank" class="tool-link">Padlet</a> for collaborative mapping</p>
+                    <h4>Graphic Organizer</h4>
+                    <table style="margin-top:15px;">
+                        <tr>
+                            <th>Framework</th>
+                            <th>Core Values</th>
+                            <th>Contextual Assumptions</th>
+                            <th>Implications for Dilemma</th>
+                        </tr>
+                        <tr><td colspan="4"><em>Students complete this in their home groups</em></td></tr>
+                    </table>
+                </div>
 
-                                    <h4>Setup Instructions:</h4>
-                                    <ol>
-                                        <li>Create a free <a href="https://padlet.com" target="_blank" class="tool-link">Padlet board</a> before class</li>
-                                        <li>Set up 5 columns, one for each expert group (A through E)</li>
-                                        <li>Share the Padlet link with students</li>
-                                        <li>Divide students into 5 expert groups (6 students each)</li>
-                                    </ol>
+                <button class="collapsible">Activity 2: Ethical Dilemma Carousel - Structured Controversy (25 min)</button>
+                <div class="collapsible-content">
+                    <h3>Four Dilemma Stations</h3>
 
-                                    <h4>Expert Group Assignments:</h4>
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>Group</th>
-                                                <th>Source / Focus</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>Group A</td>
-                                                <td>Local professional standards / code of ethics</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Group B</td>
-                                                <td>OECD-TALIS conceptualisation of teacher professionalism</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Group C</td>
-                                                <td>UNESCO Recommendation concerning the Status of Teachers</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Group D</td>
-                                                <td>Hargreaves' "Four Ages of Professionalism"</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Group E</td>
-                                                <td>Case study of an international school's framework</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-
-                                    <h4>Expert Group Task:</h4>
-                                    <p>Each expert group reads key sections and answers:</p>
-                                    <ol>
-                                        <li>What <strong>core values</strong> are emphasised?</li>
-                                        <li>What <strong>contextual assumptions</strong> are embedded in this framework?</li>
-                                        <li>What would this framework say about the "gift-giving" dilemma?</li>
-                                    </ol>
-                                    <p>Groups record findings on the <strong>Padlet board</strong> using sticky notes, images, or short audio messages.</p>
-
-                                    <h4>Home Groups (Jigsaw):</h4>
-                                    <p>Re-group into "home groups" with one member from each expert group. Each student teaches their framework to others, using this graphic organiser:</p>
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>Framework</th>
-                                                <th>Core Values</th>
-                                                <th>Contextual Assumptions</th>
-                                                <th>Implications for Dilemma</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr><td colspan="4"><em>Fill in collaboratively during home group discussion</em></td></tr>
-                                        </tbody>
-                                    </table>
-
-                                    <div class="info-box">
-                                        <strong>Social Constructivism Note:</strong> Jigsaw methodology creates interdependence: students cannot complete the task without hearing, questioning, and building on each other's expertise.
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="collapsible">
-                            <div class="collapsible-header" onclick="toggleCollapsible(this)">
-                                <span><strong>Activity 2: Ethical Dilemma Carousel (25 min)</strong></span>
-                                <span class="collapsible-icon">▼</span>
-                            </div>
-                            <div class="collapsible-content">
-                                <div class="collapsible-content-inner">
-                                    <p><strong>Format:</strong> Structured Controversy Protocol with station rotation</p>
-
-                                    <h4>Setup Instructions:</h4>
-                                    <ol>
-                                        <li>Place 4 large chart papers around the classroom, each with one dilemma</li>
-                                        <li>Divide the class into 4 groups (7-8 students per group)</li>
-                                        <li>Each group visits all 4 stations (7 minutes per station)</li>
-                                        <li>Provide markers for groups to write on chart paper</li>
-                                    </ol>
-
-                                    <h4>Dilemma Stations:</h4>
-
-                                    <div class="info-box warning">
-                                        <strong>Station 1: Social Media Boundaries</strong>
-                                        <p>A teacher in an international school is "befriended" by a student's parent on Facebook. In his home culture, this is friendly and normal. In the school's international code, it is a professional boundary violation.</p>
-                                    </div>
-
-                                    <div class="info-box warning">
-                                        <strong>Station 2: Assessment and Grading</strong>
-                                        <p>A local norm values effort and improvement; international school policy requires objective final-examination grading. A teacher must decide whether to "round up" a culturally respectful but low-performing student.</p>
-                                    </div>
-
-                                    <div class="info-box warning">
-                                        <strong>Station 3: Teacher Appearance</strong>
-                                        <p>A female teacher wears culturally traditional dress that is conservative in her own community, but the international school handbook requires "Western professional attire."</p>
-                                    </div>
-
-                                    <div class="info-box warning">
-                                        <strong>Station 4: Parent Gifts</strong>
-                                        <p>In many local communities, giving gifts to teachers is a sign of respect. International codes often prohibit accepting gifts to avoid favouritism.</p>
-                                    </div>
-
-                                    <h4>Task at Each Station:</h4>
-                                    <ul>
-                                        <li><strong>Articulate both sides</strong> of the dilemma fairly</li>
-                                        <li><strong>Discuss</strong> what "professionalism" means to each stakeholder</li>
-                                        <li><strong>Write a negotiated position</strong> on the chart paper, including at least one unresolved tension</li>
-                                    </ul>
-
-                                    <h4>Teacher Facilitation Prompts:</h4>
-                                    <ul>
-                                        <li>"What would the international framework say? What would the local community say?"</li>
-                                        <li>"Is there a third possibility that respects both perspectives?"</li>
-                                        <li>"Whose voice is missing from this dilemma?"</li>
-                                    </ul>
-
-                                    <div class="info-box">
-                                        <strong>Social Constructivism Note:</strong> Structured controversy encourages students to co-construct more complex judgments rather than simply defending their own initial view.
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="collapsible">
-                            <div class="collapsible-header" onclick="toggleCollapsible(this)">
-                                <span><strong>Activity 3: Building a Shared Professionalism Charter (15 min)</strong></span>
-                                <span class="collapsible-icon">▼</span>
-                            </div>
-                            <div class="collapsible-content">
-                                <div class="collapsible-content-inner">
-                                    <p><strong>Tool:</strong> <a href="https://docs.google.com/presentation" target="_blank" class="tool-link">Google Slides</a> or <a href="https://padlet.com" target="_blank" class="tool-link">Padlet</a></p>
-
-                                    <h4>Setup Instructions:</h4>
-                                    <ol>
-                                        <li>Create a shared <a href="https://docs.google.com/presentation" target="_blank" class="tool-link">Google Slides presentation</a> with one slide per group</li>
-                                        <li>Share edit access with all students</li>
-                                        <li>Each group gets 10 minutes to draft their charter on their assigned slide</li>
-                                        <li>Conduct a 5-minute gallery walk where groups add sticky note comments to other slides</li>
-                                    </ol>
-
-                                    <h4>Task:</h4>
-                                    <p>Using insights from Activities 1 and 2, each group drafts <strong>3–5 "Contextually Responsive Professional Commitments."</strong> These should:</p>
-                                    <ul>
-                                        <li>Integrate at least one <strong>international principle</strong> (e.g., integrity, equity, accountability)</li>
-                                        <li>Respect at least one <strong>local cultural value</strong> or expectation</li>
-                                        <li>Be worded as practical commitments teachers could enact</li>
-                                    </ul>
-
-                                    <h4>Gallery Walk Protocol:</h4>
-                                    <ol>
-                                        <li>Groups post their charter draft on Google Slides or Padlet</li>
-                                        <li>Class conducts a gallery walk, placing sticky notes with questions or suggestions</li>
-                                        <li>Groups briefly respond to one key question or suggestion</li>
-                                    </ol>
-
-                                    <div class="info-box">
-                                        <strong>Social Constructivism Note:</strong> The final "charter" is an authentic shared product—constructed through discussion, critique, and consensus-building.
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="alert alert-warning" style="margin:10px 0;">
+                        <strong>Dilemma 1: Social Media Boundaries</strong><br>
+                        A teacher in an international school is "befriended" by a student's parent on Facebook. In his home culture, this is friendly and normal. In the school's international code, it is a professional boundary violation.
                     </div>
 
-                    <div class="timeline-item">
-                        <span class="timeline-duration">15 minutes</span>
-                        <h3>Synthesis & Closure</h3>
-
-                        <div class="collapsible">
-                            <div class="collapsible-header" onclick="toggleCollapsible(this)">
-                                <span><strong>Post-Test & Belief Re-Evaluation (5 min)</strong></span>
-                                <span class="collapsible-icon">▼</span>
-                            </div>
-                            <div class="collapsible-content">
-                                <div class="collapsible-content-inner">
-                                    <p>Repeat the opening <strong>Mentimeter poll</strong>:</p>
-                                    <p><em>"A truly professional teacher should follow the same ethical and professional standards anywhere in the world."</em></p>
-                                    <p>Compare the new distribution with the pre-class responses. Discuss:</p>
-                                    <ul>
-                                        <li>What changed? What remained the same?</li>
-                                        <li>Did any new tensions emerge?</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="collapsible">
-                            <div class="collapsible-header" onclick="toggleCollapsible(this)">
-                                <span><strong>Peer Teaching Summaries (5 min)</strong></span>
-                                <span class="collapsible-icon">▼</span>
-                            </div>
-                            <div class="collapsible-content">
-                                <div class="collapsible-content-inner">
-                                    <p>Each group shares one "aha" insight and one unresolved question. Encourage classmates to respond.</p>
-                                    <p><strong>Example prompts:</strong></p>
-                                    <ul>
-                                        <li>"One thing we now understand differently is…"</li>
-                                        <li>"One tension we still need to explore is…"</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="collapsible">
-                            <div class="collapsible-header" onclick="toggleCollapsible(this)">
-                                <span><strong>Exit Ticket & Preview (5 min)</strong></span>
-                                <span class="collapsible-icon">▼</span>
-                            </div>
-                            <div class="collapsible-content">
-                                <div class="collapsible-content-inner">
-                                    <p><strong>Tool:</strong> <a href="https://docs.google.com/forms" target="_blank" class="tool-link">Google Forms</a> or paper exit ticket</p>
-
-                                    <h4>Exit Ticket Prompt:</h4>
-                                    <p><em>"In 2–3 sentences: How has your understanding of teacher professionalism changed? What question will you take into the next session?"</em></p>
-
-                                    <h4>Preview Next Session:</h4>
-                                    <p>"Next time, we will apply these frameworks to teacher evaluation systems and continuous professional development in local and international schools."</p>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="alert alert-warning" style="margin:10px 0;">
+                        <strong>Dilemma 2: Assessment and Grading</strong><br>
+                        A local norm values effort and improvement; international school policy requires objective final-examination grading. A teacher must decide whether to "round up" a culturally respectful but low-performing student.
                     </div>
+
+                    <div class="alert alert-warning" style="margin:10px 0;">
+                        <strong>Dilemma 3: Teacher Appearance</strong><br>
+                        A female teacher wears culturally traditional dress that is conservative in her own community, but the international school handbook requires "Western professional attire."
+                    </div>
+
+                    <div class="alert alert-warning" style="margin:10px 0;">
+                        <strong>Dilemma 4: Parent Gifts</strong><br>
+                        In many local communities, giving gifts to teachers is a sign of respect. International codes often prohibit accepting gifts to avoid favouritism.
+                    </div>
+
+                    <h4>Structured Controversy Protocol (7 min per station):</h4>
+                    <ol>
+                        <li>Articulate both sides of the dilemma fairly</li>
+                        <li>Discuss what "professionalism" means to each stakeholder</li>
+                        <li>Write a negotiated position on chart paper, including unresolved tensions</li>
+                    </ol>
+                </div>
+
+                <button class="collapsible">Activity 3: Building a Shared Professionalism Charter (15 min)</button>
+                <div class="collapsible-content">
+                    <h3>Collaborative Charter Creation</h3>
+                    <p><strong>Task:</strong> Draft 3–5 "Contextually Responsive Professional Commitments"</p>
+
+                    <h4>Requirements:</h4>
+                    <ul>
+                        <li>Integrate at least one <strong>international principle</strong> (integrity, equity, accountability)</li>
+                        <li>Respect at least one <strong>local cultural value</strong></li>
+                        <li>Word as practical commitments teachers could enact</li>
+                    </ul>
+
+                    <div class="tool-instruction">
+                        <h4>🔗 External Tool: Google Slides or Padlet</h4>
+                        <ol>
+                            <li>Create a <a href="https://slides.google.com" target="_blank">Google Slides presentation</a> or new Padlet board</li>
+                            <li>Assign one slide/section per group</li>
+                            <li>Groups draft their charter commitments</li>
+                            <li>Conduct a gallery walk with sticky note feedback</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <button class="btn btn-success" onclick="markSectionComplete('activities')">Mark Activities as Complete</button>
+            </div>
+
+            <!-- Knowledge Check Quiz -->
+            <div class="card">
+                <h2>📝 Knowledge Check Quiz: Professional Frameworks</h2>
+                <p>Test your understanding of the frameworks explored in Activity 1.</p>
+
+                <div class="quiz-container">
+                    <div class="quiz-question">
+                        <h4>Question 1: Which framework emphasizes teacher collaboration and collegial learning communities?</h4>
+                        <ul class="quiz-options">
+                            <li><label><input type="radio" name="kc1" value="a" onchange="checkKnowledgeAnswer('kc1', 'a')"> OECD-TALIS</label></li>
+                            <li><label><input type="radio" name="kc1" value="b" onchange="checkKnowledgeAnswer('kc1', 'b')"> UNESCO Recommendation</label></li>
+                            <li><label><input type="radio" name="kc1" value="c" onchange="checkKnowledgeAnswer('kc1', 'c')"> Hargreaves' Four Ages</label></li>
+                            <li><label><input type="radio" name="kc1" value="d" onchange="checkKnowledgeAnswer('kc1', 'd')"> Local Standards Only</label></li>
+                        </ul>
+                        <div id="feedback-kc1" class="quiz-feedback"></div>
+                    </div>
+
+                    <div class="quiz-question">
+                        <h4>Question 2: The UNESCO Recommendation (1966/2016) primarily focuses on:</h4>
+                        <ul class="quiz-options">
+                            <li><label><input type="radio" name="kc2" value="a" onchange="checkKnowledgeAnswer('kc2', 'a')"> Teacher certification requirements</label></li>
+                            <li><label><input type="radio" name="kc2" value="b" onchange="checkKnowledgeAnswer('kc2', 'b')"> Teacher status, rights, and working conditions</label></li>
+                            <li><label><input type="radio" name="kc2" value="c" onchange="checkKnowledgeAnswer('kc2', 'c')"> Student assessment methods</label></li>
+                            <li><label><input type="radio" name="kc2" value="d" onchange="checkKnowledgeAnswer('kc2', 'd')"> Digital technology integration</label></li>
+                        </ul>
+                        <div id="feedback-kc2" class="quiz-feedback"></div>
+                    </div>
+
+                    <div class="quiz-question">
+                        <h4>Question 3: According to Hargreaves, the "Fourth Age" of professionalism is characterized by:</h4>
+                        <ul class="quiz-options">
+                            <li><label><input type="radio" name="kc3" value="a" onchange="checkKnowledgeAnswer('kc3', 'a')"> Individual autonomy and craft knowledge</label></li>
+                            <li><label><input type="radio" name="kc3" value="b" onchange="checkKnowledgeAnswer('kc3', 'b')"> Standardization and accountability</label></li>
+                            <li><label><input type="radio" name="kc3" value="c" onchange="checkKnowledgeAnswer('kc3', 'c')"> Democratic professionalism and networking</label></li>
+                            <li><label><input type="radio" name="kc3" value="d" onchange="checkKnowledgeAnswer('kc3', 'd')"> Pre-professional apprenticeship</label></li>
+                        </ul>
+                        <div id="feedback-kc3" class="quiz-feedback"></div>
+                    </div>
+
+                    <div class="quiz-question">
+                        <h4>Question 4: A "contextually responsive" approach to professionalism means:</h4>
+                        <ul class="quiz-options">
+                            <li><label><input type="radio" name="kc4" value="a" onchange="checkKnowledgeAnswer('kc4', 'a')"> Ignoring international standards</label></li>
+                            <li><label><input type="radio" name="kc4" value="b" onchange="checkKnowledgeAnswer('kc4', 'b')"> Only following local customs</label></li>
+                            <li><label><input type="radio" name="kc4" value="c" onchange="checkKnowledgeAnswer('kc4', 'c')"> Negotiating between international principles and local realities</label></li>
+                            <li><label><input type="radio" name="kc4" value="d" onchange="checkKnowledgeAnswer('kc4', 'd')"> Completely standardizing practice globally</label></li>
+                        </ul>
+                        <div id="feedback-kc4" class="quiz-feedback"></div>
+                    </div>
+
+                    <button class="btn btn-success" onclick="submitKnowledgeCheck()">Submit Knowledge Check</button>
+                    <div id="kc-score" style="display:none; margin-top:20px;"></div>
                 </div>
             </div>
         </div>
 
+        <!-- Synthesis & Closure Section -->
+        <div id="synthesis" class="section">
+            <div class="card">
+                <h2>🔄 Synthesis & Closure (15 minutes)</h2>
+
+                <h3>Post-Test: Belief Re-Evaluation</h3>
+                <div class="tool-instruction">
+                    <h4>🔗 Repeat Opening Mentimeter Poll</h4>
+                    <p>Re-run the same poll: "A truly professional teacher should follow the same ethical and professional standards anywhere in the world."</p>
+                    <p>Compare results with pre-class responses and discuss what changed.</p>
+                </div>
+
+                <h3>Peer Teaching Summaries</h3>
+                <p>Each group shares:</p>
+                <ul class="activity-list">
+                    <li>One "aha" insight from the lesson</li>
+                    <li>One unresolved question that requires further exploration</li>
+                </ul>
+
+                <h3>Exit Ticket</h3>
+                <div class="quiz-container">
+                    <h4>Reflection Prompt:</h4>
+                    <p>"In 2–3 sentences: How has your understanding of teacher professionalism changed? What question will you take into the next session?"</p>
+                    <textarea id="exit-ticket" style="width:100%; min-height:100px; padding:10px; border-radius:5px; border:1px solid var(--border-color);" placeholder="Type your reflection here..."></textarea>
+                    <button class="btn btn-success" onclick="saveExitTicket()" style="margin-top:10px;">Save Exit Ticket</button>
+                    <div id="exit-saved" style="display:none; margin-top:10px; color:var(--success-color); font-weight:bold;">✓ Your reflection has been saved!</div>
+                </div>
+
+                <h3>Preview Next Session</h3>
+                <div class="alert alert-info">
+                    <strong>Coming Next:</strong> We will apply these frameworks to teacher evaluation systems and continuous professional development in local and international schools.
+                </div>
+
+                <button class="btn btn-success" onclick="markSectionComplete('synthesis')">Mark as Complete</button>
+            </div>
+
+            <!-- Post-Lesson Comprehensive Quiz -->
+            <div class="card">
+                <h2>📊 Comprehensive Post-Lesson Quiz</h2>
+                <p>This quiz assesses your overall understanding of the lesson content.</p>
+
+                <div class="quiz-container">
+                    <div class="quiz-question">
+                        <h4>Question 1: Social constructivism views professional knowledge as:</h4>
+                        <ul class="quiz-options">
+                            <li><label><input type="radio" name="post1" value="a" onchange="checkPostAnswer('post1', 'a')"> Fixed and universal across contexts</label></li>
+                            <li><label><input type="radio" name="post1" value="b" onchange="checkPostAnswer('post1', 'b')"> Socially negotiated and culturally situated</label></li>
+                            <li><label><input type="radio" name="post1" value="c" onchange="checkPostAnswer('post1', 'c')"> Individually discovered through reflection</label></li>
+                            <li><label><input type="radio" name="post1" value="d" onchange="checkPostAnswer('post1', 'd')"> Transmitted by experts to novices</label></li>
+                        </ul>
+                        <div id="feedback-post1" class="quiz-feedback"></div>
+                    </div>
+
+                    <div class="quiz-question">
+                        <h4>Question 2: The main purpose of the "structured controversy" protocol is to:</h4>
+                        <ul class="quiz-options">
+                            <li><label><input type="radio" name="post2" value="a" onchange="checkPostAnswer('post2', 'a')"> Determine which side is correct</label></li>
+                            <li><label><input type="radio" name="post2" value="b" onchange="checkPostAnswer('post2', 'b')"> Build more complex judgments through dialogue</label></li>
+                            <li><label><input type="radio" name="post2" value="c" onchange="checkPostAnswer('post2', 'c')"> Avoid discussing difficult topics</label></li>
+                            <li><label><input type="radio" name="post2" value="d" onchange="checkPostAnswer('post2', 'd')"> Enforce compliance with rules</label></li>
+                        </ul>
+                        <div id="feedback-post2" class="quiz-feedback"></div>
+                    </div>
+
+                    <div class="quiz-question">
+                        <h4>Question 3: When international and local norms conflict, a professional teacher should:</h4>
+                        <ul class="quiz-options">
+                            <li><label><input type="radio" name="post3" value="a" onchange="checkPostAnswer('post3', 'a')"> Always follow international standards</label></li>
+                            <li><label><input type="radio" name="post3" value="b" onchange="checkPostAnswer('post3', 'b')"> Always follow local customs</label></li>
+                            <li><label><input type="radio" name="post3" value="c" onchange="checkPostAnswer('post3', 'c')"> Engage in ethical reasoning considering both perspectives</label></li>
+                            <li><label><input type="radio" name="post3" value="d" onchange="checkPostAnswer('post3', 'd')"> Ignore the conflict</label></li>
+                        </ul>
+                        <div id="feedback-post3" class="quiz-feedback"></div>
+                    </div>
+
+                    <div class="quiz-question">
+                        <h4>Question 4: The jigsaw methodology in Activity 1 promotes:</h4>
+                        <ul class="quiz-options">
+                            <li><label><input type="radio" name="post4" value="a" onchange="checkPostAnswer('post4', 'a')"> Individual competition</label></li>
+                            <li><label><input type="radio" name="post4" value="b" onchange="checkPostAnswer('post4', 'b')"> Interdependence and collective knowledge building</label></li>
+                            <li><label><input type="radio" name="post4" value="c" onchange="checkPostAnswer('post4', 'c')"> Teacher-centered instruction</label></li>
+                            <li><label><input type="radio" name="post4" value="d" onchange="checkPostAnswer('post4', 'd')"> Memorization of facts</label></li>
+                        </ul>
+                        <div id="feedback-post4" class="quiz-feedback"></div>
+                    </div>
+
+                    <div class="quiz-question">
+                        <h4>Question 5: The primary outcome of creating a "Contextually Responsive Professionalism Charter" is:</h4>
+                        <ul class="quiz-options">
+                            <li><label><input type="radio" name="post5" value="a" onchange="checkPostAnswer('post5', 'a')"> A universal code applicable everywhere</label></li>
+                            <li><label><input type="radio" name="post5" value="b" onchange="checkPostAnswer('post5', 'b')"> A locally-specific document rejecting international norms</label></li>
+                            <li><label><input type="radio" name="post5" value="c" onchange="checkPostAnswer('post5', 'c')"> An authentic product synthesizing international principles with local realities</label></li>
+                            <li><label><input type="radio" name="post5" value="d" onchange="checkPostAnswer('post5', 'd')"> A compliance checklist</label></li>
+                        </ul>
+                        <div id="feedback-post5" class="quiz-feedback"></div>
+                    </div>
+
+                    <button class="btn btn-success" onclick="submitPostQuiz()">Submit Post-Lesson Quiz</button>
+                    <div id="post-score" style="display:none; margin-top:20px;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Assessment Section -->
         <div id="assessment" class="section">
             <div class="card">
-                <h2>Assessment Methods</h2>
+                <h2>✅ Assessment Methods</h2>
 
                 <h3>Formative Assessment (During Class)</h3>
                 <table>
-                    <thead>
-                        <tr>
-                            <th>Method</th>
-                            <th>Alignment</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Diagnostic pre-test + misconception analysis</td>
-                            <td>Activating prior knowledge; identifying starting points</td>
-                        </tr>
-                        <tr>
-                            <td>Observation of group collaboration</td>
-                            <td>Social-constructivist process: listening, negotiating, building on ideas</td>
-                        </tr>
-                        <tr>
-                            <td>Padlet / concept map contributions</td>
-                            <td>Evidence of comparative understanding</td>
-                        </tr>
-                        <tr>
-                            <td>Chart paper positions / gallery walk feedback</td>
-                            <td>Evidence of evaluation and co-construction</td>
-                        </tr>
-                        <tr>
-                            <td>Exit ticket</td>
-                            <td>Reflection on learning and remaining questions</td>
-                        </tr>
-                    </tbody>
+                    <tr>
+                        <th>Method</th>
+                        <th>Purpose & Alignment</th>
+                    </tr>
+                    <tr>
+                        <td>Diagnostic pre-test + misconception analysis</td>
+                        <td>Activating prior knowledge; identifying starting points</td>
+                    </tr>
+                    <tr>
+                        <td>Observation of group collaboration</td>
+                        <td>Social-constructivist process: listening, negotiating, building on ideas</td>
+                    </tr>
+                    <tr>
+                        <td>Padlet / concept map contributions</td>
+                        <td>Evidence of comparative understanding</td>
+                    </tr>
+                    <tr>
+                        <td>Chart paper positions / gallery walk feedback</td>
+                        <td>Evidence of evaluation and co-construction</td>
+                    </tr>
+                    <tr>
+                        <td>Exit ticket</td>
+                        <td>Reflection on learning and remaining questions</td>
+                    </tr>
                 </table>
 
                 <h3>Summative Assessment</h3>
 
-                <div class="collapsible">
-                    <div class="collapsible-header" onclick="toggleCollapsible(this)">
-                        <span><strong>Group Digital Portfolio: "Teacher Professionalism in Context"</strong></span>
-                        <span class="collapsible-icon">▼</span>
-                    </div>
-                    <div class="collapsible-content">
-                        <div class="collapsible-content-inner">
-                            <p><span class="badge badge-warning">Due: One week after the lesson</span></p>
-
-                            <h4>Components:</h4>
-                            <ol>
-                                <li><strong>Comparative framework analysis</strong> (500–700 words)
-                                    <ul>
-                                        <li>Compares local standards with one international framework (OECD/UNESCO) using concepts from Activity 1</li>
-                                    </ul>
-                                </li>
-                                <li><strong>Case response</strong> (300–400 words)
-                                    <ul>
-                                        <li>Selects one carousel dilemma and formulates a justified, contextually responsive professional response</li>
-                                    </ul>
-                                </li>
-                                <li><strong>Professionalism Charter</strong> (from Activity 3)
-                                    <ul>
-                                        <li>Polished version with a short rationale for each commitment</li>
-                                    </ul>
-                                </li>
-                            </ol>
-                        </div>
-                    </div>
+                <button class="collapsible">Group Digital Portfolio: "Teacher Professionalism in Context"</button>
+                <div class="collapsible-content">
+                    <p><strong>Due:</strong> One week after the lesson</p>
+                    <h4>Components:</h4>
+                    <ol>
+                        <li><strong>Comparative framework analysis</strong> (500–700 words)<br>
+                            Compare local standards with one international framework (OECD/UNESCO) using concepts from Activity 1.</li>
+                        <li><strong>Case response</strong> (300–400 words)<br>
+                            Select one carousel dilemma and formulate a justified, contextually responsive professional response.</li>
+                        <li><strong>Professionalism Charter</strong> (from Activity 3)<br>
+                            Polished version with a short rationale for each commitment.</li>
+                    </ol>
                 </div>
 
-                <div class="collapsible">
-                    <div class="collapsible-header" onclick="toggleCollapsible(this)">
-                        <span><strong>Individual Reflective Essay (300–500 words)</strong></span>
-                        <span class="collapsible-icon">▼</span>
-                    </div>
-                    <div class="collapsible-content">
-                        <div class="collapsible-content-inner">
-                            <p><strong>Prompt:</strong> "In what ways did dialogue with peers challenge or enrich your understanding of teacher professionalism?"</p>
-                        </div>
-                    </div>
+                <button class="collapsible">Individual Reflective Essay (300–500 words)</button>
+                <div class="collapsible-content">
+                    <p><strong>Prompt:</strong> "In what ways did dialogue with peers challenge or enrich your understanding of teacher professionalism?"</p>
                 </div>
 
-                <h3>Summative Rubric</h3>
+                <h3>Summative Rubric (Excerpt)</h3>
                 <table>
-                    <thead>
-                        <tr>
-                            <th>Criteria</th>
-                            <th>Excellent</th>
-                            <th>Developing</th>
-                            <th>Needs Revision</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>Contextual awareness</strong></td>
-                            <td>Nuanced analysis of both local and international perspectives; avoids stereotypes</td>
-                            <td>Acknowledges context but tends to generalise</td>
-                            <td>Ignores or simplifies context</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Use of frameworks</strong></td>
-                            <td>Skillfully applies UNESCO/OECD/local frameworks to cases</td>
-                            <td>Mentions frameworks but superficially</td>
-                            <td>No reference to course materials</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Collaboration / co-construction</strong></td>
-                            <td>Clear evidence of shared thinking, negotiation, and peer contribution</td>
-                            <td>Some evidence of collaboration</td>
-                            <td>Individual work only</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Critical reflection</strong></td>
-                            <td>Shows complexity, self-questioning, and growth</td>
-                            <td>Some reflection, mostly descriptive</td>
-                            <td>Does not address learning process</td>
-                        </tr>
-                    </tbody>
+                    <tr>
+                        <th>Criteria</th>
+                        <th>Excellent</th>
+                        <th>Developing</th>
+                        <th>Needs Revision</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Contextual awareness</strong></td>
+                        <td>Nuanced analysis of both local and international perspectives; avoids stereotypes</td>
+                        <td>Acknowledges context but tends to generalize</td>
+                        <td>Ignores or simplifies context</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Use of frameworks</strong></td>
+                        <td>Skillfully applies UNESCO/OECD/local frameworks to cases</td>
+                        <td>Mentions frameworks but superficially</td>
+                        <td>No reference to course materials</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Collaboration / co-construction</strong></td>
+                        <td>Clear evidence of shared thinking, negotiation, and peer contribution</td>
+                        <td>Some evidence of collaboration</td>
+                        <td>Individual work only</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Critical reflection</strong></td>
+                        <td>Shows complexity, self-questioning, and growth</td>
+                        <td>Some reflection, mostly descriptive</td>
+                        <td>Does not address learning process</td>
+                    </tr>
                 </table>
-
-                <h3>Constructive Alignment Matrix</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Learning Outcome</th>
-                            <th>Teaching Activity</th>
-                            <th>Assessment Method</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>ILO 1:</strong> Analyse competing definitions</td>
-                            <td>Jigsaw expert groups + Padlet concept mapping</td>
-                            <td>Group comparative framework analysis; diagnostic misconception review</td>
-                        </tr>
-                        <tr>
-                            <td><strong>ILO 2:</strong> Compare local and international frameworks</td>
-                            <td>Framework comparison graphic organiser; gallery walk</td>
-                            <td>Portfolio comparative analysis; observation of Padlet themes</td>
-                        </tr>
-                        <tr>
-                            <td><strong>ILO 3:</strong> Evaluate ethical dilemmas</td>
-                            <td>Dilemma carousel with structured controversy</td>
-                            <td>Case response in portfolio; individual reflective essay</td>
-                        </tr>
-                        <tr>
-                            <td><strong>ILO 4:</strong> Create a shared charter</td>
-                            <td>Charter-building activity + gallery walk feedback</td>
-                            <td>Professionalism Charter in portfolio</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <button class="btn btn-success" onclick="markSectionComplete('assessment')">Mark as Complete</button>
             </div>
         </div>
 
+        <!-- Resources Section -->
         <div id="resources" class="section">
             <div class="card">
-                <h2>Required Resources & Technology</h2>
+                <h2>📚 Required Resources & Technology</h2>
 
-                <h3>Existing Materials</h3>
-                <ul>
-                    <li>OECD (2019). <em>TALIS 2018 Results (Volume I): Teachers and School Leaders as Lifelong Learners</em>. <a href="https://doi.org/10.1787/1d0bc92a-en" target="_blank" class="tool-link">Access OECD Report</a></li>
-                    <li>UNESCO (1966/2016). <em>Recommendation concerning the Status of Teachers</em>. <a href="https://unesdoc.unesco.org/ark:/48223/pf0000244956" target="_blank" class="tool-link">Access UNESCO Document</a></li>
-                    <li>Hargreaves, A. (2000). <em>Four Ages of Professionalism and Professional Learning</em>. Teachers and Teaching, 6(2), 151–182. <a href="https://doi.org/10.1080/713698714" target="_blank" class="tool-link">Access Article</a></li>
-                    <li><strong>Local professional standards document</strong> — Insert your institution's / country's official teacher professional standards or code of ethics</li>
+                <h3>Required Pre-Reading Materials</h3>
+                <ul class="activity-list">
+                    <li>
+                        <a href="https://doi.org/10.1787/1d0bc92a-en" target="_blank" class="resource-link">OECD (2019). TALIS 2018 Results (Volume I): Teachers and School Leaders as Lifelong Learners</a>
+                    </li>
+                    <li>
+                        <a href="https://unesdoc.unesco.org/ark:/48223/pf0000244956" target="_blank" class="resource-link">UNESCO (1966/2016). Recommendation concerning the Status of Teachers</a>
+                    </li>
+                    <li>
+                        <a href="https://doi.org/10.1080/713698714" target="_blank" class="resource-link">Hargreaves, A. (2000). Four Ages of Professionalism and Professional Learning</a>
+                    </li>
+                    <li>
+                        <strong>Local professional standards document</strong> — Insert your institution's / country's official teacher professional standards or code of ethics
+                    </li>
                 </ul>
 
-                <h3>Interactive Tools & External Resources</h3>
+                <h3>Interactive Tools</h3>
 
-                <div class="collapsible">
-                    <div class="collapsible-header" onclick="toggleCollapsible(this)">
-                        <span><strong>Mentimeter - Polling & Quiz</strong></span>
-                        <span class="collapsible-icon">▼</span>
-                    </div>
-                    <div class="collapsible-content">
-                        <div class="collapsible-content-inner">
-                            <p><strong>Purpose:</strong> Opening poll, diagnostic quiz, and post-test</p>
-                            <p><strong>Access:</strong> <a href="https://www.mentimeter.com" target="_blank" class="tool-link">Visit Mentimeter</a></p>
-
-                            <h4>How to Use for This Lesson:</h4>
-                            <ol>
-                                <li>Create a free account at Mentimeter</li>
-                                <li>Create a new presentation</li>
-                                <li>Add the opening poll question with three options (Agree/Disagree/Not sure)</li>
-                                <li>Add 5-7 quiz questions with adaptive feedback</li>
-                                <li>Share the presentation code with students</li>
-                                <li>Display results in real-time during class</li>
-                            </ol>
-                        </div>
-                    </div>
+                <button class="collapsible">Mentimeter / Slido - Polling & Voting</button>
+                <div class="collapsible-content">
+                    <p><strong>Purpose:</strong> Opening hook and post-test belief re-evaluation</p>
+                    <h4>How to Use:</h4>
+                    <ol>
+                        <li>Visit <a href="https://www.mentimeter.com" target="_blank">Mentimeter</a> or <a href="https://www.slido.com" target="_blank">Slido</a></li>
+                        <li>Create a free account (or use institutional license)</li>
+                        <li>Set up a multiple-choice poll with the lesson's key questions</li>
+                        <li>Share the participation code with students</li>
+                        <li>Display real-time results for class discussion</li>
+                    </ol>
                 </div>
 
-                <div class="collapsible">
-                    <div class="collapsible-header" onclick="toggleCollapsible(this)">
-                        <span><strong>Padlet - Collaborative Mapping</strong></span>
-                        <span class="collapsible-icon">▼</span>
-                    </div>
-                    <div class="collapsible-content">
-                        <div class="collapsible-content-inner">
-                            <p><strong>Purpose:</strong> Jigsaw activity expert group concept mapping</p>
-                            <p><strong>Access:</strong> <a href="https://padlet.com" target="_blank" class="tool-link">Visit Padlet</a></p>
-
-                            <h4>How to Use for This Lesson:</h4>
-                            <ol>
-                                <li>Create a free Padlet account</li>
-                                <li>Choose a "Wall" or "Grid" layout</li>
-                                <li>Create 5 columns for expert groups A through E</li>
-                                <li>Share the Padlet link with edit access to students</li>
-                                <li>Students add sticky notes with text, images, or audio</li>
-                                <li>Review contributions as a class</li>
-                            </ol>
-                        </div>
-                    </div>
+                <button class="collapsible">Padlet - Collaborative Board</button>
+                <div class="collapsible-content">
+                    <p><strong>Purpose:</strong> Jigsaw expert group concept mapping and charter sharing</p>
+                    <h4>How to Use:</h4>
+                    <ol>
+                        <li>Go to <a href="https://padlet.com" target="_blank">Padlet</a> and sign in</li>
+                        <li>Create a new board (Canvas or Grid format works well)</li>
+                        <li>Set up columns for each expert group or open space for charter drafts</li>
+                        <li>Enable multimedia posts (text, images, audio, video)</li>
+                        <li>Share the board link with students</li>
+                        <li>Students post findings using sticky notes during Activity 1</li>
+                    </ol>
                 </div>
 
-                <div class="collapsible">
-                    <div class="collapsible-header" onclick="toggleCollapsible(this)">
-                        <span><strong>Google Slides - Charter Building</strong></span>
-                        <span class="collapsible-icon">▼</span>
-                    </div>
-                    <div class="collapsible-content">
-                        <div class="collapsible-content-inner">
-                            <p><strong>Purpose:</strong> Collaborative charter development and gallery walk</p>
-                            <p><strong>Access:</strong> <a href="https://docs.google.com/presentation" target="_blank" class="tool-link">Visit Google Slides</a></p>
-
-                            <h4>How to Use for This Lesson:</h4>
-                            <ol>
-                                <li>Create a new Google Slides presentation</li>
-                                <li>Add one slide per group (6 slides for 6 groups)</li>
-                                <li>Share with edit access to all students</li>
-                                <li>Groups draft their charter commitments on their slide</li>
-                                <li>Enable commenting for gallery walk feedback</li>
-                                <li>Students add comments/suggestions to other slides</li>
-                            </ol>
-                        </div>
-                    </div>
+                <button class="collapsible">Google Slides - Charter Presentation</button>
+                <div class="collapsible-content">
+                    <p><strong>Purpose:</strong> Collaborative charter creation and gallery walk</p>
+                    <h4>How to Use:</h4>
+                    <ol>
+                        <li>Create a new <a href="https://slides.google.com" target="_blank">Google Slides presentation</a></li>
+                        <li>Assign one slide per group (use slide numbers for organization)</li>
+                        <li>Set sharing permissions to "Anyone with the link can edit"</li>
+                        <li>Groups draft their charter commitments on their assigned slide</li>
+                        <li>Enable comments for gallery walk feedback</li>
+                        <li>Students leave constructive feedback using the comment feature</li>
+                    </ol>
                 </div>
 
-                <div class="collapsible">
-                    <div class="collapsible-header" onclick="toggleCollapsible(this)">
-                        <span><strong>Google Forms - Exit Ticket</strong></span>
-                        <span class="collapsible-icon">▼</span>
-                    </div>
-                    <div class="collapsible-content">
-                        <div class="collapsible-content-inner">
-                            <p><strong>Purpose:</strong> Collect exit ticket reflections</p>
-                            <p><strong>Access:</strong> <a href="https://docs.google.com/forms" target="_blank" class="tool-link">Visit Google Forms</a></p>
-
-                            <h4>How to Use for This Lesson:</h4>
-                            <ol>
-                                <li>Create a new Google Form</li>
-                                <li>Add a short answer question with the exit ticket prompt</li>
-                                <li>Share the form link or QR code at the end of class</li>
-                                <li>Students submit anonymously or with names</li>
-                                <li>Review responses to inform next session</li>
-                            </ol>
-                        </div>
-                    </div>
+                <button class="collapsible">Kahoot / Quizizz - Formative Quizzes</button>
+                <div class="collapsible-content">
+                    <p><strong>Purpose:</strong> Knowledge checks and gamified assessment</p>
+                    <h4>How to Use:</h4>
+                    <ol>
+                        <li>Visit <a href="https://kahoot.com" target="_blank">Kahoot</a> or <a href="https://quizizz.com" target="_blank">Quizizz</a></li>
+                        <li>Create quiz questions based on the diagnostic and knowledge check items</li>
+                        <li>Set time limits and points for each question</li>
+                        <li>Launch the quiz and share the game PIN with students</li>
+                        <li>Review results to identify areas needing clarification</li>
+                    </ol>
                 </div>
 
                 <h3>Physical Materials</h3>
-                <ul>
-                    <li>4 large chart papers for dilemma carousel stations</li>
-                    <li>Markers and colored pens</li>
+                <ul class="activity-list">
+                    <li>Chart paper and markers for dilemma carousel (4 stations)</li>
                     <li>Sticky notes for gallery walk feedback</li>
                     <li>Printed or digital case scenario cards</li>
-                    <li>Graphic organiser templates (printed or digital)</li>
+                    <li>Graphic organizer template (downloadable PDF or digital form)</li>
                 </ul>
-            </div>
-        </div>
 
-        <div id="differentiation" class="section">
+                <h3>Differentiation & Inclusivity</h3>
+
+                <button class="collapsible">Support Strategies</button>
+                <div class="collapsible-content">
+                    <h4>Multiple Entry Points:</h4>
+                    <ul>
+                        <li>Padlet contributions via text, audio, or video</li>
+                        <li>Oral participation alternatives for written tasks</li>
+                        <li>Visual, auditory, and kinesthetic learning options</li>
+                    </ul>
+
+                    <h4>Group Roles:</h4>
+                    <ul>
+                        <li>Timekeeper</li>
+                        <li>Note-taker</li>
+                        <li>Synthesizer</li>
+                        <li>Devil's advocate</li>
+                        <li>Reporter</li>
+                    </ul>
+
+                    <h4>Scaffolded Sources:</h4>
+                    <ul>
+                        <li>Simplified versions of academic readings</li>
+                        <li>Extended/original versions for advanced learners</li>
+                        <li>Video summaries of key frameworks</li>
+                    </ul>
+                </div>
+
+                <button class="collapsible">Extension for Advanced Learners</button>
+                <div class="collapsible-content">
+                    <ul>
+                        <li>Compare an additional international framework (e.g., Australia's AITSL standards, Finland's teacher education principles)</li>
+                        <li>Draft a professional development workshop proposal based on the professionalism charter</li>
+                        <li>Research and present on a specific country's approach to teacher professionalism</li>
+                    </ul>
+                </div>
+
+                <button class="collapsible">Accessibility Accommodations</button>
+                <div class="collapsible-content">
+                    <ul>
+                        <li>All videos/images captioned and described</li>
+                        <li>PDF readings screen-reader accessible</li>
+                        <li>Large-print and high-contrast versions of case cards</li>
+                        <li>Flexible seating and movement for mobility devices</li>
+                        <li>Additional processing time for reflection and exit tickets</li>
+                        <li>Translation support for multilingual learners</li>
+                    </ul>
+                </div>
+
+                <button class="btn btn-success" onclick="markSectionComplete('resources')">Mark as Complete</button>
+            </div>
+
             <div class="card">
-                <h2>Differentiation & Inclusivity</h2>
-
-                <h3>Social-Constructivist Supports</h3>
-                <ul>
-                    <li><strong>Multiple entry points:</strong> Students can contribute to Padlet via text, audio, or video; oral participation is not the only way to show understanding</li>
-                    <li><strong>Group roles:</strong> Assign rotating roles (timekeeper, note-taker, synthesizer, devil's advocate, reporter) so all students can participate meaningfully</li>
-                    <li><strong>Scaffolded sources:</strong> Expert group materials are available in simplified and extended versions, depending on student need</li>
-                </ul>
-
-                <div class="collapsible">
-                    <div class="collapsible-header" onclick="toggleCollapsible(this)">
-                        <span><strong>Extension for Advanced Learners</strong></span>
-                        <span class="collapsible-icon">▼</span>
-                    </div>
-                    <div class="collapsible-content">
-                        <div class="collapsible-content-inner">
-                            <ul>
-                                <li>Challenge advanced students to compare an <strong>additional</strong> international framework (e.g., Australia's AITSL standards, Finland's teacher education principles) during the jigsaw</li>
-                                <li>Ask them to draft a <strong>professional development workshop proposal</strong> based on their professionalism charter</li>
-                                <li>Invite them to analyze how social media has changed the public perception of teacher professionalism</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="collapsible">
-                    <div class="collapsible-header" onclick="toggleCollapsible(this)">
-                        <span><strong>Accessibility Accommodations</strong></span>
-                        <span class="collapsible-icon">▼</span>
-                    </div>
-                    <div class="collapsible-content">
-                        <div class="collapsible-content-inner">
-                            <ul>
-                                <li>All videos/images captioned and described</li>
-                                <li>PDF readings screen-reader accessible</li>
-                                <li>Large-print and high-contrast versions of case cards</li>
-                                <li>Flexible seating and movement for mobility devices</li>
-                                <li>Additional processing time for individual reflection and exit tickets</li>
-                                <li>Option to submit audio or video responses instead of written text</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <h3>Reflection & Improvement</h3>
-
-                <h4>Pedagogy-Specific Success Indicators</h4>
-                <ul>
-                    <li><strong>Dialogue quality:</strong> Did students listen, question, and build on peers' ideas? Use an observation checklist</li>
-                    <li><strong>Conceptual nuance:</strong> Did post-test responses show increased complexity and less binary thinking?</li>
-                    <li><strong>Collaborative output:</strong> Did the group charter reflect multiple perspectives rather than one dominant voice?</li>
-                </ul>
-
-                <h4>Student Feedback (3-2-1 Format)</h4>
-                <ul>
-                    <li><strong>3</strong> ideas you learned about professionalism</li>
-                    <li><strong>2</strong> ways group discussion helped or hindered your understanding</li>
-                    <li><strong>1</strong> question you still have</li>
-                </ul>
-
-                <h4>Modification Strategies</h4>
-                <ul>
-                    <li>If students struggle with abstract international frameworks, replace one reading with a <strong>video case study</strong> of a teacher working across cultures</li>
-                    <li>If local context is underrepresented, invite a <strong>guest teacher or school leader</strong> to join the dilemma carousel and share their lived experience</li>
-                    <li>If time is limited, reduce the carousel from four stations to two and provide more structured scaffolds for each station</li>
-                </ul>
+                <h2>🎓 Constructive Alignment Matrix</h2>
+                <table>
+                    <tr>
+                        <th>Learning Outcome</th>
+                        <th>Teaching Activity</th>
+                        <th>Assessment Method</th>
+                    </tr>
+                    <tr>
+                        <td><strong>ILO 1:</strong> Analyze competing definitions</td>
+                        <td>Jigsaw expert groups + Padlet concept mapping</td>
+                        <td>Group comparative framework analysis; diagnostic misconception review</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ILO 2:</strong> Compare frameworks</td>
+                        <td>Framework comparison graphic organizer; gallery walk</td>
+                        <td>Portfolio comparative analysis; Padlet observation</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ILO 3:</strong> Evaluate ethical dilemmas</td>
+                        <td>Dilemma carousel with structured controversy</td>
+                        <td>Case response in portfolio; reflective essay</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ILO 4:</strong> Create shared charter</td>
+                        <td>Charter-building activity + gallery walk feedback</td>
+                        <td>Professionalism Charter in portfolio</td>
+                    </tr>
+                </table>
             </div>
         </div>
+
     </div>
 
     <script>
-        // Tab Navigation
+        // LocalStorage keys
+        const STORAGE_KEY = 'teacherProfessionalism';
+
+        // Initialize progress tracking
+        let lessonProgress = {
+            overview: false,
+            outcomes: false,
+            preclass: false,
+            introduction: false,
+            activities: false,
+            synthesis: false,
+            assessment: false,
+            resources: false,
+            diagnosticQuizCompleted: false,
+            knowledgeCheckCompleted: false,
+            postQuizCompleted: false,
+            exitTicket: ''
+        };
+
+        // Load progress from localStorage
+        function loadProgress() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (saved) {
+                lessonProgress = JSON.parse(saved);
+                updateProgressBar();
+            }
+        }
+
+        // Save progress to localStorage
+        function saveProgress() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(lessonProgress));
+            updateProgressBar();
+        }
+
+        // Update progress bar
+        function updateProgressBar() {
+            const sections = ['overview', 'outcomes', 'preclass', 'introduction', 'activities', 'synthesis', 'assessment', 'resources'];
+            const completed = sections.filter(s => lessonProgress[s]).length;
+            const percentage = Math.round((completed / sections.length) * 100);
+
+            const fill = document.getElementById('progress-fill');
+            const percent = document.getElementById('progress-percent');
+
+            fill.style.width = percentage + '%';
+            fill.textContent = percentage + '%';
+            percent.textContent = percentage + '%';
+        }
+
+        // Show section
         function showSection(sectionId) {
             // Hide all sections
             const sections = document.querySelectorAll('.section');
-            sections.forEach(section => {
-                section.classList.remove('active');
-            });
+            sections.forEach(s => s.classList.remove('active'));
 
-            // Remove active class from all tabs
-            const tabs = document.querySelectorAll('.nav-tab');
-            tabs.forEach(tab => {
-                tab.classList.remove('active');
-            });
+            // Remove active class from all nav buttons
+            const buttons = document.querySelectorAll('nav button');
+            buttons.forEach(b => b.classList.remove('active'));
 
             // Show selected section
             document.getElementById(sectionId).classList.add('active');
 
-            // Add active class to clicked tab
+            // Add active class to clicked button
             event.target.classList.add('active');
-
-            // Save to localStorage
-            localStorage.setItem('activeSection', sectionId);
 
             // Scroll to top
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Collapsible functionality
-        function toggleCollapsible(header) {
-            const collapsible = header.parentElement;
-            collapsible.classList.toggle('open');
+        // Mark section as complete
+        function markSectionComplete(sectionId) {
+            lessonProgress[sectionId] = true;
+            saveProgress();
+            alert('Section marked as complete! ✓');
         }
 
-        // Progress tracking
-        function initializeProgress() {
-            const checkboxes = document.querySelectorAll('.checkbox-item input[type="checkbox"]');
-            checkboxes.forEach(checkbox => {
-                const savedState = localStorage.getItem(checkbox.id);
-                if (savedState === 'true') {
-                    checkbox.checked = true;
-                    checkbox.parentElement.classList.add('completed');
-                }
+        // Diagnostic Quiz Feedback
+        const diagnosticFeedback = {
+            q1: {
+                agree: 'Many people think this, but qualifications are only one dimension. In this course, we explore professionalism as practice, ethics, and context.',
+                somewhat: 'Good thinking! Qualifications matter, but they are just the starting point. Professionalism also includes ongoing practice, ethical judgment, and contextual awareness.',
+                disagree: 'Excellent insight! Professionalism extends far beyond credentials to include practice, reflection, ethics, collaboration, and cultural responsiveness.',
+                unsure: 'That is okay! This is exactly what we will explore in this lesson—professionalism has many dimensions beyond formal qualifications.'
+            },
+            q2: {
+                agree: 'This is a common tension. In our session, we will examine when and why such an assumption may be problematic. International standards are not culturally neutral.',
+                somewhat: 'You are sensing the complexity! Sometimes international principles align with local values, sometimes they conflict. Our lesson explores how to navigate this.',
+                disagree: 'Strong awareness of context! This lesson will help you develop frameworks for negotiating between international principles and local cultural realities.',
+                unsure: 'This is one of the key questions we will explore together. There is no simple answer, which is why dialogue is so important.'
+            },
+            q3: {
+                agree: 'Interesting perspective! Social constructivist views of professionalism emphasize collegial dialogue, school culture, and shared norms. We will explore both individual and collective dimensions.',
+                somewhat: 'You are recognizing complexity. Professionalism has both individual and collective dimensions—both matter.',
+                disagree: 'Great insight! Professionalism thrives in collaborative environments where teachers learn from and support each other.',
+                unsure: 'Good question! We will explore how professionalism involves both personal integrity and collective responsibility.'
+            },
+            q4: {
+                agree: 'This is a common assumption that we will challenge today. Professionalism is deeply shaped by culture, history, and local context.',
+                somewhat: 'You may be sensing that context matters. This lesson will show you just how much!',
+                disagree: 'Excellent! Your experience may already reflect the importance of local context. We will deepen that understanding today.',
+                unsure: 'Perfect starting point! By the end of the lesson, you will have a much clearer view on this.'
+            },
+            q5: {
+                agree: 'Many see it this way, but there are ways to balance both. We will explore how professional communities navigate autonomy and accountability together.',
+                somewhat: 'You are right to see tension, but it does not have to be total conflict. We will examine how to balance these.',
+                disagree: 'Thoughtful perspective! When designed well, accountability can support rather than undermine autonomy.',
+                unsure: 'Great question—this is something we will investigate through real dilemmas.'
+            },
+            q6: {
+                agree: 'Many formal codes exist, but they are never culture-free. We will examine the cultural assumptions embedded in professional codes.',
+                somewhat: 'You are sensing the interplay. Codes matter, but so does cultural interpretation and context.',
+                disagree: 'Strong cultural awareness! Professional behavior is always interpreted through cultural lenses.',
+                unsure: 'This is exactly what we will explore—how codes and culture shape professional behavior together.'
+            },
+            q7: {
+                agree: 'This reflects one view, but it may oversimplify the relationship between international and local norms. We will explore more nuanced approaches.',
+                somewhat: 'You are navigating complexity. Sometimes they align, sometimes they conflict. We will develop tools for ethical reasoning in these situations.',
+                disagree: 'Thoughtful position! A contextually responsive approach considers both international principles and community values.',
+                unsure: 'Perfect question for our lesson! We will work through real dilemmas to develop your thinking on this.'
+            },
+            q8: {
+                agree: 'Interesting! Lifelong learning is certainly central to modern professionalism, though initial preparation also matters.',
+                somewhat: 'You are recognizing that both matter. The balance between initial preparation and ongoing development is an important question.',
+                disagree: 'Both are important! Initial qualifications provide foundation; CPD ensures teachers stay current and reflective.',
+                unsure: 'Great question! We will explore how initial preparation and continuous development work together.'
+            }
+        };
 
-                checkbox.addEventListener('change', function() {
-                    if (this.checked) {
-                        this.parentElement.classList.add('completed');
-                    } else {
-                        this.parentElement.classList.remove('completed');
-                    }
-                    localStorage.setItem(this.id, this.checked);
-                    updateProgress();
-                });
+        // Check answer for diagnostic quiz
+        function checkAnswer(questionId, answer) {
+            const feedbackDiv = document.getElementById('feedback-' + questionId);
+            const feedback = diagnosticFeedback[questionId][answer];
+
+            feedbackDiv.className = 'quiz-feedback show';
+            feedbackDiv.innerHTML = '<strong>Feedback:</strong> ' + feedback;
+        }
+
+        // Submit diagnostic quiz
+        function submitDiagnosticQuiz() {
+            const questions = ['q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8'];
+            let answered = 0;
+
+            questions.forEach(q => {
+                const selected = document.querySelector(`input[name="${q}"]:checked`);
+                if (selected) answered++;
             });
 
-            updateProgress();
+            if (answered < questions.length) {
+                alert(`Please answer all questions. You have answered ${answered} out of ${questions.length}.`);
+                return;
+            }
+
+            lessonProgress.diagnosticQuizCompleted = true;
+            saveProgress();
+
+            const scoreDiv = document.getElementById('quiz-score');
+            scoreDiv.style.display = 'block';
+            scoreDiv.innerHTML = '<strong>✓ Diagnostic Quiz Complete!</strong><br>Thank you for completing the diagnostic assessment. Your responses help us understand your starting point. Review the feedback above and bring your questions to class.';
         }
 
-        function updateProgress() {
-            const checkboxes = document.querySelectorAll('.checkbox-item input[type="checkbox"]');
-            const checkedBoxes = document.querySelectorAll('.checkbox-item input[type="checkbox"]:checked');
-            const progress = checkboxes.length > 0 ? (checkedBoxes.length / checkboxes.length) * 100 : 0;
+        // Knowledge Check Quiz (Activity-based)
+        const knowledgeCheckAnswers = {
+            kc1: { correct: 'a', feedback: { a: 'Correct! OECD-TALIS emphasizes professional collaboration and collegial learning communities.', b: 'Not quite. While UNESCO values collaboration, TALIS specifically studies teacher collaboration patterns internationally.', c: 'Partially. Hargreaves discusses collaborative professionalism in the "fourth age," but TALIS is most directly focused on this.', d: 'Incorrect. Local standards vary; TALIS specifically highlights collaboration as a key dimension.' } },
+            kc2: { correct: 'b', feedback: { a: 'Partially correct, but the main focus is broader.', b: 'Correct! The UNESCO Recommendation addresses teacher status, rights, responsibilities, and working conditions globally.', c: 'Incorrect. Assessment methods are not the primary focus of this document.', d: 'Incorrect. Technology integration was not a major focus in 1966, though the 2016 revision acknowledges changing contexts.' } },
+            kc3: { correct: 'c', feedback: { a: 'That describes the "pre-professional" or early autonomous age.', b: 'That describes the "third age" of managerial professionalism.', c: 'Correct! Hargreaves identifies the fourth age as democratic professionalism characterized by networking and inclusive dialogue.', d: 'That is a pre-professional stage, not the fourth age.' } },
+            kc4: { correct: 'c', feedback: { a: 'Incorrect. A contextually responsive approach engages with international standards thoughtfully.', b: 'Incorrect. It also considers international principles and ethical reasoning.', c: 'Correct! Contextually responsive professionalism involves negotiating tensions between international principles and local cultural realities.', d: 'Incorrect. Standardization erases important contextual differences.' } }
+        };
 
-            document.getElementById('overallProgress').style.width = progress + '%';
-            document.getElementById('progressText').textContent = Math.round(progress) + '% Complete';
+        function checkKnowledgeAnswer(questionId, answer) {
+            const feedbackDiv = document.getElementById('feedback-' + questionId);
+            const correctAnswer = knowledgeCheckAnswers[questionId].correct;
+            const feedback = knowledgeCheckAnswers[questionId].feedback[answer];
+
+            if (answer === correctAnswer) {
+                feedbackDiv.className = 'quiz-feedback show correct';
+            } else {
+                feedbackDiv.className = 'quiz-feedback show incorrect';
+            }
+
+            feedbackDiv.innerHTML = '<strong>Feedback:</strong> ' + feedback;
+        }
+
+        function submitKnowledgeCheck() {
+            const questions = ['kc1', 'kc2', 'kc3', 'kc4'];
+            let correct = 0;
+            let answered = 0;
+
+            questions.forEach(q => {
+                const selected = document.querySelector(`input[name="${q}"]:checked`);
+                if (selected) {
+                    answered++;
+                    if (selected.value === knowledgeCheckAnswers[q].correct) {
+                        correct++;
+                    }
+                }
+            });
+
+            if (answered < questions.length) {
+                alert(`Please answer all questions. You have answered ${answered} out of ${questions.length}.`);
+                return;
+            }
+
+            lessonProgress.knowledgeCheckCompleted = true;
+            saveProgress();
+
+            const scoreDiv = document.getElementById('kc-score');
+            scoreDiv.style.display = 'block';
+            const percentage = Math.round((correct / questions.length) * 100);
+
+            let message = `<strong>Knowledge Check Complete!</strong><br>You scored ${correct} out of ${questions.length} (${percentage}%).<br>`;
+
+            if (percentage >= 75) {
+                message += '<span style="color:var(--success-color);">✓ Excellent understanding of the frameworks!</span>';
+            } else if (percentage >= 50) {
+                message += '<span style="color:var(--warning-color);">Good start! Review the feedback above to strengthen your understanding.</span>';
+            } else {
+                message += '<span style="color:var(--accent-color);">Review the frameworks and feedback carefully. Discuss questions with your peers.</span>';
+            }
+
+            scoreDiv.innerHTML = message;
+        }
+
+        // Post-Lesson Quiz
+        const postQuizAnswers = {
+            post1: { correct: 'b', feedback: { a: 'Incorrect. Social constructivism views knowledge as context-dependent, not fixed.', b: 'Correct! Social constructivism sees knowledge as socially negotiated and culturally situated.', c: 'Partially. Individual reflection matters, but social constructivism emphasizes collective dialogue.', d: 'Incorrect. This reflects a transmission model, not social constructivism.' } },
+            post2: { correct: 'b', feedback: { a: 'Incorrect. The goal is not to "win" but to build understanding.', b: 'Correct! Structured controversy helps students co-construct more complex, nuanced judgments through dialogue.', c: 'Incorrect. The protocol encourages productive engagement with difficult topics.', d: 'Incorrect. It is about ethical reasoning, not rule enforcement.' } },
+            post3: { correct: 'c', feedback: { a: 'Too simplistic. Context matters and must be considered.', b: 'Too simplistic. International principles also provide important guidance.', c: 'Correct! Professional teachers engage in ethical reasoning that honors both international principles and local contexts.', d: 'Incorrect. Conflicts require thoughtful, principled navigation.' } },
+            post4: { correct: 'b', feedback: { a: 'Incorrect. Jigsaw promotes collaboration, not competition.', b: 'Correct! Jigsaw methodology creates interdependence—students need each other to complete the task.', c: 'Incorrect. Jigsaw is student-centered, not teacher-centered.', d: 'Incorrect. It promotes deep understanding through dialogue, not memorization.' } },
+            post5: { correct: 'c', feedback: { a: 'Incorrect. Universal codes ignore important contextual differences.', b: 'Incorrect. The charter integrates international principles, not rejects them.', c: 'Correct! The charter is an authentic, co-constructed product that synthesizes international principles with local realities.', d: 'Incorrect. It is more than compliance—it reflects values and commitments.' } }
+        };
+
+        function checkPostAnswer(questionId, answer) {
+            const feedbackDiv = document.getElementById('feedback-' + questionId);
+            const correctAnswer = postQuizAnswers[questionId].correct;
+            const feedback = postQuizAnswers[questionId].feedback[answer];
+
+            if (answer === correctAnswer) {
+                feedbackDiv.className = 'quiz-feedback show correct';
+            } else {
+                feedbackDiv.className = 'quiz-feedback show incorrect';
+            }
+
+            feedbackDiv.innerHTML = '<strong>Feedback:</strong> ' + feedback;
+        }
+
+        function submitPostQuiz() {
+            const questions = ['post1', 'post2', 'post3', 'post4', 'post5'];
+            let correct = 0;
+            let answered = 0;
+
+            questions.forEach(q => {
+                const selected = document.querySelector(`input[name="${q}"]:checked`);
+                if (selected) {
+                    answered++;
+                    if (selected.value === postQuizAnswers[q].correct) {
+                        correct++;
+                    }
+                }
+            });
+
+            if (answered < questions.length) {
+                alert(`Please answer all questions. You have answered ${answered} out of ${questions.length}.`);
+                return;
+            }
+
+            lessonProgress.postQuizCompleted = true;
+            saveProgress();
+
+            const scoreDiv = document.getElementById('post-score');
+            scoreDiv.style.display = 'block';
+            scoreDiv.className = 'alert';
+            const percentage = Math.round((correct / questions.length) * 100);
+
+            let message = `<strong>🎉 Post-Lesson Quiz Complete!</strong><br>You scored ${correct} out of ${questions.length} (${percentage}%).<br><br>`;
+
+            if (percentage >= 80) {
+                message += '<span style="color:var(--success-color); font-weight:bold;">✓ Outstanding! You have demonstrated excellent understanding of teacher professionalism in local and international contexts.</span>';
+                scoreDiv.className += ' alert-info';
+            } else if (percentage >= 60) {
+                message += '<span style="color:var(--warning-color); font-weight:bold;">Good progress! Review the feedback above and revisit key concepts to deepen your understanding.</span>';
+                scoreDiv.className += ' alert-warning';
+            } else {
+                message += '<span style="color:var(--accent-color); font-weight:bold;">Keep working! Revisit the lesson materials, review feedback, and engage with peers to strengthen your understanding.</span>';
+            }
+
+            scoreDiv.innerHTML = message;
+        }
+
+        // Exit Ticket
+        function saveExitTicket() {
+            const ticket = document.getElementById('exit-ticket').value.trim();
+
+            if (ticket.length < 20) {
+                alert('Please write at least 2-3 sentences for your reflection (minimum 20 characters).');
+                return;
+            }
+
+            lessonProgress.exitTicket = ticket;
+            saveProgress();
+
+            document.getElementById('exit-saved').style.display = 'block';
+        }
+
+        // Collapsible functionality
+        function initializeCollapsibles() {
+            const collapsibles = document.querySelectorAll('.collapsible');
+
+            collapsibles.forEach(coll => {
+                coll.addEventListener('click', function() {
+                    this.classList.toggle('active');
+
+                    const content = this.nextElementSibling;
+
+                    if (content.style.maxHeight) {
+                        content.style.maxHeight = null;
+                        content.classList.remove('show');
+                    } else {
+                        content.style.maxHeight = content.scrollHeight + 'px';
+                        content.classList.add('show');
+                    }
+                });
+            });
         }
 
         // Initialize on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            // Restore last active section
-            const savedSection = localStorage.getItem('activeSection');
-            if (savedSection) {
-                const sections = document.querySelectorAll('.section');
-                sections.forEach(section => section.classList.remove('active'));
-
-                const tabs = document.querySelectorAll('.nav-tab');
-                tabs.forEach(tab => tab.classList.remove('active'));
-
-                document.getElementById(savedSection).classList.add('active');
-                const activeTab = Array.from(tabs).find(tab =>
-                    tab.textContent.toLowerCase().includes(savedSection.toLowerCase())
-                );
-                if (activeTab) activeTab.classList.add('active');
-            }
-
-            initializeProgress();
-        });
+        window.onload = function() {
+            loadProgress();
+            initializeCollapsibles();
+        };
     </script>
 </body>
 </html>
