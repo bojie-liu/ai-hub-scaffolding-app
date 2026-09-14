@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Section 2: Pre-Class Preparation — PSY101</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<nav class="navbar">
+  <div class="navbar-inner">
+    <div class="navbar-brand">PSY101 <span>Lesson Plan</span></div>
+    <div class="navbar-links" id="navLinks">
+      <a href="index.html">Overview</a>
+      <a href="section-1.html">ILOs</a>
+      <a href="section-2.html" class="active">Pre-Class</a>
+      <a href="section-3.html">Introduction</a>
+      <a href="section-4.html">Development</a>
+      <a href="section-5.html">Closure</a>
+      <a href="assessment.html">Assessment</a>
+      <a href="slides.html">Slides</a>
+      <a href="resources.html">Resources</a>
+    </div>
+    <button class="role-badge student" onclick="toggleRole()" title="Switch role">🎓 Student</button>
+    <button class="navbar-hamburger" id="navHam" aria-label="Menu">☰</button>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="section-hero">
+    <h1>Section 2 — Pre-Class Preparation</h1>
+    <div class="sub">PSY101 · ~20 minutes independent study · Complete before the lesson</div>
+  </div>
+
+  <!-- Role-switch info -->
+  <div class="card card-info" style="margin-bottom:1.5rem;">
+    <div class="flex-between">
+      <span><strong>View as:</strong> Toggle the role button in the navbar to switch between Teacher and Student views.</span>
+      <span class="chip chip-primary">20 min pre-work</span>
+    </div>
+  </div>
+
+  <!-- 2.1 Required Readings -->
+  <div class="card" id="readings">
+    <div class="card-header"><span class="icon">📚</span>2.1 Required Pre-Reading &amp; Media</div>
+    <p class="text-muted text-small" style="margin-bottom:1rem;">Complete all three items before class. They activate the schemas you'll need for group activities.</p>
+    <div class="card-grid">
+      <div class="card card-highlight" style="margin-bottom:0;">
+        <div class="card-header"><span class="icon">📖</span>Textbook Reading</div>
+        <p style="font-size:0.92rem;">Schacter, Gilbert &amp; Wegner (2020). <em>Psychology</em> (3rd ed.). Worth Publishers.<br>
+        <strong>Chapter 7: Learning</strong> — Sections on Classical &amp; Operant Conditioning.</p>
+        <p class="text-muted text-small mt-1">Focus: understand the vocabulary (US, UR, CS, CR, reinforcement, punishment) before class.</p>
+      </div>
+      <div class="card card-highlight" style="margin-bottom:0;">
+        <div class="card-header"><span class="icon">🎬</span>Khan Academy Video</div>
+        <p style="font-size:0.92rem;"><a href="https://www.khanacademy.org/test-prep/mcat/behavior/learning-slug/v/classical-conditioning" target="_blank">Classical Conditioning (2014)</a> — Khan Academy MCAT series.</p>
+        <p class="text-muted text-small mt-1">~10 min. Pause and rewind when the US/CS distinction is introduced.</p>
+      </div>
+      <div class="card card-highlight" style="margin-bottom:0;">
+        <div class="card-header"><span class="icon">📺</span>Crash Course Psychology</div>
+        <p style="font-size:0.92rem;"><a href="https://www.youtube.com/watch?v=H6QRcX6w6dM" target="_blank">How to Train a Brain (2014)</a> — Crash Course Psychology #11.</p>
+        <p class="text-muted text-small mt-1">~10 min. Covers classical and operant conditioning with memorable examples.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2.2 Pre-Class Diagnostic Quiz -->
+  <div class="card" id="quiz">
+    <div class="card-header"><span class="icon">📝</span>2.2 Pre-Class Diagnostic Quiz</div>
+    <div class="ai-callout" style="margin-bottom:1rem;">
+      <div class="ai-callout-title">🗳️ Mentimeter / Poll Everywhere</div>
+      <p>Submit answers via <a href="https://www.mentimeter.com" target="_blank">Mentimeter</a> or <a href="https://www.polleverywhere.com" target="_blank">Poll Everywhere</a> before class. Results will be displayed at the start of the session for pair-share discussion.</p>
+    </div>
+    <form class="quiz-form" data-quiz-id="pretest">
+      <div class="quiz-question" data-correct="B" data-exp="The unconditioned stimulus (US) naturally and automatically triggers a response without any prior learning.">
+        <p>Q1. Which stimulus elicits a response WITHOUT prior conditioning?</p>
+        <label class="quiz-option"><input type="radio" name="q1" value="A"> (a) Neutral stimulus</label>
+        <label class="quiz-option"><input type="radio" name="q1" value="B"> (b) Unconditioned stimulus</label>
+        <label class="quiz-option"><input type="radio" name="q1" value="C"> (c) Conditioned stimulus</label>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-question" data-correct="C" data-exp="A bell (neutral stimulus) paired with food (US) becomes a conditioned stimulus — this is the hallmark of classical conditioning.">
+        <p>Q2. A dog salivates when hearing a bell previously paired with food. This is:</p>
+        <label class="quiz-option"><input type="radio" name="q2" value="A"> (a) Operant conditioning</label>
+        <label class="quiz-option"><input type="radio" name="q2" value="B"> (b) Observational learning</label>
+        <label class="quiz-option"><input type="radio" name="q2" value="C"> (c) Classical conditioning</label>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-question" data-correct="B" data-exp="Extinction occurs when a conditioned response disappears because the reinforcer or unconditioned stimulus is removed. Ignoring tantrums removes the reinforcement (attention).">
+        <p>Q3. A child stops throwing tantrums after being ignored. This represents:</p>
+        <label class="quiz-option"><input type="radio" name="q3" value="A"> (a) Positive punishment</label>
+        <label class="quiz-option"><input type="radio" name="q3" value="B"> (b) Extinction</label>
+        <label class="quiz-option"><input type="radio" name="q3" value="C"> (c) Negative reinforcement</label>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-question" data-correct="B" data-exp="Operant behavior is voluntary behavior shaped by its consequences (reinforcement/punishment). The rat's lever-pressing is voluntary and motivated by food reward.">
+        <p>Q4. A rat presses a lever to receive food pellets. This is an example of:</p>
+        <label class="quiz-option"><input type="radio" name="q4" value="A"> (a) Respondent behavior</label>
+        <label class="quiz-option"><input type="radio" name="q4" value="B"> (b) Operant behavior</label>
+        <label class="quiz-option"><input type="radio" name="q4" value="C"> (c) Social learning</label>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-question" data-correct="A" data-exp="Vicarious reinforcement is a core concept in Bandura's observational learning — seeing someone else rewarded increases the likelihood of imitating their behaviour.">
+        <p>Q5. Watching a peer receive a reward for sharing leads another child to share. This is:</p>
+        <label class="quiz-option"><input type="radio" name="q5" value="A"> (a) Vicarious reinforcement (observational learning)</label>
+        <label class="quiz-option"><input type="radio" name="q5" value="B"> (b) Positive reinforcement</label>
+        <label class="quiz-option"><input type="radio" name="q5" value="C"> (c) Classical conditioning</label>
+        <div class="quiz-feedback"></div>
+      </div>
+      <button type="submit" class="btn btn-primary mt-2">Submit &amp; Check Answers</button>
+      <div class="quiz-result" style="display:none;margin-top:1rem;padding:1rem;border-radius:8px;font-weight:700;"></div>
+    </form>
+  </div>
+
+  <!-- 2.3 Guiding Questions -->
+  <div class="card" id="guiding">
+    <div class="card-header"><span class="icon">💬</span>2.3 Pre-Class Guiding Questions</div>
+    <p class="text-muted text-small" style="margin-bottom:1rem;">Write 2–3 sentence responses and bring them to class. These seed your group discussions.</p>
+    <div class="accordion">
+      <div class="accordion-item open">
+        <div class="accordion-header">1. Real-World Connection <span class="accordion-arrow">▼</span></div>
+        <div class="accordion-body open">
+          <p>Reflect on an advertisement you've seen that pairs a product (neutral stimulus) with an appealing image (unconditioned stimulus). Explain how this reflects classical conditioning.</p>
+          <p class="text-muted text-small mt-1"><strong>Social Constructivism link:</strong> Activates personal schemas as the starting point for collaborative meaning-making in class.</p>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-header">2. Cultural Perspective <span class="accordion-arrow">▼</span></div>
+        <div class="accordion-body">
+          <p>Based on your cultural background, share an example of how learning occurs through observation of elders or role models. How does this reflect observational learning theory?</p>
+          <p class="text-muted text-small mt-1"><strong>Social Constructivism link:</strong> Frames learning theories within cultural diversity — critical for Vygotsky's emphasis on sociocultural context.</p>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-header">3. Curiosity Question <span class="accordion-arrow">▼</span></div>
+        <div class="accordion-body">
+          <p>Pose one question about learning theories that you hope the class session will answer. Write it down — you'll share it during the introduction activity.</p>
+          <p class="text-muted text-small mt-1"><strong>Social Constructivism link:</strong> Student-generated questions drive peer inquiry during class.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2.4 Pre-Class AI Engagement Task -->
+  <div class="card card-ai" id="ai-task">
+    <div class="card-header"><span class="icon">🤖</span>2.4 Pre-Class AI Engagement Task</div>
+    <div class="ai-callout" style="margin-bottom:1rem;">
+      <div class="ai-callout-title">🎯 Purpose</div>
+      <p>Build AI literacy <em>before</em> class. Arrive with critical impressions of AI capabilities and limitations ready to share with your group.</p>
+    </div>
+    <p style="font-size:0.93rem;margin-bottom:1rem;"><strong>Time:</strong> ~15 minutes &nbsp;|&nbsp; <strong>Tools:</strong> ChatGPT / Claude / Copilot</p>
+    <div class="card card-highlight" style="margin-bottom:1rem;">
+      <div class="card-header"><span class="icon">💬</span>AI Prompt to Use</div>
+      <blockquote style="background:#f0f4ff;border-left:4px solid var(--primary);padding:1rem;border-radius:8px;font-style:italic;font-size:0.92rem;">
+        "You are a psychology tutor. Please explain the difference between classical conditioning and operant conditioning, provide two examples of each, and indicate whether the following scenario is classical or operant: 'A student studies hard to avoid getting a bad grade.' Also, identify one limitation of each theory."
+      </blockquote>
+    </div>
+    <div class="card-header" style="margin-bottom:0.5rem;"><span class="icon">📝</span>Guided Reflection Journal (2 paragraphs)</div>
+    <p class="text-muted text-small" style="margin-bottom:0.75rem;">Document your answers to these prompts. Bring your journal to class — it will be used in the Introduction activity.</p>
+    <div class="accordion">
+      <div class="accordion-item">
+        <div class="accordion-header">1. What did the AI explain accurately? <span class="accordion-arrow">▼</span></div>
+        <div class="accordion-body"><p>What did you already know that confirmed the AI's explanation? Where did your prior knowledge align with the AI output?</p></div>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-header">2. Where was the AI incomplete or misleading? <span class="accordion-arrow">▼</span></div>
+        <div class="accordion-body"><p>Did the explanation seem oversimplified? Were any nuances missing? Did the AI confuse extinction with punishment, or miss schedules of reinforcement?</p></div>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-header">3. Did you find any cultural biases? <span class="accordion-arrow">▼</span></div>
+        <div class="accordion-body"><p>Did the AI's examples all come from certain cultural contexts? Did it force examples into a Western framework? Consider whether the examples are universally relatable.</p></div>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-header">4. How would YOU explain it differently? <span class="accordion-arrow">▼</span></div>
+        <div class="accordion-body"><p>If you were the tutor, how would your explanation differ? What personal examples or culturally relevant scenarios would you use?</p></div>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-header">5. What would human expertise add? <span class="accordion-arrow">▼</span></div>
+        <div class="accordion-body"><p>What can a human psychologist or instructor provide that AI cannot? Consider: nuance, ethical judgment, lived experience, cultural competence.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card card-success">
+    <div class="card-header"><span class="icon">✅</span>Pre-Class Checklist</div>
+    <ul style="padding-left:1.2rem;font-size:0.92rem;">
+      <li>Read Chapter 7 (Classical &amp; Operant Conditioning sections)</li>
+      <li>Watch Khan Academy Classical Conditioning video (~10 min)</li>
+      <li>Watch Crash Course Psychology #11 (~10 min)</li>
+      <li>Complete the 5-question diagnostic quiz above</li>
+      <li>Write 2–3 sentence responses to each guiding question</li>
+      <li>Complete the 15-minute AI engagement task and write 2-paragraph journal</li>
+    </ul>
+  </div>
+
+  <div class="flex-between mt-2">
+    <a href="section-1.html" class="btn btn-outline">← Section 1: ILOs</a>
+    <a href="section-3.html" class="btn btn-primary">Section 3: Introduction →</a>
+  </div>
+</div>
+
+<footer>
+  <p>PSY101 – Introduction to Learning Theories &nbsp;|&nbsp; Social Constructivism + AI Integration &nbsp;|&nbsp; <a href="index.html">Back to Overview</a></p>
+</footer>
+<script src="app.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    initNav(); initTabs(); initAccordions(); initQuizzes();
+    setRole(getRole());
+    markSectionVisited('section-2');
+  });
+</script>
+</body>
+</html>

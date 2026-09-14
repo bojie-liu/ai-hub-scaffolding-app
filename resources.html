@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resources &amp; Differentiation — PSY101</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<nav class="navbar">
+  <div class="navbar-inner">
+    <div class="navbar-brand">PSY101 <span>Lesson Plan</span></div>
+    <div class="navbar-links" id="navLinks">
+      <a href="index.html">Overview</a>
+      <a href="section-1.html">ILOs</a>
+      <a href="section-2.html">Pre-Class</a>
+      <a href="section-3.html">Introduction</a>
+      <a href="section-4.html">Development</a>
+      <a href="section-5.html">Closure</a>
+      <a href="assessment.html">Assessment</a>
+      <a href="slides.html">Slides</a>
+      <a href="resources.html" class="active">Resources</a>
+    </div>
+    <button class="role-badge student" onclick="toggleRole()" title="Switch role">🎓 Student</button>
+    <button class="navbar-hamburger" id="navHam" aria-label="Menu">☰</button>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="section-hero">
+    <h1>Resources, Differentiation &amp; Reflection</h1>
+    <div class="sub">PSY101 · Sections 6–10 · Technology, Inclusivity, TA Notes &amp; Appendices</div>
+  </div>
+
+  <div class="tab-section">
+    <div class="tabs" role="tablist">
+      <button class="tab-btn" data-tab="tech" role="tab">🛠 Technology</button>
+      <button class="tab-btn" data-tab="diff" role="tab">♿ Differentiation</button>
+      <button class="tab-btn" data-tab="reflect" role="tab">🔍 Reflection</button>
+      <button class="tab-btn" data-tab="ta" role="tab">🧑‍🏫 TA Notes</button>
+      <button class="tab-btn" data-tab="appendix" role="tab">📎 Appendices</button>
+    </div>
+
+    <!-- TECHNOLOGY TAB -->
+    <div class="tab-panel" id="tech">
+      <div class="card">
+        <div class="card-header"><span class="icon">🖥</span>6.2 Interactive Classroom Tools</div>
+        <div class="card-grid">
+
+          <div class="card card-highlight" style="margin-bottom:0;">
+            <div class="card-header"><span class="icon">📊</span>Mentimeter</div>
+            <p style="font-size:0.92rem;"><strong>Purpose:</strong> Pre-class quiz, real-time polls, post-test, exit tickets.</p>
+            <details style="margin-top:0.75rem;">
+              <summary style="cursor:pointer;font-weight:600;color:var(--primary);font-size:0.9rem;">How to use in this lesson ▼</summary>
+              <ol style="padding-left:1.2rem;font-size:0.88rem;margin-top:0.5rem;color:var(--text-secondary);">
+                <li>Go to <a href="https://www.mentimeter.com" target="_blank">mentimeter.com</a> and sign in.</li>
+                <li>Click <strong>New Presentation</strong> → choose <em>Quiz</em> or <em>Multiple Choice</em> slide type.</li>
+                <li>Enter each of the 5 pre-test questions from Section 2.</li>
+                <li>Share the join code (e.g., menti.com + code) on the projected screen.</li>
+                <li>Students enter the code on their phones and submit answers.</li>
+                <li>Results appear live — use the bar chart to reveal correct answers and trigger pair discussion.</li>
+                <li>Repeat the same presentation for the 3-question post-test in Section 3c.</li>
+                <li>Add a final <em>Open Ended</em> slide for Exit Ticket Q1 (one-word summary).</li>
+              </ol>
+            </details>
+          </div>
+
+          <div class="card card-highlight" style="margin-bottom:0;">
+            <div class="card-header"><span class="icon">📌</span>Padlet</div>
+            <p style="font-size:0.92rem;"><strong>Purpose:</strong> Group poster gallery wall; peer feedback posts; take-away reflection wall.</p>
+            <details style="margin-top:0.75rem;">
+              <summary style="cursor:pointer;font-weight:600;color:var(--primary);font-size:0.9rem;">How to use in this lesson ▼</summary>
+              <ol style="padding-left:1.2rem;font-size:0.88rem;margin-top:0.5rem;color:var(--text-secondary);">
+                <li>Go to <a href="https://padlet.com" target="_blank">padlet.com</a> and create a free account.</li>
+                <li>Click <strong>Make a Padlet</strong> → choose <em>Wall</em> layout.</li>
+                <li>Title it: <em>"PSY101 Theory Synthesis Gallery Wall"</em>.</li>
+                <li>Share the link or QR code with students before Segment 2 (Operant Design).</li>
+                <li>Groups post their revised behavior modification plan as a card (text or image).</li>
+                <li>During the gallery walk, students click on two other groups' cards and leave a comment (question or improvement suggestion).</li>
+                <li>For the Closure reflection, create a second column titled "Take-Away Words".</li>
+              </ol>
+            </details>
+          </div>
+
+          <div class="card card-highlight" style="margin-bottom:0;">
+            <div class="card-header"><span class="icon">🙋</span>Poll Everywhere</div>
+            <p style="font-size:0.92rem;"><strong>Purpose:</strong> Quick classroom consensus checks; real-time misconception identification.</p>
+            <details style="margin-top:0.75rem;">
+              <summary style="cursor:pointer;font-weight:600;color:var(--primary);font-size:0.9rem;">How to use in this lesson ▼</summary>
+              <ol style="padding-left:1.2rem;font-size:0.88rem;margin-top:0.5rem;color:var(--text-secondary);">
+                <li>Register at <a href="https://www.polleverywhere.com" target="_blank">polleverywhere.com</a>.</li>
+                <li>Create a <em>Multiple Choice</em> activity: "Is this classical or operant conditioning?"</li>
+                <li>Present a scenario on the slide; students respond via pollev.com/[yourname].</li>
+                <li>Results update live — use to spark discussion when the class is split.</li>
+                <li>Ideal for the 5–8 min AI example thumbs-up/down activity in Section 3a.</li>
+              </ol>
+            </details>
+          </div>
+
+          <div class="card card-highlight" style="margin-bottom:0;">
+            <div class="card-header"><span class="icon">🃏</span>Quizlet</div>
+            <p style="font-size:0.92rem;"><strong>Purpose:</strong> Peer-driven flashcard practice for classical conditioning vocabulary.</p>
+            <details style="margin-top:0.75rem;">
+              <summary style="cursor:pointer;font-weight:600;color:var(--primary);font-size:0.9rem;">How to use in this lesson ▼</summary>
+              <ol style="padding-left:1.2rem;font-size:0.88rem;margin-top:0.5rem;color:var(--text-secondary);">
+                <li>Create a set at <a href="https://quizlet.com" target="_blank">quizlet.com</a> with 10 terms: US, UR, NS, CS, CR, acquisition, extinction, generalization, discrimination, spontaneous recovery.</li>
+                <li>Share the set link via Moodle before class.</li>
+                <li>During Segment 1 (15–25 min), pairs open Quizlet on one device.</li>
+                <li>Partner A reads the term; Partner B defines it without looking.</li>
+                <li>Swap roles after 5 cards. Use <em>Learn</em> mode for self-paced review.</li>
+              </ol>
+            </details>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="card card-ai" style="margin-top:1.25rem;">
+        <div class="card-header"><span class="icon">🤖</span>6.3 AI Tools</div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>AI Tool</th><th>Purpose in This Lesson</th><th>Critical Engagement Focus</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><strong>ChatGPT / Claude / Copilot</strong></td>
+                <td>Pre-class journal; group critique tasks; slogan generation (Segment 4)</td>
+                <td>Students evaluate accuracy, biases, completeness; decide adopt/modify/reject</td>
+              </tr>
+              <tr>
+                <td><strong>Gradescope / Turnitin Revision Assistant</strong></td>
+                <td>AI formative feedback on portfolio drafts</td>
+                <td>Students interrogate AI feedback, agree/disagree in reflection statement</td>
+              </tr>
+              <tr>
+                <td><strong>Grammarly</strong></td>
+                <td>Writing support for portfolio drafts</td>
+                <td>Students document AI-mediated modifications in AI Transparency Statement</td>
+              </tr>
+              <tr>
+                <td><strong>YouTube auto-captions</strong></td>
+                <td>Accessibility for Khan Academy &amp; Crash Course videos</td>
+                <td>Instructor notes AI captions may contain errors — students learn AI limitation first-hand</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card card-warning" style="margin-top:1rem;">
+          <strong>Key Design Principle:</strong> AI is a supplement, never a replacement. The instructor explicitly communicates: "AI may help you revise drafts, but the final responsibility for the quality, accuracy, and ethics of your work rests with you."
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:1.25rem;" data-role="teacher">
+        <div class="card-header"><span class="icon">✅</span>6.5 Instructor Preparation Checklist</div>
+        <ul style="padding-left:1.2rem;font-size:0.92rem;">
+          <li>☐ Prepare AI prompts for all activities (pre-class journal, group critique, Segment 4 synthesis)</li>
+          <li>☐ Test AI tools in advance; create backup prompts (in case of internet/technical failure)</li>
+          <li>☐ Create an "AI Troubleshooting Station" sign for instructor desk</li>
+          <li>☐ Print worksheets: AI Critique Sheet, Operant Design Worksheet, Synthesis Project Brief (≥90 copies)</li>
+          <li>☐ Set up Moodle page with all resources and submission links</li>
+          <li>☐ Pre-assign groups (mixed ability, mixed cultural backgrounds, ≥1 AI-confident student per group)</li>
+          <li>☐ Prepare sticky notes, poster paper, markers, and name tents</li>
+          <li>☐ Set up Padlet and Mentimeter presentations</li>
+          <li>☐ Verify all video captions are accurate; correct any AI-generated caption errors</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- DIFFERENTIATION TAB -->
+    <div class="tab-panel" id="diff">
+      <div class="card">
+        <div class="card-header"><span class="icon">♿</span>7.1 Social Constructivism-Tailored Supports</div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Student Need</th><th>Support Strategy</th><th>Pedagogy Link</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><strong>English Language Learners (ELL)</strong></td>
+                <td>Provide visual glossary of key terms; pair with fluent English speakers; provide sentence starters for reflection questions</td>
+                <td>Scaffolding in ZPD — students learn academic vocabulary through peer discourse</td>
+              </tr>
+              <tr>
+                <td><strong>Visual Impairments</strong></td>
+                <td>All worksheets available electronically (screen-reader friendly); verbal description of all images and animations</td>
+                <td>Equitable access through verbal description and digital alternatives</td>
+              </tr>
+              <tr>
+                <td><strong>Hearing Impairments</strong></td>
+                <td>All videos with verified closed captions; instructor repeats spoken text; visual diagrams supplement verbal instruction</td>
+                <td>Redundancy of information (visual + verbal) — dual-channel learning</td>
+              </tr>
+              <tr>
+                <td><strong>Kinesthetic Learners</strong></td>
+                <td>Sticky notes for quick writes; hands-on card matching (US/UR/NS/CS/CR); gallery walk movement activity</td>
+                <td>Integrating movement into collaborative activities</td>
+              </tr>
+              <tr>
+                <td><strong>Advanced Learners / Early Finishers</strong></td>
+                <td>Extension task: "Design a culturally-specific behavior modification plan that AI could not generate." Lead class debrief during Closure.</td>
+                <td>Extension tasks at higher Bloom's levels (Create, Evaluate) — peer co-teaching within ZPD</td>
+              </tr>
+              <tr>
+                <td><strong>Attention Difficulties</strong></td>
+                <td>20-minute activity changes with clear structure; explicit task chunking with mini-goals; movement breaks (gallery walk, card sorting)</td>
+                <td>Reducing cognitive load through segmentation; collaboration provides external regulation</td>
+              </tr>
+              <tr>
+                <td><strong>Unfamiliar with AI Tools</strong></td>
+                <td>3-minute visual walkthrough at start of class; "AI Buddy" pairing; AI Troubleshooting Station for in-task support</td>
+                <td>Peer scaffolding in ZPD — more skilled navigator supports less confident peer</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card card-ai" style="margin-top:1.25rem;">
+        <div class="card-header"><span class="icon">🤖</span>7.2 AI-Supported Differentiation</div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Student Need</th><th>AI Accommodation</th><th>Instructor Oversight</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><strong>Simplified Language</strong></td>
+                <td>Students prompt AI: "Explain this in simpler terms using an analogy."</td>
+                <td>Students document AI use in Transparency Statement</td>
+              </tr>
+              <tr>
+                <td><strong>Advanced Learners</strong></td>
+                <td>Prompt AI for ethical dilemma scenarios in operant conditioning; evaluate AI's resolution</td>
+                <td>Extension assignment</td>
+              </tr>
+              <tr>
+                <td><strong>Dyslexia</strong></td>
+                <td>Text-to-speech tools (NaturalReader); AI-generated audio summaries; AI skeleton outlines (instructor-approved)</td>
+                <td>Instructor reviews AI outlines for accuracy before release</td>
+              </tr>
+              <tr>
+                <td><strong>Non-English Speakers</strong></td>
+                <td>DeepL or AI translation tools for concepts; bilingual glossaries (e.g., 经典条件作用 for classical conditioning)</td>
+                <td>Instructor provides bilingual vocabulary list; students check AI translation against course definitions</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card card-info" style="margin-top:1.25rem;">
+        <div class="card-header"><span class="icon">👥</span>7.3 Inclusive Group Formation Principles</div>
+        <ul style="padding-left:1.2rem;font-size:0.92rem;">
+          <li>Mixed abilities — ELL + strong English speakers together</li>
+          <li>Mixed cultural backgrounds — to enrich discussion of diverse examples</li>
+          <li>Balanced confidence levels across groups</li>
+          <li>At least one student familiar with AI tools per group (identified from pre-class survey)</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- REFLECTION TAB -->
+    <div class="tab-panel" id="reflect">
+      <div class="card">
+        <div class="card-header"><span class="icon">🔍</span>8.1 Social Constructivism Success Indicators</div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Indicator</th><th>Data Source</th><th>Target</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><strong>Peer discourse quality</strong></td>
+                <td>Instructor observation + audio recording of 2 groups; peer evaluation rubric data</td>
+                <td>Evidence of: disagreement, negotiation, elaboration, co-construction of ideas</td>
+              </tr>
+              <tr>
+                <td><strong>Group collaboration efficacy</strong></td>
+                <td>Peer evaluation scores; instructor observation; synthesis poster quality</td>
+                <td>Average peer evaluation score ≥ 3.5 / 4</td>
+              </tr>
+              <tr>
+                <td><strong>Collaborative product quality</strong></td>
+                <td>Synthesis poster; portfolio case study</td>
+                <td>Evidence of integrated, synthesized ideas (not just assembled parts)</td>
+              </tr>
+              <tr>
+                <td><strong>Emergent shared understanding</strong></td>
+                <td>Post-test scores vs. pre-test; exit ticket take-aways</td>
+                <td>Measurable learning gains from pre to post-test</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card card-ai" style="margin-top:1.25rem;">
+        <div class="card-header"><span class="icon">🤖</span>8.2 AI Integration Reflection Questions</div>
+        <div class="accordion">
+          <div class="accordion-item">
+            <div class="accordion-header">Did AI enhance or distract from learning? <span class="accordion-arrow">▼</span></div>
+            <div class="accordion-body">
+              <p><strong>Data source:</strong> Exit ticket Q3; AI Reflection discussion; AI Transparency Statements.</p>
+              <p><strong>Instructor prompt:</strong> "What percentage of students found AI helpful? Where did AI create confusion or frustration? What does this suggest about the optimal level of AI integration?"</p>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <div class="accordion-header">Were students able to maintain independent reasoning? <span class="accordion-arrow">▼</span></div>
+            <div class="accordion-body">
+              <p><strong>Data source:</strong> AI Transparency Statements; group discussion observations.</p>
+              <p><strong>Instructor prompt:</strong> "Did AI use replace critical thinking, or scaffold it? Did students demonstrate effective human override? What patterns in student decision-making emerged?"</p>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <div class="accordion-header">Where did students struggle with AI criticality? <span class="accordion-arrow">▼</span></div>
+            <div class="accordion-body">
+              <p><strong>Data source:</strong> AI critique worksheets; AI journal entries.</p>
+              <p><strong>Instructor prompt:</strong> "Which aspects of AI evaluation were most difficult? Did students get trapped by 'authority bias'? What scaffolding could be added next time?"</p>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <div class="accordion-header">How did AI support specific groups? <span class="accordion-arrow">▼</span></div>
+            <div class="accordion-body">
+              <p><strong>Data source:</strong> AI-supported differentiation observations; ELL student performance vs. prior cohorts.</p>
+              <p><strong>Instructor prompt:</strong> "Did AI accommodations effectively support ELL/bilingual learners? Where might AI have created additional equity concerns?"</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:1.25rem;">
+        <div class="card-header"><span class="icon">📊</span>8.3 AI Integration Effectiveness Rubric</div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Level</th><th>Description</th><th>Action Plan</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><span class="badge badge-success">Excellent</span></td>
+                <td>AI tasks consistently provoke critical thinking; students demonstrate sophisticated human override; integration is natural</td>
+                <td>Maintain current approach</td>
+              </tr>
+              <tr>
+                <td><span class="badge badge-warning">Good</span></td>
+                <td>AI tasks useful but some students defer to AI without critique; instructor facilitates significant judgment prompting</td>
+                <td>Increase explicit guidance on independent reasoning; add optional AI-focused extensions</td>
+              </tr>
+              <tr>
+                <td><span class="badge badge-danger">Developing</span></td>
+                <td>AI integration superficial; students treat AI as authoritative; tasks don't meaningfully enhance learning</td>
+                <td>Revise AI prompts; model explicit human judgment; reduce AI usage where unclear</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TA NOTES TAB -->
+    <div class="tab-panel" id="ta">
+      <div class="card" data-role="teacher">
+        <div class="card-header"><span class="icon">🧑‍🏫</span>9.1 TA Responsibilities</div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Task</th><th>Checkpoint</th></tr></thead>
+            <tbody>
+              <tr><td>Set up room ahead of time (projector, seating arrangement, materials at stations)</td><td>Before class</td></tr>
+              <tr><td>Circulate during group activities; document student interactions with AI tools</td><td>During all AI segments</td></tr>
+              <tr><td>Operate the "AI Troubleshooting Station"</td><td>Throughout Development phase</td></tr>
+              <tr><td>Support the gallery walk (direct students to groups; facilitate movement)</td><td>Segment 4</td></tr>
+              <tr><td>Collect exit tickets and summarise key themes for instructor</td><td>End of class</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card card-ai" style="margin-top:1.25rem;" data-role="teacher">
+        <div class="card-header"><span class="icon">💬</span>9.2 TA Facilitation Prompts for AI Activities</div>
+        <p style="font-size:0.92rem;margin-bottom:0.75rem;">Use these prompts while circulating during AI group tasks:</p>
+        <ul style="padding-left:1.2rem;font-size:0.93rem;">
+          <li style="margin-bottom:0.5rem;"><em>"What did you ask the AI? Why did you phrase your prompt that way?"</em></li>
+          <li style="margin-bottom:0.5rem;"><em>"What do you think the AI got right? What might it have missed?"</em></li>
+          <li style="margin-bottom:0.5rem;"><em>"How would YOU have said it differently?"</em></li>
+          <li style="margin-bottom:0.5rem;"><em>"If a psychologist wrote this explanation, how might it differ from the AI's?"</em></li>
+          <li style="margin-bottom:0.5rem;"><em>"Are you confident trusting this? Where's your evidence?"</em></li>
+        </ul>
+      </div>
+
+      <div class="card card-warning" style="margin-top:1.25rem;">
+        <div class="card-header"><span class="icon">⚠️</span>Student-Facing Note</div>
+        <p style="font-size:0.92rem;">The TA Responsibilities section above is visible to instructors/teachers. Switch to Teacher view (role button in nav) to see full TA facilitation materials.</p>
+      </div>
+    </div>
+
+    <!-- APPENDICES TAB -->
+    <div class="tab-panel" id="appendix">
+      <div class="card">
+        <div class="card-header"><span class="icon">📎</span>Appendix A: AI Critical Evaluation Worksheet</div>
+        <p class="text-muted text-small" style="margin-bottom:1rem;">Classical Conditioning Example Critique — for use during Segment 1 (25–35 min)</p>
+        <div style="background:#f8faff;border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;font-family:monospace;font-size:0.85rem;white-space:pre-wrap;">GROUP MEMBERS: __________ | __________ | __________
+
+AI Prompt Used: "Generate 6 examples of classical conditioning in daily life."
+
+YOUR TASKS — For EACH example:
+  a. Label: US, UR, NS, CS, CR
+  b. ✔ Correct  |  ✗ Incorrect  |  ⚠ Actually Operant?
+  c. Cultural limitations: would this apply universally?
+
+EXAMPLE 1:
+"A student feels nervous before an exam because she previously failed in the same room."
+  a. Labels: ______________________________________
+  b. ✔ / ✗ / ⚠ : _________
+  c. Cultural limits: _______________________________
+
+EXAMPLE 2:
+"A child bitten by a dog is now afraid of all dogs."
+  a. Labels: ______________________________________
+     Generalization present? Y / N
+  b. ✔ / ✗ / ⚠ : _________
+  c. Cultural limits: _______________________________
+
+EXAMPLE 3:
+"A student studies hard because studying earns praise from parents."
+  a. Labels: ______________________________________
+     ACTUALLY what type? _________________________
+  b. ✔ / ✗ / ⚠ : _________
+  c. Cultural limits: _______________________________
+
+[Continue for Examples 4–6...]
+
+GROUP DECISION — Which 3 examples would you present to the class?
+  Example # ___  Reason: ________________________________
+  Example # ___  Reason: ________________________________
+  Example # ___  Reason: ________________________________
+
+GROUP SELF-ASSESSMENT:
+  Did anyone disagree on a classification? What was the disagreement?
+  _______________________________________________
+  How did you resolve it?
+  _______________________________________________</div>
+      </div>
+
+      <div class="card" style="margin-top:1.25rem;">
+        <div class="card-header"><span class="icon">📎</span>Appendix B: AI Use Transparency Statement Template</div>
+        <p class="text-muted text-small" style="margin-bottom:1rem;">For use in the summative Learning Theory Portfolio — due 3 weeks after lesson.</p>
+        <div style="background:#f8faff;border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;font-family:monospace;font-size:0.85rem;white-space:pre-wrap;">AI USE TRANSPARENCY STATEMENT
+Learning Theory Portfolio | PSY101
+
+Name: ____________  Group: _____________
+
+PART 1: DOCUMENTATION TABLE
+| AI Tool | Prompt Used | AI Output Summary | Action Taken | Rationale |
+|---------|-------------|-------------------|--------------|-----------|
+|         |             |                   | Adopted /    |           |
+|         |             |                   | Modified /   |           |
+|         |             |                   | Rejected     |           |
+
+PART 2: CRITICAL REFLECTION (minimum 3 paragraphs)
+
+Q1. What are the main limitations of AI for learning psychology content?
+    (Consider: accuracy gaps, cultural bias, missing nuance, ethical blindspots)
+
+Q2. Where did your human judgment take precedence over AI?
+    (Provide 2 specific examples with psychological reasoning)
+
+Q3. What did you learn about AI's limitations through this assignment?
+    (Connect to at least one ILO from the lesson)</div>
+      </div>
+    </div>
+
+  </div><!-- end tab-section -->
+
+</div><!-- end container -->
+
+<footer>
+  <p>PSY101 — Introduction to Learning Theories &nbsp;|&nbsp; Social Constructivism + AI Integration &nbsp;|&nbsp;
+    <a href="index.html">Back to Overview</a>
+  </p>
+</footer>
+<script src="app.js"></script>
+</body>
+</html>

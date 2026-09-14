@@ -1,16 +1,177 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Basic HTML Project</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PSY101 – Introduction to Learning Theories</title>
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="container">
-    <h1>Hello World!</h1>
-    <p>Welcome to your new project.</p>
+<nav class="navbar">
+  <div class="navbar-inner">
+    <div class="navbar-brand">PSY101 <span>Lesson Plan</span></div>
+    <div class="navbar-links" id="navLinks">
+      <a href="index.html" class="active">Overview</a>
+      <a href="section-1.html">ILOs</a>
+      <a href="section-2.html">Pre-Class</a>
+      <a href="section-3.html">Introduction</a>
+      <a href="section-4.html">Development</a>
+      <a href="section-5.html">Closure</a>
+      <a href="assessment.html">Assessment</a>
+      <a href="slides.html">Slides</a>
+      <a href="resources.html">Resources</a>
+    </div>
+    <button class="role-badge student" onclick="toggleRole()" title="Switch role">🎓 Student</button>
+    <button class="navbar-hamburger" id="navHam" aria-label="Menu">☰</button>
   </div>
-  <script src="script.js"></script>
+</nav>
+
+<div class="container">
+  <div class="page-header">
+    <h1>Introduction to Learning Theories</h1>
+    <div class="subtitle">PSY101 — Introduction to Psychology | First-Year Undergraduates</div>
+    <div class="meta-tags">
+      <span class="meta-tag">⏱ 120 minutes</span>
+      <span class="meta-tag">👥 90 students</span>
+      <span class="meta-tag">🌐 English</span>
+      <span class="meta-tag">🤝 Social Constructivism</span>
+      <span class="meta-tag">🤖 AI-Integrated</span>
+    </div>
+  </div>
+
+  <!-- Progress Bar -->
+  <div class="card" style="padding:1rem 1.5rem;">
+    <div class="flex-between mb-1">
+      <span style="font-weight:700;font-size:0.95rem;">Your Progress</span>
+      <span class="progress-label text-muted">0% complete</span>
+    </div>
+    <div class="progress-bar-wrap"><div class="progress-fill progress-bar" style="width:0%"></div></div>
+  </div>
+
+  <!-- Course Info -->
+  <div class="card-grid" style="margin-bottom:1.5rem;">
+    <div class="card card-highlight">
+      <div class="card-header"><span class="icon">📋</span>Course Details</div>
+      <table><tbody>
+        <tr><td><strong>Course</strong></td><td>PSY101 – Introduction to Psychology</td></tr>
+        <tr><td><strong>Topic</strong></td><td>Classical, Operant &amp; Observational Learning</td></tr>
+        <tr><td><strong>Level</strong></td><td>First-year undergraduates (no prior background)</td></tr>
+        <tr><td><strong>Duration</strong></td><td>120 minutes</td></tr>
+        <tr><td><strong>Class size</strong></td><td>90 students</td></tr>
+        <tr><td><strong>Pedagogy</strong></td><td>Social Constructivism (Vygotsky / ZPD)</td></tr>
+      </tbody></table>
+    </div>
+    <div class="card card-ai">
+      <div class="card-header"><span class="icon">🤖</span>AI Integration Highlights</div>
+      <ul style="padding-left:1.2rem;font-size:0.92rem;color:#4c1d95;">
+        <li>Pre-class AI journal: critical evaluation before class</li>
+        <li>Segment 1: evaluate AI-generated classical conditioning examples</li>
+        <li>Segment 2: critique AI-designed behaviour modification plans</li>
+        <li>Segment 3: compare AI &amp; human critique of Bobo Doll ethics</li>
+        <li>Segment 4: adopt / modify / reject AI slogans for theories</li>
+        <li>Assessment: AI Use Transparency Statement in portfolio</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Table of Contents -->
+  <div class="card">
+    <div class="card-header"><span class="icon">🗂️</span>Lesson Plan Sections</div>
+    <div class="card-grid">
+      <a href="section-1.html" class="card card-highlight" style="text-decoration:none;display:block;">
+        <div style="font-size:1.5rem;margin-bottom:6px;">🎯</div>
+        <strong>1. Intended Learning Outcomes</strong>
+        <p class="text-muted text-small mt-1">7 ILOs across Bloom's taxonomy — including AI literacy outcomes</p>
+      </a>
+      <a href="section-2.html" class="card card-highlight" style="text-decoration:none;display:block;">
+        <div style="font-size:1.5rem;margin-bottom:6px;">📚</div>
+        <strong>2. Pre-Class Preparation</strong>
+        <p class="text-muted text-small mt-1">Required readings, diagnostic quiz, guiding questions &amp; AI journal task</p>
+      </a>
+      <a href="section-3.html" class="card card-highlight" style="text-decoration:none;display:block;">
+        <div style="font-size:1.5rem;margin-bottom:6px;">🎬</div>
+        <strong>3. Introduction Activities</strong>
+        <p class="text-muted text-small mt-1">Conditioned Classroom hook, AI focus activity, misconception analysis (15 min)</p>
+      </a>
+      <a href="section-4.html" class="card card-highlight" style="text-decoration:none;display:block;">
+        <div style="font-size:1.5rem;margin-bottom:6px;">⚗️</div>
+        <strong>4. Development Activities</strong>
+        <p class="text-muted text-small mt-1">4 segments: Classical, Operant, Observational &amp; Synthesis Mural (85 min)</p>
+      </a>
+      <a href="section-5.html" class="card card-highlight" style="text-decoration:none;display:block;">
+        <div style="font-size:1.5rem;margin-bottom:6px;">🔗</div>
+        <strong>5. Synthesis &amp; Closure</strong>
+        <p class="text-muted text-small mt-1">Post-test, peer reflection, AI discussion &amp; next steps (15 min)</p>
+      </a>
+      <a href="assessment.html" class="card card-ai" style="text-decoration:none;display:block;">
+        <div style="font-size:1.5rem;margin-bottom:6px;">📝</div>
+        <strong>Assessment Methods</strong>
+        <p class="text-muted text-small mt-1">Formative, summative, AI Transparency Statement &amp; rubrics</p>
+      </a>
+      <a href="slides.html" class="card" style="border-left:4px solid var(--secondary);text-decoration:none;display:block;">
+        <div style="font-size:1.5rem;margin-bottom:6px;">📊</div>
+        <strong>Presentation Slides</strong>
+        <p class="text-muted text-small mt-1">10-slide academic presentation with fullscreen &amp; download</p>
+      </a>
+      <a href="resources.html" class="card card-success" style="text-decoration:none;display:block;">
+        <div style="font-size:1.5rem;margin-bottom:6px;">🛠️</div>
+        <strong>Resources &amp; Differentiation</strong>
+        <p class="text-muted text-small mt-1">Tools, inclusivity strategies, TA notes &amp; instructor script</p>
+      </a>
+    </div>
+  </div>
+
+  <!-- Pedagogy Summary -->
+  <div class="card card-info mt-2">
+    <div class="card-header"><span class="icon">🧠</span>Pedagogical Framework</div>
+    <div class="card-grid">
+      <div>
+        <strong>Social Constructivism (Vygotsky)</strong>
+        <p class="text-small mt-1">Knowledge is co-constructed through peer interaction, discussion, and collaborative meaning-making. Students work within their Zone of Proximal Development (ZPD), supported by peers and instructor scaffolding.</p>
+      </div>
+      <div>
+        <strong>AI Literacy Integration</strong>
+        <p class="text-small mt-1">AI tools are positioned as stimuli for critical discourse — not authoritative sources. Students evaluate, critique, and override AI outputs, developing independent judgment and ethical awareness.</p>
+      </div>
+      <div>
+        <strong>Bloom's Taxonomy Alignment</strong>
+        <p class="text-small mt-1">ILOs span Analyze → Apply → Evaluate → Create. Activities scaffold progressively from individual comprehension to collaborative synthesis.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Constructive Alignment Matrix -->
+  <div class="card mt-2">
+    <div class="card-header"><span class="icon">🔄</span>Constructive Alignment at a Glance</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>ILO</th><th>Key Activity</th><th>Assessment</th><th>AI Link</th></tr></thead>
+        <tbody>
+          <tr><td>1 – Analyze classical conditioning</td><td>Mini-lecture + AI critique worksheet</td><td>Group critique; Post-test Q1</td><td>AI examples as error-rich stimuli</td></tr>
+          <tr><td>2 – Differentiate theories</td><td>Cross-theory comparison; Bobo Doll</td><td>Pre/Post-test; Portfolio case study</td><td>AI boundary confusion forces differentiation</td></tr>
+          <tr><td>3 – Apply operant principles</td><td>Reinforcement Design Challenge</td><td>Portfolio case study; Padlet plans</td><td>AI plan critique → human override</td></tr>
+          <tr><td>4 – Evaluate strengths/limits</td><td>Bobo Doll ethics; media violence discussion</td><td>Portfolio limitations sections</td><td>AI omission of cultural/ethical nuance</td></tr>
+          <tr><td>5 – Collaborative synthesis</td><td>Learning Theory Mural poster</td><td>Peer evaluation; Case study</td><td>Group adopt/modify/reject AI slogans</td></tr>
+          <tr><td>6 – Critically evaluate AI</td><td>All AI tasks; pre-class journal</td><td>AI Transparency Statement</td><td>Core AI literacy outcome</td></tr>
+          <tr><td>7 – Reflect on AI ethics</td><td>Closure AI reflection discussion</td><td>Transparency Statement; Exit ticket</td><td>Ethical AI integration as curriculum goal</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>PSY101 – Introduction to Learning Theories &nbsp;|&nbsp; Social Constructivism &amp; AI-Integrated Lesson Plan</p>
+  <p style="margin-top:4px;font-size:0.78rem;">University Curriculum | Hong Kong</p>
+</footer>
+<script src="app.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    initNav(); initTabs(); initAccordions(); initQuizzes();
+    setRole(getRole());
+    updateProgressBar();
+    markSectionVisited('index');
+  });
+</script>
 </body>
 </html>

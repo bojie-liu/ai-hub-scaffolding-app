@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Section 4: Development Activities — PSY101</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<nav class="navbar">
+  <div class="navbar-inner">
+    <div class="navbar-brand">PSY101 <span>Lesson Plan</span></div>
+    <div class="navbar-links" id="navLinks">
+      <a href="index.html">Overview</a>
+      <a href="section-1.html">ILOs</a>
+      <a href="section-2.html">Pre-Class</a>
+      <a href="section-3.html">Introduction</a>
+      <a href="section-4.html" class="active">Development</a>
+      <a href="section-5.html">Closure</a>
+      <a href="assessment.html">Assessment</a>
+      <a href="slides.html">Slides</a>
+      <a href="resources.html">Resources</a>
+    </div>
+    <button class="role-badge student" onclick="toggleRole()" title="Switch role">🎓 Student</button>
+    <button class="navbar-hamburger" id="navHam" aria-label="Menu">☰</button>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="section-hero">
+    <h1>Section 3b — Development Activities</h1>
+    <div class="sub">PSY101 · 15–105 minutes · 71% of lesson time · Four interconnected segments</div>
+  </div>
+
+  <div class="card card-info" style="margin-bottom:1.5rem;">
+    <div class="flex-between">
+      <span>Four segments build progressively toward the Group Synthesis Project. Each applies a distinct Social Constructivism strategy.</span>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <span class="chip chip-primary">85 min total</span>
+        <span class="chip chip-ai">AI-integrated throughout</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Segment navigation tabs -->
+  <div class="tab-section">
+    <div class="tabs" role="tablist">
+      <button class="tab-btn" data-tab="seg1" role="tab">🔬 Seg 1: Classical</button>
+      <button class="tab-btn" data-tab="seg2" role="tab">🎯 Seg 2: Operant</button>
+      <button class="tab-btn" data-tab="seg3" role="tab">👁 Seg 3: Observational</button>
+      <button class="tab-btn" data-tab="seg4" role="tab">🖼 Seg 4: Synthesis</button>
+    </div>
+
+    <!-- SEGMENT 1 -->
+    <div class="tab-panel" id="seg1">
+      <div class="card">
+        <div class="card-header"><span class="icon">🔬</span>Segment 1: Classical Conditioning — "The Pairing Game" (15–35 min, 20 min)</div>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-time">15–25 min</div>
+            <div class="timeline-title">Mini-Lecture + Animation Visualization</div>
+            <div class="timeline-body">
+              <p>Instructor uses animated PowerPoint diagram (Pavlov's dog) to illustrate the classical conditioning sequence:</p>
+              <ul style="padding-left:1.2rem;font-size:0.92rem;margin:0.5rem 0;">
+                <li><strong>US → UR</strong>: Unconditioned Stimulus → Unconditioned Response</li>
+                <li><strong>NS → Pairing → CS → CR</strong>: Neutral Stimulus becomes Conditioned Stimulus</li>
+                <li>Key concepts: acquisition, extinction, spontaneous recovery, generalization, discrimination</li>
+              </ul>
+              <p class="mt-1"><strong>Think-Pair-Share checkpoint:</strong> <em>"With your partner, describe one real-life NS→CS pairing you've experienced."</em></p>
+              <div class="ai-callout" style="margin-top:0.75rem;">
+                <div class="ai-callout-title">🃏 Flashcard Tool: Quizlet</div>
+                <p>Students work in pairs on <a href="https://quizlet.com" target="_blank">Quizlet</a> to define classical conditioning terms to each other (peer teaching within ZPD). Steps: (1) Go to quizlet.com, (2) Search "classical conditioning PSY101", (3) Use Flashcard mode, (4) Partner A reads term, Partner B defines it, then swap.</p>
+              </div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-time">25–35 min</div>
+            <div class="timeline-title">🤖 AI-Enhanced Comparison Activity</div>
+            <div class="timeline-body">
+              <p><strong>Groups of 3</strong> access ChatGPT/Claude and use the prompt:</p>
+              <blockquote style="border-left:3px solid #805ad5;padding-left:1rem;color:#4c1d95;font-style:italic;font-size:0.9rem;margin:0.75rem 0;">"Generate 6 examples of classical conditioning in daily life."</blockquote>
+              <p><strong>Worksheet tasks:</strong></p>
+              <ol style="padding-left:1.2rem;font-size:0.92rem;margin:0.5rem 0;">
+                <li>Label each example: US, UR, NS, CS, CR</li>
+                <li><strong>Flag any examples that are actually operant conditioning</strong> (e.g., "a student studies to earn praise" = operant)</li>
+                <li><strong>Identify cultural limitations</strong> — Are examples universally relatable? Do food-based examples vary across cultures?</li>
+                <li><strong>Decide:</strong> Which 3 of the 6 would YOU present to the class? Justify your choice.</li>
+              </ol>
+              <div class="ai-callout" style="margin-top:0.75rem;">
+                <div class="ai-callout-title">🤖 Instructor Facilitation Prompts</div>
+                <ul>
+                  <li>"Why did you flag example #2? What might the AI have misunderstood?"</li>
+                  <li>"Did the AI confuse extinction with forgetting?"</li>
+                  <li>"Are these examples culturally biased toward Western contexts?"</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-time">35 min</div>
+            <div class="timeline-title">Class Debrief (5 min)</div>
+            <div class="timeline-body">
+              <p>4 groups share one example they "rejected or revised" from AI and why. Instructor summarises:</p>
+              <blockquote style="border-left:3px solid var(--primary);padding-left:1rem;font-style:italic;font-size:0.9rem;margin:0.5rem 0;">"The AI generates 90% accurate work — your job as psychologists is to be the 10% that makes it great."</blockquote>
+            </div>
+          </div>
+        </div>
+        <div class="card card-success" style="margin-top:1rem;">
+          <div class="card-header"><span class="icon">🤝</span>Social Constructivism Integration</div>
+          <p style="font-size:0.92rem;">Pairs/groups negotiate meaning, challenge each other's classifications of AI examples, and co-construct corrections. The AI serves as a stimulus — not as authority — provoking critical discussion.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEGMENT 2 -->
+    <div class="tab-panel" id="seg2">
+      <div class="card">
+        <div class="card-header"><span class="icon">🎯</span>Segment 2: Operant Conditioning — "Reinforcement Design Challenge" (35–60 min, 25 min)</div>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-time">35–40 min</div>
+            <div class="timeline-title">Mini-Lecture + Worked Example</div>
+            <div class="timeline-body">
+              <p>Instructor uses "Pigeon Pong" animation (Skinner box) to illustrate key concepts:</p>
+              <ul style="padding-left:1.2rem;font-size:0.92rem;margin:0.5rem 0;">
+                <li><strong>Positive/Negative Reinforcement</strong> vs <strong>Positive/Negative Punishment</strong></li>
+                <li>Schedules: fixed ratio, variable ratio, fixed interval, variable interval</li>
+                <li>Important: punishment ≠ negative reinforcement</li>
+              </ul>
+              <p class="mt-1"><strong>Worked Example:</strong> Instructor walks through designing a behaviour modification plan for "increasing student class participation" using positive reinforcement + fixed ratio schedule.</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-time">40–55 min</div>
+            <div class="timeline-title">🤖 AI-Enabled Group Design Challenge</div>
+            <div class="timeline-body">
+              <p>Each group of 3 selects ONE real-world behaviour to modify (e.g., increase exercise, reduce social media use, improve sleep habits). Groups prompt AI:</p>
+              <blockquote style="border-left:3px solid #805ad5;padding-left:1rem;color:#4c1d95;font-style:italic;font-size:0.9rem;margin:0.75rem 0;">"Design a behaviour modification plan using operant conditioning principles for [behaviour]. Include: target behaviour, type of reinforcement/punishment, schedule, and potential ethical concerns."</blockquote>
+              <p><strong>Critical Evaluation Worksheet:</strong></p>
+              <ol style="padding-left:1.2rem;font-size:0.92rem;margin:0.5rem 0;">
+                <li>Is the AI's plan logical and feasible? Are there practical constraints it ignored?</li>
+                <li>Are there ethical concerns? (unethical punishment, manipulation, cultural sensitivity?)</li>
+                <li>Would you <strong>modify or reject</strong> any element? If so, why?</li>
+                <li>Does the AI's plan address <strong>generalisation</strong> — will the behaviour transfer across contexts?</li>
+                <li><strong>Human override:</strong> What element requires YOUR judgment as a psychologist?</li>
+              </ol>
+              <div class="ai-callout" style="margin-top:0.75rem;">
+                <div class="ai-callout-title">🤖 Instructor Probing Questions</div>
+                <ul>
+                  <li>"Why would you change that schedule?"</li>
+                  <li>"What did the AI not consider?"</li>
+                  <li>"Is there a more ethical approach you would choose?"</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-time">55–60 min</div>
+            <div class="timeline-title">🖼 Class Gallery Walk (Padlet)</div>
+            <div class="timeline-body">
+              <p>Each group posts their revised condensed plan on <a href="https://padlet.com" target="_blank">Padlet</a>. Students walk to 2 other groups' posts and leave one comment: a question or a suggested improvement.</p>
+              <div class="ai-callout" style="margin-top:0.75rem;">
+                <div class="ai-callout-title">🛠 How to Use Padlet</div>
+                <ol style="padding-left:1.2rem;font-size:0.9rem;">
+                  <li>Go to <a href="https://padlet.com" target="_blank">padlet.com</a></li>
+                  <li>Instructor shares the class Padlet link (projected on screen)</li>
+                  <li>Click the "+" button to add your group's post</li>
+                  <li>Title it with your group name and behaviour topic</li>
+                  <li>To comment on others' posts: click their card, then click "Comment"</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card card-success" style="margin-top:1rem;">
+          <div class="card-header"><span class="icon">🤝</span>Social Constructivism Integration</div>
+          <p style="font-size:0.92rem;">Groups negotiate between AI outputs and their own judgment. The gallery walk fosters peer feedback and distributed expertise across the class.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEGMENT 3 -->
+    <div class="tab-panel" id="seg3">
+      <div class="card">
+        <div class="card-header"><span class="icon">👁</span>Segment 3: Observational Learning — "Bandura's Bobo Doll Today" (60–75 min, 15 min)</div>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-time">60–70 min</div>
+            <div class="timeline-title">Interactive Video Analysis + AI Critique</div>
+            <div class="timeline-body">
+              <p>Instructor plays a 3-minute clip of Bandura's Bobo Doll experiment. Students are given the prompt:</p>
+              <blockquote style="border-left:3px solid var(--primary);padding-left:1rem;font-style:italic;font-size:0.9rem;margin:0.75rem 0;">"How would this experiment be considered unethical by today's standards?"</blockquote>
+              <p><strong>AI Comparison Task:</strong> Instructor shows AI's response to the same prompt, listing: (1) exposure of children to aggressive models, (2) lack of proper consent, (3) risk of psychological distress.</p>
+              <p class="mt-1">Students are asked: <em>"What is MISSING from this AI response? What would a psychologist's critique add?"</em></p>
+              <div class="ai-callout" style="margin-top:0.75rem;">
+                <div class="ai-callout-title">🤖 What AI Misses — Class Discussion</div>
+                <ul>
+                  <li>Long-term developmental effects on child participants</li>
+                  <li>Researcher's ethical responsibility beyond the study</li>
+                  <li>Alternative research designs available today</li>
+                  <li>IRB / Ethics Committee review requirements</li>
+                  <li>Cultural context of aggression and its measurement</li>
+                </ul>
+              </div>
+              <div class="card card-ai" style="margin-top:0.75rem;">
+                <div class="ai-callout-title">🎤 Instructor Script</div>
+                <blockquote style="border-left:3px solid #805ad5;padding-left:1rem;color:#4c1d95;font-style:italic;font-size:0.9rem;">"The AI gave a perfectly reasonable list. But is it complete? This is important: the AI is not wrong — but it's incomplete. And incompleteness is one of the most subtle and dangerous limitations of AI. You must learn to spot what's missing as much as what's present."</blockquote>
+              </div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-time">70–75 min</div>
+            <div class="timeline-title">Social Constructivism Discussion: "Learning from Media Influence"</div>
+            <div class="timeline-body">
+              <p>Instructor poses: <em>"Based on observational learning theory, does exposure to violent video games cause aggression? What does your group think?"</em></p>
+              <p class="mt-1">Groups of 3 discuss for 2 minutes, then share. Instructor synthesises:</p>
+              <ul style="padding-left:1.2rem;font-size:0.92rem;margin:0.5rem 0;">
+                <li>Observational learning ≠ automatic behaviour adoption</li>
+                <li>Cognitive, social, and contextual factors mediate behaviour</li>
+                <li>Cultural context shapes what is observed and imitated</li>
+              </ul>
+              <p class="text-muted text-small mt-1"><strong>Social Constructivism:</strong> Students co-construct a nuanced position by pooling knowledge, considering counterexamples, and negotiating a shared standpoint.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEGMENT 4 -->
+    <div class="tab-panel" id="seg4">
+      <div class="card">
+        <div class="card-header"><span class="icon">&#x1F5BC;</span>Segment 4: Group Synthesis Project — "The Learning Theory Mural" (75–105 min, 25 min)</div>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-time">75–100 min</div>
+            <div class="timeline-title">Collaborative Synthesis + AI-Enhanced Design</div>
+            <div class="timeline-body">
+              <p>Each group is assigned one theory (classical, operant, or observational) and must develop a <strong>poster-based synthesis</strong> containing:</p>
+              <ol style="padding-left:1.2rem;font-size:0.92rem;margin:0.5rem 0;">
+                <li>A central analogy (e.g., "Classical conditioning is like a reflex that gets rerouted")</li>
+                <li>At least 2 real-world applications</li>
+                <li>At least 1 limitation or cultural consideration</li>
+                <li><strong>AI Requirement:</strong> Prompt an AI to generate a slogan/metaphor for your theory, then critique it</li>
+              </ol>
+              <div class="card card-warning" style="margin-top:0.75rem;">
+                <div class="card-header"><span class="icon">&#x1F4AC;</span>Example AI Prompt for Segment 4</div>
+                <p style="font-size:0.92rem;font-family:monospace;background:#fffbeb;padding:0.75rem;border-radius:6px;margin-top:0.5rem;">"Create a memorable slogan for operant conditioning."</p>
+                <p class="text-muted text-small mt-1">AI might generate: "Behavior is shaped by consequences." — Groups must evaluate: Does it capture the essence? Is it catchy but technically inaccurate? Adopt, modify, or reject?</p>
+              </div>
+              <div class="ai-callout" style="margin-top:0.75rem;">
+                <div class="ai-callout-title">&#x1F916; Critical Evaluation: Adopt / Modify / Reject</div>
+                <p>Groups must document:</p>
+                <ul>
+                  <li>Did the AI slogan capture the essence of the theory?</li>
+                  <li>Was it catchy but technically inaccurate?</li>
+                  <li>Did you choose to adopt it, modify it, or reject it — and why?</li>
+                </ul>
+              </div>
+              <div class="card card-ai" style="margin-top:0.75rem;">
+                <div class="ai-callout-title">&#x1F3A4; Instructor Script</div>
+                <blockquote style="border-left:3px solid #805ad5;padding-left:1rem;color:#4c1d95;font-style:italic;font-size:0.9rem;">"Your poster must include your slogan or metaphor. You're allowed to generate it with AI but not to copy it blindly. Where's the evidence that you evaluated it? You'll present that decision in 5 minutes."</blockquote>
+              </div>
+              <p class="text-muted text-small mt-1"><strong>AI Troubleshooting Station:</strong> Instructor helps groups struggling with AI prompt design or getting poor output.</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-time">100–105 min</div>
+            <div class="timeline-title">Gallery Presentation + Peer Feedback</div>
+            <div class="timeline-body">
+              <p>Half the groups present their posters while others engage in a <strong>Peers-Critique protocol</strong>. Presenting group explains their AI evaluation process (adopt/modify/reject).</p>
+              <div class="card card-info" style="margin-top:0.75rem;">
+                <div class="card-header"><span class="icon">&#x1F4CB;</span>Padlet Gallery Wall</div>
+                <p style="font-size:0.92rem;">Use <a href="https://padlet.com" target="_blank">Padlet</a> to post condensed plans. Steps: (1) Go to padlet.com, (2) Open the class Padlet link shared by instructor, (3) Click '+' to add your group's poster summary, (4) Walk to 2 other groups' posts and leave one comment — a question or suggested improvement.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card card-success" style="margin-top:1rem;">
+          <div class="card-header"><span class="icon">&#x1F91D;</span>Social Constructivism Integration</div>
+          <p style="font-size:0.92rem;">This synthesis task requires integrating three content areas into a group product that could not be produced individually. The explicit requirement to include AI-generated content, then exercise human judgment, places students in a ZPD where they must apply higher-order thinking to metacognitive decisions about AI trust/rejection.</p>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end .tab-section -->
+
+</div><!-- end .container -->
+
+<footer>
+  <p>PSY101 &mdash; Introduction to Learning Theories &mdash; Section 3b: Development Activities</p>
+  <p style="margin-top:0.4rem;"><a href="index.html">&#8592; Back to Overview</a> &nbsp;|&nbsp; <a href="section-5.html">Next: Closure &#8594;</a></p>
+</footer>
+
+<script src="app.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    initNav(); initTabs(); initAccordions();
+    setRole(getRole());
+    markSectionVisited('section-4');
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Slides — Introduction to Learning Theories | PSY101</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+/* ── Slide presentation styles ── */
+.slides-shell { background:#1a202c; min-height:100vh; display:flex; flex-direction:column; }
+.slides-toolbar { background:#111827; display:flex; align-items:center; justify-content:space-between; padding:0.6rem 1.5rem; border-bottom:1px solid #374151; flex-shrink:0; }
+.slides-toolbar .course-tag { color:#9ca3af; font-size:0.82rem; font-family:'Georgia',serif; }
+.slides-counter { color:#d1d5db; font-size:0.9rem; font-weight:600; font-family:'Georgia',serif; min-width:60px; text-align:center; }
+.toolbar-btns { display:flex; gap:8px; }
+.tool-btn { background:#374151; color:#e5e7eb; border:none; padding:6px 14px; border-radius:6px; font-size:0.82rem; font-weight:600; cursor:pointer; transition:background 0.2s; display:flex; align-items:center; gap:5px; }
+.tool-btn:hover { background:#4b5563; }
+.tool-btn.fs-btn { background:#1e3a8a; }
+.tool-btn.fs-btn:hover { background:#1d4ed8; }
+.tool-btn.dl-btn { background:#065f46; }
+.tool-btn.dl-btn:hover { background:#047857; }
+/* Slide viewport */
+.slides-viewport { flex:1; display:flex; align-items:center; justify-content:center; padding:2rem; }
+.slide { background:#fff; border-radius:12px; width:100%; max-width:900px; min-height:520px; display:none; flex-direction:column; box-shadow:0 8px 40px rgba(0,0,0,0.5); overflow:hidden; position:relative; }
+.slide.active { display:flex; }
+/* Slide header bar */
+.slide-header { background:#1a2a6c; color:#fff; padding:0.75rem 1.5rem; display:flex; align-items:center; justify-content:space-between; flex-shrink:0; }
+.slide-section-tag { font-size:0.75rem; font-weight:700; letter-spacing:1px; text-transform:uppercase; opacity:0.8; font-family:'Georgia',serif; }
+.slide-title-bar { font-size:0.85rem; font-weight:600; opacity:0.9; }
+/* Slide body */
+.slide-body { flex:1; padding:2rem 2.5rem; display:flex; flex-direction:column; justify-content:center; }
+.slide-h1 { font-family:'Georgia',serif; font-size:clamp(1.4rem,3vw,2rem); font-weight:700; color:#1a202c; line-height:1.25; margin-bottom:0.5rem; }
+.slide-h2 { font-family:'Georgia',serif; font-size:clamp(1.1rem,2.5vw,1.5rem); font-weight:700; color:#1a2a6c; line-height:1.3; margin-bottom:1rem; }
+.slide-sub { font-size:1rem; color:#4b5563; margin-bottom:1.5rem; font-family:'Georgia',serif; font-style:italic; }
+.slide-body ul { padding-left:1.4rem; color:#374151; font-size:0.97rem; line-height:1.85; }
+.slide-body ol { padding-left:1.4rem; color:#374151; font-size:0.97rem; line-height:1.85; }
+.slide-body p { color:#374151; font-size:0.97rem; line-height:1.75; margin-bottom:0.75rem; }
+.slide-cols { display:grid; grid-template-columns:1fr 1fr; gap:2rem; }
+.slide-col-head { font-family:'Georgia',serif; font-weight:700; color:#1a2a6c; font-size:1rem; margin-bottom:0.5rem; border-bottom:2px solid #1a2a6c; padding-bottom:4px; }
+.slide-accent { background:#eef2ff; border-left:4px solid #1a2a6c; padding:0.75rem 1rem; border-radius:0 8px 8px 0; margin:0.75rem 0; font-size:0.93rem; color:#1e3a8a; }
+.slide-ai-box { background:#f5f3ff; border:1.5px solid #c4b5fd; border-radius:8px; padding:0.75rem 1rem; margin:0.75rem 0; font-size:0.9rem; color:#4c1d95; }
+.slide-ai-box strong { color:#7c3aed; }
+.slide-tag { display:inline-block; padding:2px 10px; border-radius:20px; font-size:0.75rem; font-weight:700; background:#e0e7ff; color:#3730a3; margin:2px; }
+.slide-tag.ai { background:#ede9fe; color:#6d28d9; }
+.slide-tag.green { background:#d1fae5; color:#065f46; }
+/* Title slide special */
+.slide-title-body { background:linear-gradient(135deg,#1a2a6c 0%,#2c3e8c 60%,#4a6bd8 100%); flex:1; display:flex; flex-direction:column; justify-content:center; align-items:flex-start; padding:3rem; color:#fff; }
+.slide-title-body h1 { font-family:'Georgia',serif; font-size:clamp(1.6rem,4vw,2.4rem); font-weight:700; line-height:1.2; margin-bottom:0.75rem; }
+.slide-title-body .course { font-size:1rem; opacity:0.85; font-family:'Georgia',serif; font-style:italic; margin-bottom:1.5rem; }
+.slide-title-body .tags { display:flex; flex-wrap:wrap; gap:8px; }
+.slide-title-body .tag { background:rgba(255,255,255,0.18); backdrop-filter:blur(4px); color:#fff; padding:4px 12px; border-radius:20px; font-size:0.78rem; font-weight:600; }
+/* Footer nav */
+.slides-nav { background:#111827; display:flex; align-items:center; justify-content:center; gap:1rem; padding:0.75rem 1.5rem; flex-shrink:0; }
+.nav-btn { background:#374151; color:#e5e7eb; border:none; padding:8px 24px; border-radius:8px; font-size:0.9rem; font-weight:700; cursor:pointer; transition:background 0.2s; }
+.nav-btn:hover:not(:disabled) { background:#4b5563; }
+.nav-btn:disabled { opacity:0.35; cursor:not-allowed; }
+/* Fullscreen */
+:fullscreen .slides-shell, :-webkit-full-screen .slides-shell { background:#111; }
+:fullscreen .slides-viewport, :-webkit-full-screen .slides-viewport { padding:1rem; }
+</style>
+</head>
+<body>
+<nav class="navbar">
+  <div class="navbar-inner">
+    <div class="navbar-brand">PSY101 <span>Lesson Plan</span></div>
+    <div class="navbar-links" id="navLinks">
+      <a href="index.html">Overview</a>
+      <a href="section-1.html">ILOs</a>
+      <a href="section-2.html">Pre-Class</a>
+      <a href="section-3.html">Introduction</a>
+      <a href="section-4.html">Development</a>
+      <a href="section-5.html">Closure</a>
+      <a href="assessment.html">Assessment</a>
+      <a href="slides.html" class="active">Slides</a>
+      <a href="resources.html">Resources</a>
+    </div>
+    <button class="role-badge student" onclick="toggleRole()" title="Switch role">🎓 Student</button>
+    <button class="navbar-hamburger" id="navHam" aria-label="Menu">☰</button>
+  </div>
+</nav>
+
+<div class="slides-shell" id="slidesShell">
+  <!-- Toolbar -->
+  <div class="slides-toolbar">
+    <span class="course-tag">PSY101 — Introduction to Learning Theories</span>
+    <span class="slides-counter" id="slideCounter">1 / 10</span>
+    <div class="toolbar-btns">
+      <button class="tool-btn dl-btn" onclick="downloadSlides()">&#11015; Download Slides</button>
+      <button class="tool-btn fs-btn" id="fsBtn" onclick="toggleFullscreen()">&#9974; Fullscreen</button>
+    </div>
+  </div>
+
+  <!-- Slides viewport -->
+  <div class="slides-viewport" id="slidesViewport">
+  </div>
+
+  <!-- Nav controls -->
+  <div class="slides-nav" id="slidesNav">
+    <button class="slides-btn" id="prevBtn" onclick="changeSlide(-1)" aria-label="Previous slide">&#8592; Prev</button>
+    <span class="slide-counter" id="slideCounter">1 / 10</span>
+    <button class="slides-btn" id="nextBtn" onclick="changeSlide(1)" aria-label="Next slide">Next &#8594;</button>
+    <button class="slides-btn btn-fs" id="fsBtn" onclick="toggleFullscreen()" aria-label="Fullscreen">&#x26F6; Fullscreen</button>
+    <button class="slides-btn btn-dl" onclick="downloadSlides()" aria-label="Download slides">&#11015; Download Slides</button>
+  </div>
+</div>
+
+<script>
+const SLIDES = [
+  {
+    num: 1,
+    title: "Introduction to Learning Theories",
+    subtitle: "PSY101 — Introduction to Psychology",
+    content: `
+      <div class="slide-two-col">
+        <div>
+          <h3>Today's Questions</h3>
+          <ol class="slide-list">
+            <li>What distinguishes classical, operant, and observational learning?</li>
+            <li>How do these theories apply to real life?</li>
+            <li>When should you trust AI — and when should you challenge it?</li>
+          </ol>
+          <p class="slide-note">Duration: 120 minutes &nbsp;|&nbsp; Groups of 3 &nbsp;|&nbsp; Social Constructivism</p>
+        </div>
+        <div>
+          <div class="slide-box accent">
+            <strong>Learning as Social Construction</strong>
+            <p>Vygotsky (1978): Knowledge is co-constructed through dialogue, peer interaction, and shared meaning-making within the Zone of Proximal Development (ZPD).</p>
+          </div>
+          <div class="slide-box ai-box">
+            <strong>AI Integration</strong>
+            <p>Today you will use, evaluate, and critically override AI-generated content — building AI literacy alongside psychology content knowledge.</p>
+          </div>
+        </div>
+      </div>`
+  },
+  {
+    num: 2,
+    title: "Intended Learning Outcomes",
+    subtitle: "Seven ILOs across Bloom's Taxonomy",
+    content: `
+      <div class="slide-ilos">
+        <div class="ilo-row"><span class="bloom-badge analyze">Analyze</span><span>Analyze key principles of classical conditioning with real-world examples</span></div>
+        <div class="ilo-row"><span class="bloom-badge analyze">Analyze</span><span>Differentiate classical, operant, and observational learning in case scenarios</span></div>
+        <div class="ilo-row"><span class="bloom-badge apply">Apply</span><span>Apply operant conditioning principles to design a behavior modification plan</span></div>
+        <div class="ilo-row"><span class="bloom-badge evaluate">Evaluate</span><span>Evaluate strengths and limitations of learning theories across cultures</span></div>
+        <div class="ilo-row"><span class="bloom-badge create">Create</span><span>Collaboratively construct a group synthesis presentation (ZPD task)</span></div>
+        <div class="ilo-row ai-ilo"><span class="bloom-badge ai-badge">AI Literacy</span><span><strong>Critically evaluate AI outputs</strong> — identify inaccuracies, biases, limitations; exercise independent judgment</span></div>
+        <div class="ilo-row ai-ilo"><span class="bloom-badge ai-badge">AI Ethics</span><span><strong>Reflect on ethical AI use</strong> — academic integrity and independent reasoning with AI tools</span></div>
+      </div>`
+  },
+  {
+    num: 3,
+    title: "Classical Conditioning",
+    subtitle: "Pavlov's Discovery — Learning Through Association",
+    content: `
+      <div class="slide-two-col">
+        <div>
+          <h3>The Conditioning Sequence</h3>
+          <div class="slide-sequence">
+            <div class="seq-step"><span class="seq-label">US</span><span>Unconditioned Stimulus</span><span class="seq-arrow">&#8594;</span><span class="seq-label">UR</span><span>Unconditioned Response</span></div>
+            <div class="seq-step"><span class="seq-label">NS</span><span>Neutral Stimulus</span><span class="seq-arrow">+</span><span class="seq-label">US</span><span>(repeated pairing)</span></div>
+            <div class="seq-step highlight"><span class="seq-label">CS</span><span>Conditioned Stimulus</span><span class="seq-arrow">&#8594;</span><span class="seq-label">CR</span><span>Conditioned Response</span></div>
+          </div>
+          <p class="slide-note">Key processes: acquisition, extinction, spontaneous recovery, generalization, discrimination</p>
+        </div>
+        <div>
+          <div class="slide-box">
+            <strong>Classic Example</strong>
+            <p>Pavlov's dog: Bell (NS) + Food (US) &#8594; Salivation (UR)<br>After pairing: Bell (CS) &#8594; Salivation (CR)</p>
+          </div>
+          <div class="slide-box ai-box">
+            <strong>AI Activity (Segment 1)</strong>
+            <p>Groups prompt AI for 6 daily-life examples, then flag mislabeled examples and identify cultural biases in AI outputs.</p>
+          </div>
+        </div>
+      </div>`
+  },
+  {
+    num: 4,
+    title: "Operant Conditioning",
+    subtitle: "Skinner's Framework — Learning Through Consequences",
+    content: `
+      <div class="slide-two-col">
+        <div>
+          <h3>Types of Consequences</h3>
+          <table class="slide-table">
+            <thead><tr><th></th><th>Add (+)</th><th>Remove (&#8722;)</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Increase behavior</strong></td><td class="good-cell">Positive Reinforcement</td><td class="good-cell">Negative Reinforcement</td></tr>
+              <tr><td><strong>Decrease behavior</strong></td><td class="bad-cell">Positive Punishment</td><td class="bad-cell">Negative Punishment</td></tr>
+            </tbody>
+          </table>
+          <p class="slide-note">Common confusion: "negative reinforcement" &#8800; punishment</p>
+        </div>
+        <div>
+          <div class="slide-box">
+            <strong>Schedules of Reinforcement</strong>
+            <ul class="slide-list-sm">
+              <li>Fixed Ratio: after N responses (e.g., every 5th)</li>
+              <li>Variable Ratio: after unpredictable N (most resistant to extinction)</li>
+              <li>Fixed Interval: after set time period</li>
+              <li>Variable Interval: after unpredictable time</li>
+            </ul>
+          </div>
+          <div class="slide-box ai-box">
+            <strong>AI Design Challenge (Segment 2)</strong>
+            <p>Groups prompt AI to generate a behavior modification plan, then critique it for ethical issues, practical flaws, and missing cultural context.</p>
+          </div>
+        </div>
+      </div>`
+  },
+  {
+    num: 5,
+    title: "Observational Learning",
+    subtitle: "Bandura's Social Learning Theory",
+    content: `
+      <div class="slide-two-col">
+        <div>
+          <h3>Four Processes (Bandura, 1977)</h3>
+          <div class="slide-process-row">
+            <div class="process-box"><strong>Attention</strong><p>Observer must notice the model's behavior</p></div>
+            <div class="process-box"><strong>Retention</strong><p>Store mental representation of behavior</p></div>
+            <div class="process-box"><strong>Reproduction</strong><p>Physically capable of performing behavior</p></div>
+            <div class="process-box"><strong>Motivation</strong><p>Incentive to perform (vicarious reinforcement)</p></div>
+          </div>
+        </div>
+        <div>
+          <div class="slide-box">
+            <strong>Bobo Doll Experiment (1961)</strong>
+            <p>Children exposed to aggressive adult models showed increased aggression. Raised modern ethical concerns: consent, psychological risk, long-term effects.</p>
+          </div>
+          <div class="slide-box ai-box">
+            <strong>AI Critique (Segment 3)</strong>
+            <p>Class compares human psychologist's ethical analysis vs. AI's "perfectly reasonable but incomplete" list — modeling that incompleteness is AI's most subtle danger.</p>
+          </div>
+        </div>
+      </div>`
+  },
+  {
+    num: 6,
+    title: "Comparing the Three Theories",
+    subtitle: "Differentiation Framework for Case Scenarios",
+    content: `
+      <div class="slide-full">
+        <table class="slide-table wide-table">
+          <thead>
+            <tr><th>Feature</th><th>Classical Conditioning</th><th>Operant Conditioning</th><th>Observational Learning</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Theorist</td><td>Pavlov (1890s)</td><td>Skinner (1930s)</td><td>Bandura (1960s)</td></tr>
+            <tr><td>Behavior type</td><td>Involuntary / reflexive</td><td>Voluntary / operant</td><td>Voluntary / imitative</td></tr>
+            <tr><td>Mechanism</td><td>Association (NS+US pairing)</td><td>Consequence shapes behavior</td><td>Observation + imitation</td></tr>
+            <tr><td>Key terms</td><td>US, UR, CS, CR, extinction</td><td>Reinforcement, punishment, schedules</td><td>Attention, retention, reproduction, motivation</td></tr>
+            <tr><td>Classic example</td><td>Pavlov's dog</td><td>Skinner box (pigeon/rat)</td><td>Bobo Doll experiment</td></tr>
+            <tr><td>Limitation</td><td>Cannot explain complex voluntary behavior</td><td>Ethical concerns with punishment; ignores cognition</td><td>Doesn't guarantee behavior — motivation required</td></tr>
+          </tbody>
+        </table>
+      </div>`
+  },
+  {
+    num: 7,
+    title: "AI Integration: Critical Evaluation Framework",
+    subtitle: "How to Evaluate AI Outputs in Psychology",
+    content: `
+      <div class="slide-two-col">
+        <div>
+          <h3>The Adopt / Modify / Reject Framework</h3>
+          <div class="slide-amr">
+            <div class="amr-box adopt"><strong>Adopt</strong><p>AI output is accurate, culturally inclusive, and aligned with psychological theory. Use it.</p></div>
+            <div class="amr-box modify"><strong>Modify</strong><p>AI output is partially correct but oversimplified, culturally biased, or missing nuance. Revise it.</p></div>
+            <div class="amr-box reject"><strong>Reject</strong><p>AI output is factually wrong, ethically problematic, or fundamentally mislabeled. Override it.</p></div>
+          </div>
+        </div>
+        <div>
+          <div class="slide-box ai-box">
+            <strong>Common AI Errors Found in This Topic</strong>
+            <ul class="slide-list-sm">
+              <li>Mislabeling operant conditioning as classical</li>
+              <li>Confusing extinction with forgetting</li>
+              <li>Providing exclusively Western cultural examples</li>
+              <li>Omitting ethical dimensions of punishment</li>
+              <li>"Perfectly reasonable but incomplete" ethical analyses</li>
+            </ul>
+          </div>
+          <div class="slide-box accent">
+            <strong>Key Principle</strong>
+            <p>"The AI generates 90% accurate work — your job as psychologists is to be the 10% that makes it great."</p>
+          </div>
+        </div>
+      </div>`
+  },
+  {
+    num: 8,
+    title: "Group Synthesis: The Learning Theory Mural",
+    subtitle: "Segment 4 — Collaborative ZPD Activity (75–105 min)",
+    content: `
+      <div class="slide-two-col">
+        <div>
+          <h3>Task Requirements</h3>
+          <ol class="slide-list">
+            <li>Each group is assigned one theory (classical / operant / observational)</li>
+            <li>Create a central analogy (e.g., "classical conditioning is like a reflex that gets rerouted")</li>
+            <li>Include at least 2 real-world applications</li>
+            <li>Address at least 1 limitation / cultural consideration</li>
+            <li>Prompt AI for a slogan or metaphor — then adopt, modify, or reject it with justification</li>
+          </ol>
+          <p class="slide-note">Deliverable: 1-minute poster presentation + AI decision documentation</p>
+        </div>
+        <div>
+          <div class="slide-box ai-box">
+            <strong>Example AI Prompt</strong>
+            <p><em>"Create a memorable slogan for operant conditioning."</em><br>AI might generate: <em>"Behavior is shaped by consequences."</em><br>Your group decides: Keep? Revise? Reject? Why?</p>
+          </div>
+          <div class="slide-box accent">
+            <strong>Social Constructivism Link</strong>
+            <p>This task requires synthesis that cannot be produced individually — true ZPD collaboration where group interdependence is essential.</p>
+          </div>
+        </div>
+      </div>`
+  },
+  {
+    num: 9,
+    title: "Assessment Overview",
+    subtitle: "Formative + Summative + AI-Integrated Assessment",
+    content: `
+      <div class="slide-two-col">
+        <div>
+          <h3>Formative (During Class)</h3>
+          <ul class="slide-list-sm">
+            <li>Pre-class diagnostic quiz (Mentimeter)</li>
+            <li>AI journal check (critical evaluation evidence)</li>
+            <li>Group AI critique worksheets</li>
+            <li>Operant design plans on Padlet</li>
+            <li>Synthesis poster + peer feedback</li>
+            <li>Exit ticket (3 questions including AI reflection)</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Summative — Learning Theory Portfolio</h3>
+          <table class="slide-table">
+            <tbody>
+              <tr><td>Individual Reflection Essay (800 words)</td><td>30%</td></tr>
+              <tr><td>Collaborative Case Study Analysis</td><td>30%</td></tr>
+              <tr><td><strong>AI Use Transparency Statement</strong></td><td>15%</td></tr>
+              <tr><td>Peer Evaluation</td><td>10%</td></tr>
+              <tr><td>Reflection on Peer Feedback</td><td>15%</td></tr>
+            </tbody>
+          </table>
+          <div class="slide-box ai-box" style="margin-top:0.75rem;">
+            <strong>AI Transparency Statement</strong>
+            <p>Document every AI interaction: what was adopted, modified, rejected — and why. Evidence of independent judgment is required.</p>
+          </div>
+        </div>
+      </div>`
+  },
+  {
+    num: 10,
+    title: "Key Takeaways",
+    subtitle: "What You Should Now Be Able to Do",
+    content: `
+      <div class="slide-takeaways">
+        <div class="takeaway-item">
+          <span class="takeaway-num">1</span>
+          <div><strong>Distinguish the three theories</strong> by mechanism, theorist, and type of behavior they explain — and apply the correct label to unfamiliar scenarios.</div>
+        </div>
+        <div class="takeaway-item">
+          <span class="takeaway-num">2</span>
+          <div><strong>Apply operant principles</strong> to design ethically sound behavior modification plans — including appropriate schedules and consideration of cultural context.</div>
+        </div>
+        <div class="takeaway-item">
+          <span class="takeaway-num">3</span>
+          <div><strong>Evaluate AI outputs</strong> — identifying inaccuracies, cultural biases, ethical omissions, and incomplete analyses. Practice the Adopt / Modify / Reject framework.</div>
+        </div>
+        <div class="takeaway-item">
+          <span class="takeaway-num">4</span>
+          <div><strong>Reflect ethically</strong> on AI use in academic work — documenting AI interactions transparently and articulating where human judgment took precedence.</div>
+        </div>
+        <div class="takeaway-box ai-box">
+          <strong>Next Session:</strong> Cognitive Learning Theories — memory, information processing, and schema theory. Begin your Learning Theory Portfolio this week.
+        </div>
+      </div>`
+  }
+];
+
+let current = 0;
+
+function renderSlide(idx) {
+  const s = SLIDES[idx];
+  const vp = document.getElementById('slidesViewport');
+  vp.innerHTML = `
+    <div class="slide-inner">
+      <div class="slide-header">
+        <span class="slide-course">PSY101 — Introduction to Learning Theories</span>
+        <span class="slide-num-tag">${s.num} / ${SLIDES.length}</span>
+      </div>
+      <div class="slide-body">
+        <h2 class="slide-title">${s.title}</h2>
+        <p class="slide-subtitle">${s.subtitle}</p>
+        <div class="slide-content">${s.content}</div>
+      </div>
+    </div>`;
+  document.getElementById('slideCounter').textContent = `${s.num} / ${SLIDES.length}`;
+  document.getElementById('prevBtn').disabled = idx === 0;
+  document.getElementById('nextBtn').disabled = idx === SLIDES.length - 1;
+}
+
+function changeSlide(dir) {
+  const next = current + dir;
+  if (next >= 0 && next < SLIDES.length) { current = next; renderSlide(current); }
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') changeSlide(1);
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') changeSlide(-1);
+  if (e.key === 'f' || e.key === 'F') toggleFullscreen();
+  if (e.key === 'Escape') { if (document.fullscreenElement) document.exitFullscreen(); }
+});
+
+function toggleFullscreen() {
+  const wrap = document.getElementById('slidesWrap');
+  const btn = document.getElementById('fsBtn');
+  if (!document.fullscreenElement) {
+    wrap.requestFullscreen().then(() => { btn.textContent = '✕ Exit Fullscreen'; }).catch(() => {});
+  } else {
+    document.exitFullscreen();
+    btn.textContent = '⛶ Fullscreen';
+  }
+}
+document.addEventListener('fullscreenchange', () => {
+  if (!document.fullscreenElement) document.getElementById('fsBtn').textContent = '⛶ Fullscreen';
+});
+
+function downloadSlides() {
+  const styles = `
+    *{box-sizing:border-box;margin:0;padding:0}body{font-family:'Segoe UI',system-ui,sans-serif;background:#1a1a2e;display:flex;align-items:center;justify-content:center;min-height:100vh}
+    #sw{width:100%;max-width:960px;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,0.4)}
+    .sh{background:#1a2a6c;color:#fff;padding:1rem 1.5rem;display:flex;justify-content:space-between;font-size:0.8rem}
+    .sb{padding:2.5rem 3rem 2rem}.st{font-size:1.8rem;font-weight:800;color:#1a2a6c;margin-bottom:0.3rem}
+    .ss{font-size:0.95rem;color:#4a5568;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:2px solid #e2e8f0}
+    .sc{font-size:0.9rem}.sn{background:#e2e8f0;border-radius:99px;padding:6px 18px;font-size:0.82rem;cursor:pointer;border:none;font-weight:600}
+    .sn:disabled{opacity:0.4}.snav{display:flex;align-items:center;justify-content:center;gap:1rem;padding:1rem;border-top:1px solid #e2e8f0;background:#f7f9ff}
+    .sc-lbl{font-size:0.82rem;color:#718096}
+    table{width:100%;border-collapse:collapse;font-size:0.85rem}th{background:#1a2a6c;color:#fff;padding:8px 12px;text-align:left}td{padding:8px 12px;border-bottom:1px solid #e2e8f0}
+    .slide-two-col{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}.slide-box{background:#f7f9ff;border:1px solid #e2e8f0;border-radius:8px;padding:1rem;margin-bottom:0.75rem}
+    .ai-box{background:#f3f0ff;border-color:#c4b5fd}.slide-list{padding-left:1.2rem}.slide-list li{margin-bottom:0.4rem}
+    .slide-list-sm{padding-left:1.2rem;font-size:0.85rem}.slide-list-sm li{margin-bottom:0.3rem}
+    .ilo-row{display:flex;align-items:flex-start;gap:0.75rem;margin-bottom:0.5rem;font-size:0.9rem}
+    .bloom-badge{flex-shrink:0;padding:3px 10px;border-radius:12px;font-size:0.72rem;font-weight:700;background:#e0e7ff;color:#3730a3}
+    .ai-badge{background:#ede9fe;color:#6b21a8}.ai-ilo{background:#faf9ff;border-radius:6px;padding:4px 6px}
+    .seq-step{display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem;font-size:0.9rem}
+    .seq-label{background:#1a2a6c;color:#fff;padding:2px 8px;border-radius:4px;font-size:0.75rem;font-weight:700}
+    .seq-arrow{color:#e67e22;font-weight:700}.highlight{background:#fff3cd;border-radius:4px;padding:4px}
+    .accent{border-left:4px solid #e67e22}.slide-table{font-size:0.82rem}
+    .good-cell{background:#d1fae5;color:#065f46}.bad-cell{background:#fee2e2;color:#991b1b}
+    .wide-table td,.wide-table th{font-size:0.78rem;padding:6px 10px}
+    .slide-amr{display:flex;flex-direction:column;gap:0.5rem}
+    .amr-box{padding:0.6rem 0.9rem;border-radius:6px;font-size:0.88rem}
+    .adopt{background:#d1fae5;border-left:4px solid #059669}.modify{background:#fef3c7;border-left:4px solid #d97706}
+    .reject{background:#fee2e2;border-left:4px solid #dc2626}
+    .slide-process-row{display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;margin-bottom:0.75rem}
+    .process-box{background:#f7f9ff;border:1px solid #e2e8f0;border-radius:6px;padding:0.6rem;font-size:0.85rem}
+    .slide-ilos{display:flex;flex-direction:column;gap:0.4rem}
+    .slide-takeaways{display:flex;flex-direction:column;gap:0.75rem}
+    .takeaway-item{display:flex;align-items:flex-start;gap:0.75rem;font-size:0.9rem}
+    .takeaway-num{flex-shrink:0;width:28px;height:28px;border-radius:50%;background:#1a2a6c;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.85rem}
+    .takeaway-box{background:#f3f0ff;border:1px solid #c4b5fd;border-radius:8px;padding:0.9rem;font-size:0.9rem}
+    .slide-full{overflow-x:auto}.slide-note{font-size:0.8rem;color:#718096;margin-top:0.5rem}
+    h3{font-size:1rem;color:#1a2a6c;margin-bottom:0.75rem}`;
+
+  const allSlides = SLIDES.map((s, i) => `
+    <div class="slide-page" id="ds${i}" style="display:${i===0?'block':'none'}">
+      <div id="sw"><div class="sh"><span>PSY101 — Introduction to Learning Theories</span><span>${s.num}/${SLIDES.length}</span></div>
+      <div class="sb"><h2 class="st">${s.title}</h2><p class="ss">${s.subtitle}</p><div class="sc">${s.content}</div></div></div>
+    </div>`).join('');
+
+  const script = `
+    let dc=0;const dt=${SLIDES.length};
+    function dcs(d){document.getElementById('ds'+dc).style.display='none';dc=Math.max(0,Math.min(dc+d,dt-1));document.getElementById('ds'+dc).style.display='block';document.getElementById('dct').textContent=(dc+1)+'/'+dt;document.getElementById('dpb').disabled=dc===0;document.getElementById('dnb').disabled=dc===dt-1;}
+    document.addEventListener('keydown',e=>{if(e.key==='ArrowRight')dcs(1);if(e.key==='ArrowLeft')dcs(-1);});`;
+
+  const html = `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>PSY101 — Learning Theories Slides</title><style>${styles}</style></head><body>${allSlides}<div class="snav"><button class="sn" id="dpb" onclick="dcs(-1)" disabled>&#8592; Prev</button><span class="sc-lbl" id="dct">1/${SLIDES.length}</span><button class="sn" id="dnb" onclick="dcs(1)">Next &#8594;</button></div><script>${script}<\/script></body></html>`;
+
+  const blob = new Blob([html], {type:'text/html'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'PSY101-Learning-Theories-Slides.html';
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+// Init
+renderSlide(0);
+</script>
+</body>
+</html>

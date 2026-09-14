@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Section 1: ILOs — PSY101</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<nav class="navbar">
+  <div class="navbar-inner">
+    <div class="navbar-brand">PSY101 <span>Lesson Plan</span></div>
+    <div class="navbar-links" id="navLinks">
+      <a href="index.html">Overview</a>
+      <a href="section-1.html" class="active">ILOs</a>
+      <a href="section-2.html">Pre-Class</a>
+      <a href="section-3.html">Introduction</a>
+      <a href="section-4.html">Development</a>
+      <a href="section-5.html">Closure</a>
+      <a href="assessment.html">Assessment</a>
+      <a href="slides.html">Slides</a>
+      <a href="resources.html">Resources</a>
+    </div>
+    <button class="role-badge student" onclick="toggleRole()" title="Switch role">🎓 Student</button>
+    <button class="navbar-hamburger" id="navHam" aria-label="Menu">☰</button>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="section-hero">
+    <h1>Section 1 — Intended Learning Outcomes</h1>
+    <div class="sub">PSY101 · Introduction to Learning Theories · 7 ILOs across Bloom's Taxonomy</div>
+  </div>
+
+  <div class="card card-ai" style="margin-bottom:1.5rem;">
+    <div class="ai-callout-title">🤖 AI Literacy is an Explicit Learning Outcome</div>
+    <p>ILOs #6 and #7 ensure students develop critical AI literacy — evaluating accuracy, bias, and limitations of AI outputs, and reflecting on ethical use of AI in psychology coursework. These are not optional extensions; they are core assessable outcomes.</p>
+  </div>
+
+  <!-- ILO Table -->
+  <div class="card">
+    <div class="card-header"><span class="icon">🎯</span>Learning Outcomes Overview</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>#</th><th>Intended Learning Outcome</th><th>Bloom's Level</th><th>Alignment</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>ILO 1</strong></td>
+            <td><strong>Analyze</strong> the key principles of classical conditioning (acquisition, extinction, generalization, discrimination) using real-world examples</td>
+            <td><span class="badge badge-bloom">Analyze</span></td>
+            <td>Core content mastery</td>
+          </tr>
+          <tr>
+            <td><strong>ILO 2</strong></td>
+            <td><strong>Differentiate</strong> between classical conditioning, operant conditioning, and observational learning by identifying defining characteristics in case scenarios</td>
+            <td><span class="badge badge-bloom">Analyze</span></td>
+            <td>Comparative understanding</td>
+          </tr>
+          <tr>
+            <td><strong>ILO 3</strong></td>
+            <td><strong>Apply</strong> operant conditioning principles (reinforcement, punishment, schedules) to design a behavior modification plan for a real-world scenario</td>
+            <td><span class="badge badge-bloom">Apply</span></td>
+            <td>Practical application</td>
+          </tr>
+          <tr>
+            <td><strong>ILO 4</strong></td>
+            <td><strong>Evaluate</strong> the strengths and limitations of learning theories in explaining human behavior across diverse contexts and cultures</td>
+            <td><span class="badge badge-bloom">Evaluate</span></td>
+            <td>Critical thinking</td>
+          </tr>
+          <tr>
+            <td><strong>ILO 5</strong></td>
+            <td><strong>Collaboratively construct</strong> a group presentation that synthesizes learning theories to explain a complex human behavior phenomenon</td>
+            <td><span class="badge badge-bloom">Create</span></td>
+            <td>Social Constructivism alignment</td>
+          </tr>
+          <tr>
+            <td><strong>ILO 6</strong> <span class="badge badge-ai">AI Literacy</span></td>
+            <td><strong>Demonstrate AI literacy</strong> by critically evaluating AI-generated explanations of learning theories, identifying inaccuracies, biases, and limitations, and making independent judgments about when to trust or override AI-generated content</td>
+            <td><span class="badge badge-bloom">Evaluate</span></td>
+            <td>AI literacy outcome</td>
+          </tr>
+          <tr>
+            <td><strong>ILO 7</strong> <span class="badge badge-ai">AI Ethics</span></td>
+            <td><strong>Reflect on</strong> the ethical considerations of using AI to support learning, including maintaining academic integrity and independent reasoning when using AI tools in psychology coursework</td>
+            <td><span class="badge badge-bloom">Evaluate</span></td>
+            <td>AI literacy + ethical judgment</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Design Notes -->
+  <div class="card card-highlight mt-2">
+    <div class="card-header"><span class="icon">📐</span>ILO Design Notes — Social Constructivism Alignment</div>
+    <ul style="padding-left:1.25rem;font-size:0.92rem;line-height:1.9;">
+      <li><strong>ILO #5</strong> emphasises <em>collaboration</em> as an explicit outcome, reflecting Vygotsky's Zone of Proximal Development (ZPD) — students co-construct knowledge within groups.</li>
+      <li><strong>ILOs #1–4</strong> are individually scaffolded to prepare students for the collaborative ZPD activity in ILO #5.</li>
+      <li><strong>ILO #6</strong> addresses AI literacy: using AI critically, evaluating accuracy/bias/limitations, and exercising independent judgment on whether to act on AI content.</li>
+      <li><strong>ILO #7</strong> ensures students develop metacognitive awareness of when and how to use AI responsibly in academic work.</li>
+    </ul>
+  </div>
+
+  <!-- Constructive Alignment Preview -->
+  <div class="card mt-2">
+    <div class="card-header"><span class="icon">🔗</span>Constructive Alignment Summary</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>ILO</th><th>Key Activity</th><th>Assessment</th><th>AI Link</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>ILO 1</td><td>Segment 1: Mini-lecture + AI example critique</td><td>Group critique worksheet; post-test Q1</td><td>AI examples as error-rich stimuli</td></tr>
+          <tr><td>ILO 2</td><td>Segments 1 &amp; 2: Compare AI examples across theories</td><td>Pre/post-test; portfolio case study</td><td>AI output imperfect boundaries force differentiation</td></tr>
+          <tr><td>ILO 3</td><td>Segment 2: Operant Design Challenge</td><td>Portfolio case study; plan presentation</td><td>AI plan critique invites human override</td></tr>
+          <tr><td>ILO 4</td><td>Segment 3: Bobo Doll ethics; media violence discussion</td><td>Portfolio limitation sections; reflection essay</td><td>Critique of AI omission of cultural/ethical nuance</td></tr>
+          <tr><td>ILO 5</td><td>Segment 4: Synthesis poster + 1-min presentations</td><td>Peer evaluation; collaborative case study</td><td>Groups co-decide adopt/modify/reject AI slogans</td></tr>
+          <tr><td>ILO 6</td><td>All AI tasks; pre-class journal; closure reflection</td><td>AI Use Transparency Statement; critique worksheets</td><td>Core AI literacy outcome</td></tr>
+          <tr><td>ILO 7</td><td>AI Reflection discussion; academic integrity discussion</td><td>Transparency Statement ethical reflection; exit ticket</td><td>Ethical AI integration as curriculum outcome</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="flex-between mt-3">
+    <a href="index.html" class="btn btn-secondary">← Overview</a>
+    <a href="section-2.html" class="btn btn-primary">Pre-Class Preparation →</a>
+  </div>
+</div>
+
+<footer>PSY101 · Introduction to Learning Theories · Social Constructivism + AI Integration</footer>
+<script src="app.js"></script>
+<script>document.addEventListener('DOMContentLoaded',()=>{ initNav(); setRole(getRole()); markSectionVisited('section-1'); updateProgressBar(); });</script>
+</body>
+</html>

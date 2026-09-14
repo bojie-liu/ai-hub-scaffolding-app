@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Assessment — PSY101</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<nav class="navbar">
+  <div class="navbar-inner">
+    <div class="navbar-brand">PSY101 <span>Lesson Plan</span></div>
+    <div class="navbar-links" id="navLinks">
+      <a href="index.html">Overview</a>
+      <a href="section-1.html">ILOs</a>
+      <a href="section-2.html">Pre-Class</a>
+      <a href="section-3.html">Introduction</a>
+      <a href="section-4.html">Development</a>
+      <a href="section-5.html">Closure</a>
+      <a href="assessment.html" class="active">Assessment</a>
+      <a href="slides.html">Slides</a>
+      <a href="resources.html">Resources</a>
+    </div>
+    <button class="role-badge student" onclick="toggleRole()" title="Switch role">🎓 Student</button>
+    <button class="navbar-hamburger" id="navHam" aria-label="Menu">☰</button>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="section-hero">
+    <h1>Assessment Methods</h1>
+    <div class="sub">PSY101 · Formative + Summative · AI-Integrated Assessment Design</div>
+  </div>
+
+  <!-- Tabs: Formative / Summative / AI Feedback -->
+  <div class="tab-section">
+    <div class="tabs" role="tablist">
+      <button class="tab-btn" data-tab="formative" role="tab">📝 Formative</button>
+      <button class="tab-btn" data-tab="summative" role="tab">📊 Summative</button>
+      <button class="tab-btn" data-tab="aifeedback" role="tab">🤖 AI Feedback</button>
+      <button class="tab-btn" data-tab="alignment" role="tab">🔗 Alignment</button>
+    </div>
+
+    <!-- FORMATIVE -->
+    <div class="tab-panel" id="formative">
+      <div class="card">
+        <div class="card-header"><span class="icon">📝</span>4.1 Formative Assessment (During Class)</div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Tool</th><th>Description</th><th>Pedagogy Link</th><th>AI Integration</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Pre-Class Quiz</strong><br><span class="badge badge-primary">Mentimeter</span></td>
+                <td>5-question diagnostic submitted before class; results reviewed at start of session to surface misconceptions</td>
+                <td>Activates prior schema; provides baseline for learning comparison</td>
+                <td>—</td>
+              </tr>
+              <tr>
+                <td><strong>AI Journal Check</strong><br><span class="badge badge-ai">AI-Focused</span></td>
+                <td>Instructor reviews students' pre-class AI reflection journals for evidence of critical evaluation of AI limitations</td>
+                <td>Self-assessment of initial AI skepticism; serves as discussion seed in 3a</td>
+                <td>Students demonstrate whether they identified AI inaccuracies or biases</td>
+              </tr>
+              <tr>
+                <td><strong>Group AI Example Critiques</strong><br><span class="badge badge-ai">Segment 1</span></td>
+                <td>Worksheet evaluating AI's classical conditioning examples — label US/UR/NS/CS/CR, flag operant mislabels, identify cultural limits</td>
+                <td>Peer-driven error identification and co-construction of accurate labels</td>
+                <td>Students document mistakes in AI outputs; justify accept/reject decisions</td>
+              </tr>
+              <tr>
+                <td><strong>Operant Design Plan</strong><br><span class="badge badge-ai">Segment 2</span></td>
+                <td>Groups' revised behaviour modification plans posted to Padlet with peer comments via gallery walk</td>
+                <td>Peer feedback via gallery walk; distributed expertise</td>
+                <td>Evidence of human "override" of AI-generated plans; ethical reasoning documented</td>
+              </tr>
+              <tr>
+                <td><strong>Synthesis Poster + 1-min Presentation</strong><br><span class="badge badge-ai">Segment 4</span></td>
+                <td>Group poster with analogy, 2 real-world applications, 1 limitation, and AI slogan adopt/modify/reject decision</td>
+                <td>Peer-assessment using structured rubric; ZPD group synthesis</td>
+                <td>Groups explicitly explain their AI adopt/modify/reject decision to the class</td>
+              </tr>
+              <tr>
+                <td><strong>Exit Ticket</strong><br><span class="badge badge-primary">3 Questions</span></td>
+                <td>(1) One-word takeaway; (2) Continuing question; (3) Did AI help you learn today? Why/why not?</td>
+                <td>Reflective self-assessment; informs next session adjustments</td>
+                <td>Direct student feedback on AI integration effectiveness</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Interactive: AI Critique Worksheet -->
+      <div class="card card-ai" style="margin-top:1.5rem;">
+        <div class="card-header"><span class="icon">🤖</span>Interactive: AI Critique Worksheet (Appendix A)</div>
+        <p style="font-size:0.92rem;margin-bottom:1rem;">Practice evaluating AI-generated classical conditioning examples. Work through each scenario as you would in class.</p>
+        <form class="quiz-form" data-quiz-id="aiCritique">
+          <div class="quiz-question" data-correct="B" data-exp="This is classical conditioning: the exam room (NS) was paired with failure (US producing anxiety/UR), making the room itself a CS eliciting anxiety (CR).">
+            <p>Scenario 1 (AI generated): "A student feels nervous before an exam because she previously failed the same exam in the same room." Is this classical conditioning?</p>
+            <label class="quiz-option"><input type="radio" name="ac1" value="A"> (a) No — this is operant conditioning (avoidance behavior)</label>
+            <label class="quiz-option"><input type="radio" name="ac1" value="B"> (b) Yes — the exam room is the CS; nervousness is the CR</label>
+            <label class="quiz-option"><input type="radio" name="ac1" value="C"> (c) No — this is observational learning</label>
+            <div class="quiz-feedback"></div>
+          </div>
+          <div class="quiz-question" data-correct="A" data-exp="This IS classical conditioning — the dog (NS→CS) was paired with the bite (US→UR:pain/fear), producing fear of all dogs (CR). Generalization is also occurring (fear extends to all dogs).">
+            <p>Scenario 2 (AI generated): "A child bitten by a dog is now afraid of all dogs." The AI labels this classical conditioning. Is the AI correct?</p>
+            <label class="quiz-option"><input type="radio" name="ac2" value="A"> (a) Yes — correct, and it also demonstrates generalization</label>
+            <label class="quiz-option"><input type="radio" name="ac2" value="B"> (b) No — this is operant conditioning (punishment)</label>
+            <label class="quiz-option"><input type="radio" name="ac2" value="C"> (c) Yes — correct, but no generalization is involved</label>
+            <div class="quiz-feedback"></div>
+          </div>
+          <div class="quiz-question" data-correct="C" data-exp="'Studying to earn praise' describes a behavior (studying) followed by a consequence (praise = positive reinforcement) that increases the behavior. This is operant conditioning — the AI mislabeled it.">
+            <p>Scenario 3 (AI generated): "A student studies hard because studying earns praise from parents." The AI labels this classical conditioning. What should you flag?</p>
+            <label class="quiz-option"><input type="radio" name="ac3" value="A"> (a) The AI is correct — this is classical conditioning</label>
+            <label class="quiz-option"><input type="radio" name="ac3" value="B"> (b) The AI is partially correct — it is a hybrid of classical and operant</label>
+            <label class="quiz-option"><input type="radio" name="ac3" value="C"> (c) Flag it — the AI is wrong. This is operant conditioning (positive reinforcement)</label>
+            <div class="quiz-feedback"></div>
+          </div>
+          <button type="submit" class="btn btn-ai mt-2">Check My Answers</button>
+          <div class="quiz-result" style="display:none;margin-top:1rem;padding:1rem;border-radius:8px;font-weight:700;"></div>
+        </form>
+      </div>
+    </div>
+
+    <!-- SUMMATIVE -->
+    <div class="tab-panel" id="summative">
+      <div class="card">
+        <div class="card-header"><span class="icon">📊</span>4.2 Summative Assessment — Learning Theory Portfolio (Due: 3 weeks)</div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Component</th><th>Description</th><th>Weight</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><strong>Individual Reflection Essay</strong><br><span class="badge badge-primary">800 words</span></td>
+                <td>Reflect on: (a) Which theory best explains a behaviour you have personally experienced? (b) How was your understanding shaped by peer discussion? (c) How has your thinking evolved over the lesson?</td>
+                <td><strong>30%</strong></td>
+              </tr>
+              <tr>
+                <td><strong>Collaborative Case Study Analysis</strong><br><span class="badge badge-success">Group Product</span></td>
+                <td>Apply learning theories to a complex behaviour (e.g., social media addiction, procrastination). Include: theory-driven explanation, limitations, cultural considerations.</td>
+                <td><strong>30%</strong></td>
+              </tr>
+              <tr>
+                <td><strong>AI Use Transparency Statement</strong><br><span class="badge badge-ai">AI-Focused</span></td>
+                <td>Document every AI use: prompts, outputs, what was adopted/modified/rejected, and reasoning. Reflect on AI limitations in learning psychology.</td>
+                <td><strong>15%</strong></td>
+              </tr>
+              <tr>
+                <td><strong>Peer Evaluation</strong></td>
+                <td>Evaluate group members' contributions using a rubric (participation, collaboration quality, conflict resolution).</td>
+                <td><strong>10%</strong></td>
+              </tr>
+              <tr>
+                <td><strong>Reflection on Peer Feedback</strong></td>
+                <td>Reflect on how peer evaluations and in-class feedback shaped your final portfolio.</td>
+                <td><strong>15%</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- AI Transparency Rubric -->
+      <div class="card card-ai" style="margin-top:1rem;">
+        <div class="card-header"><span class="icon">🤖</span>AI Use Transparency Statement Rubric</div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Criteria</th><th>Excellent (4)</th><th>Good (3)</th><th>Developing (2)</th><th>Beginning (1)</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><strong>Critical Evaluation of AI Outputs</strong></td>
+                <td>Identifies limitations, biases, gaps with specific examples; clear justification for acceptance/rejection</td>
+                <td>Identifies some limitations but accepts AI somewhat uncritically</td>
+                <td>Mentions AI use but limited critical evaluation</td>
+                <td>No evidence of critical evaluation</td>
+              </tr>
+              <tr>
+                <td><strong>Independent Judgment</strong></td>
+                <td>Clearly articulates where human judgment overrode AI, with strong rationale based in psychology knowledge</td>
+                <td>Shows some independent judgment but occasionally defers to AI uncritically</td>
+                <td>Rarely demonstrates independent judgment</td>
+                <td>Indicative of unreflective AI reliance</td>
+              </tr>
+              <tr>
+                <td><strong>Transparency &amp; Documentation</strong></td>
+                <td>Thorough, honest documentation of all AI interactions with precise detail</td>
+                <td>Documents AI use but omits some details</td>
+                <td>Sparse documentation</td>
+                <td>Minimal or unclear AI use documentation</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Collaborative Case Study Rubric -->
+      <div class="card" style="margin-top:1rem;">
+        <div class="card-header"><span class="icon">🤝</span>Collaborative Case Study Rubric (Social Constructivism)</div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Criteria</th><th>Excellent</th><th>Good</th><th>Developing</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><strong>Collaboration Quality</strong></td>
+                <td>Evidence of distributed expertise; all members contributed; disagreement handled constructively; synthesis of multiple perspectives</td>
+                <td>Good collaboration but some asymmetry; synthesis present but less integrated</td>
+                <td>Groupwork evident but product appears assembled from individual sections without true synthesis</td>
+              </tr>
+              <tr>
+                <td><strong>Critical Synthesis of Theories</strong></td>
+                <td>Theory applied with depth; limitations addressed; connections between theories explicitly discussed</td>
+                <td>Theory applied correctly but primarily sequential discussion rather than integrated synthesis</td>
+                <td>One theory dominates; others absent or superficially addressed</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI FEEDBACK -->
+    <div class="tab-panel" id="aifeedback">
+      <div class="card">
+        <div class="card-header"><span class="icon">🤖</span>4.3 AI-Supported Feedback &amp; Learning Support</div>
+        <div class="ai-callout">
+          <div class="ai-callout-title">⚠️ Key Design Principle</div>
+          <p><strong>AI as supplement, never replacement.</strong> Instructor explicitly communicates: "AI may help you revise drafts, but the final responsibility for quality, accuracy, and ethics of your work rests with you — and your human educators will always make the final judgment."</p>
+        </div>
+        <div class="table-wrap" style="margin-top:1rem;">
+          <table>
+            <thead><tr><th>Mechanism</th><th>Description</th><th>Instructor Oversight</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><strong>AI-Generated Draft Feedback</strong><br><span class="chip chip-ai">Grammarly / LanguageTool</span></td>
+                <td>Students may use AI grammar/style tools on draft essays. Students submit AI-modified drafts AND indicate what they changed based on AI suggestions.</td>
+                <td>Instructor reviews student AI-change log to assess judgment and independent reasoning</td>
+              </tr>
+              <tr>
+                <td><strong>Automated Rubric Feedback</strong><br><span class="chip chip-ai">Gradescope-like tool</span></td>
+                <td>AI provides formative feedback on portfolio sections against rubric criteria (e.g., "Your reflection addresses 'limitations' but doesn't discuss cultural considerations").</td>
+                <td>Instructor reviews all AI-generated feedback before releasing to students; adjusts or supplements as needed</td>
+              </tr>
+              <tr>
+                <td><strong>AI-Assisted Peer Review</strong><br><span class="chip chip-ai">Turnitin Revision Assistant</span></td>
+                <td>AI flags structural concerns (e.g., "This paragraph lacks a topic sentence"), which students address before instructor final review.</td>
+                <td>Instructor confirms AI flags are appropriate; provides personalised follow-up where AI feedback was inaccurate</td>
+              </tr>
+              <tr>
+                <td><strong>AI-Feedback Interrogation Task</strong></td>
+                <td>After receiving AI-generated feedback, students submit a brief reflection: "Do you agree with the AI's assessment? What might the AI have missed? Where did you override the AI's feedback?"</td>
+                <td>Used during individual check-ins (office hours) to discuss metacognitive skills</td>
+              </tr>
+              <tr>
+                <td><strong>Calibration Session (Week 2)</strong></td>
+                <td>Instructor presents a "mystery draft" where AI feedback flags issues. Class votes on whether the AI feedback was accurate/harsh/misleading.</td>
+                <td>Instructor facilitates the calibration session, correcting misconceptions about AI feedback</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ALIGNMENT -->
+    <div class="tab-panel" id="alignment">
+      <div class="card">
+        <div class="card-header"><span class="icon">🔗</span>5. Constructive Alignment Matrix</div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>ILO</th><th>Teaching Activity</th><th>Assessment</th><th>Pedagogy</th><th>AI Integration</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><strong>ILO 1</strong>: Analyze classical conditioning</td>
+                <td>Segment 1: Mini-lecture + AI critique activity; Think-Pair-Share</td>
+                <td>Group AI critique worksheet; post-test Q1</td>
+                <td>Peer discussion labeling AI examples; co-construction</td>
+                <td>AI examples provide error-rich stimuli for critical analysis</td>
+              </tr>
+              <tr>
+                <td><strong>ILO 2</strong>: Differentiate theories</td>
+                <td>Segments 1 &amp; 2: Compare AI examples across theories; Bobo Doll extension</td>
+                <td>Pre-test Q2 &amp; Q4; post-test; portfolio case study</td>
+                <td>Comparing/contrasting negotiated among peers</td>
+                <td>AI output imperfect boundaries force differentiation</td>
+              </tr>
+              <tr>
+                <td><strong>ILO 3</strong>: Apply operant conditioning</td>
+                <td>Segment 2: Operant Design Challenge with AI-generated plans</td>
+                <td>Portfolio case study; behavior modification plans</td>
+                <td>Peer critique of AI-generated plans is collaborative task</td>
+                <td>AI plan critique invites human override and judgment</td>
+              </tr>
+              <tr>
+                <td><strong>ILO 4</strong>: Evaluate strengths/limitations</td>
+                <td>Segment 3: Ethical critiques of Bobo Doll; media violence discussion</td>
+                <td>Portfolio case study limitation sections; reflection essay</td>
+                <td>Discussion-based co-construction of nuanced evaluations</td>
+                <td>Critique of AI's omission of cultural/ethical nuances</td>
+              </tr>
+              <tr>
+                <td><strong>ILO 5</strong>: Collaboratively synthesize theories</td>
+                <td>Segment 4: Synthesis poster + 1-min presentations</td>
+                <td>Peer evaluation; collaborative case study analysis</td>
+                <td>Direct Social Constructivism — ZPD activity</td>
+                <td>AI integration required; students co-decide adopt/modify/reject</td>
+              </tr>
+              <tr>
+                <td><strong>ILO 6</strong>: Critically evaluate AI outputs <span class="badge badge-ai">AI Literacy</span></td>
+                <td>All segments — AI tasks; AI journal (pre-class); AI reflection (closure)</td>
+                <td>AI Use Transparency Statement; AI critique worksheets</td>
+                <td>Instructor models critical AI interrogation; groups practice judgment</td>
+                <td><strong>Core AI literacy outcome</strong>: evaluate accuracy/bias/limitations</td>
+              </tr>
+              <tr>
+                <td><strong>ILO 7</strong>: Reflect on AI ethics <span class="badge badge-ai">AI Ethics</span></td>
+                <td>AI-Reflection discussion (closure); academic integrity discussion</td>
+                <td>AI Use Transparency Statement; exit ticket Q3</td>
+                <td>Peer discussion of ethical AI use</td>
+                <td>Ethical AI integration as intentional curriculum outcome</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /tab-section -->
+
+</div>
+
+<footer>
+  <p>PSY101 — Introduction to Learning Theories &nbsp;|&nbsp; Assessment &amp; Alignment &nbsp;|&nbsp; <a href="index.html">Return to Overview</a></p>
+</footer>
+<script src="app.js"></script>
+</body>
+</html>
