@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>学习理论导论 - 教案</title>
+    <title>Introduction to Learning Theories - Lesson Plan</title>
     <style>
         * {
             margin: 0;
@@ -12,7 +12,7 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             line-height: 1.6;
             color: #333;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -220,28 +220,32 @@
             background: #764ba2;
         }
 
-        .collapsible::after {
-            content: '+';
-            float: right;
-            font-size: 1.5em;
-        }
-
-        .collapsible.active::after {
-            content: '−';
-        }
-
         .content {
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.3s ease;
-            background: #f8f9fa;
-            padding: 0 15px;
-            border-radius: 0 0 6px 6px;
+            background: white;
+            border-radius: 6px;
+            margin-bottom: 15px;
         }
 
         .content.active {
-            padding: 15px;
             max-height: 2000px;
+            padding: 20px;
+            border: 1px solid #e0e7ff;
+        }
+
+        .highlight-ai {
+            background: linear-gradient(135deg, #fff5f7 0%, #ffe8ec 100%);
+            border: 2px solid #f5576c;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .highlight-ai h4 {
+            color: #f5576c;
+            margin-bottom: 10px;
         }
 
         .tool-instruction {
@@ -300,12 +304,13 @@
         }
 
         .checkbox-container.checked {
-            opacity: 0.6;
-            text-decoration: line-through;
+            background: #e0f2fe;
+            border-left: 4px solid #4ade80;
         }
 
         .table-container {
             overflow-x: auto;
+            margin: 20px 0;
         }
 
         table {
@@ -314,7 +319,7 @@
             background: white;
             border-radius: 8px;
             overflow: hidden;
-            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
 
         th, td {
@@ -331,19 +336,6 @@
 
         tr:hover {
             background: #f8f9fa;
-        }
-
-        .highlight-ai {
-            background: linear-gradient(135deg, #fff5f7 0%, #ffe8ec 100%);
-            padding: 20px;
-            border-radius: 8px;
-            border-left: 4px solid #f5576c;
-            margin: 20px 0;
-        }
-
-        .highlight-ai h4 {
-            color: #f5576c;
-            margin-bottom: 10px;
         }
 
         .btn {
@@ -368,6 +360,17 @@
 
         .btn-reset:hover {
             background: #dc2626;
+        }
+
+        .collapsible::after {
+            content: '+';
+            float: right;
+            font-size: 1.5em;
+            transition: transform 0.3s ease;
+        }
+
+        .collapsible.active::after {
+            content: '−';
         }
 
         footer {
@@ -404,32 +407,32 @@
 <body>
     <div class="container">
         <header>
-            <h1>学习理论导论</h1>
-            <p class="subtitle">Introduction to Learning Theories</p>
+            <h1>Introduction to Learning Theories</h1>
+            <p class="subtitle">Behaviorism, Cognitivism & Constructivism</p>
             <div class="meta-info">
                 <div class="meta-item">
-                    <strong>课程</strong>
-                    <div>教育心理学导论</div>
+                    <strong>Course</strong>
+                    <div>Introduction to Educational Psychology</div>
                 </div>
                 <div class="meta-item">
-                    <strong>学生水平</strong>
-                    <div>大学一年级本科生</div>
+                    <strong>Level</strong>
+                    <div>First-Year Undergraduate</div>
                 </div>
                 <div class="meta-item">
-                    <strong>班级规模</strong>
-                    <div>90名学生</div>
+                    <strong>Class Size</strong>
+                    <div>90 Students</div>
                 </div>
                 <div class="meta-item">
-                    <strong>时长</strong>
-                    <div>120分钟</div>
+                    <strong>Duration</strong>
+                    <div>120 Minutes</div>
                 </div>
                 <div class="meta-item">
-                    <strong>教学法</strong>
-                    <div>社会建构主义</div>
+                    <strong>Pedagogy</strong>
+                    <div>Social Constructivism</div>
                 </div>
                 <div class="meta-item">
-                    <strong>AI集成</strong>
-                    <div>全面整合</div>
+                    <strong>AI Integration</strong>
+                    <div>Comprehensive</div>
                 </div>
             </div>
             <div class="progress-bar">
@@ -439,330 +442,330 @@
 
         <nav>
             <ul>
-                <li><a href="#ilos">学习成果</a></li>
-                <li><a href="#activities">教学活动</a></li>
-                <li><a href="#assessment">评估方法</a></li>
-                <li><a href="#alignment">对齐矩阵</a></li>
-                <li><a href="#resources">所需资源</a></li>
-                <li><a href="#differentiation">差异化教学</a></li>
-                <li><a href="#reflection">反思与改进</a></li>
+                <li><a href="#ilos">Learning Outcomes</a></li>
+                <li><a href="#activities">Activities</a></li>
+                <li><a href="#assessment">Assessment</a></li>
+                <li><a href="#alignment">Alignment Matrix</a></li>
+                <li><a href="#resources">Resources</a></li>
+                <li><a href="#differentiation">Differentiation</a></li>
+                <li><a href="#reflection">Reflection</a></li>
             </ul>
         </nav>
 
         <main>
             <section id="ilos" class="section">
                 <h2 class="section-title">
-                    预期学习成果 (ILOs)
-                    <span class="ai-badge">AI 增强</span>
+                    Intended Learning Outcomes (ILOs)
+                    <span class="ai-badge">AI ENHANCED</span>
                 </h2>
 
-                <p style="margin-bottom: 20px;">完成本课后，学生应能：</p>
+                <p style="margin-bottom: 20px;">Upon completion of this lesson, students will be able to:</p>
 
                 <ul class="ilo-list">
                     <li>
-                        <strong>ILO 1:</strong> <strong>分析</strong>并<strong>比较</strong>行为主义、认知主义和建构主义三种学习理论的核心原则与假设。
-                        <span class="bloom-tag">Bloom：分析</span>
-                        <div style="margin-top: 10px; font-style: italic; color: #666;">社会建构主义：为协作比较提供基础</div>
+                        <strong>ILO 1:</strong> <strong>Analyze</strong> and <strong>compare</strong> the core principles and assumptions of behaviorism, cognitivism, and constructivism learning theories.
+                        <span class="bloom-tag">Bloom: Analyze</span>
+                        <div style="margin-top: 10px; font-style: italic; color: #666;">Social Constructivism: Foundation for collaborative comparison</div>
                     </li>
                     <li>
-                        <strong>ILO 2:</strong> <strong>应用</strong>社会建构主义的原则，<strong>协作</strong>创建并<strong>展示</strong>一个微缩教案，该教案需体现至少一种学习理论的教学应用。
-                        <span class="bloom-tag">Bloom：应用、创造</span>
-                        <div style="margin-top: 10px; font-style: italic; color: #666;">社会建构主义：协作知识建构</div>
+                        <strong>ILO 2:</strong> <strong>Apply</strong> social constructivist principles to <strong>collaboratively create</strong> and <strong>present</strong> a micro-lesson plan demonstrating the practical application of at least one learning theory.
+                        <span class="bloom-tag">Bloom: Apply, Create</span>
+                        <div style="margin-top: 10px; font-style: italic; color: #666;">Social Constructivism: Collaborative knowledge construction</div>
                     </li>
                     <li class="card ai-integrated" style="border-left: 3px solid #f5576c;">
-                        <strong>ILO 3 [AI 素养]:</strong> <strong>使用</strong>AI工具（如ChatGPT）为某个学习情境生成教学策略建议，并<strong>批判性评估</strong>AI输出的准确性、局限性和潜在偏见。
-                        <span class="bloom-tag">AI 素养 ILO</span>
+                        <strong>ILO 3 [AI Literacy]:</strong> <strong>Use</strong> AI tools (e.g., ChatGPT) to generate instructional strategy recommendations for a learning scenario, and <strong>critically evaluate</strong> the accuracy, limitations, and potential biases of AI outputs.
+                        <span class="bloom-tag">AI Literacy ILO</span>
                     </li>
                     <li class="card ai-integrated" style="border-left: 3px solid #f5576c;">
-                        <strong>ILO 4 [AI 素养]:</strong> <strong>判断</strong>在教学设计中，何时应采纳、修改或拒绝AI的建议，并清晰<strong>论证</strong>人类判断相对于AI输出的优先性。
-                        <span class="bloom-tag">AI 素养：独立判断</span>
+                        <strong>ILO 4 [AI Literacy]:</strong> <strong>Judge</strong> when to adopt, modify, or reject AI recommendations in instructional design, and clearly <strong>justify</strong> the primacy of human judgment over AI outputs.
+                        <span class="bloom-tag">AI Literacy: Independent Judgment</span>
                     </li>
                 </ul>
             </section>
 
             <section id="activities" class="section">
                 <h2 class="section-title">
-                    教学活动
-                    <span class="ai-badge">AI 全面整合</span>
+                    Learning Activities
+                    <span class="ai-badge">FULL AI INTEGRATION</span>
                 </h2>
 
                 <div class="card">
-                    <h3 class="card-title">导入 (15分钟)</h3>
+                    <h3 class="card-title">Introduction (15 minutes)</h3>
 
                     <div style="margin-bottom: 20px;">
-                        <h4 style="color: #667eea; margin-bottom: 10px;">社会建构主义钩子 (5分钟)</h4>
-                        <p>通过Mentimeter发起快速投票："你认为'学习'是如何发生的？是因为反复练习（行为主义），还是因为理解信息如何加工（认知主义），或者是通过亲身经验和与他人交流（建构主义）？"</p>
+                        <h4 style="color: #667eea; margin-bottom: 10px;">Social Constructivist Hook (5 minutes)</h4>
+                        <p>Launch a quick poll using Mentimeter: "How do you think 'learning' happens? Through repeated practice (behaviorism), understanding information processing (cognitivism), or hands-on experience and social interaction (constructivism)?" Real-time voting results will serve as the starting point for class discussion.</p>
                         <div style="margin-top: 15px; padding: 15px; background: #e0e7ff; border-radius: 6px;">
-                            <strong>🎯 目的：</strong>利用全班已有知识框架作为协作探究的起点
+                            <strong>🎯 Purpose:</strong> Use the class's existing knowledge framework as a starting point for collaborative inquiry
                         </div>
                     </div>
 
-                    <button class="collapsible">📱 外部工具：如何使用 Mentimeter</button>
+                    <button class="collapsible">📱 External Tool: How to Use Mentimeter</button>
                     <div class="content">
                         <div class="tool-instruction">
-                            <h4>Mentimeter 投票设置步骤</h4>
+                            <h4>Mentimeter Poll Setup Steps</h4>
                             <ol>
-                                <li>访问 <a href="https://www.mentimeter.com" target="_blank">Mentimeter官网</a> 并登录您的账户</li>
-                                <li>点击"New presentation"创建新的演示文稿</li>
-                                <li>选择"Multiple Choice"题型</li>
-                                <li>输入问题："你认为'学习'是如何发生的？"</li>
-                                <li>添加三个选项：
+                                <li>Visit <a href="https://www.mentimeter.com" target="_blank">Mentimeter website</a> and log in to your account</li>
+                                <li>Click "New presentation" to create a new presentation</li>
+                                <li>Select "Multiple Choice" question type</li>
+                                <li>Enter the question: "How do you think 'learning' happens?"</li>
+                                <li>Add three options:
                                     <ul>
-                                        <li>反复练习和强化（行为主义）</li>
-                                        <li>理解信息加工过程（认知主义）</li>
-                                        <li>亲身经验和社会交流（建构主义）</li>
+                                        <li>Repeated practice and reinforcement (Behaviorism)</li>
+                                        <li>Understanding information processing (Cognitivism)</li>
+                                        <li>Hands-on experience and social interaction (Constructivism)</li>
                                     </ul>
                                 </li>
-                                <li>在课堂上分享投票码，让学生通过手机访问 menti.com 输入代码参与</li>
-                                <li>实时展示投票结果并引导讨论</li>
+                                <li>Share the voting code in class, students visit menti.com and enter the code to participate</li>
+                                <li>Display results in real-time and guide discussion</li>
                             </ol>
                         </div>
                     </div>
                 </div>
 
                 <div class="card ai-integrated">
-                    <h4 style="color: #f5576c; margin-bottom: 15px;">🤖 AI 集成导入 [AI 集成：活动] (5分钟)</h4>
+                    <h4 style="color: #f5576c; margin-bottom: 15px;">🤖 AI-Integrated Introduction [AI Integration: Activity] (5 minutes)</h4>
                     <div class="highlight-ai">
-                        <p><strong>活动描述：</strong>教师展示一个由AI工具（如ChatGPT）生成的、对"操作性条件反射"的简要解释，该解释刻意包含一个细微的概念错误或过度简化。</p>
-                        <p style="margin-top: 15px;"><strong>教师引导问题：</strong>"刚刚屏幕上这段由AI生成的对操作性条件反射的解释完全正确吗？有什么遗漏、不精确或可能产生误导的地方？"</p>
-                        <p style="margin-top: 15px; font-style: italic; color: #f5576c;"><strong>关键批判：</strong>建模对AI输出的批判性态度</p>
+                        <p><strong>Activity Description:</strong> Instructor displays an AI-generated (e.g., ChatGPT) brief explanation of "operant conditioning" that deliberately contains a subtle conceptual error or oversimplification.</p>
+                        <p style="margin-top: 15px;"><strong>Guiding Question:</strong> "Is this AI-generated explanation of operant conditioning completely accurate? What's missing, imprecise, or potentially misleading?"</p>
+                        <p style="margin-top: 15px; font-style: italic; color: #f5576c;"><strong>Critical Focus:</strong> Model a critical attitude toward AI outputs</p>
                     </div>
                 </div>
 
                 <div class="card">
-                    <h4 style="color: #667eea; margin-bottom: 10px;">连接现实与预览 (5分钟)</h4>
-                    <p>教师总结AI回答中可能存在的局限性，并预告："今天，我们将像一群研究者一样，协作探索三种经典学习理论。你们不仅会学习如何区分它们，还会学习如何在与AI协作时，保持批判性的头脑和独立的判断力。"</p>
+                    <h4 style="color: #667eea; margin-bottom: 10px;">Connecting to Reality & Preview (5 minutes)</h4>
+                    <p>Instructor summarizes potential limitations in AI responses and previews: "Today, we'll work like a community of researchers, collaboratively exploring three classic learning theories. You'll not only learn to distinguish them but also how to maintain critical thinking and independent judgment when collaborating with AI."</p>
                 </div>
 
                 <div class="card">
-                    <h3 class="card-title">发展活动 (85分钟)</h3>
-                    <p style="margin-bottom: 15px; font-style: italic; color: #667eea;">此部分全程贯彻社会建构主义原则，并整合AI互动。</p>
+                    <h3 class="card-title">Development Activities (85 minutes)</h3>
+                    <p style="margin-bottom: 15px; font-style: italic; color: #667eea;">This section fully implements social constructivist principles and integrates AI interaction throughout.</p>
 
                     <div style="background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
-                        <h4 style="color: #667eea; margin-bottom: 15px;">环节一：理论学习与 AI 辩论 (50分钟)</h4>
+                        <h4 style="color: #667eea; margin-bottom: 15px;">Phase 1: Theory Learning & AI Debate (50 minutes)</h4>
 
                         <div style="margin-bottom: 25px;">
-                            <h5 style="margin-bottom: 10px;">1. 专家小组组建 (10分钟)</h5>
-                            <p>将90名学生分成30个组（每组3人）。学习管理系统随机将每组分配一个"核心理论"（行为主义、认知主义或建构主义），并指定为"专家组"。每组需在10分钟内，利用手上的资料（讲义、阅读材料）和<strong>一个指定的AI聊天机器人</strong>，协作完成一份"理论声明"，概括其核心观点、关键人物（如斯金纳、皮亚杰、维果茨基）和典型教学应用。</p>
+                            <h5 style="margin-bottom: 10px;">1. Expert Group Formation (10 minutes)</h5>
+                            <p>Divide 90 students into 30 groups of 3. The LMS randomly assigns each group a "core theory" (behaviorism, cognitivism, or constructivism) as "expert groups." Each group has 10 minutes to use handouts, reading materials, and <strong>a designated AI chatbot</strong> to collaboratively complete a "Theory Statement" summarizing core viewpoints, key figures (e.g., Skinner, Piaget, Vygotsky), and typical educational applications.</p>
                         </div>
 
                         <div class="highlight-ai">
-                            <h4>🤖 结构化 AI 互动任务 [AI 集成：活动] (10分钟)</h4>
-                            <p><strong>任务描述：</strong>组内学生共同提示AI聊天机器人。提示例如："你是一位教育心理学家，请为我解释[行为主义/认知主义/建构主义]学习理论的核心原则，并给出一个在大学课堂中应用该理论的例子。"</p>
-                            <p style="margin-top: 15px;"><strong>学生需要记录AI的原始输出并集体讨论、识别其中的：</strong></p>
+                            <h4>🤖 Structured AI Interaction Task [AI Integration: Activity] (10 minutes)</h4>
+                            <p><strong>Task Description:</strong> Group members collectively prompt the AI chatbot. Example prompt: "You are an educational psychologist. Please explain the core principles of [behaviorism/cognitivism/constructivism] learning theory and provide an example of applying this theory in a university classroom."</p>
+                            <p style="margin-top: 15px;"><strong>Students must record the AI's raw output and collectively discuss and identify:</strong></p>
                             <ul style="margin-left: 20px; margin-top: 10px;">
-                                <li><strong>准确性：</strong>AI的解释是否符合教科书定义？</li>
-                                <li><strong>完整性：</strong>AI是否遗漏了重要概念或学派分支（如行为主义中的社会学习理论）？</li>
-                                <li><strong>偏见：</strong>AI的举例是否有任何隐含的偏见（如偏好西方教育体系、特定教学方法）？</li>
-                                <li><strong>决策：</strong>他们是否决定直接使用AI的某部分回答，或是需要修改、甚至完全重写？</li>
+                                <li><strong>Accuracy:</strong> Does the AI's explanation match textbook definitions?</li>
+                                <li><strong>Completeness:</strong> Did the AI omit important concepts or branches (e.g., social learning theory within behaviorism)?</li>
+                                <li><strong>Bias:</strong> Does the AI's example contain implicit biases (e.g., favoring Western education systems or specific teaching methods)?</li>
+                                <li><strong>Decision:</strong> Will they use parts of the AI's response directly, or do they need to modify or completely rewrite it?</li>
                             </ul>
-                            <p style="margin-top: 15px; font-weight: 600; color: #f5576c;">⚠️ 每组必须在"理论声明"中标注哪些来自AI，哪些是他们的独立贡献。</p>
+                            <p style="margin-top: 15px; font-weight: 600; color: #f5576c;">⚠️ Each group must annotate their "Theory Statement" indicating what came from AI and what was their independent contribution.</p>
                         </div>
+                    </div>
 
-                        <div style="margin-bottom: 25px;">
-                            <h5 style="margin-bottom: 10px;">2. 社会建构主义圆桌讨论 (25分钟)</h5>
-                            <p>重新分组：3个不同核心理论专家组（A组-行为主义，B组-认知主义，C组-建构主义）的3名学生组成一个混合组（共30个6人大组）。</p>
-                            <p style="margin-top: 10px;"><strong>要求：</strong>每个学生在8分钟内（共24分钟）向其他两位成员"教学"自己组的"理论声明"，并回答同学的提问。重点不是背诵，而是<strong>协作建构</strong>对理论异同点的集体理解。</p>
-                            <div style="margin-top: 15px; padding: 15px; background: #e0e7ff; border-radius: 6px;">
-                                <strong>🎯 社会建构主义：</strong>通过对话和教别人来内化知识，澄清理解
-                            </div>
+                    <div style="background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                        <h5 style="margin-bottom: 10px;">2. Social Constructivist Round-Table Discussion (25 minutes)</h5>
+                        <p>Regroup: Form mixed groups of 6 students (30 groups total), each containing one representative from behaviorism, cognitivism, and constructivism expert groups.</p>
+                        <p style="margin-top: 10px;"><strong>Requirement:</strong> Each student takes 8 minutes (24 minutes total) to "teach" their Theory Statement to the other members and answer questions. The focus is not on recitation, but on <strong>collaborative construction</strong> of a collective understanding of theory similarities and differences.</p>
+                        <div style="margin-top: 15px; padding: 15px; background: #e0e7ff; border-radius: 6px;">
+                            <strong>🎯 Social Constructivism:</strong> Internalize knowledge and clarify understanding through dialogue and teaching others
                         </div>
+                    </div>
 
-                        <div style="margin-bottom: 25px;">
-                            <h5 style="margin-bottom: 10px;">3. 全班共识与教师干预 (15分钟)</h5>
-                            <p>使用投票呈现3-5个教学情境，全班同学投票判断哪种理论最能解释该情境。投票结果会引发即时讨论。教师在此环节进行<strong>支架式干预</strong>，纠正全班普遍存在的错误概念（例如："建构主义者总是反对任何形式的讲授"），提供专家的分析和链接，将讨论推向前沿。</p>
+                    <div style="background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                        <h5 style="margin-bottom: 10px;">3. Whole-Class Consensus & Teacher Scaffolding (15 minutes)</h5>
+                        <p>Present 3-5 teaching scenarios using polling. Students vote on which theory best explains each scenario. Results trigger immediate discussion. Instructor provides <strong>scaffolded intervention</strong> to correct common misconceptions (e.g., "Constructivists always oppose all forms of lecture") and provide expert analysis and connections to advance the discussion.</p>
 
-                            <button class="collapsible">📱 外部工具：如何使用 Kahoot! 进行理论应用投票</button>
-                            <div class="content">
-                                <div class="tool-instruction">
-                                    <h4>Kahoot! 设置步骤</h4>
-                                    <ol>
-                                        <li>访问 <a href="https://kahoot.com" target="_blank">Kahoot!官网</a> 并登录</li>
-                                        <li>点击"Create"创建新的Kahoot</li>
-                                        <li>选择"Quiz"模式</li>
-                                        <li>创建3-5道情境题，例如：
-                                            <ul>
-                                                <li>"教师在每次学生完成作业后给予表扬贴纸" - 这最体现哪种理论？</li>
-                                                <li>"学生通过小组项目共同解决真实问题" - 这最体现哪种理论？</li>
-                                                <li>"教师使用思维导图帮助学生组织信息" - 这最体现哪种理论？</li>
-                                            </ul>
-                                        </li>
-                                        <li>每题设置三个选项：行为主义、认知主义、建构主义</li>
-                                        <li>在课堂上分享游戏PIN码，学生通过手机加入</li>
-                                        <li>实时查看投票结果并引导讨论</li>
-                                    </ol>
-                                </div>
+                        <button class="collapsible">📱 External Tool: How to Use Kahoot! for Theory Application Voting</button>
+                        <div class="content">
+                            <div class="tool-instruction">
+                                <h4>Kahoot! Setup Steps</h4>
+                                <ol>
+                                    <li>Visit <a href="https://kahoot.com" target="_blank">Kahoot! website</a> and log in</li>
+                                    <li>Click "Create" to create a new Kahoot</li>
+                                    <li>Select "Quiz" mode</li>
+                                    <li>Create 3-5 scenario questions, for example:
+                                        <ul>
+                                            <li>"A teacher gives praise stickers each time students complete homework" - Which theory does this best exemplify?</li>
+                                            <li>"Students collaborate on projects to solve real-world problems" - Which theory does this best exemplify?</li>
+                                            <li>"A teacher uses mind maps to help students organize information" - Which theory does this best exemplify?</li>
+                                        </ul>
+                                    </li>
+                                    <li>Set three answer options for each question: Behaviorism, Cognitivism, Constructivism</li>
+                                    <li>Share the game PIN code in class, students join via mobile devices</li>
+                                    <li>View real-time voting results and guide discussion</li>
+                                </ol>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="card ai-integrated">
-                    <h4 style="color: #667eea; margin-bottom: 15px;">环节二：协作教案微设计 (35分钟)</h4>
+                    <h4 style="color: #667eea; margin-bottom: 15px;">Phase 2: Collaborative Micro-Lesson Design (35 minutes)</h4>
 
                     <div style="margin-bottom: 20px;">
-                        <h5 style="margin-bottom: 10px;">1. 情境挑战 (5分钟)</h5>
-                        <p>教师提出设计挑战："假设你们是一所大学的通识教育委员会，需要为400名一年级新生设计一节45分钟的'如何有效在线学习'工作坊。你们的任务是：<strong>利用本课学到的三种理论之一，为该工作坊设计一个核心的教学活动环节。</strong>" 每个混合小组选择一种理论作为设计基础。</p>
+                        <h5 style="margin-bottom: 10px;">1. Scenario Challenge (5 minutes)</h5>
+                        <p>Instructor presents a design challenge: "Imagine you are a university general education committee tasked with designing a 45-minute 'Effective Online Learning' workshop for 400 first-year students. Your task: <strong>Use one of the three theories learned today to design a core instructional activity for this workshop.</strong>" Each mixed group selects one theory as the design foundation.</p>
                     </div>
 
                     <div class="highlight-ai">
-                        <h4>🤖 AI 辅助设计与批判 [AI 集成：活动] (20分钟)</h4>
-                        <p><strong>活动描述：</strong>各组使用AI工具辅助设计他们的微教案。</p>
-                        <p style="margin-top: 15px;"><strong>AI 提示示例：</strong>"请为'大学新生有效在线学习工作坊'提供三个基于[建构主义]的教学活动创意，每个活动时长5-10分钟，要求学生使用数字工具进行协作。"</p>
+                        <h4>🤖 AI-Assisted Design & Critical Evaluation [AI Integration: Activity] (20 minutes)</h4>
+                        <p><strong>Activity Description:</strong> Groups use AI tools to assist in designing their micro-lesson.</p>
+                        <p style="margin-top: 15px;"><strong>AI Prompt Example:</strong> "Please provide three activity ideas based on [constructivism] for a 'Effective Online Learning Workshop for University Freshmen,' each 5-10 minutes long, requiring students to use digital tools for collaboration."</p>
 
                         <div style="margin-top: 20px; padding: 15px; background: white; border-radius: 6px;">
-                            <p style="font-weight: 600; color: #f5576c; margin-bottom: 10px;">关键批判要求：</p>
-                            <p>每组必须批判性地审视AI生成的创意。他们需要：</p>
+                            <p style="font-weight: 600; color: #f5576c; margin-bottom: 10px;">Critical Evaluation Requirements:</p>
+                            <p>Each group must critically examine AI-generated ideas. They need to:</p>
                             <ul style="margin-left: 20px; margin-top: 10px;">
-                                <li><strong>评估：</strong>这些创意是否符合他们所选择的理论核心？（例如，AI是否错误地将"用Kahoot!玩游戏"归类为"建构主义"？这其实更接近行为主义/认知主义。）</li>
-                                <li><strong>修改：</strong>基于他们的理解，如何修改AI的提议以使其更符合理论？</li>
-                                <li><strong>拒绝与创造：</strong>如果AI的建议全无用处，他们需要完全自主设计一个，并<strong>论证</strong>为什么人类的创见在此情境下优于AI。</li>
+                                <li><strong>Evaluate:</strong> Do these ideas align with the core of their chosen theory? (E.g., Did the AI incorrectly classify "playing Kahoot!" as "constructivism"? It's actually closer to behaviorism/cognitivism.)</li>
+                                <li><strong>Modify:</strong> Based on their understanding, how should they modify AI suggestions to better align with the theory?</li>
+                                <li><strong>Reject & Create:</strong> If AI suggestions are useless, they need to design completely independently and <strong>justify</strong> why human creativity is superior to AI in this context.</li>
                             </ul>
-                            <p style="margin-top: 15px; font-style: italic;">所有修改和决策需记录在小组的共享文档中。</p>
+                            <p style="margin-top: 15px; font-style: italic;">All modifications and decisions must be documented in the group's shared document.</p>
                         </div>
 
                         <div style="margin-top: 15px; padding: 15px; background: #e0e7ff; border-radius: 6px;">
-                            <strong>🎯 社会建构主义+AI：</strong>在协作中共同决策、批判性地整合AI资源，深化对理论应用的理解
+                            <strong>🎯 Social Constructivism + AI:</strong> Collaborative decision-making, critically integrating AI resources to deepen understanding of theory application
                         </div>
                     </div>
 
-                    <button class="collapsible">📱 外部工具：如何使用 Padlet 进行协作设计</button>
+                    <button class="collapsible">📱 External Tool: How to Use Padlet for Collaborative Design</button>
                     <div class="content">
                         <div class="tool-instruction">
-                            <h4>Padlet 协作设计步骤</h4>
+                            <h4>Padlet Collaborative Design Steps</h4>
                             <ol>
-                                <li>访问 <a href="https://padlet.com" target="_blank">Padlet官网</a> 并创建账户</li>
-                                <li>点击"Make a Padlet"创建新的协作板</li>
-                                <li>选择"Canvas"格式，适合自由组织教案设计元素</li>
-                                <li>为教案设计创建不同的区域：
+                                <li>Visit <a href="https://padlet.com" target="_blank">Padlet website</a> and create an account</li>
+                                <li>Click "Make a Padlet" to create a new collaboration board</li>
+                                <li>Select "Canvas" format, suitable for freely organizing lesson design elements</li>
+                                <li>Create different areas for the lesson design:
                                     <ul>
-                                        <li>"AI 生成的原始创意"区域</li>
-                                        <li>"我们的评估与修改"区域</li>
-                                        <li>"最终教案设计"区域</li>
-                                        <li>"人类判断优于AI的论证"区域</li>
+                                        <li>"AI-Generated Original Ideas" area</li>
+                                        <li>"Our Evaluation & Modifications" area</li>
+                                        <li>"Final Lesson Design" area</li>
+                                        <li>"Justification for Human Judgment Over AI" area</li>
                                     </ul>
                                 </li>
-                                <li>分享Padlet链接给小组成员，所有人可同时编辑</li>
-                                <li>使用不同颜色的便签来区分AI内容与学生原创内容</li>
-                                <li>鼓励学生添加注释、图片和链接来丰富设计</li>
+                                <li>Share the Padlet link with group members for simultaneous editing</li>
+                                <li>Use different colored sticky notes to distinguish AI content from student-created content</li>
+                                <li>Encourage students to add annotations, images, and links to enrich the design</li>
                             </ol>
                         </div>
                     </div>
 
                     <div style="margin-top: 20px;">
-                        <h5 style="margin-bottom: 10px;">3. 初步展示与同伴反馈 (10分钟)</h5>
-                        <p>两分钟：每个组选出"项目主持人"在组内快速（1.5分钟）介绍他们设计的活动如何体现其理论。组内其他成员根据同伴评估检查表提供结构化反馈，检查表包含"活动是否与理论原则一致？"、"学生的角色是否恰当？"等关键项。</p>
+                        <h5 style="margin-bottom: 10px;">3. Preliminary Presentation & Peer Feedback (10 minutes)</h5>
+                        <p>Each group selects a "project presenter" to quickly introduce (1.5 minutes) how their designed activity embodies their chosen theory. Other group members provide structured feedback using a peer assessment checklist containing key items such as "Does the activity align with theoretical principles?" and "Is the student role appropriate?"</p>
                     </div>
                 </div>
 
                 <div class="card ai-integrated">
-                    <h3 class="card-title">总结与反思 (15分钟)</h3>
+                    <h3 class="card-title">Summary & Reflection (15 minutes)</h3>
 
                     <div style="margin-bottom: 20px;">
-                        <h4 style="color: #667eea; margin-bottom: 10px;">后测与反思 (5分钟)</h4>
-                        <p>分发包含3道应用题的小测，与课前测中的内容形成对比，检测学生掌握程度。</p>
+                        <h4 style="color: #667eea; margin-bottom: 10px;">Post-Test & Reflection (5 minutes)</h4>
+                        <p>Distribute a quiz containing 3 application questions to contrast with pre-test content and assess student mastery.</p>
                     </div>
 
                     <div class="highlight-ai">
-                        <h4>🤖 AI 整合反思 [AI 集成：活动] (8分钟)</h4>
-                        <p style="margin-bottom: 15px;"><strong>引导全班讨论：</strong></p>
+                        <h4>🤖 AI Integration Reflection [AI Integration: Activity] (8 minutes)</h4>
+                        <p style="margin-bottom: 15px;"><strong>Guide whole-class discussion:</strong></p>
                         <ul style="margin-left: 20px;">
-                            <li><strong>"在今天的设计挑战中，AI在哪里是'助推器'，在哪里是'绊脚石'？"</strong>（学生分享经验）</li>
-                            <li><strong>"什么时候你们决定必须'覆盖'或'拒绝'AI的建议？是什么让你们做出了这个判断？"</strong>（强调人类判断的优先性）</li>
-                            <li><strong>"AI的回答是否有任何隐藏的文化偏见或知识局限？"</strong>（如对非西方在线学习情境的忽视）</li>
+                            <li><strong>"In today's design challenge, where was AI a 'booster' and where was it a 'stumbling block'?"</strong> (Students share experiences)</li>
+                            <li><strong>"When did you decide you had to 'override' or 'reject' AI suggestions? What led you to make that judgment?"</strong> (Emphasize the primacy of human judgment)</li>
+                            <li><strong>"Did AI's responses contain any hidden cultural biases or knowledge limitations?"</strong> (E.g., neglect of non-Western online learning contexts)</li>
                         </ul>
                         <div style="margin-top: 15px; padding: 15px; background: white; border-radius: 6px;">
-                            <strong>🎯 社会建构主义+AI：</strong>全班共同建构对AI作为工具的批判性认知
+                            <strong>🎯 Social Constructivism + AI:</strong> Collaboratively construct critical awareness of AI as a tool
                         </div>
                     </div>
 
                     <div style="margin-top: 20px;">
-                        <h4 style="color: #667eea; margin-bottom: 10px;">预告与衔接 (2分钟)</h4>
-                        <p>"今天你们体验到，即使是关于'学习'的经典理论，不同的人（和AI！）也能给出不同的解释。下周，我们将聚焦于更先进的教学模式——<strong>翻转课堂</strong>——并探讨它为什么可以被看作是今天所学几种理论的融合实践。"</p>
+                        <h4 style="color: #667eea; margin-bottom: 10px;">Preview & Connection (2 minutes)</h4>
+                        <p>"Today you experienced that even about 'learning,' different people (and AI!) can offer different interpretations. Next week, we'll focus on a more advanced instructional model—<strong>Flipped Classroom</strong>—and explore why it can be seen as a fusion practice of the theories we learned today."</p>
                     </div>
                 </div>
             </section>
 
             <section id="assessment" class="section">
                 <h2 class="section-title">
-                    评估方法
-                    <span class="ai-badge">AI 增强</span>
+                    Assessment Methods
+                    <span class="ai-badge">AI ENHANCED</span>
                 </h2>
 
                 <div class="card">
-                    <h3 class="card-title">形成性评估</h3>
+                    <h3 class="card-title">Formative Assessment</h3>
 
                     <ul class="activity-list">
                         <li>
-                            <strong>教师观察（社会建构主义关注）：</strong>在圆桌讨论和小组设计环节，教师巡视各组的讨论进度、合作质量和对AI的批判性使用方式。
+                            <strong>Teacher Observation (Social Constructivist Focus):</strong> During round-table discussions and group design sessions, instructor circulates to observe discussion progress, collaboration quality, and critical use of AI.
                         </li>
                         <li>
-                            <strong>实时投票反馈：</strong>投票提供全班知识掌握情况的即时快照。
+                            <strong>Real-Time Polling Feedback:</strong> Polling provides instant snapshots of whole-class knowledge mastery.
                         </li>
                     </ul>
                 </div>
 
                 <div class="card ai-integrated">
-                    <h4 style="color: #f5576c; margin-bottom: 15px;">🤖 AI 课堂任务提交 [AI 集成：评估]</h4>
-                    <p>学生小组在课堂结束前提交他们的<strong>AI对话记录 + 修改决策清单</strong>。教师据此评估学生：</p>
+                    <h4 style="color: #f5576c; margin-bottom: 15px;">🤖 AI Classroom Task Submission [AI Integration: Assessment]</h4>
+                    <p>Student groups submit their <strong>AI dialogue records + modification decision checklist</strong> before class ends. Instructor evaluates:</p>
                     <ul style="margin-left: 20px; margin-top: 10px;">
-                        <li><strong>A)</strong> 是否能够有效提问？</li>
-                        <li><strong>B)</strong> 能否识别AI输出中的局限性？</li>
-                        <li><strong>C)</strong> 作出了明智的判断？</li>
+                        <li><strong>A)</strong> Can they ask effective questions?</li>
+                        <li><strong>B)</strong> Can they identify limitations in AI outputs?</li>
+                        <li><strong>C)</strong> Did they make wise judgments?</li>
                     </ul>
                 </div>
 
                 <div class="card">
                     <ul class="activity-list">
                         <li>
-                            <strong>同伴评估检查表：</strong>促进即时反馈和相互学习。
+                            <strong>Peer Assessment Checklist:</strong> Promotes immediate feedback and mutual learning.
                         </li>
                     </ul>
                 </div>
 
                 <div class="card ai-integrated">
-                    <h3 class="card-title">总结性评估</h3>
+                    <h3 class="card-title">Summative Assessment</h3>
 
-                    <h4 style="color: #667eea; margin-bottom: 15px;">个人反思性论文（课后提交）</h4>
+                    <h4 style="color: #667eea; margin-bottom: 15px;">Individual Reflective Essay (Post-Class Submission)</h4>
 
                     <div style="background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
-                        <p style="font-weight: 600; margin-bottom: 10px;">任务：</p>
-                        <p>"回顾本课中你们小组设计的微教案。选择一个你们对AI输出进行过重大修改或全盘拒绝的关键决策点。写一篇不少于500字的短文，包括：</p>
+                        <p style="font-weight: 600; margin-bottom: 10px;">Task:</p>
+                        <p>"Review your group's micro-lesson design from this class. Select a critical decision point where you significantly modified or completely rejected AI output. Write an essay of at least 500 words including:</p>
                         <ol style="margin-left: 20px; margin-top: 10px;">
-                            <li>AI的原始输出是什么？（截图）</li>
-                            <li>你们小组为何决定修改/拒绝它？引用课堂所学理论进行论证。</li>
-                            <li>在这次协作和决策中，人类教学者的专业判断（基于理论理解）扮演了什么核心角色？它在哪些方面优于或不能由AI替代？"</li>
+                            <li>What was the AI's original output? (Include screenshot)</li>
+                            <li>Why did your group decide to modify/reject it? Justify using theories learned in class.</li>
+                            <li>In this collaboration and decision-making, what core role did human educators' professional judgment (based on theoretical understanding) play? In what ways is it superior to or irreplaceable by AI?"</li>
                         </ol>
                     </div>
 
                     <div class="highlight-ai">
-                        <h4>🤖 AI 集成评估要点 [AI 集成：评估]</h4>
-                        <p>本评估明确<strong>要求并允许</strong>使用AI（提供原文），但核心评价标准是学生<strong>批判性反思</strong>的质量，他们<strong>对AI输出局限性</strong>的指认，以及对其<strong>独立判断过程</strong>的清晰阐明。</p>
-                        <p style="margin-top: 10px;">Rubric包含"<strong>对AI的批判性参与</strong>"（30%）标准。</p>
+                        <h4>🤖 AI Integration Assessment Points [AI Integration: Assessment]</h4>
+                        <p>This assessment explicitly <strong>requires and allows</strong> use of AI (provide original text), but core evaluation criteria are the quality of students' <strong>critical reflection</strong>, their identification of <strong>AI output limitations</strong>, and clear articulation of their <strong>independent judgment process</strong>.</p>
+                        <p style="margin-top: 10px;">Rubric includes "<strong>Critical Engagement with AI</strong>" (30%) criterion.</p>
                     </div>
 
                     <div style="background: white; padding: 20px; border-radius: 8px; margin-top: 20px;">
-                        <h4 style="color: #667eea; margin-bottom: 15px;">评分 Rubric（关键项）</h4>
+                        <h4 style="color: #667eea; margin-bottom: 15px;">Grading Rubric (Key Criteria)</h4>
                         <table>
                             <tr>
-                                <th>评估维度</th>
-                                <th>优秀</th>
-                                <th>中等</th>
+                                <th>Assessment Dimension</th>
+                                <th>Excellent</th>
+                                <th>Average</th>
                             </tr>
                             <tr>
-                                <td><strong>AI 批判性</strong></td>
-                                <td>清晰识别AI存在的理论概念偏差、文化偏见或逻辑错误，并进行了有理有据的修改</td>
-                                <td>识别出明显错误，但未能深入分析其理论根源</td>
+                                <td><strong>AI Critical Engagement</strong></td>
+                                <td>Clearly identifies AI's theoretical concept deviations, cultural biases, or logical errors with well-reasoned modifications</td>
+                                <td>Identifies obvious errors but fails to deeply analyze their theoretical roots</td>
                             </tr>
                             <tr>
-                                <td><strong>人类判断论证</strong></td>
-                                <td>强烈论证人类教学决策（如情境感、学生同理心、理论深层应用）的不可替代性，论点清晰</td>
-                                <td>仅模糊地提及"人类更懂学生"</td>
+                                <td><strong>Human Judgment Justification</strong></td>
+                                <td>Strongly argues the irreplaceable nature of human instructional decisions (e.g., contextual awareness, student empathy, deep theory application) with clear points</td>
+                                <td>Only vaguely mentions "humans understand students better"</td>
                             </tr>
                             <tr>
-                                <td><strong>理论应用准确性</strong></td>
-                                <td>在设计中自始至终准确地应用了选择的理论原则</td>
-                                <td>有部分应用，但存在理论与活动脱节之处</td>
+                                <td><strong>Theory Application Accuracy</strong></td>
+                                <td>Accurately applies chosen theory principles consistently throughout the design</td>
+                                <td>Partial application with some disconnect between theory and activity</td>
                             </tr>
                         </table>
                     </div>
@@ -771,49 +774,49 @@
 
             <section id="alignment" class="section">
                 <h2 class="section-title">
-                    建构性对齐矩阵
-                    <span class="ai-badge">完整对齐</span>
+                    Constructive Alignment Matrix
+                    <span class="ai-badge">FULL ALIGNMENT</span>
                 </h2>
 
                 <div class="table-container">
                     <table>
                         <thead>
                             <tr>
-                                <th>预期学习成果 (ILO)</th>
-                                <th>教学活动</th>
-                                <th>评估方法</th>
-                                <th>教学法连结</th>
-                                <th>AI 集成连结</th>
+                                <th>Intended Learning Outcome (ILO)</th>
+                                <th>Learning Activities</th>
+                                <th>Assessment Methods</th>
+                                <th>Pedagogical Connection</th>
+                                <th>AI Integration Connection</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td><strong>ILO 1:</strong> 分析并比较三种学习理论</td>
-                                <td>理论学习与AI辩论<br>社会建构主义圆桌讨论</td>
-                                <td>小组提交的"理论声明"<br>全班投票与教师干预</td>
-                                <td><em>社会建构主义：</em>结构化对话建构共识</td>
-                                <td><em>AI集成（活动）：</em>使用AI作为初稿生成器，批判性辩论其准确性</td>
+                                <td><strong>ILO 1:</strong> Analyze and compare three learning theories</td>
+                                <td>Theory Learning & AI Debate<br>Social Constructivist Round-Table Discussion</td>
+                                <td>Group-submitted "Theory Statements"<br>Whole-class polling & teacher intervention</td>
+                                <td><em>Social Constructivism:</em> Structured dialogue to build consensus</td>
+                                <td><em>AI Integration (Activity):</em> Use AI as draft generator, critically debate its accuracy</td>
                             </tr>
                             <tr>
-                                <td><strong>ILO 2:</strong> 应用原则协作创建微教案</td>
-                                <td>协作教案微设计<br>AI辅助设计与批判</td>
-                                <td>同伴评估检查表<br>个人反思性论文</td>
-                                <td><em>社会建构主义：</em>小组合作为共同挑战创造解决方案</td>
-                                <td><em>AI集成（活动）：</em>将AI作为设计伙伴，评估其创意并做出取舍</td>
+                                <td><strong>ILO 2:</strong> Apply principles to collaboratively create micro-lesson</td>
+                                <td>Collaborative Micro-Lesson Design<br>AI-Assisted Design & Critique</td>
+                                <td>Peer Assessment Checklist<br>Individual Reflective Essay</td>
+                                <td><em>Social Constructivism:</em> Group collaboration to create solutions for shared challenges</td>
+                                <td><em>AI Integration (Activity):</em> Use AI as design partner, evaluate its ideas and make choices</td>
                             </tr>
                             <tr>
-                                <td><strong>ILO 3:</strong> 评估AI输出的局限性和偏见</td>
-                                <td>导入阶段的AI批判<br>结构化AI互动任务</td>
-                                <td>反思性论文中的"AI批判性"部分</td>
-                                <td><em>社会建构主义：</em>通过集体讨论揭示AI的盲点</td>
-                                <td><em>AI集成（评估）：</em>评估的核心标准正是对AI输出的批判性分析</td>
+                                <td><strong>ILO 3:</strong> Evaluate AI output limitations and biases</td>
+                                <td>AI Critique in Introduction Phase<br>Structured AI Interaction Task</td>
+                                <td>"AI Critical Engagement" section in reflective essay</td>
+                                <td><em>Social Constructivism:</em> Reveal AI blind spots through collective discussion</td>
+                                <td><em>AI Integration (Assessment):</em> Core evaluation criterion is critical analysis of AI output</td>
                             </tr>
                             <tr>
-                                <td><strong>ILO 4:</strong> 判断何时采纳或拒绝AI建议</td>
-                                <td>AI辅助设计与批判环节的决策过程</td>
-                                <td>反思性论文中的"人类判断论证"部分</td>
-                                <td><em>社会建构主义：</em>集体决策过程中锻炼独立判断</td>
-                                <td><em>AI集成（活动/评估）：</em>聚焦于<strong>决策过程</strong>，而非仅仅是最终结果</td>
+                                <td><strong>ILO 4:</strong> Judge when to adopt or reject AI recommendations</td>
+                                <td>Decision-making process in AI-Assisted Design & Critique phase</td>
+                                <td>"Human Judgment Justification" section in reflective essay</td>
+                                <td><em>Social Constructivism:</em> Practice independent judgment in collective decision-making</td>
+                                <td><em>AI Integration (Activity/Assessment):</em> Focus on <strong>decision process</strong>, not just final results</td>
                             </tr>
                         </tbody>
                     </table>
@@ -822,144 +825,144 @@
 
             <section id="resources" class="section">
                 <h2 class="section-title">
-                    所需资源与技术
-                    <span class="ai-badge">AI 工具</span>
+                    Required Resources & Technology
+                    <span class="ai-badge">AI TOOLS</span>
                 </h2>
 
                 <div class="card">
-                    <h3 class="card-title">技术平台</h3>
+                    <h3 class="card-title">Technology Platforms</h3>
                     <ul style="margin-left: 20px;">
-                        <li><strong>学习管理系统：</strong>Moodle / Blackboard 用于分组、任务发布、提交与Rubric评估</li>
-                        <li><strong>教学法特定平台：</strong>
+                        <li><strong>Learning Management System:</strong> Moodle / Blackboard for grouping, task distribution, submission & rubric assessment</li>
+                        <li><strong>Pedagogy-Specific Platforms:</strong>
                             <ul style="margin-left: 20px; margin-top: 10px;">
-                                <li>Mentimeter（用于投票）</li>
-                                <li>Padlet（用于成果共享）</li>
-                                <li>Kahoot!（用于互动测验）</li>
+                                <li>Mentimeter (for polling)</li>
+                                <li>Padlet (for collaborative sharing)</li>
+                                <li>Kahoot! (for interactive quizzes)</li>
                             </ul>
                         </li>
                     </ul>
                 </div>
 
                 <div class="card ai-integrated">
-                    <h3 class="card-title">🤖 AI 工具 [AI 集成]</h3>
+                    <h3 class="card-title">🤖 AI Tools [AI Integration]</h3>
                     <ul style="margin-left: 20px;">
-                        <li><strong>AI 聊天机器人：</strong>提供访问统一AI聊天机器人（如ChatGPT或Claude）的引导页面，避免学生使用不同工具</li>
-                        <li><strong>AI 素养资源：</strong>课堂讲义中包含关于"AI幻觉"、"算法偏见"的一页纸</li>
+                        <li><strong>AI Chatbot:</strong> Provide access to a unified AI chatbot (e.g., ChatGPT or Claude) via a guided webpage to prevent students from using different tools</li>
+                        <li><strong>AI Literacy Resources:</strong> Class handouts include one-pager on "AI hallucination" and "algorithmic bias"</li>
                     </ul>
                 </div>
 
                 <div class="card">
-                    <h3 class="card-title">教学材料</h3>
+                    <h3 class="card-title">Instructional Materials</h3>
                     <ul style="margin-left: 20px;">
-                        <li>三种学习理论的小型讲义（A4单页）</li>
-                        <li>同伴评估检查表</li>
-                        <li>课前/课后测验</li>
+                        <li>Mini handouts on three learning theories (A4 single page)</li>
+                        <li>Peer assessment checklists</li>
+                        <li>Pre/post-test quizzes</li>
                     </ul>
                 </div>
             </section>
 
             <section id="differentiation" class="section">
                 <h2 class="section-title">
-                    差异化与包容性
-                    <span class="ai-badge">AI 支持</span>
+                    Differentiation & Inclusivity
+                    <span class="ai-badge">AI SUPPORT</span>
                 </h2>
 
                 <div class="card">
-                    <h3 class="card-title">社会建构主义特定支持</h3>
-                    <p>通过灵活的3人小组，能力稍逊的学生可以被同伴支持，而能力更强的学生可以在"专家"环节中教学相长。</p>
+                    <h3 class="card-title">Social Constructivist Specific Support</h3>
+                    <p>Through flexible 3-person groups, less confident students can receive peer support, while more capable students can teach and learn in "expert" sessions.</p>
                 </div>
 
                 <div class="card ai-integrated">
-                    <h3 class="card-title">🤖 AI 支持差异化 [AI 集成]</h3>
+                    <h3 class="card-title">🤖 AI-Supported Differentiation [AI Integration]</h3>
 
                     <div style="margin-bottom: 20px;">
-                        <h4 style="color: #667eea; margin-bottom: 10px;">支架式学习</h4>
-                        <p>对于不熟悉理论的初学者，AI可以简化概念并提供通俗例子。</p>
+                        <h4 style="color: #667eea; margin-bottom: 10px;">Scaffolded Learning</h4>
+                        <p>For beginners unfamiliar with theories, AI can simplify concepts and provide accessible examples.</p>
                     </div>
 
                     <div style="margin-bottom: 20px;">
-                        <h4 style="color: #667eea; margin-bottom: 10px;">深化探究</h4>
-                        <p>对于学有余力的学生，AI可以引导探索理论的批评性观点或发展分支（如生成对抗编程主义对建构主义的挑战）。</p>
+                        <h4 style="color: #667eea; margin-bottom: 10px;">Deepened Inquiry</h4>
+                        <p>For advanced students, AI can guide exploration of critical perspectives or theoretical branches (e.g., critiques of constructivism from programming approaches).</p>
                     </div>
 
                     <div style="margin-bottom: 20px;">
-                        <h4 style="color: #667eea; margin-bottom: 10px;">语言/感官支持</h4>
-                        <p>AI生成的文本可通过浏览器插件朗读，或翻译成更简单的语言，以支持不同需求的学生。</p>
+                        <h4 style="color: #667eea; margin-bottom: 10px;">Language/Sensory Support</h4>
+                        <p>AI-generated text can be read aloud via browser plugins or translated into simpler language to support students with diverse needs.</p>
                     </div>
                 </div>
 
                 <div class="card">
-                    <h3 class="card-title">无障碍设施</h3>
+                    <h3 class="card-title">Accessibility</h3>
                     <ul style="margin-left: 20px;">
-                        <li>所有AI互动都应考虑到屏幕阅读器的兼容性</li>
-                        <li>设计指导材料时使用清晰、无歧义的语言</li>
-                        <li>提供多种形式的内容呈现（文本、视觉、听觉）</li>
+                        <li>All AI interactions should consider screen reader compatibility</li>
+                        <li>Use clear, unambiguous language in design guidance materials</li>
+                        <li>Provide multiple forms of content presentation (text, visual, auditory)</li>
                     </ul>
                 </div>
             </section>
 
             <section id="reflection" class="section">
                 <h2 class="section-title">
-                    反思与改进
-                    <span class="ai-badge">AI 特定反思</span>
+                    Reflection & Improvement
+                    <span class="ai-badge">AI-SPECIFIC REFLECTION</span>
                 </h2>
 
                 <div class="card">
-                    <h3 class="card-title">社会建构主义成功指标</h3>
+                    <h3 class="card-title">Social Constructivist Success Indicators</h3>
                     <div class="checkbox-container">
                         <input type="checkbox" id="check1">
-                        <label for="check1">圆桌讨论的参与度是否均衡？是否所有声音都被听到？</label>
+                        <label for="check1">Was participation balanced in round-table discussions? Were all voices heard?</label>
                     </div>
                     <div class="checkbox-container">
                         <input type="checkbox" id="check2">
-                        <label for="check2">小组生成的微教案是否反映了共同决策的深度，而非个别成员的"包办"？</label>
+                        <label for="check2">Did group-generated micro-lessons reflect depth of collective decision-making rather than one member "taking over"?</label>
                     </div>
                 </div>
 
                 <div class="card ai-integrated">
-                    <h3 class="card-title">🤖 学生反馈（AI 特定）[AI 集成]</h3>
-                    <p style="margin-bottom: 15px;">分发匿名电子反馈票：</p>
+                    <h3 class="card-title">🤖 Student Feedback (AI-Specific) [AI Integration]</h3>
+                    <p style="margin-bottom: 15px;">Distribute anonymous electronic feedback survey:</p>
                     <div class="checkbox-container">
                         <input type="checkbox" id="check3">
-                        <label for="check3">"AI工具是提升、分散还是混淆了你今天的学习？请给出具体例子。"</label>
+                        <label for="check3">"Did the AI tool enhance, distract from, or confuse your learning today? Please provide specific examples."</label>
                     </div>
                     <div class="checkbox-container">
                         <input type="checkbox" id="check4">
-                        <label for="check4">"你在哪个环节最强烈地感到自己需要'对抗'或'纠正'AI的建议？那感觉如何？"</label>
+                        <label for="check4">"At which point did you most strongly feel you needed to 'counter' or 'correct' AI suggestions? How did that feel?"</label>
                     </div>
                 </div>
 
                 <div class="card ai-integrated">
-                    <h3 class="card-title">🤖 教师反思（AI 特定）[AI 集成]</h3>
+                    <h3 class="card-title">🤖 Teacher Reflection (AI-Specific) [AI Integration]</h3>
 
                     <div style="margin-bottom: 20px;">
-                        <h4 style="color: #667eea; margin-bottom: 10px;">分析学生AI互动质量</h4>
-                        <p>收集学生提交的"AI对话记录 + 修改决策清单"，分析他们对AI批判的<strong>深度</strong>。是流于表面的错误纠正，还是基于理论概念的深层批判？</p>
+                        <h4 style="color: #667eea; margin-bottom: 10px;">Analyze Student AI Interaction Quality</h4>
+                        <p>Collect student-submitted "AI dialogue records + modification decision checklists" and analyze the <strong>depth</strong> of their AI critique. Is it superficial error correction or deep theoretical critique?</p>
                     </div>
 
                     <div style="margin-bottom: 20px;">
-                        <h4 style="color: #667eea; margin-bottom: 10px;">评估AI反馈的有效性</h4>
-                        <p>评估AI反馈的准确性和有用性（如果使用了AI辅助反馈）。</p>
+                        <h4 style="color: #667eea; margin-bottom: 10px;">Evaluate AI Feedback Effectiveness</h4>
+                        <p>Assess the accuracy and usefulness of AI feedback (if AI-assisted feedback was used).</p>
                     </div>
 
                     <div class="highlight-ai">
-                        <h4>改进策略</h4>
+                        <h4>Improvement Strategies</h4>
                         <ul style="margin-left: 20px; margin-top: 10px;">
-                            <li>如果发现学生普遍未能有效提问（即提示词能力不足），应在下一节课增加"如何有效提示AI"的快速培训</li>
-                            <li>如果发现AI在某些理论（如建构主义）的举例上特别薄弱，教师可提前准备"AI陷阱范例"作为课堂批判的焦点，以补充学生自发发现的不足</li>
+                            <li>If students generally failed to ask effective questions (i.e., poor prompting skills), add a quick training on "how to effectively prompt AI" in the next class</li>
+                            <li>If AI is particularly weak in examples for certain theories (e.g., constructivism), instructor can prepare "AI trap examples" as focal points for class critique to supplement students' self-discoveries</li>
                         </ul>
                     </div>
                 </div>
 
                 <div class="card" style="text-align: center; margin-top: 30px;">
-                    <button class="btn btn-reset" onclick="resetProgress()">🔄 重置所有进度</button>
+                    <button class="btn btn-reset" onclick="resetProgress()">🔄 Reset All Progress</button>
                 </div>
             </section>
         </main>
 
         <footer>
-            <p>&copy; 2026 学习理论导论教案 | 社会建构主义 + AI 全面整合</p>
-            <p style="margin-top: 10px; font-size: 0.9em; opacity: 0.8;">本教案展示了AI如何增强教学设计，同时培养学生的批判性思维和独立判断能力</p>
+            <p>&copy; 2026 Introduction to Learning Theories Lesson Plan | Social Constructivism + Comprehensive AI Integration</p>
+            <p style="margin-top: 10px; font-size: 0.9em; opacity: 0.8;">This lesson plan demonstrates how AI can enhance instructional design while cultivating students' critical thinking and independent judgment</p>
         </footer>
     </div>
 
@@ -995,7 +998,7 @@
 
         // Reset progress
         function resetProgress() {
-            if (confirm('确定要重置所有进度吗？这将清除所有已勾选的项目。')) {
+            if (confirm('Are you sure you want to reset all progress? This will clear all checked items.')) {
                 localStorage.removeItem('lessonProgress');
                 const checkboxes = document.querySelectorAll('input[type="checkbox"]');
                 checkboxes.forEach(cb => {
@@ -1065,5 +1068,3 @@
     </script>
 </body>
 </html>
-                        </div>
-                    </div>
