@@ -1,16 +1,1056 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Basic HTML Project</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Introduction to Learning Theories - Lesson Plan</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #333;
+  line-height: 1.6;
+  padding: 20px;
+  min-height: 100vh;
+}
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  overflow: hidden;
+}
+header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 40px;
+  text-align: center;
+}
+header h1 { font-size: 2.5em; margin-bottom: 10px; }
+header p { font-size: 1.1em; opacity: 0.95; }
+.progress-bar {
+  background: rgba(255,255,255,0.2);
+  height: 8px;
+  border-radius: 4px;
+  margin-top: 20px;
+  overflow: hidden;
+}
+.progress-fill {
+  background: #4ade80;
+  height: 100%;
+  width: 0%;
+  transition: width 0.3s ease;
+}
+nav {
+  background: #f8f9fa;
+  padding: 20px;
+  border-bottom: 2px solid #e9ecef;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+nav button {
+  background: white;
+  border: 2px solid #667eea;
+  color: #667eea;
+  padding: 10px 20px;
+  margin: 5px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+nav button:hover { background: #667eea; color: white; transform: translateY(-2px); }
+nav button.active { background: #667eea; color: white; }
+main { padding: 40px; }
+.section {
+  display: none;
+  animation: fadeIn 0.5s;
+}
+.section.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.card {
+  background: white;
+  border: 1px solid #e9ecef;
+  border-radius: 12px;
+  padding: 25px;
+  margin-bottom: 25px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: all 0.3s;
+}
+.card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.15); transform: translateY(-2px); }
+.card h2 {
+  color: #667eea;
+  margin-bottom: 15px;
+  font-size: 1.8em;
+  border-bottom: 3px solid #667eea;
+  padding-bottom: 10px;
+}
+.card h3 {
+  color: #764ba2;
+  margin: 20px 0 10px 0;
+  font-size: 1.4em;
+}
+.card h4 {
+  color: #555;
+  margin: 15px 0 8px 0;
+  font-size: 1.1em;
+}
+ul, ol { margin-left: 25px; margin-top: 10px; }
+li { margin-bottom: 8px; }
+.collapsible {
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  margin: 15px 0;
+  overflow: hidden;
+}
+.collapsible-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 15px;
+  cursor: pointer;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s;
+}
+.collapsible-header:hover { opacity: 0.9; }
+.collapsible-content {
+  padding: 20px;
+  display: none;
+}
+.collapsible.open .collapsible-content { display: block; }
+.collapsible-header::after {
+  content: '▼';
+  transition: transform 0.3s;
+}
+.collapsible.open .collapsible-header::after { transform: rotate(180deg); }
+.highlight-box {
+  background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+  border-left: 4px solid #d63031;
+  padding: 15px;
+  border-radius: 8px;
+  margin: 15px 0;
+}
+.ai-box {
+  background: linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%);
+  color: white;
+  border-left: 4px solid #0984e3;
+  padding: 15px;
+  border-radius: 8px;
+  margin: 15px 0;
+}
+.ai-box strong { display: block; margin-bottom: 8px; font-size: 1.1em; }
+.pedagogy-box {
+  background: linear-gradient(135deg, #81ecec 0%, #00cec9 100%);
+  border-left: 4px solid #00b894;
+  padding: 15px;
+  border-radius: 8px;
+  margin: 15px 0;
+}
+.tool-card {
+  background: #fff;
+  border: 2px solid #667eea;
+  border-radius: 8px;
+  padding: 15px;
+  margin: 10px 0;
+}
+.tool-card h5 {
+  color: #667eea;
+  margin-bottom: 10px;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+th, td {
+  padding: 12px;
+  text-align: left;
+  border: 1px solid #dee2e6;
+}
+th {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  font-weight: 600;
+}
+tr:nth-child(even) { background: #f8f9fa; }
+a {
+  color: #667eea;
+  text-decoration: none;
+  font-weight: 600;
+  border-bottom: 2px solid transparent;
+  transition: border-bottom 0.3s;
+}
+a:hover { border-bottom: 2px solid #667eea; }
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+  padding: 10px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.checkbox-item:hover { background: #e9ecef; }
+.checkbox-item input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  margin-right: 12px;
+  cursor: pointer;
+}
+.checkbox-item.checked {
+  background: #d4edda;
+  text-decoration: line-through;
+  opacity: 0.7;
+}
+.btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1em;
+  transition: all 0.3s;
+  margin: 10px 5px;
+}
+.btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(102,126,234,0.4); }
+.btn-reset {
+  background: linear-gradient(135deg, #ff7675 0%, #d63031 100%);
+}
+@media (max-width: 768px) {
+  header h1 { font-size: 1.8em; }
+  main { padding: 20px; }
+  nav button { display: block; width: 100%; margin: 5px 0; }
+  .card { padding: 15px; }
+}
+</style>
 </head>
 <body>
-  <div class="container">
-    <h1>Hello World!</h1>
-    <p>Welcome to your new project.</p>
-  </div>
-  <script src="script.js"></script>
+<div class="container">
+<header>
+<h1>Introduction to Learning Theories</h1>
+<p>A Comprehensive Lesson Plan with AI Integration</p>
+<p style="margin-top: 10px; font-size: 0.9em;">Duration: 150 minutes | Level: Teacher Education</p>
+<div class="progress-bar">
+<div class="progress-fill" id="progressFill"></div>
+</div>
+</header>
+<nav>
+<button class="nav-btn active" onclick="showSection('outcomes')">Learning Outcomes</button>
+<button class="nav-btn" onclick="showSection('preclass')">Pre-Class Preparation</button>
+<button class="nav-btn" onclick="showSection('activities')">Teaching Activities</button>
+<button class="nav-btn" onclick="showSection('assessment')">Assessment Methods</button>
+<button class="nav-btn" onclick="showSection('alignment')">Alignment Matrix</button>
+<button class="nav-btn" onclick="showSection('resources')">Resources & Technology</button>
+<button class="nav-btn" onclick="showSection('differentiation')">Differentiation</button>
+<button class="nav-btn" onclick="showSection('reflection')">Reflection</button>
+</nav>
+<main>
+
+<!-- SECTION 1: Learning Outcomes -->
+<section id="outcomes" class="section active">
+<div class="card">
+<h2>Learning Outcomes</h2>
+<p><strong>By the end of this lesson, students will be able to:</strong></p>
+<ol>
+<li><strong>Explain</strong> the key principles of behaviorism, cognitivism, and constructivism.</li>
+<li><strong>Compare and contrast</strong> the three learning theories using appropriate terminology.</li>
+<li><strong>Apply</strong> learning theories to real-world educational scenarios.</li>
+<li><strong>Critically evaluate</strong> AI-generated educational content for accuracy, bias, and completeness.</li>
+<li><strong>Articulate</strong> independent reasoning about when and how to use AI in learning.</li>
+</ol>
+
+<div class="pedagogy-box">
+<strong>Pedagogical Approaches:</strong>
+<ul>
+<li><strong>Social Constructivism</strong> – Collaborative knowledge building through peer dialogue</li>
+<li><strong>Scaffolded Instruction</strong> – Gradual release from teacher guidance to student independence</li>
+<li><strong>Peer Assessment</strong> – Students evaluate each other's work using rubrics</li>
+<li><strong>Project-Based Learning (PBL)</strong> – Applied portfolio creation</li>
+<li><strong>Multiple Intelligences</strong> – Varied assessment formats (visual, verbal, intrapersonal)</li>
+</ul>
+</div>
+
+<div class="ai-box">
+<strong>🤖 AI Integration Focus</strong>
+<p>Students will critically engage with AI tools (ChatGPT, Claude) to:</p>
+<ul>
+<li>Generate initial explanations and compare with authoritative sources</li>
+<li>Identify AI biases, oversimplifications, and omissions</li>
+<li>Modify AI outputs based on their own reasoning</li>
+<li>Document decision-making when overriding AI suggestions</li>
+</ul>
+</div>
+</div>
+</section>
+
+<!-- SECTION 2: Pre-Class Preparation -->
+<section id="preclass" class="section">
+<div class="card">
+<h2>Pre-Class Preparation (Flipped Learning Component)</h2>
+
+<h3>Pre-reading/Video Materials</h3>
+<ul>
+<li><strong>Watch:</strong> <a href="https://www.khanacademy.org" target="_blank">Khan Academy – "Introduction to Learning Theories"</a> (5 min)</li>
+<li><strong>Read:</strong> <em>"Behaviorism, Cognitivism, Constructivism: A Comparison"</em> (Chapter 1 from <em>Learning Theories for Teachers</em>, Ormrod)</li>
+<li><strong>Collaborative Annotation:</strong> Use <a href="https://web.hypothes.is" target="_blank">Hypothesis.is</a> to annotate the reading with questions, comments, and connections to your experiences (Social Constructivism approach)</li>
+</ul>
+
+<h3>Pre-Test / Diagnostic Quiz</h3>
+<div class="tool-card">
+<h5>📋 Quiz: Learning Theories Pre-Test (10 questions)</h5>
+<p><strong>Purpose:</strong> Assess prior knowledge and identify misconceptions</p>
+<p><strong>Format:</strong> Multiple choice with adaptive feedback</p>
+<ul>
+<li><strong>Correct answers:</strong> Receive links to extension resources</li>
+<li><strong>Incorrect answers:</strong> Trigger a short video explainer with guided re-quiz</li>
+<li><strong>Misconception analysis:</strong> "Which learning theory is most associated with rewards and punishments?" (common conflation of behaviorism and cognitivism)</li>
+</ul>
+</div>
+
+<h3>Pedagogy-Specific Guiding Questions</h3>
+<div class="collapsible">
+<div class="collapsible-header" onclick="toggleCollapsible(this)">
+For Constructivism
+</div>
+<div class="collapsible-content">
+<p>"Identify one example from your own life where you learned something not because you were taught, but because you constructed meaning from experience. Which theory best explains this?"</p>
+</div>
+</div>
+
+<div class="collapsible">
+<div class="collapsible-header" onclick="toggleCollapsible(this)">
+For Peer Assessment Preparation
+</div>
+<div class="collapsible-content">
+<p>"After watching the video, list two strengths and two weaknesses you see in each theory. Be ready to defend your evaluation in class."</p>
+</div>
+</div>
+
+<div class="ai-box">
+<strong>🤖 Pre-Class AI Engagement Task</strong>
+<p><strong>Instructions:</strong></p>
+<ol>
+<li>Open <a href="https://chat.openai.com" target="_blank" style="color: white; text-decoration: underline;">ChatGPT</a> (or your preferred AI tool) and prompt it: <em>"Explain the difference between behaviorism, cognitivism, and constructivism in simple terms."</em></li>
+<li>Copy the response into a shared Google Doc.</li>
+<li><strong>Reflect and record:</strong>
+<ul style="margin-top: 10px;">
+<li><em>"Did the AI accurately represent all three theories? Did it miss any key concepts?"</em></li>
+<li><em>"Did the AI show any bias (e.g., favoring one theory over another)? If so, how?"</em></li>
+<li><em>"What does this tell you about the limitations of AI-generated educational content?"</em></li>
+</ul>
+</li>
+<li>Bring your observations to class.</li>
+</ol>
+</div>
+</div>
+</section>
+
+<!-- SECTION 3: Teaching & Learning Activities -->
+<section id="activities" class="section">
+<div class="card">
+<h2>Teaching & Learning Activities (150 minutes)</h2>
+
+<div class="collapsible open">
+<div class="collapsible-header" onclick="toggleCollapsible(this)">
+Introduction (15 minutes – 10% of class time)
+</div>
+<div class="collapsible-content">
+<h4>Pedagogy-Aligned Hook (Social Constructivism)</h4>
+<p><strong>Provocative scenario:</strong> <em>"A student fails math every year but excels in basketball. According to learning theory, why?"</em></p>
+<ul>
+<li>Students pair-share their initial explanations</li>
+<li>Instructor collects responses on <a href="https://padlet.com" target="_blank">Padlet</a> (constructivist collaborative board)</li>
+</ul>
+
+<h4>Pre-Test Review with Misconception Analysis</h4>
+<p>Display top 3 misconceptions from the pre-test (e.g., "Cognitivism is the same as behaviorism because both focus on internal mental states")</p>
+<div class="tool-card">
+<h5>🎯 How to Use Mentimeter</h5>
+<ol>
+<li>Go to <a href="https://www.mentimeter.com" target="_blank">www.mentimeter.com</a></li>
+<li>Create a new presentation and add a "Multiple Choice" question: "Which of these is actually a misconception?"</li>
+<li>Display the join code on the projector</li>
+<li>Students visit <strong>menti.com</strong> and enter the code on their devices</li>
+<li>Live poll results appear; instructor reveals correct answer and explains reasoning</li>
+</ol>
+</div>
+
+<h4>Real-World Connection</h4>
+<p>"Understanding these theories will help you design more effective lessons and adapt to different learners. Today, we will also use AI to explore how these theories apply—and where AI might misrepresent them."</p>
+
+<div class="ai-box">
+<strong>🤖 AI-Generated Scenario Introduction</strong>
+<p>Show an AI-generated explanation of a learning theory from ChatGPT (pre-created by instructor):</p>
+<p style="font-style: italic; margin: 10px 0;">"Behaviorism says learning is just stimulus-response, so teachers just need to reward good behavior."</p>
+<p><strong>Ask students:</strong> "Is this accurate? What is missing?"</p>
+<ul style="margin-top: 10px;">
+<li>Discuss the oversimplification: behaviorism also includes extinction, generalization, and cognitive elements in modern versions</li>
+<li><strong>Model critical questioning:</strong> Instructor demonstrates how to challenge AI: <em>"Does behaviorism account for thinking, or only behavior? Cite a source."</em></li>
+</ul>
+</div>
+</div>
+</div>
+
+<div class="collapsible">
+<div class="collapsible-header" onclick="toggleCollapsible(this)">
+Development Activities (105 minutes – 70% of class time)
+</div>
+<div class="collapsible-content">
+
+<h3>Chunk 1: Behaviorism & Cognitivism (35 minutes)</h3>
+
+<h4>Interactive Lecture with Think-Pair-Share</h4>
+<ul>
+<li>Instructor explains key concepts (classical vs. operant conditioning, information processing model) using animated slides</li>
+<li><strong>After 10 minutes, pause:</strong> "Think of two examples of cognitivism in a classroom. Pair-share with a neighbor. Then we discuss."</li>
+</ul>
+
+<div class="ai-box">
+<strong>🤖 AI-Enabled Activity (Structured AI Interaction)</strong>
+<p><strong>Task:</strong> In pairs, students prompt ChatGPT/Claude: <em>"Give me a real-life example of classical conditioning in education."</em></p>
+<p><strong>Critique:</strong> Evaluate the AI's example. Does it match the definition? Is it accurate? (Many AI examples conflate classical and operant conditioning.)</p>
+<p><strong>Modify:</strong> Pairs rewrite the AI's example to correct any errors, documenting changes.</p>
+<p><strong>Share:</strong> One pair presents the original AI output and their corrected version, explaining reasoning.</p>
+</div>
+
+<div class="tool-card">
+<h5>📝 Quiz: Conditioning Scenarios – Peer Assessment</h5>
+<p>Students answer 3 multiple-choice scenarios, then swap answers with a partner and assess using a simple rubric (accuracy, justification).</p>
+</div>
+
+<h3>Chunk 2: Constructivism & Social Learning (35 minutes)</h3>
+
+<h4>Jigsaw Activity (Social Constructivism)</h4>
+<ul>
+<li>Groups of 4. Each member becomes "expert" on one aspect:
+<ul>
+<li>Piaget's cognitive constructivism</li>
+<li>Vygotsky's social constructivism</li>
+<li>Bandura's social learning theory</li>
+<li>Situated learning</li>
+</ul>
+</li>
+<li>Experts meet and prepare a 2-minute summary. Then return to home group and teach each other.</li>
+</ul>
+
+<div class="ai-box">
+<strong>🤖 AI-Enabled Activity (Collaborative AI-Assisted Problem-Solving)</strong>
+<p><strong>Scenario:</strong> "A student is struggling to understand fractions in math class. Which constructivist approach would you recommend, and why?"</p>
+<p><strong>AI support:</strong> Each group prompts an AI tool: <em>"Give me three constructivist teaching strategies for fractions."</em></p>
+<p><strong>Critique:</strong> Groups evaluate each AI suggestion for:</p>
+<ul style="margin-top: 10px;">
+<li>Alignment with constructivist principles (e.g., does it promote active meaning-making?)</li>
+<li>Practicality in a real classroom</li>
+<li>Potential biases (does AI favor one culture's approach?)</li>
+</ul>
+<p><strong>Final product:</strong> Groups choose one AI suggestion and modify it to better fit their chosen constructivist theory, presenting rationale.</p>
+</div>
+
+<h3>Chunk 3: Comparison & Synthesis (35 minutes)</h3>
+
+<h4>Concept Mapping (Scaffolded Instruction)</h4>
+<ul>
+<li>Instructor provides a partially completed concept map (graphic organizer) comparing the three theories</li>
+<li>Students work in groups to fill in missing elements (key theorists, assumptions, role of teacher, role of assessment)</li>
+<li><strong>Gradual release:</strong> First model one example, then groups complete the rest, then peer-check with adjacent group</li>
+</ul>
+
+<div class="ai-box">
+<strong>🤖 AI-Enabled Synthesis Task</strong>
+<p><strong>Task:</strong> Each group prompts AI: <em>"Create a comparison table of behaviorism, cognitivism, and constructivism including: key theorists, unit of analysis, role of experience, and typical critiques."</em></p>
+<p><strong>Critical interrogation:</strong></p>
+<ul style="margin-top: 10px;">
+<li>Does the table include all required columns?</li>
+<li>Are the critiques accurate? (Many AI tables omit the criticism that behaviorism ignores internal states.)</li>
+<li><strong>Modify:</strong> Groups add missing critiques or correct inaccuracies, documenting why they changed AI's output</li>
+<li><strong>Share:</strong> Gallery walk – groups post their tables on walls; others use sticky notes to add comments ("I agree with your change because…")</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div class="collapsible">
+<div class="collapsible-header" onclick="toggleCollapsible(this)">
+Synthesis & Closure (15 minutes – 10% of class time)
+</div>
+<div class="collapsible-content">
+
+<h4>Post-Test (Misconception Check)</h4>
+<p>Same 3 misconception items from the pre-test. Students answer again via <a href="https://www.mentimeter.com" target="_blank">Mentimeter</a>. Instructor shows comparison of pre- and post-class results to highlight growth.</p>
+
+<h4>Peer-Teaching Summaries</h4>
+<ul>
+<li>Each student writes a 1-minute summary of the biggest thing they learned today</li>
+<li>They share with a neighbor, who adds one insight</li>
+<li>Three volunteers share with the class</li>
+</ul>
+
+<div class="ai-box">
+<strong>🤖 AI Reflection Discussion</strong>
+<p><strong>Class discussion prompts:</strong></p>
+<ul style="margin-top: 10px;">
+<li><em>"How did AI support or hinder your learning today? Share one instance where AI was helpful and one where it was misleading."</em></li>
+<li><em>"When did you need to override AI suggestions? What did that feel like?"</em></li>
+</ul>
+<p><strong>Instructor highlights key lessons:</strong> "AI can summarize but it oversimplifies. Your human judgment is essential to evaluate, correct, and contextualize."</p>
+</div>
+
+<h4>Preview of Next Session</h4>
+<p>"Next time, we will apply these theories to designing a lesson plan. Bring a topic you love to teach."</p>
+
+</div>
+</div>
+</div>
+</section>
+
+<!-- SECTION 4: Assessment Methods -->
+<section id="assessment" class="section">
+<div class="card">
+<h2>Assessment Methods</h2>
+
+<h3>Formative Assessment (During Class)</h3>
+
+<h4>Pedagogy-Aligned Observations</h4>
+<ul>
+<li><strong>Constructivism:</strong> Instructor circulates during jigsaw and concept mapping, noting quality of group dialogue, use of peer explanations, and evidence of meaning-making</li>
+<li><strong>Peer Assessment:</strong> Rubric checklist used by students during scenario quizzes (accuracy, justification, clarity)</li>
+</ul>
+
+<h4>Real-time Polling</h4>
+<div class="tool-card">
+<h5>🎯 Mentimeter Exit Ticket</h5>
+<p><strong>Question:</strong> "Which theory still confuses you? What is one question you have?"</p>
+<p><strong>Setup:</strong></p>
+<ol>
+<li>Create an "Open Ended" question in Mentimeter</li>
+<li>Students submit responses anonymously</li>
+<li>Word cloud displays common themes</li>
+<li>Instructor addresses top confusions in next class</li>
+</ol>
+</div>
+
+<div class="ai-box">
+<strong>🤖 AI-Supported Formative Checks</strong>
+<p>Students submit their AI interaction logs (AI outputs + their critiques) via Google Form.</p>
+<p><strong>Instructor reviews critical engagement:</strong></p>
+<ul style="margin-top: 10px;">
+<li>Are students identifying biases?</li>
+<li>Are they modifying outputs intelligently?</li>
+</ul>
+<p><strong>Quick feedback:</strong> Instructor selects 2–3 examples and shares anonymized exemplars of strong critical engagement during the closure discussion.</p>
+</div>
+
+<h3>Summative Assessment</h3>
+
+<h4>Pedagogy-Aligned Approach: Project-Based Learning (PBL) + Multiple Intelligences</h4>
+<p><strong>Learning Theory Portfolio</strong> includes:</p>
+<ol>
+<li>A <strong>concept map</strong> comparing the three theories (visual-spatial)</li>
+<li>A <strong>written reflection</strong> on how each theory applies to their own learning (intrapersonal)</li>
+<li>A <strong>recorded 5-minute podcast</strong> explaining one theory to a peer (verbal-linguistic)</li>
+<li>A <strong>lesson plan snippet</strong> applying one theory to a specific topic (logical-mathematical)</li>
+</ol>
+
+<h4>Rubric (Pedagogy-Linked Criteria)</h4>
+<ul>
+<li><strong>Constructivism:</strong> Depth of personal meaning-making in reflection (30%)</li>
+<li><strong>Peer Assessment:</strong> Evidence of evaluating others' work based on rubric (20%)</li>
+<li><strong>PBL:</strong> Completeness and coherence of portfolio as a whole (20%)</li>
+<li><strong>Critical AI Engagement</strong> (30%) – see below</li>
+</ul>
+
+<div class="ai-box">
+<strong>🤖 AI-Integrated Assessment Requirements</strong>
+<p><strong>Requirement:</strong> Students may use AI to brainstorm or generate initial drafts for any portfolio component, but <strong>must</strong>:</p>
+<ol style="margin-top: 10px;">
+<li>Disclose which sections used AI, and for what purpose</li>
+<li><strong>Evaluate</strong> AI outputs: For each AI-related component, submit a short paragraph explaining:
+<ul style="margin-top: 8px;">
+<li><em>"What did the AI suggest? What was accurate? What was missing or biased?"</em></li>
+<li><em>"What changes did you make? Why did you override the AI's suggestion?"</em></li>
+<li><em>"Where did your own human judgment prove essential?"</em></li>
+</ul>
+</li>
+<li><strong>Document</strong> their decision-making process in a table format</li>
+</ol>
+
+<h5 style="margin-top: 15px;">Example Documentation Table:</h5>
+<table>
+<tr>
+<th>AI-Generated Content</th>
+<th>Did You Use It?</th>
+<th>Modifications Made</th>
+<th>Rationale (Why human judgment took precedence)</th>
+</tr>
+<tr>
+<td>Example comparison table</td>
+<td>Modified</td>
+<td>Added missing critique about behaviorism ignoring internal states</td>
+<td>AI omitted this; I know it's a standard critique from our reading</td>
+</tr>
+<tr>
+<td>Podcast script draft</td>
+<td>Rejected entirely</td>
+<td>I wrote my own script because AI's tone was too formal for a peer audience</td>
+<td>AI didn't understand the context</td>
+</tr>
+</table>
+
+<h5 style="margin-top: 15px;">Rubric – "Critical AI Engagement" (30% of total)</h5>
+<ul>
+<li><strong>90–100%:</strong> Excellent evaluation of AI outputs; clear evidence of independent judgment; identifies subtle biases; demonstrates how human reasoning improved the final product</li>
+<li><strong>70–89%:</strong> Good evaluation; some modifications but limited depth; most AI suggestions accepted without strong rationale</li>
+<li><strong>50–69%:</strong> Minimal evaluation; AI used uncritically; no documentation of modifications</li>
+<li><strong>&lt;50%:</strong> No disclosure; AI use hidden; no evidence of critical engagement</li>
+</ul>
+</div>
+</div>
+</section>
+
+<!-- SECTION 5: Constructive Alignment Matrix -->
+<section id="alignment" class="section">
+<div class="card">
+<h2>Constructive Alignment Matrix</h2>
+<p><strong>This matrix demonstrates how learning outcomes, teaching activities, assessment methods, pedagogical approaches, and AI integration are aligned.</strong></p>
+
+<div style="overflow-x: auto;">
+<table>
+<tr>
+<th>Learning Outcome</th>
+<th>Teaching Activity</th>
+<th>Assessment Method</th>
+<th>Pedagogy Link</th>
+<th>AI Integration Link</th>
+</tr>
+<tr>
+<td>1. Explain key principles of behaviorism, cognitivism, and constructivism</td>
+<td>Interactive lecture + AI-generated definition critique</td>
+<td>Pre-class quiz + AI evaluation reflection</td>
+<td>Social Constructivism (collaborative meaning-making through AI critique)</td>
+<td>AI used to generate definitions; students critically evaluate accuracy</td>
+</tr>
+<tr>
+<td>2. Compare and contrast the three learning theories using appropriate terminology</td>
+<td>Jigsaw activity + concept mapping + AI comparison table synthesis</td>
+<td>Portfolio concept map + written comparison summary</td>
+<td>Constructivism (jigsaw builds shared understanding)</td>
+<td>AI generates comparison table; students modify inaccuracies</td>
+</tr>
+<tr>
+<td>3. Apply learning theories to real-world educational scenarios</td>
+<td>AI-assisted problem-solving (constructivist strategies for fractions)</td>
+<td>Scenario-based peer assessment quiz</td>
+<td>Scaffolded Instruction (gradual release from AI to independent evaluation)</td>
+<td>AI provides initial strategies; students evaluate, modify, justify changes</td>
+</tr>
+<tr>
+<td>4. Critically evaluate AI-generated educational content for accuracy, bias, and completeness</td>
+<td>All AI interaction tasks (pre-class, in-class, synthesis)</td>
+<td>Portfolio critical AI engagement documentation</td>
+<td>Critical Inquiry (questioning assumptions, evaluating sources)</td>
+<td>Core AI outcome: evaluate, modify, and override AI as needed</td>
+</tr>
+<tr>
+<td>5. Articulate independent reasoning about when and how to use AI in learning</td>
+<td>Reflection discussion + peer-teaching summaries</td>
+<td>Exit ticket + portfolio reflection</td>
+<td>Social Constructivism (co-construction of norms around AI use)</td>
+<td>Students share instances of overriding AI; reflect on human judgment</td>
+</tr>
+</table>
+</div>
+</div>
+</section>
+
+<!-- SECTION 6: Resources & Technology -->
+<section id="resources" class="section">
+<div class="card">
+<h2>Required Resources & Technology</h2>
+
+<h3>Learning Management System</h3>
+<p>Moodle/Canvas (for pre-class quiz, AI log submission, portfolio upload)</p>
+
+<h3>Pedagogy-Specific Platforms</h3>
+<div class="collapsible">
+<div class="collapsible-header" onclick="toggleCollapsible(this)">
+📌 Padlet (Social Constructivism)
+</div>
+<div class="collapsible-content">
+<p><strong>Purpose:</strong> Collaborative brainstorming</p>
+<p><strong>How to Use:</strong></p>
+<ol>
+<li>Create a free account at <a href="https://padlet.com" target="_blank">padlet.com</a></li>
+<li>Click "Make a Padlet" and choose "Wall" format</li>
+<li>Set the title to "Learning Theory Scenarios"</li>
+<li>Share the link with students (QR code or direct link)</li>
+<li>Students add sticky notes with their initial explanations</li>
+<li>Everyone can read and react to each other's posts</li>
+</ol>
+</div>
+</div>
+
+<div class="collapsible">
+<div class="collapsible-header" onclick="toggleCollapsible(this)">
+🎯 Mentimeter (Interactive Polls)
+</div>
+<div class="collapsible-content">
+<p><strong>Purpose:</strong> Live polling and misconception checks</p>
+<p><strong>How to Use:</strong></p>
+<ol>
+<li>Sign up at <a href="https://www.mentimeter.com" target="_blank">mentimeter.com</a></li>
+<li>Create a new presentation</li>
+<li>Add questions (Multiple Choice, Open Ended, Word Cloud)</li>
+<li>Present the slide showing the unique code (e.g., "1234 5678")</li>
+<li>Students go to <strong>menti.com</strong> on their devices and enter the code</li>
+<li>Responses appear in real-time on the projected screen</li>
+</ol>
+</div>
+</div>
+
+<div class="collapsible">
+<div class="collapsible-header" onclick="toggleCollapsible(this)">
+📝 Hypothesis (Collaborative Annotation)
+</div>
+<div class="collapsible-content">
+<p><strong>Purpose:</strong> Collaborative reading and annotation</p>
+<p><strong>How to Use:</strong></p>
+<ol>
+<li>Visit <a href="https://web.hypothes.is" target="_blank">web.hypothes.is</a></li>
+<li>Create a free educator account</li>
+<li>Create a private group for your class</li>
+<li>Share the reading URL with students</li>
+<li>Students install the Hypothesis browser extension or use via.hypothes.is/[URL]</li>
+<li>Students highlight text and add comments, questions, or replies to peers</li>
+</ol>
+</div>
+</div>
+
+<div class="collapsible">
+<div class="collapsible-header" onclick="toggleCollapsible(this)">
+🎴 Quizlet (Flashcards & Peer Feedback)
+</div>
+<div class="collapsible-content">
+<p><strong>Purpose:</strong> Flashcards for peer feedback on learning theorists</p>
+<p><strong>How to Use:</strong></p>
+<ol>
+<li>Go to <a href="https://quizlet.com" target="_blank">quizlet.com</a></li>
+<li>Create a new study set with key theorists and their contributions</li>
+<li>Share the link with students</li>
+<li>Students study using Learn mode, Flashcards, or Test mode</li>
+<li>Peers can rate and comment on each other's custom study sets</li>
+</ol>
+</div>
+</div>
+
+<h3>AI Tools and Platforms</h3>
+<div class="ai-box">
+<p><strong>🤖 Required AI Tools:</strong></p>
+<ul style="margin-top: 10px;">
+<li><strong><a href="https://chat.openai.com" target="_blank" style="color: white; text-decoration: underline;">ChatGPT</a></strong> or <strong><a href="https://claude.ai" target="_blank" style="color: white; text-decoration: underline;">Claude</a></strong> – Each student needs access</li>
+<li><strong>Google Docs</strong> – Shared documentation of AI outputs and critiques</li>
+</ul>
+
+<p style="margin-top: 15px;"><strong>AI Literacy Resources:</strong></p>
+<ul style="margin-top: 10px;">
+<li>Handout: <em>"How to Critically Evaluate AI Outputs: A Checklist"</em> (covers bias, hallucination, overgeneralization, missing nuance)</li>
+<li>Example of AI bias: Pre-prepared screenshot of ChatGPT favoring Western-centric educational contexts</li>
+</ul>
+
+<p style="margin-top: 15px;"><strong>AI Feedback Tool:</strong></p>
+<ul style="margin-top: 10px;">
+<li><strong>Gradescope</strong> – For AI-assisted rubric scoring with instructor override</li>
+</ul>
+</div>
+
+<h3>Physical/Digital Materials</h3>
+<ul>
+<li>Printed concept map templates (scaffolding)</li>
+<li>Sticky notes for gallery walk</li>
+<li>Projector for live AI demonstrations</li>
+</ul>
+</div>
+</section>
+
+<!-- SECTION 7: Differentiation & Inclusivity -->
+<section id="differentiation" class="section">
+<div class="card">
+<h2>Differentiation & Inclusivity</h2>
+
+<h3>Pedagogy-Tailored Supports</h3>
+<ul>
+<li><strong>Multiple Intelligences:</strong> Portfolio options cater to visual, verbal, intrapersonal, logical learners</li>
+<li><strong>Constructivism:</strong> Struggling learners receive additional sentence starters for AI critique ("The AI said…, but I think… because…")</li>
+<li><strong>Peer Assessment:</strong> Differentiated peer-rubric – simpler version for novice assessors (3 criteria) vs. advanced version (5 criteria)</li>
+</ul>
+
+<h3>Extension Activities for Advanced Learners</h3>
+<ul>
+<li>Create a mini-lesson plan using TPACK framework integrating AI tools (beyond basic portfolio)</li>
+<li>Evaluate AI-generated lesson plans for a specific theory and propose improvements</li>
+<li>Prompt AI to generate counterarguments to the theories (e.g., "Criticize constructivism from a behaviorist perspective"), then evaluate the critique</li>
+</ul>
+
+<div class="ai-box">
+<strong>🤖 AI-Supported Differentiation</strong>
+
+<h4 style="color: white; margin-top: 15px;">Struggling Learners</h4>
+<ul style="margin-top: 10px;">
+<li>AI tools provide simplified explanations (e.g., "Explain behaviorism like I'm 10") with guided prompts to evaluate accuracy</li>
+<li>Instructor pre-loads a "safe" AI prompt template</li>
+<li>Step-by-step AI prompt guide with examples</li>
+</ul>
+
+<h4 style="color: white; margin-top: 15px;">Advanced Learners</h4>
+<ul style="margin-top: 10px;">
+<li>Prompt AI to generate counterarguments to the theories</li>
+<li>Open-ended AI challenges with minimal scaffolding</li>
+<li>Create "AI vs. Human Debate": argue for human-centric vs. AI-assisted learning</li>
+</ul>
+
+<h4 style="color: white; margin-top: 15px;">Accessibility</h4>
+<ul style="margin-top: 10px;">
+<li>AI-generated captions for all video materials (via auto-transcribe)</li>
+<li>Text-to-speech for AI outputs (for students with reading difficulties)</li>
+<li>Language translation via AI (e.g., Google Translate for non-native English speakers)</li>
+</ul>
+
+<h4 style="color: white; margin-top: 15px;">AI Familiarity Accommodations</h4>
+<ul style="margin-top: 10px;">
+<li><strong>Beginners:</strong> Step-by-step AI prompt guide with examples</li>
+<li><strong>Experienced:</strong> Open-ended AI challenges with minimal scaffolding</li>
+</ul>
+</div>
+
+<h3>Universal Supports</h3>
+<ul>
+<li>Captioned videos for all pre-class materials</li>
+<li>Tactile concept map templates for kinesthetic learners</li>
+<li>Multiple formats for assessment (visual, audio, written, practical)</li>
+</ul>
+</div>
+</section>
+
+<!-- SECTION 8: Reflection & Improvement -->
+<section id="reflection" class="section">
+<div class="card">
+<h2>Reflection & Improvement</h2>
+
+<h3>Pedagogy-Specific Success Indicators</h3>
+<ul>
+<li><strong>Constructivism:</strong> Did students reference each other's ideas in discussions? Did AI critique move beyond "it's wrong" to "it's incomplete"?</li>
+<li><strong>Peer Assessment:</strong> Did students use rubric consistently? Were calibration exercises effective?</li>
+<li><strong>PBL:</strong> Portfolio completeness and depth of personal reflection</li>
+</ul>
+
+<h3>Student Feedback (Pedagogy-Aligned)</h3>
+<div class="tool-card">
+<h5>📊 TPACK Self-Evaluation Form</h5>
+<p>Students rate their own use of AI, critical thinking, and collaboration.</p>
+<p><strong>Questions:</strong></p>
+<ul>
+<li><em>"Which activity helped you understand the theories best?"</em> (open-ended)</li>
+<li><em>"Rate the AI tasks: Were they confusing, helpful, or just average?"</em></li>
+<li><em>"Did you feel you could challenge the AI's outputs, or did you feel you had to accept them?"</em> (Likert scale)</li>
+</ul>
+</div>
+
+<div class="ai-box">
+<strong>🤖 AI-Specific Reflection</strong>
+
+<h4 style="color: white; margin-top: 15px;">Student Feedback on AI Integration</h4>
+<ul style="margin-top: 10px;">
+<li>"Did AI tools enhance or distract from your learning? Provide one example of each."</li>
+<li>"Were you able to maintain your own thinking when using AI? Explain."</li>
+</ul>
+
+<h4 style="color: white; margin-top: 15px;">Instructor Reflection on AI Effectiveness</h4>
+<ul style="margin-top: 10px;">
+<li><strong>Data:</strong> Number of students who identified AI bias in pre-class task</li>
+<li><strong>Critical incidents:</strong> Moments where students strongly disagreed with AI and defended their reasoning</li>
+<li><strong>Challenges:</strong> Students who accepted AI uncritically – what support do they need next time?</li>
+</ul>
+
+<h4 style="color: white; margin-top: 15px;">Data on Student Critical Engagement with AI</h4>
+<ul style="margin-top: 10px;">
+<li>Collected from AI logs: instances where AI outputs were rejected, modified, or accepted with justification</li>
+<li>Compare pre-class vs. in-class: Did students become more critical over time?</li>
+</ul>
+</div>
+
+<h3>Modification Strategies Based on Pedagogical Theory</h3>
+<ul>
+<li><strong>Constructivism:</strong> If students struggled to critique AI, add a structured "AI evaluation sentence starter" handout before the next class</li>
+<li><strong>Peer Assessment:</strong> If rubric scores were inconsistent, conduct a calibration session with AI-generated sample submissions</li>
+<li><strong>AI Integration:</strong> If too many students overly relied on AI, increase emphasis on independent judgment in future prompts (e.g., require students to answer first, <em>then</em> compare with AI)</li>
+<li><strong>Differentiation:</strong> If advanced learners felt under-challenged, add "AI vs. Human Debate" extension: students argue for human-centric vs. AI-assisted learning</li>
+</ul>
+
+<h3>Deployment Checklist</h3>
+<div class="checkbox-item">
+<input type="checkbox" id="check1" onchange="updateProgress()">
+<label for="check1">All external tools tested (Padlet, Mentimeter, Hypothesis)</label>
+</div>
+<div class="checkbox-item">
+<input type="checkbox" id="check2" onchange="updateProgress()">
+<label for="check2">AI tools accessible to all students (accounts created)</label>
+</div>
+<div class="checkbox-item">
+<input type="checkbox" id="check3" onchange="updateProgress()">
+<label for="check3">Pre-class materials uploaded to LMS</label>
+</div>
+<div class="checkbox-item">
+<input type="checkbox" id="check4" onchange="updateProgress()">
+<label for="check4">Concept map templates printed</label>
+</div>
+<div class="checkbox-item">
+<input type="checkbox" id="check5" onchange="updateProgress()">
+<label for="check5">AI literacy handout prepared</label>
+</div>
+<div class="checkbox-item">
+<input type="checkbox" id="check6" onchange="updateProgress()">
+<label for="check6">Rubrics finalized and shared with students</label>
+</div>
+<div class="checkbox-item">
+<input type="checkbox" id="check7" onchange="updateProgress()">
+<label for="check7">Portfolio submission form created</label>
+</div>
+<div class="checkbox-item">
+<input type="checkbox" id="check8" onchange="updateProgress()">
+<label for="check8">Differentiation materials prepared (sentence starters, simplified rubrics)</label>
+</div>
+
+<button class="btn btn-reset" onclick="resetProgress()">Reset Progress</button>
+</div>
+</section>
+
+</main>
+</div>
+
+<script>
+// Navigation and section management
+function showSection(sectionId) {
+  // Hide all sections
+  const sections = document.querySelectorAll('.section');
+  sections.forEach(section => section.classList.remove('active'));
+
+  // Remove active class from all nav buttons
+  const buttons = document.querySelectorAll('.nav-btn');
+  buttons.forEach(btn => btn.classList.remove('active'));
+
+  // Show selected section
+  document.getElementById(sectionId).classList.add('active');
+
+  // Highlight active button
+  event.target.classList.add('active');
+
+  // Save current section to localStorage
+  localStorage.setItem('currentSection', sectionId);
+
+  // Scroll to top
+  window.scrollTo(0, 0);
+}
+
+// Collapsible sections
+function toggleCollapsible(element) {
+  const collapsible = element.parentElement;
+  collapsible.classList.toggle('open');
+}
+
+// Progress tracking
+function updateProgress() {
+  const checkboxes = document.querySelectorAll('.checkbox-item input[type="checkbox"]');
+  const checkedCount = document.querySelectorAll('.checkbox-item input[type="checkbox"]:checked').length;
+  const totalCount = checkboxes.length;
+  const percentage = (checkedCount / totalCount) * 100;
+
+  document.getElementById('progressFill').style.width = percentage + '%';
+
+  // Update checkbox item styling
+  checkboxes.forEach(checkbox => {
+    const item = checkbox.parentElement;
+    if (checkbox.checked) {
+      item.classList.add('checked');
+    } else {
+      item.classList.remove('checked');
+    }
+  });
+
+  // Save progress to localStorage
+  const progressData = {};
+  checkboxes.forEach((checkbox, index) => {
+    progressData['check' + (index + 1)] = checkbox.checked;
+  });
+  localStorage.setItem('lessonProgress', JSON.stringify(progressData));
+}
+
+function resetProgress() {
+  if (confirm('Are you sure you want to reset all progress? This cannot be undone.')) {
+    const checkboxes = document.querySelectorAll('.checkbox-item input[type="checkbox"]');
+    checkboxes.forEach(checkbox => {
+      checkbox.checked = false;
+      checkbox.parentElement.classList.remove('checked');
+    });
+    updateProgress();
+    localStorage.removeItem('lessonProgress');
+  }
+}
+
+// Load saved progress on page load
+window.addEventListener('DOMContentLoaded', function() {
+  // Load saved section
+  const savedSection = localStorage.getItem('currentSection');
+  if (savedSection) {
+    const sections = document.querySelectorAll('.section');
+    sections.forEach(section => section.classList.remove('active'));
+    document.getElementById(savedSection).classList.add('active');
+
+    const buttons = document.querySelectorAll('.nav-btn');
+    buttons.forEach(btn => {
+      btn.classList.remove('active');
+      if (btn.textContent.toLowerCase().includes(savedSection)) {
+        btn.classList.add('active');
+      }
+    });
+  }
+
+  // Load saved progress
+  const savedProgress = localStorage.getItem('lessonProgress');
+  if (savedProgress) {
+    const progressData = JSON.parse(savedProgress);
+    Object.keys(progressData).forEach(key => {
+      const checkbox = document.getElementById(key);
+      if (checkbox) {
+        checkbox.checked = progressData[key];
+      }
+    });
+  }
+  updateProgress();
+});
+
+// Add keyboard navigation
+document.addEventListener('keydown', function(event) {
+  const sections = ['outcomes', 'preclass', 'activities', 'assessment', 'alignment', 'resources', 'differentiation', 'reflection'];
+  const currentSection = document.querySelector('.section.active').id;
+  const currentIndex = sections.indexOf(currentSection);
+
+  if (event.key === 'ArrowRight' && currentIndex < sections.length - 1) {
+    const nextButton = document.querySelectorAll('.nav-btn')[currentIndex + 1];
+    nextButton.click();
+  } else if (event.key === 'ArrowLeft' && currentIndex > 0) {
+    const prevButton = document.querySelectorAll('.nav-btn')[currentIndex - 1];
+    prevButton.click();
+  }
+});
+</script>
+
 </body>
 </html>
