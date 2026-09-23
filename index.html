@@ -1,16 +1,1101 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Basic HTML Project</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Professionalism in Local and International Contexts</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .hero {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .hero img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .hero-meta {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .meta-item {
+            background: #f7f9fc;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .meta-item strong {
+            color: #667eea;
+        }
+
+        .nav-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .nav-tab {
+            padding: 12px 24px;
+            background: #f7f9fc;
+            border: 2px solid transparent;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            flex: 1;
+            min-width: 150px;
+            text-align: center;
+        }
+
+        .nav-tab:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .nav-tab.active {
+            background: #667eea;
+            color: white;
+            border-color: #764ba2;
+        }
+
+        .section {
+            background: white;
+            border-radius: 15px;
+            padding: 35px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section h2 {
+            color: #667eea;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #f7f9fc;
+        }
+
+        .card {
+            background: #f7f9fc;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+        }
+
+        .card h3 {
+            color: #764ba2;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .ilo-list {
+            list-style: none;
+            counter-reset: ilo-counter;
+        }
+
+        .ilo-list li {
+            counter-increment: ilo-counter;
+            margin-bottom: 15px;
+            padding-left: 40px;
+            position: relative;
+        }
+
+        .ilo-list li::before {
+            content: counter(ilo-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #667eea;
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .collapsible {
+            background: #667eea;
+            color: white;
+            cursor: pointer;
+            padding: 18px;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 1.1rem;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            width: 100%;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .collapsible:hover {
+            background: #764ba2;
+        }
+
+        .collapsible::after {
+            content: '\002B';
+            color: white;
+            font-weight: bold;
+            float: right;
+            margin-left: 5px;
+        }
+
+        .collapsible.active::after {
+            content: "\2212";
+        }
+
+        .collapsible-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background: #f7f9fc;
+            border-radius: 0 0 10px 10px;
+            margin-bottom: 15px;
+        }
+
+        .collapsible-content-inner {
+            padding: 20px;
+        }
+
+        .quiz-container {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+        .quiz-question {
+            margin-bottom: 25px;
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .quiz-option {
+            padding: 15px;
+            background: #f7f9fc;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-option:hover {
+            border-color: #667eea;
+            background: #e8ecff;
+        }
+
+        .quiz-option.correct {
+            background: #d4edda;
+            border-color: #28a745;
+        }
+
+        .quiz-option.incorrect {
+            background: #f8d7da;
+            border-color: #dc3545;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+        }
+
+        .btn:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        th {
+            background: #667eea;
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background: #f7f9fc;
+        }
+
+        .tool-link {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 16px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            margin: 5px 5px 5px 0;
+            transition: all 0.3s ease;
+        }
+
+        .tool-link:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+        }
+
+        .progress-tracker {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .progress-bar {
+            background: #f0f0f0;
+            height: 25px;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            height: 100%;
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.85rem;
+        }
+
+        .alert-box {
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid;
+        }
+
+        .alert-info {
+            background: #d1ecf1;
+            border-color: #0c5460;
+            color: #0c5460;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            border-color: #28a745;
+            color: #155724;
+        }
+
+        .alert-warning {
+            background: #fff3cd;
+            border-color: #ffc107;
+            color: #856404;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .nav-tabs {
+                flex-direction: column;
+            }
+
+            .nav-tab {
+                min-width: 100%;
+            }
+
+            .section {
+                padding: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Hello World!</h1>
-    <p>Welcome to your new project.</p>
-  </div>
-  <script src="script.js"></script>
+    <div class="container">
+        <div class="hero">
+            <img src="http://localhost:9000/ai-innohub-materials/users/814facba-007c-46dc-a8bb-b9c373b3650e/chat/1789900540438-20260903143426_55_398.jpg" alt="Teacher Professionalism">
+            <h1>Teacher Professionalism in Local and International Contexts</h1>
+            <div class="hero-meta">
+                <div class="meta-item"><strong>Duration:</strong> 150 minutes</div>
+                <div class="meta-item"><strong>Level:</strong> First-year Undergraduates</div>
+                <div class="meta-item"><strong>Class Size:</strong> 90 students</div>
+                <div class="meta-item"><strong>Language:</strong> English</div>
+                <div class="meta-item"><strong>Pedagogy:</strong> Critical Inquiry Seminar</div>
+            </div>
+        </div>
+
+        <div class="progress-tracker">
+            <h3>Your Learning Progress</h3>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill" style="width: 0%;">0%</div>
+            </div>
+        </div>
+
+        <div class="nav-tabs" id="navTabs">
+            <div class="nav-tab active" data-section="ilos">Learning Outcomes</div>
+            <div class="nav-tab" data-section="preclass">Pre-Class Prep</div>
+            <div class="nav-tab" data-section="activities">Teaching Activities</div>
+            <div class="nav-tab" data-section="assessment">Assessment</div>
+            <div class="nav-tab" data-section="resources">Resources</div>
+            <div class="nav-tab" data-section="differentiation">Differentiation</div>
+            <div class="nav-tab" data-section="alignment">Alignment Matrix</div>
+        </div>
+
+        <div class="section active" id="ilos">
+            <h2>Intended Learning Outcomes (ILOs)</h2>
+            <p style="margin-bottom: 20px;"><em>By the end of this session, students will be able to:</em></p>
+
+            <ul class="ilo-list">
+                <li><strong>Analyze</strong> the key dimensions of teacher professionalism as defined in local (e.g., Hong Kong) and international (e.g., OECD, UNESCO) frameworks, identifying tensions and convergences.</li>
+                <li><strong>Evaluate</strong> the influence of cultural, political, and economic factors on conceptions of teacher professionalism using comparative case studies.</li>
+                <li><strong>Synthesize</strong> a personal definition of professionalism that integrates multiple perspectives and demonstrates critical awareness of context.</li>
+                <li><strong>Critically interrogate</strong> AI-generated summaries of policy documents on teacher professionalism, identifying biases, omissions, and limitations in the outputs.</li>
+                <li><strong>Decide</strong> when and how to rely on AI tools versus independent judgment when analyzing professional standards, with documented rationale.</li>
+            </ul>
+
+            <div class="card">
+                <h3>Bloom's Taxonomy Levels</h3>
+                <p>This lesson targets higher-order thinking skills: <strong>Analyze, Evaluate, Synthesize, Critically interrogate, and Decide</strong> (for AI literacy).</p>
+            </div>
+        </div>
+
+        <div class="section" id="preclass">
+            <h2>Pre-Class Preparation</h2>
+
+            <div class="card">
+                <h3>📚 Pre-Reading Materials</h3>
+                <ul>
+                    <li><strong>Sachs, J. (2016)</strong> – "Teacher Professionalism: Changing Discourses in a Globalized World" (excerpt)</li>
+                    <li><strong>Hong Kong Education Bureau (2020)</strong> – "Teacher Professional Standards" (summary)</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>🎯 Diagnostic Quiz</h3>
+                <p>Complete this 5-question quiz before class to assess your baseline understanding:</p>
+                <div class="quiz-container">
+                    <div class="quiz-question">
+                        <p><strong>Question 1:</strong> Which of the following is NOT a characteristic of teacher professionalism according to the OECD?</p>
+                        <div class="quiz-options">
+                            <div class="quiz-option" data-correct="false">A. Specialized knowledge and skills</div>
+                            <div class="quiz-option" data-correct="false">B. Autonomy in professional practice</div>
+                            <div class="quiz-option" data-correct="true">C. Guaranteed lifetime employment</div>
+                            <div class="quiz-option" data-correct="false">D. Commitment to ethical standards</div>
+                        </div>
+                        <div class="alert-box alert-info" style="display:none; margin-top:10px;"></div>
+                    </div>
+
+                    <div class="quiz-question">
+                        <p><strong>Question 2:</strong> Teacher professionalism in East Asian contexts often emphasizes:</p>
+                        <div class="quiz-options">
+                            <div class="quiz-option" data-correct="false">A. Individual autonomy above all</div>
+                            <div class="quiz-option" data-correct="true">B. Moral responsibility and community service</div>
+                            <div class="quiz-option" data-correct="false">C. Market-driven performance only</div>
+                            <div class="quiz-option" data-correct="false">D. Rejection of professional standards</div>
+                        </div>
+                        <div class="alert-box alert-info" style="display:none; margin-top:10px;"></div>
+                    </div>
+
+                    <div class="quiz-question">
+                        <p><strong>Question 3:</strong> Which framework provides international comparative data on teaching and learning?</p>
+                        <div class="quiz-options">
+                            <div class="quiz-option" data-correct="false">A. PISA only</div>
+                            <div class="quiz-option" data-correct="true">B. TALIS (Teaching and Learning International Survey)</div>
+                            <div class="quiz-option" data-correct="false">C. World Bank Education Index</div>
+                            <div class="quiz-option" data-correct="false">D. National Assessment Programs</div>
+                        </div>
+                        <div class="alert-box alert-info" style="display:none; margin-top:10px;"></div>
+                    </div>
+
+                    <button class="btn" onclick="submitQuiz()">Submit Quiz</button>
+                    <div id="quizResult" style="margin-top: 15px;"></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>💭 Guiding Questions</h3>
+                <p>Reflect on these questions as you complete your reading:</p>
+                <ul>
+                    <li>What tensions exist between Western notions of teacher autonomy and East Asian emphasis on moral responsibility?</li>
+                    <li>How do you think AI would define teacher professionalism? What might it miss?</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>🤖 Pre-Class AI Engagement Task</h3>
+                <p>Before class, interact with an AI tool (ChatGPT or Claude):</p>
+                <div class="alert-box alert-info">
+                    <strong>Prompt to use:</strong> "Summarize the key elements of teacher professionalism in the OECD Teaching and Learning International Survey (TALIS) framework."
+                </div>
+                <p><strong>Reflection prompt:</strong> "What strengths and limitations do you see in the AI-generated summary? Note one point you disagree with or find incomplete."</p>
+            </div>
+        </div>
+
+        <div class="section" id="activities">
+            <h2>Teaching & Learning Activities</h2>
+
+            <button class="collapsible">Introduction (15 minutes – 10% of class)</button>
+            <div class="collapsible-content">
+                <div class="collapsible-content-inner">
+                    <div class="card">
+                        <h3>Provocative Hook</h3>
+                        <p><strong>Statement:</strong> "Teacher professionalism is a Western construct imposed on the rest of the world."</p>
+                        <p>Students use <a href="https://www.mentimeter.com" target="_blank" class="tool-link">Mentimeter</a> to indicate agreement/disagreement.</p>
+
+                        <div class="alert-box alert-info">
+                            <strong>How to use Mentimeter:</strong>
+                            <ol>
+                                <li>Instructor creates account at <a href="https://www.mentimeter.com" target="_blank">mentimeter.com</a></li>
+                                <li>Create a "Scales" question with the statement</li>
+                                <li>Display unique code for students to join via phones</li>
+                                <li>Students visit menti.com and enter code</li>
+                                <li>View live results as students respond</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3>AI-Generated Scenario</h3>
+                        <p>Show two AI-generated paragraphs:</p>
+                        <ul>
+                            <li><strong>Finland:</strong> High autonomy focus</li>
+                            <li><strong>Shanghai:</strong> Accountability focus</li>
+                        </ul>
+                        <p><strong>Critical prompt:</strong> "Which shows stronger evidence? What biases might AI have introduced?"</p>
+                    </div>
+
+                    <div class="card">
+                        <h3>Real-World Connection</h3>
+                        <p>Recent news about teacher conduct in local vs. international schools.</p>
+                    </div>
+                </div>
+            </div>
+
+            <button class="collapsible">Part A: Conceptual Mapping (30 minutes)</button>
+            <div class="collapsible-content">
+                <div class="collapsible-content-inner">
+                    <div class="card">
+                        <h3>Think-Pair-Share (15 minutes)</h3>
+                        <p><strong>Individual (5 min):</strong> Write 3–5 core elements of teacher professionalism using pre-reading.</p>
+                        <p><strong>Pair (5 min):</strong> Compare with partner; add AI-generated definition as third perspective.</p>
+                        <p><strong>Share (5 min):</strong> Instructor collects responses on <a href="https://padlet.com" target="_blank" class="tool-link">Padlet</a>.</p>
+
+                        <div class="alert-box alert-info">
+                            <strong>How to use Padlet:</strong>
+                            <ol>
+                                <li>Create account at <a href="https://padlet.com" target="_blank">padlet.com</a></li>
+                                <li>Choose "Wall" format for brainstorming</li>
+                                <li>Create two sections: "Local" and "International"</li>
+                                <li>Share Padlet link or QR code with students</li>
+                                <li>Students add definitions as sticky notes</li>
+                                <li>Organize responses in real-time</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3>AI-Enabled Critical Activity (10 minutes)</h3>
+                        <p><strong>AI Statement:</strong> "Teacher professionalism is universally defined by qualifications, ethical codes, and continuous professional development."</p>
+                        <p><strong>Small groups (3–4 students) critique:</strong></p>
+                        <ul>
+                            <li>What cultural assumptions are embedded?</li>
+                            <li>How would this change if AI had been trained on African or South American education systems?</li>
+                            <li>List one aspect AI missed about local contexts (e.g., Hong Kong's emphasis on serving the community).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <button class="collapsible">Part B: Comparative Case Studies (50 minutes)</button>
+            <div class="collapsible-content">
+                <div class="collapsible-content-inner">
+                    <div class="card">
+                        <h3>Case Study Groups</h3>
+                        <p>Groups of 5–6 students each receive one case study:</p>
+
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Group</th>
+                                    <th>Case Study Focus</th>
+                                    <th>Country/Region</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>High autonomy, trust-based</td>
+                                    <td>Finland</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Performativity and examination pressure</td>
+                                    <td>Shanghai, China</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Community-oriented, resource-scarce</td>
+                                    <td>Kenya</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>Market-driven reforms</td>
+                                    <td>Chile</td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>Hybrid model (British + Chinese)</td>
+                                    <td>Hong Kong</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="card">
+                        <h3>Step 1: AI Profiling (15 minutes)</h3>
+                        <p>Students read 1-page case handout and use AI to generate a professionalism profile of their country.</p>
+                        <p><strong>Task:</strong> "Prompt AI to list top 3 characteristics of teacher professionalism in your case country. Compare with handout. Where does AI over-generalize or rely on stereotypes? Revise the AI output to be more culturally accurate. Document your changes."</p>
+                    </div>
+
+                    <div class="card">
+                        <h3>Step 2: Jigsaw Activity (20 minutes)</h3>
+                        <p>Reshuffle groups so each new group has one member from each case study. Each expert presents their case and their critique of AI's portrayal. Group uses shared Padlet to identify common themes and unique variations.</p>
+                    </div>
+
+                    <div class="card">
+                        <h3>Step 3: Full Class Synthesis (15 minutes)</h3>
+                        <p>Each group shares one key tension. Instructor records on whiteboard using TPACK-like diagram: <strong>Culture × Policy × AI Representation</strong>.</p>
+                    </div>
+                </div>
+            </div>
+
+            <button class="collapsible">Part C: Applying Conceptual Understanding (30 minutes)</button>
+            <div class="collapsible-content">
+                <div class="collapsible-content-inner">
+                    <div class="card">
+                        <h3>Elevator Pitch Task (20 minutes)</h3>
+                        <p>In pairs, prepare a 2-minute elevator pitch: <em>"How would you define teacher professionalism for a new international school in Hong Kong that hires teachers from both local and overseas backgrounds?"</em></p>
+                        <p><strong>AI component:</strong> First ask ChatGPT to draft a definition. Then annotate the draft: underline parts you accept, strike through parts you reject, and add comments explaining <em>why</em> human judgment overrode AI.</p>
+                    </div>
+
+                    <div class="card">
+                        <h3>Peer Feedback (10 minutes)</h3>
+                        <p>Each pair presents to another pair. Listeners use critical evaluation checklist:</p>
+                        <ul>
+                            <li>Did the presenter question their own assumptions?</li>
+                            <li>Did they account for both local and international expectations?</li>
+                            <li>How did they justify overriding AI suggestions?</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <button class="collapsible">Synthesis & Closure (10 minutes)</button>
+            <div class="collapsible-content">
+                <div class="collapsible-content-inner">
+                    <div class="card">
+                        <h3>Post-Test (2 minutes)</h3>
+                        <p>Same 5-question quiz as pre-class; compare results quickly to show improvement.</p>
+                    </div>
+
+                    <div class="card">
+                        <h3>AI Reflection Discussion (5 minutes)</h3>
+                        <p>Instructor poses:</p>
+                        <ul>
+                            <li>One moment where AI <em>misled</em> you about teacher professionalism – how did you realize?</li>
+                            <li>One moment where AI helped you see a new angle.</li>
+                            <li>What does this tell you about using AI in education policy analysis?</li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <h3>Preview (3 minutes)</h3>
+                        <p>Next session: <em>"Teacher Professionalism in Action: Ethics and AI in the Classroom"</em> – bring your annotated AI outputs.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="assessment">
+            <h2>Assessment Methods</h2>
+
+            <div class="card">
+                <h3>Formative Assessment (During Class)</h3>
+                <ul>
+                    <li><strong>Observations:</strong> Instructor uses structured checklist to note quality of critique during AI interrogation (e.g., identifying bias, asking counterexamples).</li>
+                    <li><strong>Group collaboration:</strong> Depth of comparative analysis.</li>
+                    <li><strong>Real-time quizzes:</strong> Poll responses and Padlet contributions.</li>
+                    <li><strong>AI-Supported Formative Checks:</strong> Students submit annotated AI-generated professionalism profile via Moodle assignment. Instructor (or AI tool) provides feedback on critical thinking demonstrated.</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>Summative Assessment</h3>
+                <p><strong>Task:</strong> Individual written reflection (800–1000 words) due one week later:</p>
+                <div class="alert-box alert-info">
+                    <em>"Critically evaluate the role of AI in shaping understanding of teacher professionalism across contexts. Using at least two case countries and your own AI interactions from class, argue whether AI tools can ever adequately represent the complexity of local professionalism. Where must human judgment take precedence?"</em>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Assessment Rubric</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Criterion (Weight)</th>
+                            <th>Excellent (4 pts)</th>
+                            <th>Proficient (3 pts)</th>
+                            <th>Developing (2 pts)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Comparison of local & intl frameworks (25%)</strong></td>
+                            <td>Insightful synthesis of at least two cases with nuanced tension analysis</td>
+                            <td>Clear comparison with specific examples</td>
+                            <td>Some comparison but lacks depth</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Critical AI Literacy (30%)</strong></td>
+                            <td>Actively interrogates AI outputs; provides concrete examples of bias/limitations and justifies overrides</td>
+                            <td>Evaluates AI outputs but less consistently</td>
+                            <td>Mentions AI but no deep critique</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Personal synthesis & judgment (25%)</strong></td>
+                            <td>Creative, well-argued personal definition showing independent critical thought</td>
+                            <td>Good personal stance but limited evidence</td>
+                            <td>Definition present but largely rehashes sources</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Use of evidence & documentation (20%)</strong></td>
+                            <td>References class AI interactions and pre-class tasks; transparent about AI use</td>
+                            <td>Relevant evidence but could be more thorough</td>
+                            <td>Some evidence but lacks AI transparency</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card">
+                <h3>AI Use Log Requirement</h3>
+                <p>Students must include an appendix: <strong>"AI Use Log"</strong> – detailing prompts used, AI outputs, and what they accepted/modified/rejected with reasons.</p>
+                <p>Grading emphasis on <em>quality of critical engagement</em> with AI, not volume of AI use.</p>
+            </div>
+        </div>
+
+        <div class="section" id="resources">
+            <h2>Required Resources & Technology</h2>
+
+            <div class="card">
+                <h3>📱 Digital Tools</h3>
+                <ul>
+                    <li><strong>LMS:</strong> Moodle for pre-class quiz and AI log submissions</li>
+                    <li><strong>Polling:</strong> <a href="https://www.mentimeter.com" target="_blank" class="tool-link">Mentimeter</a> for diagnostic and opinion polls</li>
+                    <li><strong>Collaboration:</strong> <a href="https://padlet.com" target="_blank" class="tool-link">Padlet</a> for group synthesis</li>
+                    <li><strong>AI Tools:</strong>
+                        <ul style="margin-top: 10px;">
+                            <li><a href="https://chat.openai.com" target="_blank" class="tool-link">ChatGPT</a> (free version or university-approved account)</li>
+                            <li><a href="https://claude.ai" target="_blank" class="tool-link">Claude</a> for pre-class and in-class tasks</li>
+                            <li>Gradescope/Turnitin revision assistant for formative feedback</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>📚 Learning Materials</h3>
+                <ul>
+                    <li>Case study handouts (PDF) – one per group (5 cases)</li>
+                    <li>Short video on AI bias from Google's "Responsible AI" series</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>🔧 Physical Materials</h3>
+                <ul>
+                    <li>Whiteboard markers</li>
+                    <li>Post-it notes</li>
+                    <li>Projector for displaying live polls and AI outputs</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>🌐 External Tool Quick Start Guide</h3>
+
+                <button class="collapsible">Mentimeter Setup Guide</button>
+                <div class="collapsible-content">
+                    <div class="collapsible-content-inner">
+                        <ol>
+                            <li>Go to <a href="https://www.mentimeter.com" target="_blank">mentimeter.com</a> and sign up for free</li>
+                            <li>Click "New Presentation" and choose question type (Scales, Multiple Choice, Word Cloud, etc.)</li>
+                            <li>Enter your question about teacher professionalism</li>
+                            <li>Click "Present" to get a unique code</li>
+                            <li>Students visit <strong>menti.com</strong> on their devices and enter the code</li>
+                            <li>View live results as students respond</li>
+                            <li>Export results for later analysis</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <button class="collapsible">Padlet Setup Guide</button>
+                <div class="collapsible-content">
+                    <div class="collapsible-content-inner">
+                        <ol>
+                            <li>Create free account at <a href="https://padlet.com" target="_blank">padlet.com</a></li>
+                            <li>Click "Make a Padlet" and choose "Wall" or "Grid" format</li>
+                            <li>Customize sections/columns (e.g., "Local" and "International")</li>
+                            <li>Click "Share" to get link or QR code</li>
+                            <li>Set permissions (allow anyone to post, or require account)</li>
+                            <li>Students add sticky notes with their ideas</li>
+                            <li>Drag and organize posts in real-time</li>
+                            <li>Export or screenshot final board</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <button class="collapsible">Using ChatGPT/Claude for Class Activities</button>
+                <div class="collapsible-content">
+                    <div class="collapsible-content-inner">
+                        <ol>
+                            <li>Ensure students have access to <a href="https://chat.openai.com" target="_blank">ChatGPT</a> or <a href="https://claude.ai" target="_blank">Claude</a></li>
+                            <li>Provide specific prompts for students to use</li>
+                            <li>Remind students to save AI outputs for later analysis</li>
+                            <li>Encourage critical evaluation of AI responses</li>
+                            <li>Have students document what they changed and why</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="differentiation">
+            <h2>Differentiation & Inclusivity</h2>
+
+            <div class="card">
+                <h3>👥 For Struggling Learners</h3>
+                <ul>
+                    <li><strong>Pre-class AI task:</strong> Includes scaffolded prompt template</li>
+                    <li><strong>In-class support:</strong> AI can simplify case study language (text-to-speech available)</li>
+                    <li><strong>One-on-one AI coaching:</strong> For students unfamiliar with prompting</li>
+                    <li><strong>Extended time:</strong> Additional 5 minutes for activities</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>🚀 For Advanced Learners</h3>
+                <ul>
+                    <li><strong>Extension activity:</strong> "Critique AI's representation using postcolonial theory"</li>
+                    <li><strong>Leadership role:</strong> Serve as "AI auditors" for deeper bias checking</li>
+                    <li><strong>Additional research:</strong> Compare AI representations across different models</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>♿ Accessibility Accommodations</h3>
+                <ul>
+                    <li><strong>Visual:</strong> All videos captioned, slides in high contrast</li>
+                    <li><strong>Hearing:</strong> AI-generated transcripts of class discussion available</li>
+                    <li><strong>Motor:</strong> Students can submit elevator pitch as audio recording</li>
+                    <li><strong>Cognitive:</strong> Provide case study summaries in bullet-point format</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>🌍 Linguistic & Cultural Support</h3>
+                <ul>
+                    <li><strong>Language support:</strong> AI can translate key terms into mother tongue</li>
+                    <li><strong>Multilingual AI interaction:</strong> Students can query AI in preferred language</li>
+                    <li><strong>Cultural context:</strong> Case studies represent diverse global contexts</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section" id="alignment">
+            <h2>Constructive Alignment Matrix</h2>
+
+            <div class="card">
+                <h3>ILO-Activity-Assessment Alignment</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Learning Outcome</th>
+                            <th>Teaching Activity</th>
+                            <th>Assessment Method</th>
+                            <th>AI Integration</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Analyze dimensions</td>
+                            <td>Case study jigsaw with AI profiles</td>
+                            <td>Summative reflection</td>
+                            <td>AI-generated profiles critiqued</td>
+                        </tr>
+                        <tr>
+                            <td>Evaluate cultural factors</td>
+                            <td>Group critique of AI statement</td>
+                            <td>Peer checklist evaluation</td>
+                            <td>AI bias analysis</td>
+                        </tr>
+                        <tr>
+                            <td>Synthesize personal definition</td>
+                            <td>Elevator pitch with AI annotation</td>
+                            <td>Summative personal synthesis</td>
+                            <td>AI draft annotated with rationale</td>
+                        </tr>
+                        <tr>
+                            <td>Critically interrogate AI</td>
+                            <td>Pre-class & in-class AI critique</td>
+                            <td>AI Use Log & observation</td>
+                            <td>Direct assessment of criticality</td>
+                        </tr>
+                        <tr>
+                            <td>Decide when to use AI</td>
+                            <td>Documenting AI overrides</td>
+                            <td>Reflection on human judgment</td>
+                            <td>Justify override decisions</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card">
+                <h3>🎯 Success Indicators</h3>
+                <ul>
+                    <li>80% of students identify two cultural values shaping professionalism</li>
+                    <li>60% of AI logs show modified outputs with rationales</li>
+                    <li>Students question assumptions in presentations</li>
+                    <li>Increased sophistication from pre-test to post-test</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Navigation between sections
+        const navTabs = document.querySelectorAll('.nav-tab');
+        const sections = document.querySelectorAll('.section');
+
+        navTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const sectionId = tab.getAttribute('data-section');
+
+                navTabs.forEach(t => t.classList.remove('active'));
+                sections.forEach(s => s.classList.remove('active'));
+
+                tab.classList.add('active');
+                document.getElementById(sectionId).classList.add('active');
+
+                updateProgress();
+                saveProgress();
+            });
+        });
+
+        // Collapsible sections
+        const collapsibles = document.querySelectorAll('.collapsible');
+        collapsibles.forEach(collapsible => {
+            collapsible.addEventListener('click', function() {
+                this.classList.toggle('active');
+                const content = this.nextElementSibling;
+                if (content.style.maxHeight) {
+                    content.style.maxHeight = null;
+                } else {
+                    content.style.maxHeight = content.scrollHeight + "px";
+                }
+            });
+        });
+
+        // Quiz functionality
+        document.querySelectorAll('.quiz-option').forEach(option => {
+            option.addEventListener('click', function() {
+                const question = this.closest('.quiz-question');
+                const options = question.querySelectorAll('.quiz-option');
+                const alertBox = question.querySelector('.alert-box');
+                const isCorrect = this.getAttribute('data-correct') === 'true';
+
+                options.forEach(opt => {
+                    opt.style.pointerEvents = 'none';
+                    if (opt.getAttribute('data-correct') === 'true') {
+                        opt.classList.add('correct');
+                    }
+                });
+
+                if (isCorrect) {
+                    alertBox.className = 'alert-box alert-success';
+                    alertBox.textContent = '✓ Correct! ' + getQuizFeedback(question);
+                } else {
+                    this.classList.add('incorrect');
+                    alertBox.className = 'alert-box alert-warning';
+                    alertBox.textContent = '✗ Not quite. ' + getQuizFeedback(question);
+                }
+                alertBox.style.display = 'block';
+            });
+        });
+
+        function getQuizFeedback(question) {
+            const questionText = question.querySelector('p').textContent;
+            if (questionText.includes('Question 1')) {
+                return 'Teacher professionalism is about specialized knowledge, autonomy, and ethics, not job security.';
+            } else if (questionText.includes('Question 2')) {
+                return 'East Asian contexts often emphasize moral responsibility and community service alongside professional competence.';
+            } else if (questionText.includes('Question 3')) {
+                return 'TALIS provides comprehensive international comparative data on teaching and learning environments.';
+            }
+            return 'Review the pre-reading materials for more information.';
+        }
+
+        function submitQuiz() {
+            const questions = document.querySelectorAll('.quiz-question');
+            let answered = 0;
+            questions.forEach(q => {
+                const selected = q.querySelector('.quiz-option.correct, .quiz-option.incorrect');
+                if (selected) answered++;
+            });
+
+            const resultDiv = document.getElementById('quizResult');
+            if (answered === questions.length) {
+                const correct = document.querySelectorAll('.quiz-option.correct').length;
+                resultDiv.innerHTML = `<div class="alert-box alert-success"><strong>Quiz Complete!</strong> You got ${correct} out of ${questions.length} correct.</div>`;
+                updateProgress();
+            } else {
+                resultDiv.innerHTML = `<div class="alert-box alert-warning">Please answer all questions before submitting.</div>`;
+            }
+        }
+
+        // Progress tracking with localStorage
+        function updateProgress() {
+            const totalSections = sections.length;
+            const visitedSections = JSON.parse(localStorage.getItem('visitedSections') || '[]');
+            const quizCompleted = localStorage.getItem('quizCompleted') === 'true';
+
+            const uniqueVisited = new Set(visitedSections);
+            const currentSection = document.querySelector('.section.active').id;
+            uniqueVisited.add(currentSection);
+            localStorage.setItem('visitedSections', JSON.stringify([...uniqueVisited]));
+
+            let progress = (uniqueVisited.size / totalSections) * 100;
+            if (quizCompleted) progress = Math.max(progress, 30);
+
+            const progressFill = document.getElementById('progressFill');
+            progressFill.style.width = progress + '%';
+            progressFill.textContent = Math.round(progress) + '%';
+        }
+
+        function saveProgress() {
+            const currentSection = document.querySelector('.section.active').id;
+            localStorage.setItem('currentSection', currentSection);
+        }
+
+        function loadProgress() {
+            const savedSection = localStorage.getItem('currentSection');
+            if (savedSection) {
+                navTabs.forEach(tab => {
+                    if (tab.getAttribute('data-section') === savedSection) {
+                        tab.click();
+                    }
+                });
+            }
+            updateProgress();
+        }
+
+        // Initialize on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            loadProgress();
+        });
+
+        // Reset progress (for testing)
+        function resetProgress() {
+            localStorage.clear();
+            location.reload();
+        }
+    </script>
 </body>
 </html>
