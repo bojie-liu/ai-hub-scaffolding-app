@@ -1,16 +1,1728 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Basic HTML Project</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teacher Professionalism – Local &amp; International Contexts</title>
+<style>
+:root {
+  --primary:#1a3a5c;--primary-light:#2c5282;--secondary:#2d9cdb;
+  --accent:#f6ad55;--accent-dark:#dd6b20;--success:#38a169;
+  --warning:#d69e2e;--danger:#e53e3e;--bg:#f0f4f8;--bg-card:#ffffff;
+  --text:#2d3748;--text-light:#718096;--border:#e2e8f0;
+  --shadow:0 2px 10px rgba(0,0,0,0.08);--shadow-lg:0 8px 28px rgba(0,0,0,0.13);
+  --radius:14px;--radius-sm:8px;--transition:all 0.25s ease;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.65;font-size:15px}
+a{color:var(--secondary);text-decoration:none}
+a:hover{text-decoration:underline}
+h1,h2,h3,h4{line-height:1.3;font-weight:700}
+
+/* ── HEADER ── */
+.site-header{background:linear-gradient(135deg,var(--primary) 0%,var(--primary-light) 60%,#1e6fa8 100%);color:#fff;padding:40px 24px 32px;text-align:center;position:relative;overflow:hidden}
+.site-header::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");pointer-events:none}
+.site-header h1{font-size:clamp(1.4rem,3.5vw,2.2rem);margin-bottom:10px;position:relative}
+.site-header .subtitle{font-size:1rem;opacity:.85;margin-bottom:20px;position:relative}
+.meta-pills{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;position:relative}
+.meta-pill{background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);border-radius:20px;padding:4px 14px;font-size:.8rem;color:#fff}
+
+/* ── PROGRESS BAR ── */
+.progress-wrap{background:rgba(255,255,255,0.12);height:6px;border-radius:0}
+.progress-bar{height:100%;background:var(--accent);border-radius:0;transition:width .4s ease;width:0%}
+.progress-label{text-align:center;font-size:.75rem;color:rgba(255,255,255,.7);padding:4px 0 0;position:relative}
+
+/* ── NAV TABS ── */
+.tab-nav{background:var(--primary);display:flex;overflow-x:auto;gap:0;scrollbar-width:none;position:sticky;top:0;z-index:100;border-bottom:2px solid var(--accent)}
+.tab-nav::-webkit-scrollbar{display:none}
+.tab-btn{background:transparent;border:none;color:rgba(255,255,255,.7);padding:13px 18px;font-size:.82rem;font-weight:600;cursor:pointer;white-space:nowrap;transition:var(--transition);border-bottom:3px solid transparent;letter-spacing:.02em}
+.tab-btn:hover{color:#fff;background:rgba(255,255,255,.08)}
+.tab-btn.active{color:var(--accent);border-bottom-color:var(--accent);background:rgba(246,173,85,.08)}
+
+/* ── MAIN LAYOUT ── */
+.container{max-width:1080px;margin:0 auto;padding:28px 16px}
+.tab-panel{display:none}.tab-panel.active{display:block}
+
+/* ── CARDS ── */
+.card{background:var(--bg-card);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:20px;border:1px solid var(--border)}
+.card-accent{border-left:4px solid var(--secondary)}
+.card-success{border-left:4px solid var(--success)}
+.card-warning{border-left:4px solid var(--warning)}
+.card-danger{border-left:4px solid var(--danger)}
+.card-gold{border-left:4px solid var(--accent)}
+.card h2{font-size:1.2rem;color:var(--primary);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.card h3{font-size:1rem;color:var(--primary-light);margin:14px 0 8px}
+.card h4{font-size:.9rem;color:var(--text);margin:10px 0 6px;font-weight:600}
+
+/* ── SECTION HEADERS ── */
+.section-header{display:flex;align-items:center;gap:10px;margin-bottom:20px}
+.section-icon{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+.icon-blue{background:#ebf8ff;color:var(--secondary)}
+.icon-green{background:#f0fff4;color:var(--success)}
+.icon-orange{background:#fffaf0;color:var(--accent-dark)}
+.icon-purple{background:#faf5ff;color:#805ad5}
+.icon-red{background:#fff5f5;color:var(--danger)}
+.section-header-text h2{font-size:1.25rem;color:var(--primary);margin:0}
+.section-header-text p{font-size:.83rem;color:var(--text-light);margin:2px 0 0}
+
+/* ── BADGES / TAGS ── */
+.badge{display:inline-block;padding:2px 10px;border-radius:12px;font-size:.75rem;font-weight:600}
+.badge-blue{background:#ebf8ff;color:#2b6cb0}
+.badge-green{background:#f0fff4;color:#276749}
+.badge-orange{background:#fffaf0;color:#c05621}
+.badge-purple{background:#faf5ff;color:#553c9a}
+.badge-red{background:#fff5f5;color:#9b2c2c}
+.badge-gold{background:#fffff0;color:#744210}
+
+/* ── ILO LIST ── */
+.ilo-list{list-style:none;padding:0}
+.ilo-list li{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border-radius:var(--radius-sm);border:1px solid var(--border);margin-bottom:10px;background:#fafbfc}
+.ilo-num{min-width:28px;height:28px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700;flex-shrink:0;margin-top:1px}
+.ilo-body strong{display:block;font-size:.85rem;color:var(--primary-light);margin-bottom:2px}
+.ilo-body p{font-size:.88rem;color:var(--text);margin:0}
+
+/* ── TIMELINE ── */
+.timeline{position:relative;padding-left:28px}
+.timeline::before{content:'';position:absolute;left:8px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--secondary),var(--accent))}
+.timeline-item{position:relative;margin-bottom:20px}
+.timeline-item::before{content:'';position:absolute;left:-24px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--secondary);border:2px solid #fff;box-shadow:0 0 0 2px var(--secondary)}
+.timeline-time{font-size:.75rem;font-weight:700;color:var(--secondary);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
+.timeline-content{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px 16px}
+.timeline-content h4{color:var(--primary);font-size:.95rem;margin:0 0 6px}
+.timeline-content p,.timeline-content li{font-size:.87rem;color:var(--text)}
+
+/* ── COLLAPSIBLE ── */
+.collapse-btn{width:100%;background:none;border:none;text-align:left;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:0;font-family:inherit;color:inherit}
+.collapse-btn .chevron{transition:transform .25s;font-size:.9rem;color:var(--text-light);flex-shrink:0}
+.collapse-btn.open .chevron{transform:rotate(180deg)}
+.collapse-body{display:none;margin-top:12px}
+.collapse-body.open{display:block}
+
+/* ── TOOL CARDS ── */
+.tool-card{border-radius:var(--radius-sm);padding:16px;margin-bottom:14px;border:1px solid var(--border)}
+.tool-card-header{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.tool-logo{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:800;color:#fff;flex-shrink:0}
+.logo-mentimeter{background:#4a90d9}
+.logo-padlet{background:#ff6b6b}
+.logo-jamboard{background:#fbbc04;color:#333}
+.logo-moodle{background:#f98012}
+.logo-kahoot{background:#46178f}
+.tool-name{font-weight:700;font-size:.95rem;color:var(--primary)}
+.tool-purpose{font-size:.78rem;color:var(--text-light)}
+.tool-steps{list-style:none;padding:0;counter-reset:step}
+.tool-steps li{counter-increment:step;display:flex;gap:10px;align-items:flex-start;margin-bottom:8px;font-size:.85rem}
+.tool-steps li::before{content:counter(step);min-width:22px;height:22px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;flex-shrink:0;margin-top:1px}
+
+/* ── QUIZ ── */
+.quiz-wrap{margin-top:8px}
+.quiz-q{background:#fafbfc;border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px 16px;margin-bottom:12px}
+.quiz-q p{font-size:.9rem;font-weight:600;margin-bottom:10px;color:var(--text)}
+.quiz-options{display:flex;gap:10px;flex-wrap:wrap}
+.quiz-opt{background:#fff;border:2px solid var(--border);border-radius:20px;padding:5px 16px;font-size:.84rem;cursor:pointer;transition:var(--transition)}
+.quiz-opt:hover{border-color:var(--secondary);color:var(--secondary)}
+.quiz-opt.correct{border-color:var(--success);background:#f0fff4;color:var(--success)}
+.quiz-opt.wrong{border-color:var(--danger);background:#fff5f5;color:var(--danger)}
+.quiz-feedback{font-size:.82rem;margin-top:8px;padding:8px 12px;border-radius:6px;display:none}
+.quiz-feedback.show{display:block}
+.quiz-feedback.ok{background:#f0fff4;color:#276749;border:1px solid #9ae6b4}
+.quiz-feedback.bad{background:#fff5f5;color:#9b2c2c;border:1px solid #feb2b2}
+.quiz-result{text-align:center;padding:16px;background:#ebf8ff;border-radius:var(--radius-sm);margin-top:8px;display:none}
+.quiz-score{font-size:2rem;font-weight:800;color:var(--primary)}
+
+/* ── CASE CARDS ── */
+.case-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-top:12px}
+.case-card{border-radius:var(--radius-sm);border:1px solid var(--border);overflow:hidden}
+.case-header{padding:10px 14px;font-weight:700;font-size:.85rem;color:#fff}
+.case-a{background:#3182ce}.case-b{background:#805ad5}.case-c{background:#dd6b20}.case-d{background:#38a169}
+.case-body{padding:14px;font-size:.85rem}
+.case-body p{margin-bottom:8px;color:var(--text)}
+.scaffold{list-style:none;padding:0;margin-top:8px}
+.scaffold li{display:flex;gap:8px;padding:5px 0;font-size:.82rem;border-bottom:1px dashed var(--border)}
+.scaffold li:last-child{border:none}
+.scaffold-num{min-width:20px;height:20px;border-radius:50%;background:var(--primary-light);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;flex-shrink:0}
+
+/* ── JIGSAW GROUPS ── */
+.group-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;margin-top:12px}
+.group-card{border-radius:var(--radius-sm);padding:14px;border:2px solid var(--border);transition:var(--transition)}
+.group-card:hover{box-shadow:var(--shadow-lg)}
+.group-tag{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.group-title{font-size:.9rem;font-weight:700;color:var(--primary);margin-bottom:6px}
+.group-bullets{font-size:.82rem;color:var(--text);padding-left:14px}
+.group-bullets li{margin-bottom:3px}
+.g-nordic{border-color:#bee3f8;background:#ebf8ff}.g-nordic .group-tag{color:#2b6cb0}
+.g-anglo{border-color:#fed7d7;background:#fff5f5}.g-anglo .group-tag{color:#9b2c2c}
+.g-east{border-color:#c6f6d5;background:#f0fff4}.g-east .group-tag{color:#276749}
+.g-intl{border-color:#e9d8fd;background:#faf5ff}.g-intl .group-tag{color:#553c9a}
+
+/* ── ORGANISER TABLE ── */
+.org-table{width:100%;border-collapse:collapse;font-size:.83rem;margin-top:10px}
+.org-table th{background:var(--primary);color:#fff;padding:8px 12px;text-align:left;font-size:.78rem;font-weight:600}
+.org-table td{padding:8px 12px;border-bottom:1px solid var(--border);vertical-align:top}
+.org-table tr:nth-child(even) td{background:#f7fafc}
+.org-table tr:hover td{background:#ebf8ff}
+
+/* ── ALIGNMENT MATRIX ── */
+.matrix-scroll{overflow-x:auto}
+.matrix-table{width:100%;border-collapse:collapse;font-size:.8rem;min-width:700px}
+.matrix-table th{background:var(--primary-light);color:#fff;padding:9px 10px;text-align:left;font-size:.75rem;font-weight:600}
+.matrix-table td{padding:8px 10px;border:1px solid var(--border);vertical-align:top;font-size:.8rem}
+.matrix-table tr:nth-child(even) td{background:#f7fafc}
+
+/* ── CHECKLIST ── */
+.checklist{list-style:none;padding:0}
+.checklist li{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);font-size:.88rem}
+.checklist li:last-child{border:none}
+.checklist input[type=checkbox]{width:17px;height:17px;cursor:pointer;accent-color:var(--success);flex-shrink:0;margin-top:2px}
+.checklist label{cursor:pointer;flex:1}
+.checklist input:checked+label{text-decoration:line-through;color:var(--text-light)}
+
+/* ── ACTIVITY TIMER ── */
+.timer-bar{display:flex;align-items:center;gap:10px;background:linear-gradient(90deg,#ebf8ff,#e6fffa);border:1px solid #bee3f8;border-radius:var(--radius-sm);padding:10px 14px;margin-bottom:14px}
+.timer-icon{font-size:1.2rem}
+.timer-label{font-size:.82rem;font-weight:600;color:var(--primary-light);flex:1}
+.timer-mins{font-size:.82rem;color:var(--text-light);font-weight:500}
+.timer-btn{background:var(--secondary);color:#fff;border:none;border-radius:6px;padding:4px 12px;font-size:.78rem;cursor:pointer;transition:var(--transition)}
+.timer-btn:hover{background:var(--primary-light)}
+.timer-display{font-weight:700;font-size:.95rem;color:var(--primary);min-width:40px;text-align:right}
+
+/* ── PMI FEEDBACK ── */
+.pmi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}
+.pmi-box{border-radius:var(--radius-sm);padding:12px}
+.pmi-plus{background:#f0fff4;border:1px solid #9ae6b4}.pmi-plus h5{color:var(--success)}
+.pmi-minus{background:#fff5f5;border:1px solid #feb2b2}.pmi-minus h5{color:var(--danger)}
+.pmi-interesting{background:#fffff0;border:1px solid #faf089}.pmi-interesting h5{color:#744210}
+.pmi-box h5{font-size:.8rem;margin-bottom:4px;font-weight:700}
+.pmi-box p{font-size:.78rem;color:var(--text);margin:0}
+
+/* ── GUIDE QUESTIONS ── */
+.guide-q{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;background:#fafbfc;border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:10px}
+.guide-icon{font-size:1.2rem;flex-shrink:0}
+.guide-body p{font-size:.87rem;color:var(--text);font-style:italic;margin:0}
+.guide-body strong{font-size:.78rem;color:var(--text-light);display:block;margin-bottom:3px}
+
+/* ── LANGUAGE STEMS ── */
+.stems-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px;margin-top:10px}
+.stem-pill{background:linear-gradient(135deg,#ebf8ff,#e6fffa);border:1px solid #bee3f8;border-radius:20px;padding:8px 16px;font-size:.83rem;color:var(--primary-light);font-style:italic}
+
+/* ── RESOURCE LIST ── */
+.res-list{list-style:none;padding:0}
+.res-list li{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--border);font-size:.87rem}
+.res-list li:last-child{border:none}
+.res-icon{font-size:1rem;flex-shrink:0;margin-top:1px}
+
+/* ── REFLECTION CARDS ── */
+.refl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-top:12px}
+.refl-card{border-radius:var(--radius-sm);padding:16px;border:1px solid var(--border)}
+.refl-card h4{font-size:.9rem;margin-bottom:8px;color:var(--primary)}
+.refl-card ul{padding-left:18px;font-size:.85rem}
+.refl-card ul li{margin-bottom:5px;color:var(--text)}
+
+/* ── NON-NEGOTIABLES ── */
+.nn-list{list-style:none;padding:0;counter-reset:nn}
+.nn-list li{counter-increment:nn;display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border-radius:var(--radius-sm);border:1px solid var(--border);margin-bottom:10px;background:#fffff0}
+.nn-list li::before{content:counter(nn);min-width:28px;height:28px;border-radius:50%;background:var(--accent-dark);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.82rem;font-weight:800;flex-shrink:0}
+.nn-body strong{display:block;font-size:.88rem;color:var(--primary);margin-bottom:2px}
+.nn-body p{font-size:.84rem;color:var(--text-light);margin:0}
+
+/* ── STEP CARDS ── */
+.step-cards{display:flex;flex-direction:column;gap:10px}
+.step-card{display:flex;gap:14px;align-items:flex-start;background:#fafbfc;border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 14px}
+.step-num{min-width:30px;height:30px;border-radius:50%;background:var(--secondary);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:800;flex-shrink:0}
+.step-body h4{font-size:.9rem;color:var(--primary);margin:0 0 4px}
+.step-body p,.step-body li{font-size:.85rem;color:var(--text)}
+.step-body ul{padding-left:16px;margin-top:4px}
+.step-body ul li{margin-bottom:3px}
+
+/* ── RESPONSIVE ── */
+@media(max-width:640px){
+  .pmi-grid{grid-template-columns:1fr}
+  .case-grid,.group-grid,.refl-grid{grid-template-columns:1fr}
+  .org-table,.matrix-table{font-size:.75rem}
+  .tab-btn{padding:11px 13px;font-size:.77rem}
+}
+
+/* ── MISC ── */
+.divider{border:none;border-top:1px solid var(--border);margin:20px 0}
+.text-muted{color:var(--text-light);font-size:.83rem}
+.note-box{background:#fffff0;border:1px solid #faf089;border-radius:var(--radius-sm);padding:12px 14px;font-size:.85rem;color:#744210;margin-bottom:14px}
+.note-box strong{display:block;margin-bottom:3px}
+.info-box{background:#ebf8ff;border:1px solid #bee3f8;border-radius:var(--radius-sm);padding:12px 14px;font-size:.85rem;color:#2b6cb0;margin-bottom:14px}
+.info-box strong{display:block;margin-bottom:3px}
+.pedagogy-link{background:#faf5ff;border-left:3px solid #805ad5;padding:10px 14px;border-radius:0 var(--radius-sm) var(--radius-sm) 0;font-size:.83rem;color:#553c9a;margin-top:12px}
+.pedagogy-link strong{color:#553c9a}
+</style>
 </head>
 <body>
-  <div class="container">
-    <h1>Hello World!</h1>
-    <p>Welcome to your new project.</p>
+
+<!-- ══ SITE HEADER ══ -->
+<header class="site-header">
+  <h1>🎓 Teacher Professionalism in Local &amp; International Contexts</h1>
+  <p class="subtitle">Education Studies – The Teaching Profession &nbsp;|&nbsp; 150-Minute Seminar</p>
+  <div class="meta-pills">
+    <span class="meta-pill">🎓 Second-Year Pre-Service Teachers</span>
+    <span class="meta-pill">👥 60 Students</span>
+    <span class="meta-pill">⏱ 150 Minutes</span>
+    <span class="meta-pill">💬 Social Constructivism</span>
+    <span class="meta-pill">🌐 English</span>
   </div>
-  <script src="script.js"></script>
+  <div style="margin-top:14px;position:relative">
+    <div class="progress-wrap"><div class="progress-bar" id="mainProgress"></div></div>
+    <p class="progress-label" id="progressLabel">Track your progress below</p>
+  </div>
+</header>
+
+<!-- ══ NAV TABS ══ -->
+<nav class="tab-nav" role="navigation" aria-label="Lesson sections">
+  <button class="tab-btn active" onclick="showTab('overview',this)">📋 Overview</button>
+  <button class="tab-btn" onclick="showTab('preclass',this)">📚 Pre-Class</button>
+  <button class="tab-btn" onclick="showTab('activities',this)">🏫 Activities</button>
+  <button class="tab-btn" onclick="showTab('assessment',this)">📝 Assessment</button>
+  <button class="tab-btn" onclick="showTab('resources',this)">🔧 Resources</button>
+  <button class="tab-btn" onclick="showTab('differentiation',this)">🌈 Inclusivity</button>
+  <button class="tab-btn" onclick="showTab('reflection',this)">🔄 Reflection</button>
+</nav>
+
+<!-- ══════════════════════════════════════════
+     TAB 1 – OVERVIEW
+══════════════════════════════════════════ -->
+<div class="tab-panel active" id="tab-overview">
+<div class="container">
+
+  <!-- Course Details -->
+  <div class="card card-accent">
+    <div class="section-header">
+      <div class="section-icon icon-blue">📋</div>
+      <div class="section-header-text"><h2>Course Details</h2><p>Session at a glance</p></div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px">
+      <div style="background:#f7fafc;border-radius:8px;padding:12px">
+        <div class="text-muted">Subject</div>
+        <div style="font-weight:600;font-size:.9rem;margin-top:2px">Education Studies – The Teaching Profession</div>
+      </div>
+      <div style="background:#f7fafc;border-radius:8px;padding:12px">
+        <div class="text-muted">Duration</div>
+        <div style="font-weight:600;font-size:.9rem;margin-top:2px">150 minutes (one extended seminar)</div>
+      </div>
+      <div style="background:#f7fafc;border-radius:8px;padding:12px">
+        <div class="text-muted">Student Level</div>
+        <div style="font-weight:600;font-size:.9rem;margin-top:2px">Second-year university (pre-service teachers)</div>
+      </div>
+      <div style="background:#f7fafc;border-radius:8px;padding:12px">
+        <div class="text-muted">Class Size</div>
+        <div style="font-weight:600;font-size:.9rem;margin-top:2px">60 students</div>
+      </div>
+      <div style="background:#f7fafc;border-radius:8px;padding:12px">
+        <div class="text-muted">Pedagogy</div>
+        <div style="font-weight:600;font-size:.9rem;margin-top:2px">Social Constructivism</div>
+      </div>
+      <div style="background:#f7fafc;border-radius:8px;padding:12px">
+        <div class="text-muted">Language</div>
+        <div style="font-weight:600;font-size:.9rem;margin-top:2px">English</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ILOs -->
+  <div class="card card-gold">
+    <div class="section-header">
+      <div class="section-icon icon-orange">🎯</div>
+      <div class="section-header-text"><h2>Intended Learning Outcomes (ILOs)</h2><p>Bloom's Taxonomy levels noted</p></div>
+    </div>
+    <ul class="ilo-list">
+      <li>
+        <div class="ilo-num">1</div>
+        <div class="ilo-body">
+          <strong>Analyse</strong>
+          <p>Analyse how teacher professionalism is defined and operationalised in at least one local and one international context, identifying underlying cultural, historical, and policy influences.</p>
+        </div>
+      </li>
+      <li>
+        <div class="ilo-num">2</div>
+        <div class="ilo-body">
+          <strong>Critically Evaluate</strong>
+          <p>Critically evaluate the tensions between managerial accountability and professional autonomy, using examples drawn from contrasting education systems.</p>
+        </div>
+      </li>
+      <li>
+        <div class="ilo-num">3</div>
+        <div class="ilo-body">
+          <strong>Apply</strong>
+          <p>Apply frameworks of teacher professionalism to construct contextually sensitive, ethically justified responses to authentic professional dilemmas.</p>
+        </div>
+      </li>
+      <li>
+        <div class="ilo-num">4</div>
+        <div class="ilo-body">
+          <strong>Co-Create</strong>
+          <p>Co-create a collaborative synthesis of "non-negotiable" aspects of professional practice that bridges local and international expectations, using peer critique to refine the group's work.</p>
+        </div>
+      </li>
+      <li>
+        <div class="ilo-num">5</div>
+        <div class="ilo-body">
+          <strong>Reflect / Evaluate</strong>
+          <p>Reflect on their own emerging professional identity, recognising how global and local forces can shape values, assumptions, and classroom practice.</p>
+        </div>
+      </li>
+    </ul>
+    <div class="note-box" style="margin-top:14px;margin-bottom:0">
+      <strong>Constructive Alignment Note</strong>
+      These outcomes directly shape the design of the pre-reading, in-class collaborative tasks, formative checks, and summative assessments detailed in this plan.
+    </div>
+  </div>
+
+  <!-- Session Timeline -->
+  <div class="card card-accent">
+    <div class="section-header">
+      <div class="section-icon icon-blue">⏱</div>
+      <div class="section-header-text"><h2>Session Timeline at a Glance</h2><p>150 minutes total</p></div>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-time">0 – 15 min</div>
+        <div class="timeline-content"><h4>🚀 Introduction</h4><p>Opening hook, pre-test review, misconception analysis, and session orientation.</p></div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-time">15 – 40 min</div>
+        <div class="timeline-content"><h4>📖 Segment 1 – Framing Key Concepts</h4><p>Interactive mini-lecture, concept map of four dimensions, think-pair-share.</p></div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-time">40 – 80 min</div>
+        <div class="timeline-content"><h4>🌍 Segment 2 – Jigsaw Exploration</h4><p>Expert group work (Nordic, Anglophone, East Asian, International), mixed-group sharing, whole-class debrief.</p></div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-time">80 – 110 min</div>
+        <div class="timeline-content"><h4>⚖️ Segment 3 – Dilemma Case Studies</h4><p>Group case analysis, 2-minute role-play, gallery walk with PMI feedback.</p></div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-time">110 – 125 min</div>
+        <div class="timeline-content"><h4>🤝 Segment 4 – Collaborative Synthesis</h4><p>"Five Non-Negotiables" group task and hot-seat peer critique.</p></div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-time">125 – 150 min</div>
+        <div class="timeline-content"><h4>🏁 Synthesis &amp; Closure</h4><p>Exit ticket (Mentimeter), wrap-up, preview of next session.</p></div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /container -->
+</div><!-- /tab-overview -->
+
+<!-- ══════════════════════════════════════════
+     TAB 2 – PRE-CLASS PREPARATION
+══════════════════════════════════════════ -->
+<div class="tab-panel" id="tab-preclass">
+<div class="container">
+
+  <!-- Pre-Reading -->
+  <div class="card card-accent">
+    <div class="section-header">
+      <div class="section-icon icon-blue">📚</div>
+      <div class="section-header-text"><h2>2.1 Pre-Reading / Viewing</h2><p>Complete before attending the seminar</p></div>
+    </div>
+    <ul class="checklist" id="readingChecklist">
+      <li>
+        <input type="checkbox" id="r1" onchange="saveCheck('r1',this.checked);updateProgress()">
+        <label for="r1"><strong>Reading 1 – Local Context:</strong> Excerpt from your local teaching council or ministry standards framework (posted on Moodle). Focus on: what counts as professional knowledge, roles and responsibilities.</label>
+      </li>
+      <li>
+        <input type="checkbox" id="r2" onchange="saveCheck('r2',this.checked);updateProgress()">
+        <label for="r2"><strong>Reading 2 – International Context:</strong> Excerpts from the <em>ILO/UNESCO Recommendation concerning the Status of Teachers (1966)</em> and <em>OECD TALIS 2018</em> highlights on teacher autonomy and professionalism. (URLs provided on Moodle.)</label>
+      </li>
+      <li>
+        <input type="checkbox" id="r3" onchange="saveCheck('r3',this.checked);updateProgress()">
+        <label for="r3"><strong>Video (5–8 min):</strong> Comparative teacher preparation in Finland, Shanghai, and the United States. (Link provided in the LMS.) Note similarities and differences in how "professional" is defined.</label>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Diagnostic Quiz -->
+  <div class="card card-warning">
+    <div class="section-header">
+      <div class="section-icon icon-orange">🧪</div>
+      <div class="section-header-text"><h2>2.2 Pre-Class Diagnostic Quiz</h2><p>5 true/false questions — automated feedback after each item</p></div>
+    </div>
+    <div class="info-box">
+      <strong>Instructions</strong>
+      This quiz is available on Moodle with automated feedback. Answer each question based on your current understanding — there are no penalties. Your responses help the instructor identify and address misconceptions during the seminar.
+    </div>
+    <div class="quiz-wrap" id="quizWrap">
+      <!-- Q1 -->
+      <div class="quiz-q" id="qq1">
+        <p>Q1. Teacher professionalism is primarily a matter of salary and status.</p>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="answerQ(1,'T','F',this)">True</button>
+          <button class="quiz-opt" onclick="answerQ(1,'F','F',this)">False</button>
+        </div>
+        <div class="quiz-feedback" id="qf1"></div>
+      </div>
+      <!-- Q2 -->
+      <div class="quiz-q" id="qq2">
+        <p>Q2. Professional autonomy means teachers should not be held accountable to external standards.</p>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="answerQ(2,'T','F',this)">True</button>
+          <button class="quiz-opt" onclick="answerQ(2,'F','F',this)">False</button>
+        </div>
+        <div class="quiz-feedback" id="qf2"></div>
+      </div>
+      <!-- Q3 -->
+      <div class="quiz-q" id="qq3">
+        <p>Q3. Professional standards are universal and should look identical in every country.</p>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="answerQ(3,'T','F',this)">True</button>
+          <button class="quiz-opt" onclick="answerQ(3,'F','F',this)">False</button>
+        </div>
+        <div class="quiz-feedback" id="qf3"></div>
+      </div>
+      <!-- Q4 -->
+      <div class="quiz-q" id="qq4">
+        <p>Q4. Professionalism includes both intellectual and ethical commitments.</p>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="answerQ(4,'T','T',this)">True</button>
+          <button class="quiz-opt" onclick="answerQ(4,'F','T',this)">False</button>
+        </div>
+        <div class="quiz-feedback" id="qf4"></div>
+      </div>
+      <!-- Q5 -->
+      <div class="quiz-q" id="qq5">
+        <p>Q5. International organisations such as UNESCO and the OECD have identical definitions of teacher professionalism.</p>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="answerQ(5,'T','F',this)">True</button>
+          <button class="quiz-opt" onclick="answerQ(5,'F','F',this)">False</button>
+        </div>
+        <div class="quiz-feedback" id="qf5"></div>
+      </div>
+      <div class="quiz-result" id="quizResult">
+        <div class="quiz-score" id="quizScore"></div>
+        <p style="font-size:.9rem;color:var(--primary-light);margin-top:4px">Questions answered correctly</p>
+        <p style="font-size:.83rem;color:var(--text-light);margin-top:6px">Review any misconceptions with your instructor at the start of the seminar.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Guiding Questions -->
+  <div class="card card-success">
+    <div class="section-header">
+      <div class="section-icon icon-green">💬</div>
+      <div class="section-header-text"><h2>2.3 Pre-Class Guiding Questions</h2><p>Post one response to each on the course discussion forum</p></div>
+    </div>
+    <div class="guide-q">
+      <div class="guide-icon">💭</div>
+      <div class="guide-body">
+        <strong>Question 1</strong>
+        <p>"In your own words, what does 'being a professional' mean in your local context as a teacher?"</p>
+      </div>
+    </div>
+    <div class="guide-q">
+      <div class="guide-icon">📖</div>
+      <div class="guide-body">
+        <strong>Question 2</strong>
+        <p>"Which of the two readings (local or international) surprised you more, and why?"</p>
+      </div>
+    </div>
+    <div class="guide-q">
+      <div class="guide-icon">❓</div>
+      <div class="guide-body">
+        <strong>Question 3</strong>
+        <p>"What is one question you hope this session will answer about teacher professionalism?"</p>
+      </div>
+    </div>
+    <div class="pedagogy-link" style="margin-top:14px">
+      <strong>📚 Pedagogy Link:</strong> These prompts help surface prior beliefs and invite peer-to-peer interaction before class, so students begin co-constructing meaning before the seminar starts — a core Social Constructivist principle.
+    </div>
+    <ul class="checklist" style="margin-top:12px">
+      <li><input type="checkbox" id="g2" onchange="saveCheck('g2',this.checked);updateProgress()"><label for="g2">Posted response to Question 1 on discussion forum</label></li>
+      <li><input type="checkbox" id="g3" onchange="saveCheck('g3',this.checked);updateProgress()"><label for="g3">Posted response to Question 2 on discussion forum</label></li>
+      <li><input type="checkbox" id="g4" onchange="saveCheck('g4',this.checked);updateProgress()"><label for="g4">Posted response to Question 3 on discussion forum</label></li>
+    </ul>
+  </div>
+
+</div>
+</div><!-- /tab-preclass -->
+
+<!-- ══════════════════════════════════════════
+     TAB 3 – TEACHING & LEARNING ACTIVITIES
+══════════════════════════════════════════ -->
+<div class="tab-panel" id="tab-activities">
+<div class="container">
+
+  <!-- INTRODUCTION -->
+  <div class="card card-accent">
+    <div class="section-header">
+      <div class="section-icon icon-blue">🚀</div>
+      <div class="section-header-text"><h2>Introduction</h2><p>0 – 15 minutes</p></div>
+    </div>
+    <div class="timer-bar">
+      <span class="timer-icon">⏱</span>
+      <span class="timer-label">Activity Timer – Introduction (15 min)</span>
+      <span class="timer-mins">15:00</span>
+      <button class="timer-btn" onclick="startTimer('t-intro',15)">▶ Start</button>
+      <span class="timer-display" id="t-intro">15:00</span>
+    </div>
+
+    <!-- Step 1: Opening Hook -->
+    <div class="step-cards">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h4>Opening Hook <span class="badge badge-blue">5 min</span></h4>
+          <p>Display two images side by side:</p>
+          <ul>
+            <li>A teacher in Helsinki leading a creative, student-driven workshop</li>
+            <li>A teacher in a rural school with scarce resources following a scripted national curriculum</li>
+          </ul>
+          <p style="margin-top:8px">Ask students: <em>"Whose professionalism is more demanding? Why?"</em></p>
+          <!-- Mentimeter Tool Card -->
+          <div class="tool-card" style="margin-top:12px;background:#ebf8ff">
+            <div class="tool-card-header">
+              <div class="tool-logo logo-mentimeter">M</div>
+              <div><div class="tool-name">Mentimeter – Word Cloud Poll</div><div class="tool-purpose">Collect live student responses as a word cloud</div></div>
+            </div>
+            <button class="collapse-btn" onclick="toggleCollapse(this)">
+              <span style="font-size:.85rem;font-weight:600;color:var(--primary-light)">📋 Step-by-step instructions</span>
+              <span class="chevron">▼</span>
+            </button>
+            <div class="collapse-body">
+              <ol class="tool-steps">
+                <li>Go to <a href="https://www.mentimeter.com" target="_blank">mentimeter.com</a> and sign in (or create a free account).</li>
+                <li>Click <strong>+ New Presentation</strong> and select <strong>Word Cloud</strong> as the slide type.</li>
+                <li>Enter the question: <em>"In one or two words – what makes a teacher professional?"</em></li>
+                <li>Click <strong>Present</strong> and share the join code (e.g., menti.com + code) on the projector.</li>
+                <li>Students open <a href="https://www.menti.com" target="_blank">menti.com</a> on their phones/laptops and type responses.</li>
+                <li>Watch the word cloud grow in real time; the most common answers appear larger.</li>
+                <li>Screenshot the word cloud – you will compare it to the exit-ticket word cloud at the end of class to show conceptual growth.</li>
+              </ol>
+              <div class="note-box" style="margin:8px 0 0">
+                <strong>Learning Purpose:</strong> Surfaces existing beliefs before instruction begins; gives the instructor a diagnostic snapshot of where the class is starting from.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 2: Pre-test Review -->
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h4>Pre-test Review &amp; Misconception Analysis <span class="badge badge-orange">7 min</span></h4>
+          <ul>
+            <li>Reveal the class's aggregated pre-class diagnostic quiz scores on screen.</li>
+            <li>Discuss common misconceptions, e.g., <em>"Professional autonomy means freedom from accountability."</em></li>
+            <li>Emphasise that professionalism is <strong>contested, relational, and context-dependent</strong>.</li>
+          </ul>
+          <div class="note-box" style="margin-top:8px">
+            <strong>Key Misconceptions to Address:</strong> (1) Professionalism = salary/status only. (2) Autonomy = no accountability. (3) Standards should be universal across all countries.
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 3: Orientation -->
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h4>Session Orientation <span class="badge badge-green">3 min</span></h4>
+          <ul>
+            <li>Present the five ILOs and the session agenda on screen.</li>
+            <li>Emphasise that learning happens through <strong>dialogue, case analysis, and co-construction</strong> — not only from the instructor.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="pedagogy-link">
+      <strong>📌 Formative Check:</strong> Mentimeter word cloud poll + oral questioning to gauge prior understanding before substantive instruction.
+    </div>
+  </div><!-- /intro card -->
+
+  <!-- SEGMENT 1 -->
+  <div class="card card-gold">
+    <div class="section-header">
+      <div class="section-icon icon-orange">📖</div>
+      <div class="section-header-text"><h2>Segment 1 – Framing Teacher Professionalism</h2><p>15 – 40 minutes (25 min)</p></div>
+    </div>
+    <div class="timer-bar">
+      <span class="timer-icon">⏱</span>
+      <span class="timer-label">Activity Timer – Segment 1 (25 min)</span>
+      <span class="timer-mins">25:00</span>
+      <button class="timer-btn" onclick="startTimer('t-seg1',25)">▶ Start</button>
+      <span class="timer-display" id="t-seg1">25:00</span>
+    </div>
+
+    <h3>Part A – Interactive Mini-Lecture + Concept Map <span class="badge badge-blue">15 min</span></h3>
+    <p style="font-size:.88rem;margin-bottom:12px">Present a concept map linking four dimensions of teacher professionalism:</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px;margin-bottom:14px">
+      <div style="background:#ebf8ff;border:1px solid #bee3f8;border-radius:8px;padding:12px;text-align:center">
+        <div style="font-size:1.5rem;margin-bottom:4px">🧠</div>
+        <div style="font-weight:700;color:#2b6cb0;font-size:.9rem">Knowledge &amp; Expertise</div>
+        <div style="font-size:.78rem;color:var(--text-light);margin-top:3px">Subject mastery, pedagogy, curriculum understanding</div>
+      </div>
+      <div style="background:#faf5ff;border:1px solid #d6bcfa;border-radius:8px;padding:12px;text-align:center">
+        <div style="font-size:1.5rem;margin-bottom:4px">⚖️</div>
+        <div style="font-weight:700;color:#553c9a;font-size:.9rem">Autonomy &amp; Judgment</div>
+        <div style="font-size:.78rem;color:var(--text-light);margin-top:3px">Decision-making, contextual adaptation, professional discretion</div>
+      </div>
+      <div style="background:#fff5f5;border:1px solid #fed7d7;border-radius:8px;padding:12px;text-align:center">
+        <div style="font-size:1.5rem;margin-bottom:4px">🌱</div>
+        <div style="font-weight:700;color:#9b2c2c;font-size:.9rem">Responsibility &amp; Ethics</div>
+        <div style="font-size:.78rem;color:var(--text-light);margin-top:3px">Moral purpose, duty of care, ethical reasoning</div>
+      </div>
+      <div style="background:#f0fff4;border:1px solid #9ae6b4;border-radius:8px;padding:12px;text-align:center">
+        <div style="font-size:1.5rem;margin-bottom:4px">🤝</div>
+        <div style="font-weight:700;color:#276749;font-size:.9rem">Collaboration &amp; Collegiality</div>
+        <div style="font-size:.78rem;color:var(--text-light);margin-top:3px">Peer learning, community engagement, shared leadership</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px">
+      <div style="background:#e6fffa;border:1px solid #81e6d9;border-radius:8px;padding:12px">
+        <div style="font-weight:700;color:#234e52;font-size:.88rem;margin-bottom:4px">🏛 Managerial Professionalism</div>
+        <div style="font-size:.82rem;color:var(--text)">External accountability, performance standards, standardised measurement, performativity culture.</div>
+      </div>
+      <div style="background:#fffff0;border:1px solid #faf089;border-radius:8px;padding:12px">
+        <div style="font-weight:700;color:#744210;font-size:.88rem;margin-bottom:4px">🕊 Democratic / Autonomous Professionalism</div>
+        <div style="font-size:.82rem;color:var(--text)">Teacher voice, collaborative inquiry, moral purpose, locally responsive practice.</div>
+      </div>
+    </div>
+    <div class="info-box">
+      <strong>Think-Pair-Share every 5 minutes:</strong> Pause the mini-lecture to check engagement and consolidate understanding. Use brief prompts such as: "Turn to your neighbour — which dimension do you think is most undervalued in your local context?"
+    </div>
+
+    <hr class="divider">
+    <h3>Part B – Think-Pair-Share <span class="badge badge-purple">10 min</span></h3>
+    <div class="step-cards">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h4>Prompt</h4>
+          <p><em>"Recall a teacher you admire. Which dimensions of professionalism did they demonstrate? Which dimension was most absent?"</em></p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h4>Pair Discussion (3 min)</h4>
+          <p>Students discuss in pairs; identify at least one specific example linked to a dimension.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h4>Share on Padlet <span class="badge badge-red">Padlet</span></h4>
+          <div class="tool-card" style="background:#fff5f5;margin-top:8px">
+            <div class="tool-card-header">
+              <div class="tool-logo logo-padlet">P</div>
+              <div><div class="tool-name">Padlet – Think-Pair-Share Board</div><div class="tool-purpose">Shared digital board for collaborative idea-posting</div></div>
+            </div>
+            <button class="collapse-btn" onclick="toggleCollapse(this)">
+              <span style="font-size:.85rem;font-weight:600;color:var(--primary-light)">📋 Step-by-step instructions</span>
+              <span class="chevron">▼</span>
+            </button>
+            <div class="collapse-body">
+              <ol class="tool-steps">
+                <li>Go to <a href="https://padlet.com" target="_blank">padlet.com</a> and sign in or create a free account.</li>
+                <li>Click <strong>+ Make a Padlet</strong> → choose <strong>Wall</strong> layout for this activity.</li>
+                <li>Title it: <em>"Teacher Professionalism – Dimensions in Action"</em>.</li>
+                <li>Create four columns labelled: Knowledge &amp; Expertise | Autonomy &amp; Judgment | Responsibility &amp; Ethics | Collaboration &amp; Collegiality.</li>
+                <li>Share the Padlet link or QR code with the class on the projector screen.</li>
+                <li>Students double-click any column to add a sticky note with their example (teacher name optional, context required).</li>
+                <li>After posting, scroll the board together and highlight 2–3 compelling examples per dimension.</li>
+              </ol>
+              <div class="note-box" style="margin:8px 0 0">
+                <strong>Learning Purpose:</strong> Makes thinking visible; allows all 60 students to contribute simultaneously rather than sequentially. Instructor synthesises common themes: care, preparation, adaptation, relationship-building.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pedagogy-link">
+      <strong>📚 Pedagogy Link:</strong> Knowledge is presented as a springboard for joint meaning-making — not as one-way transmission. Students immediately personalise abstract dimensions through their own lived experience.
+    </div>
+  </div><!-- /seg1 -->
+
+</div>
+</div><!-- /tab-activities partial — continues next -->
+
+<!-- ══ SEGMENT 2 ONWARDS is inside its own wrapper that belongs to tab-activities ══ -->
+<div id="tab-activities-extra" style="display:block">
+<div class="container">
+  <div class="card card-success">
+    <div class="section-header">
+      <div class="section-icon icon-green">🌍</div>
+      <div class="section-header-text"><h2>Segment 2 – Local vs International: A Jigsaw Exploration</h2><p>40 – 80 minutes (40 min)</p></div>
+    </div>
+    <div class="timer-bar">
+      <span class="timer-icon">⏱</span>
+      <span class="timer-label">Activity Timer – Segment 2 (40 min)</span>
+      <span class="timer-mins">40:00</span>
+      <button class="timer-btn" onclick="startTimer('t-seg2',40)">▶ Start</button>
+      <span class="timer-display" id="t-seg2">40:00</span>
+    </div>
+    <div class="info-box"><strong>Goal:</strong> Compare how different contexts define teacher professionalism through structured cooperative enquiry.</div>
+
+    <h3>Set-Up <span class="badge badge-blue">5 min</span></h3>
+    <p style="font-size:.87rem;margin-bottom:12px">Divide 60 students into four expert groups (~15 per group). Each group receives 2–3 short primary-source excerpt cards.</p>
+    <div class="group-grid">
+      <div class="group-card g-nordic">
+        <div class="group-tag">Group A – Nordic</div>
+        <div class="group-title">Finland</div>
+        <ul class="group-bullets">
+          <li>Research-based professionalism</li>
+          <li>High teacher autonomy</li>
+          <li>Master's-level preparation</li>
+          <li>Minimal external inspection</li>
+        </ul>
+      </div>
+      <div class="group-card g-anglo">
+        <div class="group-tag">Group B – Anglophone / Standards-Based</div>
+        <div class="group-title">England or United States</div>
+        <ul class="group-bullets">
+          <li>External professional standards</li>
+          <li>Performance appraisal systems</li>
+          <li>Career stages / pay scales</li>
+          <li>Ofsted / accountability culture</li>
+        </ul>
+      </div>
+      <div class="group-card g-east">
+        <div class="group-tag">Group C – East Asian</div>
+        <div class="group-title">Shanghai or Singapore</div>
+        <ul class="group-bullets">
+          <li>Moral responsibility emphasis</li>
+          <li>Strong collaborative culture</li>
+          <li>High societal expectations</li>
+          <li>Teacher-as-scholar tradition</li>
+        </ul>
+      </div>
+      <div class="group-card g-intl">
+        <div class="group-tag">Group D – International Organisations</div>
+        <div class="group-title">UNESCO &amp; OECD TALIS</div>
+        <ul class="group-bullets">
+          <li>ILO/UNESCO 1966 Recommendation</li>
+          <li>OECD TALIS 2018 findings</li>
+          <li>Global benchmarks &amp; indicators</li>
+          <li>Teacher autonomy vs policy pressure</li>
+        </ul>
+      </div>
+    </div>
+
+    <hr class="divider">
+    <h3>Expert Group Work <span class="badge badge-green">15 min</span></h3>
+    <p style="font-size:.87rem;margin-bottom:10px">Each expert group reads their excerpts and completes the graphic organiser:</p>
+    <div style="overflow-x:auto">
+      <table class="org-table">
+        <thead>
+          <tr>
+            <th>Dimension</th>
+            <th>Group A – Nordic</th>
+            <th>Group B – Anglophone</th>
+            <th>Group C – East Asian</th>
+            <th>Group D – International</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Key values underlying professionalism</strong></td><td></td><td></td><td></td><td></td></tr>
+          <tr><td><strong>Expected roles &amp; responsibilities</strong></td><td></td><td></td><td></td><td></td></tr>
+          <tr><td><strong>Balance: autonomy vs accountability</strong></td><td></td><td></td><td></td><td></td></tr>
+          <tr><td><strong>How "professional knowledge" is defined</strong></td><td></td><td></td><td></td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="text-muted" style="margin-top:6px">Distribute as a printed template or shared digital document.</p>
+
+    <hr class="divider">
+    <h3>Mixed-Group Sharing <span class="badge badge-orange">12 min</span></h3>
+    <div class="step-cards">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-body"><h4>Regroup</h4><p>Rearrange students into mixed groups of four — one expert from each context (A, B, C, D).</p></div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-body"><h4>Expert Sharing (3 min per expert)</h4><p>Each expert presents their context. Peers fill in the corresponding column of the graphic organiser as they listen.</p></div>
+      </div>
+    </div>
+
+    <hr class="divider">
+    <h3>Whole-Class Debrief <span class="badge badge-purple">8 min</span></h3>
+    <div class="guide-q"><div class="guide-icon">💬</div><div class="guide-body"><strong>Question 1</strong><p>"What do these contexts share? What differs fundamentally?"</p></div></div>
+    <div class="guide-q"><div class="guide-icon">🌐</div><div class="guide-body"><strong>Question 2</strong><p>"Is there a single 'global professionalism' or only local versions?"</p></div></div>
+    <div class="guide-q"><div class="guide-icon">⚖️</div><div class="guide-body"><strong>Question 3</strong><p>"How might an international benchmark encourage — or limit — local professional agency?"</p></div></div>
+
+    <div class="pedagogy-link">
+      <strong>📚 Pedagogy Link:</strong> Jigsaw is a highly structured cooperative learning strategy that forces interpersonal and conceptual negotiation — Social Constructivism made tangible. Each student holds knowledge others lack, creating genuine interdependence.
+    </div>
+  </div>
+
+  <!-- SEGMENT 3 -->
+  <div class="card card-danger">
+    <div class="section-header">
+      <div class="section-icon icon-red">⚖️</div>
+      <div class="section-header-text"><h2>Segment 3 – Dilemma Case Studies: Professionalism in Action</h2><p>80 – 110 minutes (30 min)</p></div>
+    </div>
+    <div class="timer-bar">
+      <span class="timer-icon">⏱</span>
+      <span class="timer-label">Activity Timer – Segment 3 (30 min)</span>
+      <span class="timer-mins">30:00</span>
+      <button class="timer-btn" onclick="startTimer('t-seg3',30)">▶ Start</button>
+      <span class="timer-display" id="t-seg3">30:00</span>
+    </div>
+    <div class="info-box"><strong>Goal:</strong> Apply professional judgement to messy, context-rich dilemmas that resist simple answers.</div>
+
+    <h3>Decision-Making Scaffold <span class="badge badge-blue">5 min</span></h3>
+    <p style="font-size:.87rem;margin-bottom:10px">Form groups of 4–5. Use this scaffold to analyse your assigned case:</p>
+    <ul class="scaffold">
+      <li><div class="scaffold-num">1</div><span>What is the <strong>dilemma</strong>?</span></li>
+      <li><div class="scaffold-num">2</div><span>Who are the <strong>stakeholders</strong>?</span></li>
+      <li><div class="scaffold-num">3</div><span>What <strong>professional knowledge and values</strong> apply?</span></li>
+      <li><div class="scaffold-num">4</div><span>What are the <strong>contextual constraints</strong>?</span></li>
+      <li><div class="scaffold-num">5</div><span>What would be your <strong>professional response</strong>? Why?</span></li>
+      <li><div class="scaffold-num">6</div><span>What if <strong>local and international expectations conflict</strong>?</span></li>
+    </ul>
+
+    <h3 style="margin-top:16px">Case Studies <span class="badge badge-green">Group Work – 15 min</span></h3>
+    <div class="case-grid">
+      <div class="case-card">
+        <div class="case-header case-a">Case A – Tradition vs. International Critique</div>
+        <div class="case-body">
+          <p>A respected local teacher uses rote memorisation as a core instructional strategy. An international trainer criticises the approach as "unprofessional" and "outdated."</p>
+          <p><strong>Key tension:</strong> Cultural relevance of pedagogy vs. international "best practice" norms.</p>
+        </div>
+      </div>
+      <div class="case-card">
+        <div class="case-header case-b">Case B – Narrow vs. Broad Professionalism</div>
+        <div class="case-body">
+          <p>A teacher believes professionalism is defined solely by classroom practice and refuses to participate in school community events, parental meetings, or peer observation.</p>
+          <p><strong>Key tension:</strong> Minimal compliance vs. extended professional responsibility.</p>
+        </div>
+      </div>
+      <div class="case-card">
+        <div class="case-header case-c">Case C – Accountability vs. Autonomy</div>
+        <div class="case-body">
+          <p>A school uses standardised test results as the primary basis for reprimanding teachers. A committed teacher experiences loss of autonomy and declining morale.</p>
+          <p><strong>Key tension:</strong> Managerial professionalism vs. democratic/autonomous professionalism.</p>
+        </div>
+      </div>
+      <div class="case-card">
+        <div class="case-header case-d">Case D – Global Curriculum vs. Local Culture</div>
+        <div class="case-body">
+          <p>An international NGO requires teachers to use a prescribed "canned" curriculum that ignores local cultural contexts, languages, and community values.</p>
+          <p><strong>Key tension:</strong> Donor compliance vs. professional responsibility to learners.</p>
+        </div>
+      </div>
+    </div>
+    <p class="text-muted" style="margin-top:8px">Each group prepares a <strong>2-minute "professional opinion"</strong> or role-play. Groups should challenge each other's assumptions rather than agree too quickly.</p>
+
+    <hr class="divider">
+    <h3>Gallery Walk – PMI Protocol <span class="badge badge-purple">10 min</span></h3>
+    <p style="font-size:.87rem;margin-bottom:12px">Groups post responses on large paper or a digital board. Peers rotate and leave PMI feedback:</p>
+    <div class="pmi-grid">
+      <div class="pmi-box pmi-plus"><h5>➕ Plus</h5><p>What is strong or persuasive?</p></div>
+      <div class="pmi-box pmi-minus"><h5>➖ Minus</h5><p>What is missing or problematic?</p></div>
+      <div class="pmi-box pmi-interesting"><h5>💡 Interesting</h5><p>What further question does this raise?</p></div>
+    </div>
+
+    <div class="tool-card" style="margin-top:14px;background:#fffff0">
+      <div class="tool-card-header">
+        <div class="tool-logo logo-jamboard">J</div>
+        <div><div class="tool-name">Jamboard (or Miro / Physical Posters) – Gallery Walk Board</div><div class="tool-purpose">Digital whiteboard for posting case responses and PMI peer feedback</div></div>
+      </div>
+      <button class="collapse-btn" onclick="toggleCollapse(this)">
+        <span style="font-size:.85rem;font-weight:600;color:var(--primary-light)">📋 Step-by-step instructions</span>
+        <span class="chevron">▼</span>
+      </button>
+      <div class="collapse-body">
+        <div class="note-box">As an alternative to Jamboard, use <a href="https://www.miro.com" target="_blank">Miro</a> or <a href="https://www.mural.co" target="_blank">Mural</a> (both free tiers available), or physical A3 posters.</div>
+        <ol class="tool-steps">
+          <li>Open <a href="https://jamboard.google.com" target="_blank">jamboard.google.com</a> (or Miro) and create one frame/area per case study.</li>
+          <li>Label each frame: Case A | Case B | Case C | Case D.</li>
+          <li>Share the board link with "Anyone can edit" access.</li>
+          <li>Groups post their 2-minute summary using sticky notes on their case's frame.</li>
+          <li>Set a 2-minute timer; groups rotate to the next frame and add PMI notes: <strong>green = Plus</strong>, <strong>red = Minus</strong>, <strong>yellow = Interesting</strong>.</li>
+          <li>Repeat until all groups have reviewed all cases.</li>
+          <li>Instructor highlights 2–3 stand-out feedback notes during the wrap-up.</li>
+        </ol>
+        <div class="note-box" style="margin:8px 0 0"><strong>Learning Purpose:</strong> PMI protocol encourages substantive critique rather than surface-level agreement, making diverse perspectives visible to the whole class.</div>
+      </div>
+    </div>
+
+    <div class="pedagogy-link">
+      <strong>📚 Pedagogy Link:</strong> Authentic ill-structured problems require learners to negotiate meaning, take perspectives, and justify decisions — the core mechanism of constructivist learning.
+    </div>
+  </div>
+
+  <!-- SEGMENT 4 -->
+  <div class="card card-gold">
+    <div class="section-header">
+      <div class="section-icon icon-orange">🤝</div>
+      <div class="section-header-text"><h2>Segment 4 – Collaborative Synthesis &amp; Peer Critique</h2><p>110 – 125 minutes (15 min)</p></div>
+    </div>
+    <div class="timer-bar">
+      <span class="timer-icon">⏱</span>
+      <span class="timer-label">Activity Timer – Segment 4 (15 min)</span>
+      <span class="timer-mins">15:00</span>
+      <button class="timer-btn" onclick="startTimer('t-seg4',15)">▶ Start</button>
+      <span class="timer-display" id="t-seg4">15:00</span>
+    </div>
+    <div class="info-box"><strong>Goal:</strong> Move from case application to broader professional principles that bridge local and international contexts.</div>
+
+    <h3>Task – "Five Non-Negotiables" <span class="badge badge-gold">10 min</span></h3>
+    <p style="font-size:.87rem;margin-bottom:12px">In groups of 4–5, develop <strong>Five Non-Negotiables for Teacher Professionalism</strong> valid in both local and international contexts. Each must include a one-sentence justification. One representative posts on Padlet.</p>
+    <p style="font-size:.83rem;color:var(--text-light);margin-bottom:8px"><em>Example structure (students develop their own):</em></p>
+    <ul class="nn-list">
+      <li><div class="nn-body"><strong>Commitment to ongoing learning</strong><p>The knowledge base of teaching evolves; a professional who stops learning cannot serve students equitably.</p></div></li>
+      <li><div class="nn-body"><strong>Ethical responsibility to learners</strong><p>Students are in a position of trust; the teacher's moral agency shapes not just outcomes but who each student becomes.</p></div></li>
+      <li><div class="nn-body"><strong>Contextual responsiveness</strong><p>Universal prescriptions ignore the cultural, linguistic, and material realities of diverse classrooms.</p></div></li>
+      <li><div class="nn-body"><strong>Collaborative professional practice</strong><p>No teacher can improve in isolation; peer learning is a structural requirement of sustained quality.</p></div></li>
+      <li><div class="nn-body"><strong>Balanced accountability and autonomy</strong><p>External oversight without professional agency produces compliance, not genuine improvement.</p></div></li>
+    </ul>
+
+    <div class="tool-card" style="background:#fff5f5;margin-top:12px">
+      <div class="tool-card-header">
+        <div class="tool-logo logo-padlet">P</div>
+        <div><div class="tool-name">Padlet – Non-Negotiables Synthesis Board</div><div class="tool-purpose">Groups post their Five Non-Negotiables for whole-class comparison</div></div>
+      </div>
+      <button class="collapse-btn" onclick="toggleCollapse(this)">
+        <span style="font-size:.85rem;font-weight:600;color:var(--primary-light)">📋 Step-by-step instructions</span>
+        <span class="chevron">▼</span>
+      </button>
+      <div class="collapse-body">
+        <ol class="tool-steps">
+          <li>Create a new Padlet at <a href="https://padlet.com" target="_blank">padlet.com</a> titled <em>"Our Non-Negotiables for Teacher Professionalism"</em>.</li>
+          <li>Choose the <strong>Shelf</strong> layout — one column per group.</li>
+          <li>One representative from each group posts their five principles as a numbered list.</li>
+          <li>Display the Padlet on the projector for whole-class comparison.</li>
+          <li>Identify principles appearing across multiple groups (consensus) vs. those appearing only once (productive divergence).</li>
+          <li>Use divergent principles as the starting point for the hot-seat critique.</li>
+        </ol>
+        <div class="note-box" style="margin:8px 0 0"><strong>Learning Purpose:</strong> Seeing all groups' syntheses simultaneously enables meta-level reflection on shared values and generative disagreements.</div>
+      </div>
+    </div>
+
+    <hr class="divider">
+    <h3>Peer Critique – Hot Seat Protocol <span class="badge badge-red">5 min</span></h3>
+    <div class="step-cards">
+      <div class="step-card"><div class="step-num">1</div><div class="step-body"><h4>One group presents</h4><p>A representative reads their Non-Negotiables and explains the reasoning behind the most contested one.</p></div></div>
+      <div class="step-card"><div class="step-num">2</div><div class="step-body"><h4>Class asks clarifying questions</h4><p><em>"What did you mean by X? How would this work in context Y? What would you cut if you could only keep three?"</em></p></div></div>
+      <div class="step-card"><div class="step-num">3</div><div class="step-body"><h4>Respectful critical thinking</h4><p>Focus on intellectual challenge, not winning. The goal is to surface tensions and refine thinking through dialogue.</p></div></div>
+    </div>
+    <div class="note-box" style="margin-top:12px"><strong>Formative Observation:</strong> Instructor circulates, noting groups that demonstrate strong dialogue, equal participation, and evidence of genuinely challenging ideas — not just sharing.</div>
+    <div class="pedagogy-link"><strong>📚 Pedagogy Link:</strong> Collaborative creation and peer assessment are the apex of Social Constructivist pedagogy — knowledge is actively built, tested, and refined through critical social interaction.</div>
+  </div>
+
+  <!-- SYNTHESIS & CLOSURE -->
+  <div class="card card-accent">
+    <div class="section-header">
+      <div class="section-icon icon-blue">🏁</div>
+      <div class="section-header-text"><h2>Synthesis &amp; Closure</h2><p>125 – 150 minutes (25 min)</p></div>
+    </div>
+    <div class="timer-bar">
+      <span class="timer-icon">⏱</span>
+      <span class="timer-label">Activity Timer – Closure (25 min)</span>
+      <span class="timer-mins">25:00</span>
+      <button class="timer-btn" onclick="startTimer('t-closure',25)">▶ Start</button>
+      <span class="timer-display" id="t-closure">25:00</span>
+    </div>
+
+    <h3>1. Post-Exit Ticket via Mentimeter <span class="badge badge-blue">5 min</span></h3>
+    <div class="tool-card" style="background:#ebf8ff">
+      <div class="tool-card-header">
+        <div class="tool-logo logo-mentimeter">M</div>
+        <div><div class="tool-name">Mentimeter – Exit Ticket (3 Questions)</div><div class="tool-purpose">Real-time formative check of all five ILOs</div></div>
+      </div>
+      <button class="collapse-btn" onclick="toggleCollapse(this)">
+        <span style="font-size:.85rem;font-weight:600;color:var(--primary-light)">📋 Step-by-step instructions</span>
+        <span class="chevron">▼</span>
+      </button>
+      <div class="collapse-body">
+        <ol class="tool-steps">
+          <li>Return to your Mentimeter presentation and add three new slides at the end.</li>
+          <li><strong>Slide 1 (Open Text / Word Cloud):</strong> "How do you now define teacher professionalism — in your own words?"</li>
+          <li><strong>Slide 2 (Open Text):</strong> "Name one tension between local and international expectations you identified today."</li>
+          <li><strong>Slide 3 (Open Text):</strong> "What question remains with you after today's seminar?"</li>
+          <li>Display each slide live; allow 30–60 seconds per response.</li>
+          <li>Compare Slide 1 word cloud to the opening word cloud — make learning growth visible to students.</li>
+          <li>Screenshot all responses for use in instructor reflection and next-session planning.</li>
+        </ol>
+        <div class="note-box" style="margin:8px 0 0"><strong>Learning Purpose:</strong> Measures whether outcomes were achieved; the visual contrast between opening and closing word clouds makes conceptual growth visible to everyone.</div>
+      </div>
+    </div>
+
+    <h3 style="margin-top:18px">2. Class Wrap-Up <span class="badge badge-green">7 min</span></h3>
+    <div class="step-cards">
+      <div class="step-card"><div class="step-num">1</div><div class="step-body"><h4>Share gallery walk highlights</h4><p>Read 2–3 high-quality PMI feedback comments aloud; explain what made them insightful.</p></div></div>
+      <div class="step-card"><div class="step-num">2</div><div class="step-body"><h4>Summarise key themes</h4>
+        <ul>
+          <li><strong>Autonomy vs accountability</strong> – the productive tension at the heart of all debates</li>
+          <li><strong>Culture vs universality</strong> – why context always matters</li>
+          <li><strong>Moral purpose vs technical competence</strong> – what distinguishes a professional from a technician</li>
+        </ul>
+      </div></div>
+      <div class="step-card"><div class="step-num">3</div><div class="step-body"><h4>Connect to emerging professional identity</h4><p><em>"How has your sense of what it means to be a professional teacher shifted — even slightly — today?"</em></p></div></div>
+    </div>
+
+    <h3 style="margin-top:18px">3. Preview Next Session <span class="badge badge-purple">3 min</span></h3>
+    <div class="note-box"><strong>Looking Ahead:</strong> "Next week you will observe a micro-teaching demonstration. Bring a written list of the professional values you hope to see reflected in any teacher's practice — drawing directly from today's Non-Negotiables and the dilemma cases."</div>
+  </div>
+
+</div><!-- /container -->
+</div><!-- /tab-activities-extra -->
+
+<!-- ══════════════════════════════════════════
+     TAB 4 – ASSESSMENT
+══════════════════════════════════════════ -->
+<div class="tab-panel" id="tab-assessment">
+<div class="container">
+
+  <!-- Formative Assessment -->
+  <div class="card card-accent">
+    <div class="section-header">
+      <div class="section-icon icon-blue">📊</div>
+      <div class="section-header-text"><h2>Formative Assessment (During Class)</h2><p>Ongoing checks for learning throughout the seminar</p></div>
+    </div>
+    <div style="overflow-x:auto">
+      <table class="org-table">
+        <thead>
+          <tr>
+            <th>Assessment</th>
+            <th>Purpose</th>
+            <th>Pedagogy Link</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Pre-class diagnostic quiz</strong><br><span class="badge badge-blue">Moodle</span></td>
+            <td>Activate prior knowledge; surface misconceptions before instruction begins</td>
+            <td>Frames constructivist conversation around students' existing ideas</td>
+          </tr>
+          <tr>
+            <td><strong>Opening word cloud</strong><br><span class="badge badge-blue">Mentimeter</span></td>
+            <td>Capture baseline definitions of professionalism for comparison with exit ticket</td>
+            <td>Makes prior knowledge visible and provides a diagnostic snapshot</td>
+          </tr>
+          <tr>
+            <td><strong>Padlet / Jamboard contributions</strong><br><span class="badge badge-red">Padlet</span> <span class="badge badge-gold">Jamboard</span></td>
+            <td>Assess ability to link theory to examples; track quality of collaborative thinking</td>
+            <td>Evidence of collaborative knowledge-building in action</td>
+          </tr>
+          <tr>
+            <td><strong>Jigsaw graphic organiser</strong><br><span class="badge badge-green">Group task</span></td>
+            <td>Check depth of engagement with international and local frameworks</td>
+            <td>Supports structured interdependent peer learning</td>
+          </tr>
+          <tr>
+            <td><strong>Gallery walk peer feedback (PMI)</strong><br><span class="badge badge-purple">Whole class</span></td>
+            <td>Provide immediate peer critique on case dilemma responses</td>
+            <td>Social construction of quality through peer review</td>
+          </tr>
+          <tr>
+            <td><strong>Exit ticket</strong><br><span class="badge badge-blue">Mentimeter</span></td>
+            <td>Measure understanding at close of session; adjust future teaching based on remaining questions</td>
+            <td>Checks whether all ILOs were achieved; informs next session planning</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Summative Assessment 1 -->
+  <div class="card card-success">
+    <div class="section-header">
+      <div class="section-icon icon-green">✍️</div>
+      <div class="section-header-text"><h2>Summative Assessment 1 – Individual</h2><p>Due one week after the session</p></div>
+    </div>
+    <div class="step-card" style="margin-bottom:14px">
+      <div class="step-num">📝</div>
+      <div class="step-body">
+        <h4>Comparative Professionalism Reflection</h4>
+        <p style="margin-top:4px"><em>"Compare how teacher professionalism is represented in your local context and in one of the international contexts discussed in class. Analyse the underlying values and tensions, and propose what might be learned from each. Use at least two sources from the session readings."</em></p>
+      </div>
+    </div>
+    <h3>Rubric Criteria</h3>
+    <div style="overflow-x:auto">
+      <table class="org-table">
+        <thead>
+          <tr><th>Criterion</th><th>Excellent</th><th>Proficient</th><th>Developing</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Conceptual understanding</strong></td>
+            <td>Demonstrates nuanced understanding of both contexts; uses key theoretical frameworks accurately</td>
+            <td>Shows solid understanding of both contexts with minor gaps</td>
+            <td>Limited or superficial treatment of one or both contexts</td>
+          </tr>
+          <tr>
+            <td><strong>Critical analysis</strong></td>
+            <td>Identifies and interrogates tensions with sophisticated reasoning</td>
+            <td>Recognises tensions and offers some analysis</td>
+            <td>Describes rather than analyses; tensions not clearly identified</td>
+          </tr>
+          <tr>
+            <td><strong>Use of evidence</strong></td>
+            <td>Integrates at least two sources fluently; evidence supports argument throughout</td>
+            <td>Uses two sources; some inconsistency in how evidence is applied</td>
+            <td>Fewer than two sources; or sources cited but not effectively used</td>
+          </tr>
+          <tr>
+            <td><strong>Contextual sensitivity</strong></td>
+            <td>Consistently acknowledges cultural, historical, and policy influences on professionalism</td>
+            <td>Acknowledges context in some areas</td>
+            <td>Treats professionalism as universal or decontextualised</td>
+          </tr>
+          <tr>
+            <td><strong>Clarity after peer feedback</strong></td>
+            <td>Evidence of revision and refinement based on gallery walk or peer critique feedback</td>
+            <td>Some evidence of revision</td>
+            <td>No visible engagement with peer feedback</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="info-box" style="margin-top:14px">
+      <strong>Flexible Submission:</strong> Students may choose between a written essay (800–1000 words) or a recorded oral presentation (5–7 minutes with transcript). Both formats are assessed against the same rubric.
+    </div>
+  </div>
+
+  <!-- Summative Assessment 2 -->
+  <div class="card card-warning">
+    <div class="section-header">
+      <div class="section-icon icon-orange">🗺️</div>
+      <div class="section-header-text"><h2>Summative Assessment 2 – Group</h2><p>Due two weeks after the session</p></div>
+    </div>
+    <div class="step-card" style="margin-bottom:14px">
+      <div class="step-num">🖼️</div>
+      <div class="step-body">
+        <h4>Professional Standards Synthesis Infographic</h4>
+        <p style="margin-top:4px">Groups create a one-page infographic presenting <strong>"The Five Non-Negotiables"</strong> of teacher professionalism. The infographic must be professional in presentation and substantive in content.</p>
+      </div>
+    </div>
+    <h3>Criteria</h3>
+    <ul class="checklist" style="pointer-events:none">
+      <li><input type="checkbox" checked disabled><label>Clear justification of each of the five principles</label></li>
+      <li><input type="checkbox" checked disabled><label>Evidence drawn from both local and international frameworks</label></li>
+      <li><input type="checkbox" checked disabled><label>Thoughtful acknowledgement of context-specific tensions</label></li>
+      <li><input type="checkbox" checked disabled><label>Creative and professional visual presentation</label></li>
+      <li><input type="checkbox" checked disabled><label>Revised and refined based on hot-seat peer critique feedback</label></li>
+    </ul>
+  </div>
+
+  <!-- Constructive Alignment Matrix -->
+  <div class="card card-accent">
+    <div class="section-header">
+      <div class="section-icon icon-blue">🔗</div>
+      <div class="section-header-text"><h2>Constructive Alignment Matrix</h2><p>How each ILO connects to activities and assessments</p></div>
+    </div>
+    <div class="matrix-scroll">
+      <table class="matrix-table">
+        <thead>
+          <tr>
+            <th>Learning Outcome</th>
+            <th>Teaching Activity</th>
+            <th>Assessment Method</th>
+            <th>Pedagogy Link</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>ILO 1 – Analyse local/international definitions</strong></td>
+            <td>Jigsaw exploration; expert and mixed groups; whole-class debrief</td>
+            <td>Graphic organiser; expert group discussion; debrief questions</td>
+            <td>Collaborative inquiry and peer teaching</td>
+          </tr>
+          <tr>
+            <td><strong>ILO 2 – Evaluate autonomy vs accountability</strong></td>
+            <td>Mini-lecture + think-pair-share; dilemma case studies</td>
+            <td>Group discussion; exit ticket (Mentimeter)</td>
+            <td>Constructive dialogue and critical reflection</td>
+          </tr>
+          <tr>
+            <td><strong>ILO 3 – Apply frameworks to dilemmas</strong></td>
+            <td>Dilemma case studies with structured scaffold</td>
+            <td>Gallery walk (PMI feedback); group presentations</td>
+            <td>Authentic problem-solving and social negotiation</td>
+          </tr>
+          <tr>
+            <td><strong>ILO 4 – Co-create synthesis</strong></td>
+            <td>Development of "Five Non-Negotiables" in groups</td>
+            <td>Infographic assessment; hot-seat peer critique</td>
+            <td>Collaborative creation and peer assessment</td>
+          </tr>
+          <tr>
+            <td><strong>ILO 5 – Reflect on professional identity</strong></td>
+            <td>Pre-reading; guiding forum questions; exit ticket</td>
+            <td>Comparative Reflection essay or oral presentation</td>
+            <td>Reflective practice supported by social learning</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+</div><!-- /tab-assessment -->
+
+<!-- ══════════════════════════════════════════
+     TAB 5 – RESOURCES
+══════════════════════════════════════════ -->
+<div class="tab-panel" id="tab-resources">
+<div class="container">
+
+  <div class="card card-accent">
+    <div class="section-header">
+      <div class="section-icon icon-blue">🔧</div>
+      <div class="section-header-text"><h2>Required Resources &amp; Technology</h2><p>Everything needed to run this seminar</p></div>
+    </div>
+
+    <!-- LMS / Moodle -->
+    <div class="tool-card" style="background:#fff8f0">
+      <div class="tool-card-header">
+        <div class="tool-logo logo-moodle">Mo</div>
+        <div><div class="tool-name">LMS / Moodle</div><div class="tool-purpose">Central hub for pre-class prep, quizzes, discussion forum, and submissions</div></div>
+      </div>
+      <button class="collapse-btn" onclick="toggleCollapse(this)">
+        <span style="font-size:.85rem;font-weight:600;color:var(--primary-light)">📋 Setup checklist</span>
+        <span class="chevron">▼</span>
+      </button>
+      <div class="collapse-body">
+        <ol class="tool-steps">
+          <li>Upload Reading 1 (local teaching council/ministry standards excerpt) as a PDF to the course Moodle page.</li>
+          <li>Upload Reading 2 (ILO/UNESCO 1966 excerpts and OECD TALIS 2018 highlights) with direct URL links.</li>
+          <li>Embed or link the comparative teacher preparation video (Finland / Shanghai / United States, 5–8 min).</li>
+          <li>Create the 5-question true/false diagnostic quiz with automated feedback responses for each item.</li>
+          <li>Open the discussion forum with the three guiding questions posted as separate threads.</li>
+          <li>Create the summative submission points: <em>Individual Reflection</em> (due Week + 1) and <em>Group Infographic</em> (due Week + 2).</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- Mentimeter -->
+    <div class="tool-card" style="background:#ebf8ff">
+      <div class="tool-card-header">
+        <div class="tool-logo logo-mentimeter">M</div>
+        <div><div class="tool-name">Mentimeter</div><div class="tool-purpose">Live word clouds, polls, and exit ticket</div></div>
+      </div>
+      <button class="collapse-btn" onclick="toggleCollapse(this)">
+        <span style="font-size:.85rem;font-weight:600;color:var(--primary-light)">📋 Setup checklist</span>
+        <span class="chevron">▼</span>
+      </button>
+      <div class="collapse-body">
+        <ol class="tool-steps">
+          <li>Visit <a href="https://www.mentimeter.com" target="_blank">mentimeter.com</a> — free tier supports word clouds and open-ended questions.</li>
+          <li>Create a presentation with: (a) Opening word cloud — "What makes a teacher professional?"; (b) Three-slide exit ticket (see Segment 4 / Closure instructions above).</li>
+          <li>Test the join code and display on the board before class begins.</li>
+          <li>Ensure students can access <a href="https://www.menti.com" target="_blank">menti.com</a> on personal devices.</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- Padlet -->
+    <div class="tool-card" style="background:#fff5f5">
+      <div class="tool-card-header">
+        <div class="tool-logo logo-padlet">P</div>
+        <div><div class="tool-name">Padlet</div><div class="tool-purpose">Shared digital boards for think-pair-share and non-negotiables synthesis</div></div>
+      </div>
+      <button class="collapse-btn" onclick="toggleCollapse(this)">
+        <span style="font-size:.85rem;font-weight:600;color:var(--primary-light)">📋 Setup checklist</span>
+        <span class="chevron">▼</span>
+      </button>
+      <div class="collapse-body">
+        <ol class="tool-steps">
+          <li>Create a free account at <a href="https://padlet.com" target="_blank">padlet.com</a>.</li>
+          <li>Board 1 (Segment 1 TPS): Wall layout, four columns by dimension; title "Professionalism in Action".</li>
+          <li>Board 2 (Segment 4 Synthesis): Shelf layout, one column per group; title "Our Non-Negotiables".</li>
+          <li>Share both boards via QR code or short link projected on screen.</li>
+          <li>Set posting permissions to "Visitors can post" — no student login required.</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- Jamboard / Miro -->
+    <div class="tool-card" style="background:#fffff0">
+      <div class="tool-card-header">
+        <div class="tool-logo logo-jamboard">J</div>
+        <div><div class="tool-name">Jamboard / Miro / Physical Posters</div><div class="tool-purpose">Gallery walk feedback during Segment 3 case studies</div></div>
+      </div>
+      <button class="collapse-btn" onclick="toggleCollapse(this)">
+        <span style="font-size:.85rem;font-weight:600;color:var(--primary-light)">📋 Setup checklist</span>
+        <span class="chevron">▼</span>
+      </button>
+      <div class="collapse-body">
+        <ol class="tool-steps">
+          <li>If using digital: create four frames/areas in <a href="https://jamboard.google.com" target="_blank">Jamboard</a> or <a href="https://miro.com" target="_blank">Miro</a>, one per case.</li>
+          <li>If using physical: prepare four A2/A3 sheets labelled Case A–D; post on classroom walls.</li>
+          <li>Pre-stock sticky notes (or digital equivalents) in three colours: green (Plus), red (Minus), yellow (Interesting).</li>
+          <li>Set a rotation timer on the projector for 2-minute gallery walk intervals.</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- Instructor-Prepared Materials -->
+    <hr class="divider">
+    <h3>Instructor-Prepared Materials</h3>
+    <ul class="res-list">
+      <li><span class="res-icon">📄</span><span><strong>Case Study Cards</strong> (Cases A–D) — printed or digital; one set per group of 4–5 students.</span></li>
+      <li><span class="res-icon">📊</span><span><strong>Graphic Organiser Templates</strong> — for the jigsaw exploration; printed or shared as a digital document (one per student).</span></li>
+      <li><span class="res-icon">📑</span><span><strong>Copies of Local Teaching Standards</strong> — excerpts relevant to your national/regional context (check your local teaching council or ministry website).</span></li>
+      <li><span class="res-icon">🌐</span><span><strong>ILO/UNESCO Recommendation (1966)</strong> excerpts — available at <a href="https://www.ilo.org" target="_blank">ilo.org</a>.</span></li>
+      <li><span class="res-icon">📈</span><span><strong>OECD TALIS 2018 Highlights</strong> — available at <a href="https://www.oecd.org/education/talis/" target="_blank">oecd.org/education/talis</a>.</span></li>
+      <li><span class="res-icon">🎬</span><span><strong>Comparative Teacher Preparation Video</strong> (5–8 min, Finland / Shanghai / USA) — link posted on LMS.</span></li>
+      <li><span class="res-icon">🖼️</span><span><strong>Two Opening Images</strong> — Helsinki creative classroom and scripted-curriculum rural classroom; source from Creative Commons or your institution's media library.</span></li>
+    </ul>
+  </div>
+
+</div>
+</div><!-- /tab-resources -->
+
+<!-- ══════════════════════════════════════════
+     TAB 6 – DIFFERENTIATION & INCLUSIVITY
+══════════════════════════════════════════ -->
+<div class="tab-panel" id="tab-differentiation">
+<div class="container">
+
+  <div class="card card-success">
+    <div class="section-header">
+      <div class="section-icon icon-green">🌈</div>
+      <div class="section-header-text"><h2>Differentiation &amp; Inclusivity</h2><p>Strategies to support all learners in a class of 60</p></div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px">
+
+      <div class="refl-card" style="border-left:4px solid var(--secondary)">
+        <h4>📚 Multiple Formats</h4>
+        <ul>
+          <li>Reading, video, and audio versions of key sources provided</li>
+          <li>Supports varied learning preferences and accessibility needs</li>
+          <li>All videos include captions; materials can be enlarged or digitally adapted</li>
+          <li>Mentimeter accessible on mobile devices — no laptop required</li>
+        </ul>
+      </div>
+
+      <div class="refl-card" style="border-left:4px solid var(--success)">
+        <h4>🤝 Group Roles</h4>
+        <ul>
+          <li>Each group assigns four roles to support co-construction and equal participation:</li>
+          <li><strong>Facilitator</strong> — keeps discussion on track</li>
+          <li><strong>Recorder</strong> — takes notes on graphic organiser</li>
+          <li><strong>Reporter</strong> — presents to the whole class</li>
+          <li><strong>Timekeeper</strong> — monitors allocated time</li>
+        </ul>
+      </div>
+
+      <div class="refl-card" style="border-left:4px solid var(--accent-dark)">
+        <h4>🗣️ Language Supports</h4>
+        <p style="font-size:.85rem;margin-bottom:8px">Sentence stems are provided for multilingual learners and students building academic confidence:</p>
+        <div class="stems-grid" style="grid-template-columns:1fr">
+          <div class="stem-pill">"One example from my context is…"</div>
+          <div class="stem-pill">"I notice a tension between…"</div>
+          <div class="stem-pill">"In my reading, I found that…"</div>
+          <div class="stem-pill">"This context is similar to / different from mine because…"</div>
+          <div class="stem-pill">"I would argue that… because…"</div>
+        </div>
+      </div>
+
+      <div class="refl-card" style="border-left:4px solid #805ad5">
+        <h4>🚀 Extension for Advanced Students</h4>
+        <ul>
+          <li>During discussions, prompt with higher-order questions:</li>
+          <li><em>"How might your proposed solution be critiqued by a different cultural perspective?"</em></li>
+          <li><em>"What ideological assumptions does this framework embed?"</em></li>
+          <li><em>"Could two of your Non-Negotiables contradict each other — in what circumstances?"</em></li>
+        </ul>
+      </div>
+
+      <div class="refl-card" style="border-left:4px solid var(--warning)">
+        <h4>🧩 Cognitive Load Management</h4>
+        <ul>
+          <li>Session broken into clear 15–25 minute segments with frequent transitions</li>
+          <li>Graphic organiser structures information processing during jigsaw</li>
+          <li>Decision-making scaffold (6 questions) breaks dilemma analysis into steps</li>
+          <li>PMI protocol structures peer feedback to avoid cognitive overload</li>
+        </ul>
+      </div>
+
+      <div class="refl-card" style="border-left:4px solid var(--danger)">
+        <h4>♿ Accessibility</h4>
+        <ul>
+          <li>All videos include closed captions</li>
+          <li>Digital materials can be enlarged or adapted for visual impairments</li>
+          <li>Mentimeter/Padlet accessible via mobile — reduces hardware barriers</li>
+          <li>Physical poster alternatives for students who prefer offline participation</li>
+          <li>Flexible summative assessment: written essay or recorded oral presentation with transcript</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+</div><!-- /tab-differentiation -->
+
+<!-- ══════════════════════════════════════════
+     TAB 7 – REFLECTION & IMPROVEMENT
+══════════════════════════════════════════ -->
+<div class="tab-panel" id="tab-reflection">
+<div class="container">
+
+  <!-- Success Indicators -->
+  <div class="card card-gold">
+    <div class="section-header">
+      <div class="section-icon icon-orange">✅</div>
+      <div class="section-header-text"><h2>Success Indicators</h2><p>How to know the session went well</p></div>
+    </div>
+    <ul class="res-list">
+      <li><span class="res-icon">💬</span><span>Students contribute <strong>meaningful, nuanced examples</strong> during jigsaw discussions — moving beyond surface descriptions to analytical commentary.</span></li>
+      <li><span class="res-icon">📝</span><span>Gallery walk feedback demonstrates <strong>respectful critique of professional judgements</strong>, not mere agreement or polite encouragement.</span></li>
+      <li><span class="res-icon">📊</span><span>Exit tickets show growth from initial definitions ("certification," "knowledge") towards more complex concepts: <strong>"autonomy," "moral purpose," "contextual responsiveness."</strong></span></li>
+      <li><span class="res-icon">🤝</span><span>Hot-seat peer critique generates genuine <strong>intellectual challenge and productive disagreement</strong> — students push back on each other's reasoning, not just their conclusions.</span></li>
+    </ul>
+  </div>
+
+  <!-- Student Feedback Prompts -->
+  <div class="card card-accent">
+    <div class="section-header">
+      <div class="section-icon icon-blue">💬</div>
+      <div class="section-header-text"><h2>Student Feedback Prompts</h2><p>Open next session with these questions</p></div>
+    </div>
+    <div class="guide-q"><div class="guide-icon">⚖️</div><div class="guide-body"><strong>Prompt 1</strong><p>"What did you notice about the balance between local and international views of professionalism?"</p></div></div>
+    <div class="guide-q"><div class="guide-icon">💡</div><div class="guide-body"><strong>Prompt 2</strong><p>"Which activity most changed your thinking? Why?"</p></div></div>
+    <div class="guide-q"><div class="guide-icon">❓</div><div class="guide-body"><strong>Prompt 3</strong><p>"What question would you like to explore further about teacher professionalism?"</p></div></div>
+  </div>
+
+  <!-- Instructor Reflection -->
+  <div class="card card-success">
+    <div class="section-header">
+      <div class="section-icon icon-green">🔄</div>
+      <div class="section-header-text"><h2>Instructor Reflection Questions</h2><p>Complete after each delivery of this session</p></div>
+    </div>
+    <div class="refl-grid">
+      <div class="refl-card" style="border-left:4px solid var(--secondary)">
+        <h4>📖 Jigsaw Engagement</h4>
+        <ul>
+          <li>Did all expert groups engage meaningfully with the texts?</li>
+          <li>Did some students rely on the group leader without doing the reading themselves?</li>
+          <li>Was the graphic organiser sufficiently scaffolded for this cohort?</li>
+        </ul>
+      </div>
+      <div class="refl-card" style="border-left:4px solid var(--success)">
+        <h4>⚖️ Case Study Relevance</h4>
+        <ul>
+          <li>Were the four dilemma cases realistic and relevant for this particular cohort?</li>
+          <li>Did students stay in the analytical scaffold, or default to personal opinion without evidence?</li>
+          <li>Which case generated the richest discussion — and why?</li>
+        </ul>
+      </div>
+      <div class="refl-card" style="border-left:4px solid var(--accent-dark)">
+        <h4>🎨 Gallery Walk Quality</h4>
+        <ul>
+          <li>Did the gallery walk foster genuine dialogue, or did students offer only safe comments?</li>
+          <li>Was the PMI protocol sufficient structure, or did students need additional modelling?</li>
+          <li>How evenly distributed was participation across groups?</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modification Strategies -->
+  <div class="card card-danger">
+    <div class="section-header">
+      <div class="section-icon icon-red">🛠️</div>
+      <div class="section-header-text"><h2>Modification Strategies for Next Time</h2><p>Evidence-based adaptations based on reflection</p></div>
+    </div>
+    <div class="step-cards">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h4>If students struggled with the international perspective</h4>
+          <p>Spend more pre-class time scaffolding the UNESCO/TALIS excerpts. Consider adding a brief annotation guide that directs students to key passages and prompts them to note one surprising finding per reading.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h4>If some groups moved through activities very quickly</h4>
+          <p>Invite them to develop a brief counter-argument to their Non-Negotiables: <em>"What is the strongest case against each of your five principles? What evidence would undermine it?"</em></p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h4>If time is limited</h4>
+          <p>The dilemma case activity can be extended into a full standalone lesson using the <em>"step into the lobby"</em> peer-review protocol. Alternatively, assign case analysis as asynchronous preparation and use class time for the gallery walk only.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h4>If participation was uneven</h4>
+          <p>Implement a "round-robin" share before the whole-class debrief to ensure all voices are heard before the discussion is dominated by confident speakers. Consider anonymous Padlet posting for reticent students.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Session Summary -->
+  <div class="card" style="background:linear-gradient(135deg,var(--primary) 0%,var(--primary-light) 100%);color:#fff;border:none">
+    <div class="section-header">
+      <div class="section-icon" style="background:rgba(255,255,255,0.15);color:#fff">📌</div>
+      <div class="section-header-text">
+        <h2 style="color:#fff">Session Summary</h2>
+        <p style="color:rgba(255,255,255,.75)">The big picture</p>
+      </div>
+    </div>
+    <p style="font-size:.92rem;line-height:1.75;color:rgba(255,255,255,.92)">
+      This 150-minute seminar uses <strong style="color:var(--accent)">Social Constructivism</strong> to help students investigate teacher professionalism as a contested, context-dependent concept. Through pre-reading, diagnostic questioning, jigsaw analysis, case-based problem-solving, collaborative synthesis, and peer critique, students move from personal assumptions to nuanced professional understanding — ready to carry this critical sensitivity into their own teaching practice.
+    </p>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:14px">
+      <span class="meta-pill">🧩 Jigsaw Cooperative Learning</span>
+      <span class="meta-pill">⚖️ Dilemma-Based Problem Solving</span>
+      <span class="meta-pill">🤝 Peer Critique Protocols</span>
+      <span class="meta-pill">🌍 Local + International Perspectives</span>
+      <span class="meta-pill">🎯 5 ILOs (Bloom's Levels 4–6)</span>
+    </div>
+  </div>
+
+</div>
+</div><!-- /tab-reflection -->
+
+<!-- ══════════════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════════════ -->
+<script>
+// ── Tab switching ──
+function showTab(id, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  const panel = document.getElementById('tab-' + id);
+  if (panel) panel.classList.add('active');
+  if (btn) btn.classList.add('active');
+  // The activities tab has an overflow wrapper — show/hide it in sync
+  const extra = document.getElementById('tab-activities-extra');
+  if (extra) extra.style.display = (id === 'activities') ? 'block' : 'none';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ── Collapsible sections ──
+function toggleCollapse(btn) {
+  btn.classList.toggle('open');
+  const body = btn.nextElementSibling;
+  if (body && body.classList.contains('collapse-body')) {
+    body.classList.toggle('open');
+  }
+}
+
+// ── Quiz logic ──
+const QUIZ_FEEDBACK = {
+  1: { correct: 'F', explanation: 'Correct! Professionalism encompasses responsibility, ethics, collaboration, and continuous learning — not just salary and status.' },
+  2: { correct: 'F', explanation: 'Correct! Autonomy is always balanced with accountability. Professionalism requires both independent judgment and responsibility to external communities.' },
+  3: { correct: 'F', explanation: 'Correct! Local history, culture, and policy shape professional expectations differently in each country.' },
+  4: { correct: 'T', explanation: 'Correct! Teachers are moral agents whose work carries both intellectual and ethical dimensions.' },
+  5: { correct: 'F', explanation: 'Correct! UNESCO focuses on rights and status; the OECD emphasises evidence-based practice and system performance. Their definitions differ.' }
+};
+
+let quizAnswered = {};
+let quizScore = 0;
+
+function answerQ(qNum, choice, correctAnswer, clickedEl) {
+  if (quizAnswered[qNum]) return;
+  quizAnswered[qNum] = true;
+
+  // clickedEl passed from inline handler; fall back to active element
+  const clicked = clickedEl || document.activeElement;
+  const q = QUIZ_FEEDBACK[qNum];
+  const isCorrect = (choice === q.correct);
+  if (isCorrect) quizScore++;
+
+  const fb = document.getElementById('qf' + qNum);
+  const opts = document.querySelectorAll('#qq' + qNum + ' .quiz-opt');
+  opts.forEach(opt => { opt.disabled = true; });
+
+  // Mark clicked button
+  if (clicked) clicked.classList.add(isCorrect ? 'correct' : 'wrong');
+
+  // Always reveal the correct answer
+  opts.forEach(opt => {
+    if ((q.correct === 'T' && opt.textContent.trim() === 'True') ||
+        (q.correct === 'F' && opt.textContent.trim() === 'False')) {
+      opt.classList.add('correct');
+    }
+  });
+  // If they got it right, don't double-mark
+  if (isCorrect && clicked) clicked.classList.remove('wrong');
+
+  fb.textContent = (isCorrect ? '✅ ' : '❌ ') + q.explanation;
+  fb.className = 'quiz-feedback show ' + (isCorrect ? 'ok' : 'bad');
+
+  if (Object.keys(quizAnswered).length === 5) {
+    const res = document.getElementById('quizResult');
+    document.getElementById('quizScore').textContent = quizScore + '/5';
+    res.style.display = 'block';
+    saveCheck('quiz-done', true);
+    updateProgress();
+  }
+}
+
+// ── Activity Timers ──
+const timers = {};
+
+function startTimer(id, minutes) {
+  if (timers[id]) {
+    clearInterval(timers[id].interval);
+    delete timers[id];
+    document.getElementById(id).textContent = minutes + ':00';
+    document.getElementById(id).style.color = 'var(--primary)';
+    return;
+  }
+  let secs = minutes * 60;
+  const display = document.getElementById(id);
+  timers[id] = {
+    interval: setInterval(() => {
+      secs--;
+      const m = Math.floor(secs / 60);
+      const s = secs % 60;
+      display.textContent = m + ':' + String(s).padStart(2, '0');
+      if (secs <= 60) display.style.color = 'var(--danger)';
+      if (secs <= 0) {
+        clearInterval(timers[id].interval);
+        delete timers[id];
+        display.textContent = '⏰ Done!';
+        display.style.color = 'var(--success)';
+      }
+    }, 1000)
+  };
+  display.style.color = 'var(--success)';
+}
+
+// ── localStorage progress ──
+function saveCheck(key, val) {
+  try { localStorage.setItem('lp_' + key, val ? '1' : '0'); } catch(e) {}
+}
+
+function loadChecks() {
+  try {
+    document.querySelectorAll('input[type=checkbox][id]').forEach(cb => {
+      const val = localStorage.getItem('lp_' + cb.id);
+      if (val === '1') cb.checked = true;
+    });
+  } catch(e) {}
+}
+
+function updateProgress() {
+  const checkboxes = document.querySelectorAll('input[type=checkbox][onchange]');
+  const total = checkboxes.length;
+  const checked = Array.from(checkboxes).filter(c => c.checked).length;
+  const quizDone = localStorage.getItem('lp_quiz-done') === '1' ? 1 : 0;
+  const pct = Math.round(((checked + quizDone) / (total + 1)) * 100);
+  const bar = document.getElementById('mainProgress');
+  const label = document.getElementById('progressLabel');
+  if (bar) bar.style.width = pct + '%';
+  if (label) label.textContent = pct + '% pre-class tasks completed';
+}
+
+// ── Init ──
+document.addEventListener('DOMContentLoaded', () => {
+  loadChecks();
+  updateProgress();
+  // Sync extra activities div with initial active tab (overview)
+  const extra = document.getElementById('tab-activities-extra');
+  if (extra) extra.style.display = 'none';
+});
+</script>
 </body>
 </html>
