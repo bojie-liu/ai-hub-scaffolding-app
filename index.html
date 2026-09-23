@@ -1,16 +1,1020 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Basic HTML Project</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teacher Professionalism in Local &amp; International Contexts</title>
+<style>
+:root {
+  --primary: #2563eb;
+  --primary-dark: #1d4ed8;
+  --secondary: #7c3aed;
+  --accent: #10b981;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --bg: #f1f5f9;
+  --surface: #ffffff;
+  --text: #1e293b;
+  --text-muted: #64748b;
+  --border: #e2e8f0;
+  --sidebar-w: 280px;
+  --header-h: 60px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;}
+a{color:var(--primary);text-decoration:none;}
+a:hover{text-decoration:underline;}
+
+/* ── Top bar ── */
+.topbar{position:fixed;top:0;left:0;right:0;height:var(--header-h);background:var(--primary);color:#fff;display:flex;align-items:center;padding:0 1rem;z-index:200;gap:.75rem;}
+.topbar h1{font-size:.95rem;font-weight:600;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.hamburger{background:none;border:none;color:#fff;cursor:pointer;font-size:1.4rem;padding:.25rem;display:none;}
+.progress-wrap{display:flex;align-items:center;gap:.5rem;font-size:.8rem;white-space:nowrap;}
+.progress-bar-outer{width:120px;height:8px;background:rgba(255,255,255,.3);border-radius:4px;overflow:hidden;}
+.progress-bar-inner{height:100%;background:#fff;border-radius:4px;transition:width .4s ease;}
+
+/* ── Overlay ── */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:149;}
+.overlay.open{display:block;}
+/* ── Sidebar ── */
+.sidebar{position:fixed;top:var(--header-h);left:0;width:var(--sidebar-w);height:calc(100vh - var(--header-h));background:var(--surface);border-right:1px solid var(--border);overflow-y:auto;z-index:150;transition:transform .3s ease;}
+.sidebar-inner{padding:1rem 0 2rem;}
+.sidebar-section-title{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);padding:.5rem 1.25rem .25rem;}
+.nav-item{display:flex;align-items:center;gap:.6rem;padding:.55rem 1.25rem;cursor:pointer;border-left:3px solid transparent;transition:background .15s,border-color .15s;font-size:.875rem;color:var(--text-muted);}
+.nav-item:hover{background:#f8fafc;color:var(--text);}
+.nav-item.active{background:#eff6ff;border-left-color:var(--primary);color:var(--primary);font-weight:600;}
+.nav-check{width:16px;height:16px;border-radius:50%;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.6rem;transition:all .2s;}
+.nav-check.done{background:var(--accent);border-color:var(--accent);color:#fff;}
+.nav-label{flex:1;}
+.nav-badge{font-size:.65rem;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:.1rem .4rem;color:var(--text-muted);}
+
+/* ── Main ── */
+.main{margin-left:var(--sidebar-w);padding-top:calc(var(--header-h) + 1.5rem);min-height:100vh;}
+.section-page{display:none;padding:0 2rem 3rem;max-width:960px;}
+.section-page.active{display:block;}
+/* ── Section headers ── */
+.section-header{margin-bottom:1.5rem;}
+.section-header h2{font-size:1.5rem;font-weight:700;color:var(--text);}
+.section-header p{color:var(--text-muted);margin-top:.35rem;font-size:.9rem;}
+.phase-badge{display:inline-flex;align-items:center;gap:.4rem;background:var(--primary);color:#fff;font-size:.75rem;font-weight:600;border-radius:20px;padding:.3rem .9rem;margin-bottom:.75rem;}
+.phase-badge.purple{background:var(--secondary);}
+.phase-badge.green{background:var(--accent);}
+.phase-badge.warning{background:var(--warning);}
+
+/* ── Cards ── */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem;margin-bottom:1rem;}
+.card-title{font-weight:700;margin-bottom:.6rem;display:flex;align-items:center;gap:.5rem;font-size:.95rem;}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin-bottom:1rem;}
+.card.accent-left{border-left:4px solid var(--primary);}
+.card.accent-left.secondary{border-left-color:var(--secondary);}
+.card.accent-left.green{border-left-color:var(--accent);}
+.card.accent-left.warning{border-left-color:var(--warning);}
+.card.accent-left.danger{border-left-color:var(--danger);}
+
+/* ── ILO tags ── */
+.ilo-item{display:flex;gap:.75rem;align-items:flex-start;padding:.75rem;border-radius:8px;background:#f8fafc;margin-bottom:.6rem;}
+.ilo-num{background:var(--primary);color:#fff;border-radius:50%;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;flex-shrink:0;margin-top:.1rem;}
+.ilo-text{flex:1;font-size:.875rem;line-height:1.5;}
+.bloom-tag{display:inline-block;font-size:.65rem;font-weight:700;border-radius:10px;padding:.15rem .5rem;margin-left:.4rem;}
+.bloom-cognitive{background:#dbeafe;color:#1e40af;}
+.bloom-collab{background:#ede9fe;color:#5b21b6;}
+.bloom-ai{background:#d1fae5;color:#065f46;}
+/* ── Timeline ── */
+.timeline{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1rem;}
+.tl-item{background:#fff;border:2px solid var(--border);border-radius:8px;padding:.5rem .9rem;font-size:.8rem;text-align:center;flex:1;min-width:80px;}
+.tl-item .tl-label{font-weight:700;color:var(--primary);}
+.tl-item .tl-time{color:var(--text-muted);font-size:.7rem;}
+
+/* ── Timer ── */
+.timer-box{display:flex;align-items:center;gap:.75rem;background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;padding:.75rem 1rem;margin-bottom:1rem;}
+.timer-display{font-size:1.5rem;font-weight:700;font-variant-numeric:tabular-nums;color:var(--primary);min-width:70px;}
+.timer-display.urgent{color:var(--danger);}
+.timer-btn{border:none;border-radius:6px;padding:.35rem .75rem;cursor:pointer;font-size:.8rem;font-weight:600;transition:opacity .15s;}
+.timer-btn.start{background:var(--accent);color:#fff;}
+.timer-btn.pause{background:var(--warning);color:#fff;}
+.timer-btn.reset{background:#e2e8f0;color:var(--text);}
+.timer-label{font-size:.8rem;color:var(--text-muted);margin-left:auto;}
+
+/* ── Scenario card ── */
+.scenario-card{background:linear-gradient(135deg,#eff6ff 0%,#f5f3ff 100%);border:2px solid #bfdbfe;border-radius:12px;padding:1.25rem;margin-bottom:1rem;font-style:italic;font-size:1rem;line-height:1.6;color:var(--text);}
+.scenario-card strong{font-style:normal;display:block;margin-bottom:.5rem;font-size:.8rem;text-transform:uppercase;letter-spacing:.05em;color:var(--primary);}
+
+/* ── Highlight boxes ── */
+.highlight-box{border-radius:10px;padding:1rem;margin-bottom:1rem;font-size:.875rem;}
+.highlight-box.info{background:#eff6ff;border:1px solid #bfdbfe;color:#1e3a8a;}
+.highlight-box.warning{background:#fffbeb;border:1px solid #fde68a;color:#92400e;}
+.highlight-box.success{background:#ecfdf5;border:1px solid #a7f3d0;color:#064e3b;}
+.highlight-box.purple{background:#f5f3ff;border:1px solid #ddd6fe;color:#4c1d95;}
+.highlight-box ul{margin:.5rem 0 0 1rem;}
+.highlight-box li{margin:.3rem 0;}
+/* ── Collapsible ── */
+.collapsible-header{display:flex;align-items:center;justify-content:space-between;cursor:pointer;padding:.75rem 1rem;background:#f8fafc;border-radius:8px;user-select:none;font-weight:600;font-size:.875rem;border:1px solid var(--border);margin-bottom:2px;}
+.collapsible-header:hover{background:#f1f5f9;}
+.collapsible-header .arrow{transition:transform .25s;font-size:.75rem;}
+.collapsible-header.open .arrow{transform:rotate(180deg);}
+.collapsible-body{display:none;padding:.75rem 1rem;border:1px solid var(--border);border-top:none;border-radius:0 0 8px 8px;background:#fff;font-size:.875rem;}
+.collapsible-body.open{display:block;}
+
+/* ── Activity blocks ── */
+.activity-block{border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:.85rem;}
+.activity-header{display:flex;align-items:center;gap:.75rem;padding:.85rem 1rem;background:#f8fafc;cursor:pointer;user-select:none;}
+.activity-header:hover{background:#f1f5f9;}
+.activity-header .act-num{background:var(--primary);color:#fff;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;flex-shrink:0;}
+.activity-header .act-title{font-weight:600;flex:1;font-size:.9rem;}
+.activity-header .act-time{font-size:.75rem;color:var(--text-muted);}
+.activity-header .arrow{transition:transform .25s;font-size:.75rem;}
+.activity-header.open .arrow{transform:rotate(180deg);}
+.activity-body{display:none;padding:1rem;border-top:1px solid var(--border);background:#fff;}
+.activity-body.open{display:block;}
+.activity-body p,.activity-body li{font-size:.875rem;line-height:1.6;}
+.activity-body ol,.activity-body ul{margin:.5rem 0 .5rem 1.25rem;}
+
+/* ── Quiz ── */
+.quiz-block{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem;margin-bottom:1rem;}
+.quiz-q{font-weight:600;margin-bottom:.75rem;font-size:.9rem;}
+.quiz-option{display:flex;align-items:flex-start;gap:.6rem;padding:.6rem .9rem;border:2px solid var(--border);border-radius:8px;margin-bottom:.5rem;cursor:pointer;transition:border-color .15s,background .15s;font-size:.875rem;}
+.quiz-option:hover{border-color:var(--primary);background:#eff6ff;}
+.quiz-option.selected{border-color:var(--primary);background:#eff6ff;}
+.quiz-option.correct{border-color:var(--accent);background:#ecfdf5;}
+.quiz-option.incorrect{border-color:var(--danger);background:#fef2f2;}
+.quiz-option .opt-letter{font-weight:700;color:var(--primary);flex-shrink:0;}
+.quiz-feedback{margin-top:.75rem;padding:.75rem;border-radius:8px;font-size:.85rem;display:none;}
+.quiz-feedback.show{display:block;}
+.quiz-feedback.correct{background:#ecfdf5;color:#065f46;border:1px solid #a7f3d0;}
+.quiz-feedback.incorrect{background:#fef2f2;color:#991b1b;border:1px solid #fca5a5;}
+/* ── Venn Diagram ── */
+.venn-wrap{display:flex;align-items:center;justify-content:center;gap:0;margin:1.5rem 0;position:relative;}
+.venn-circle{width:220px;height:180px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1rem;font-size:.75rem;line-height:1.5;text-align:center;}
+.venn-left{background:rgba(37,99,235,.15);border:2px solid rgba(37,99,235,.4);margin-right:-60px;z-index:1;}
+.venn-right{background:rgba(16,185,129,.15);border:2px solid rgba(16,185,129,.4);margin-left:-60px;z-index:1;}
+.venn-overlap{width:130px;height:130px;background:rgba(124,58,237,.1);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.7rem;text-align:center;z-index:2;padding:.5rem;}
+.venn-title{font-weight:700;font-size:.8rem;margin-bottom:.4rem;}
+.venn-items{list-style:none;font-size:.72rem;color:var(--text-muted);}
+
+/* ── AI task cards ── */
+.ai-card{background:#f5f3ff;border:2px solid #c4b5fd;border-radius:12px;padding:1.25rem;margin-bottom:1rem;}
+.ai-card .ai-label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--secondary);margin-bottom:.5rem;}
+.prompt-box{background:#1e1b4b;color:#c7d2fe;border-radius:8px;padding:.85rem;font-family:monospace;font-size:.8rem;line-height:1.6;margin:.75rem 0;white-space:pre-wrap;word-break:break-word;}
+.ai-output-box{background:#f9fafb;border:1px dashed #94a3b8;border-radius:8px;padding:.85rem;font-size:.82rem;line-height:1.6;margin:.5rem 0;color:#374151;}
+.ai-output-box .ai-out-label{font-size:.65rem;font-weight:700;text-transform:uppercase;color:var(--text-muted);margin-bottom:.4rem;}
+
+/* ── Tool instruction cards ── */
+.tool-card{border-radius:12px;overflow:hidden;margin-bottom:1rem;}
+.tool-card.blue .collapsible-header{background:#eff6ff;border-color:#bfdbfe;color:#1e40af;}
+.tool-card.green .collapsible-header{background:#ecfdf5;border-color:#a7f3d0;color:#065f46;}
+.tool-card.purple .collapsible-header{background:#f5f3ff;border-color:#c4b5fd;color:#4c1d95;}
+.tool-card.blue .collapsible-body{border-color:#bfdbfe;}
+.tool-card.green .collapsible-body{border-color:#a7f3d0;}
+.tool-card.purple .collapsible-body{border-color:#c4b5fd;}
+.tool-card ol{margin:.5rem 0 0 1.25rem;}
+.tool-card li{margin:.35rem 0;font-size:.85rem;}
+
+/* ── Table ── */
+.data-table{width:100%;border-collapse:collapse;font-size:.8rem;margin-bottom:1rem;}
+.data-table th{background:#f1f5f9;font-weight:700;text-align:left;padding:.7rem .9rem;border:1px solid var(--border);}
+.data-table td{padding:.65rem .9rem;border:1px solid var(--border);vertical-align:top;line-height:1.5;}
+.data-table tr:nth-child(even) td{background:#f8fafc;}
+/* ── Rating buttons ── */
+.rating-wrap{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.75rem;}
+.rating-btn{border:2px solid var(--border);background:#fff;border-radius:8px;padding:.5rem 1rem;cursor:pointer;font-size:.85rem;font-weight:600;transition:all .15s;min-width:44px;}
+.rating-btn:hover{border-color:var(--primary);background:#eff6ff;}
+.rating-btn.selected{background:var(--primary);color:#fff;border-color:var(--primary);}
+.rating-label{font-size:.8rem;color:var(--text-muted);margin-top:.4rem;}
+
+/* ── Complete button ── */
+.complete-btn{display:inline-flex;align-items:center;gap:.5rem;padding:.65rem 1.4rem;background:var(--accent);color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:.875rem;font-weight:600;margin-top:1.5rem;transition:opacity .15s;}
+.complete-btn:hover{opacity:.9;}
+.complete-btn.done{background:#94a3b8;cursor:default;}
+
+/* ── Scroll-to-top ── */
+#scrollTop{position:fixed;bottom:1.5rem;right:1.5rem;width:44px;height:44px;background:var(--primary);color:#fff;border:none;border-radius:50%;cursor:pointer;font-size:1.2rem;display:none;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,.2);z-index:300;transition:opacity .2s;}
+#scrollTop.show{display:flex;}
+
+/* ── Checklist ── */
+.check-list{list-style:none;margin-top:.5rem;}
+.check-list li{display:flex;align-items:flex-start;gap:.6rem;padding:.4rem 0;font-size:.875rem;}
+.check-list input[type=checkbox]{width:16px;height:16px;accent-color:var(--primary);margin-top:.1rem;flex-shrink:0;}
+
+/* ── Responsive ── */
+@media(max-width:768px){
+  .hamburger{display:block;}
+  .sidebar{transform:translateX(-100%);}
+  .sidebar.open{transform:translateX(0);}
+  .main{margin-left:0;}
+  .section-page{padding:0 1rem 3rem;}
+  .venn-wrap{flex-direction:column;gap:-20px;}
+  .venn-left,.venn-right{margin:0;}
+  .venn-overlap{margin:-40px auto;}
+  .progress-bar-outer{width:80px;}
+}
+</style>
 </head>
 <body>
-  <div class="container">
-    <h1>Hello World!</h1>
-    <p>Welcome to your new project.</p>
+<!-- TOP BAR -->
+<div class="topbar">
+  <button class="hamburger" onclick="toggleSidebar()" aria-label="Toggle menu">&#9776;</button>
+  <h1>Teacher Professionalism in Local &amp; International Contexts</h1>
+  <div class="progress-wrap">
+    <span id="progressText">0%</span>
+    <div class="progress-bar-outer"><div class="progress-bar-inner" id="progressBar" style="width:0%"></div></div>
   </div>
-  <script src="script.js"></script>
+</div>
+<!-- OVERLAY -->
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+<!-- SIDEBAR -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-inner">
+    <div class="sidebar-section-title">Lesson Sections</div>
+    <div class="nav-item active" onclick="showSection('s1')" id="nav-s1"><span class="nav-check" id="chk-s1"></span><span class="nav-label">Overview &amp; ILOs</span></div>
+    <div class="nav-item" onclick="showSection('s2')" id="nav-s2"><span class="nav-check" id="chk-s2"></span><span class="nav-label">Pre-Class Preparation</span></div>
+    <div class="nav-item" onclick="showSection('s3')" id="nav-s3"><span class="nav-check" id="chk-s3"></span><span class="nav-label">Introduction</span><span class="nav-badge">15 min</span></div>
+    <div class="nav-item" onclick="showSection('s4')" id="nav-s4"><span class="nav-check" id="chk-s4"></span><span class="nav-label">Phase 1: Local–International</span><span class="nav-badge">30 min</span></div>
+    <div class="nav-item" onclick="showSection('s5')" id="nav-s5"><span class="nav-check" id="chk-s5"></span><span class="nav-label">Phase 2: Professional Spectrum</span><span class="nav-badge">40 min</span></div>
+    <div class="nav-item" onclick="showSection('s6')" id="nav-s6"><span class="nav-check" id="chk-s6"></span><span class="nav-label">Phase 3: AI as Partner</span><span class="nav-badge">35 min</span></div>
+    <div class="nav-item" onclick="showSection('s7')" id="nav-s7"><span class="nav-check" id="chk-s7"></span><span class="nav-label">Synthesis &amp; Closure</span><span class="nav-badge">15 min</span></div>
+    <div class="nav-item" onclick="showSection('s8')" id="nav-s8"><span class="nav-check" id="chk-s8"></span><span class="nav-label">Assessment</span></div>
+    <div class="nav-item" onclick="showSection('s9')" id="nav-s9"><span class="nav-check" id="chk-s9"></span><span class="nav-label">Constructive Alignment</span></div>
+    <div class="nav-item" onclick="showSection('s10')" id="nav-s10"><span class="nav-check" id="chk-s10"></span><span class="nav-label">Resources &amp; Technology</span></div>
+    <div class="nav-item" onclick="showSection('s11')" id="nav-s11"><span class="nav-check" id="chk-s11"></span><span class="nav-label">Differentiation &amp; Inclusivity</span></div>
+    <div class="nav-item" onclick="showSection('s12')" id="nav-s12"><span class="nav-check" id="chk-s12"></span><span class="nav-label">Reflection &amp; Improvement</span></div>
+  </div>
+</nav>
+<!-- MAIN CONTENT -->
+<main class="main">
+<!-- ════════════════ SECTION 1: OVERVIEW & ILOs ════════════════ -->
+<section class="section-page active" id="s1">
+  <div class="section-header">
+    <h2>Overview &amp; Intended Learning Outcomes</h2>
+    <p>Teacher Professionalism in Local &amp; International Contexts &nbsp;·&nbsp; 150 min &nbsp;·&nbsp; University Level &nbsp;·&nbsp; Social Constructivism</p>
+  </div>
+  <div class="card">
+    <div class="card-title">Intended Learning Outcomes</div>
+    <div class="ilo-item"><div class="ilo-num">1</div><div class="ilo-text"><strong>Analyze</strong> the key characteristics and tensions of teacher professionalism as defined in local (Hong Kong) and international (e.g., OECD, Western) policy frameworks.<span class="bloom-tag bloom-cognitive">Cognitive: Analyze</span></div></div>
+    <div class="ilo-item"><div class="ilo-num">2</div><div class="ilo-text"><strong>Evaluate</strong> the role of context (cultural, political, economic) in shaping different models of teacher professionalism.<span class="bloom-tag bloom-cognitive">Cognitive: Evaluate</span></div></div>
+    <div class="ilo-item"><div class="ilo-num">3</div><div class="ilo-text"><strong>Collaboratively construct</strong> a critical argument defending a specific model of professionalism for a contemporary educational challenge, using evidence from both local and international sources.<span class="bloom-tag bloom-collab">Collaborative: Social Constructivism</span></div></div>
+    <div class="ilo-item"><div class="ilo-num">4</div><div class="ilo-text"><strong>Critically evaluate</strong> AI-generated analyses of teacher professionalism contexts, identifying cultural biases and limitations in the AI's output.<span class="bloom-tag bloom-ai">AI Literacy: Analyze, Evaluate</span></div></div>
+    <div class="ilo-item"><div class="ilo-num">5</div><div class="ilo-text"><strong>Justify</strong> when and how to use or reject AI-generated suggestions for professional standards, demonstrating independent professional judgment.<span class="bloom-tag bloom-ai">AI Literacy: Evaluate, Create</span></div></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Lesson Structure Overview</div>
+    <div class="timeline">
+      <div class="tl-item"><div class="tl-label">Pre-Class</div><div class="tl-time">Flipped</div></div>
+      <div class="tl-item"><div class="tl-label">Intro</div><div class="tl-time">15 min</div></div>
+      <div class="tl-item"><div class="tl-label">Phase 1</div><div class="tl-time">30 min</div></div>
+      <div class="tl-item"><div class="tl-label">Phase 2</div><div class="tl-time">40 min</div></div>
+      <div class="tl-item"><div class="tl-label">Phase 3</div><div class="tl-time">35 min</div></div>
+      <div class="tl-item"><div class="tl-label">Closure</div><div class="tl-time">15 min</div></div>
+      <div class="tl-item"><div class="tl-label">Assessment</div><div class="tl-time">Post-class</div></div>
+    </div>
+  </div>
+  <button class="complete-btn" onclick="markComplete('s1')">Mark as Complete</button>
+</section>
+<!-- ════════════════ SECTION 2: PRE-CLASS ════════════════ -->
+<section class="section-page" id="s2">
+  <div class="section-header">
+    <div class="phase-badge purple">Flipped Learning + Social Constructivism</div>
+    <h2>Pre-Class Preparation</h2>
+  </div>
+  <div class="card">
+    <div class="card-title">Pre-Reading Materials</div>
+    <div class="card accent-left" style="margin-bottom:.6rem;">
+      <strong>Local Context:</strong> Hong Kong Education Bureau's "Teachers' Professional Conduct" guidelines<br>
+      <a href="https://www.edb.gov.hk/en/teacher/conduct-and-ethics.html" target="_blank">https://www.edb.gov.hk/en/teacher/conduct-and-ethics.html</a>
+    </div>
+    <div class="card accent-left green">
+      <strong>International Context:</strong> Hargreaves, A. (2000). "Four ages of professionalism and professional learning." <em>Teachers and Teaching: Theory and Practice</em>, 6(2), 151–182. Focus on the "Post-modern" age.
+    </div>
+  </div>
+  <div class="ai-card">
+    <div class="ai-label">Pre-Class AI Engagement Task</div>
+    <p style="margin-bottom:.6rem;"><strong>Tool:</strong> ChatGPT / Claude</p>
+    <p style="margin-bottom:.5rem;"><strong>Prompt to use:</strong></p>
+    <div class="prompt-box">Compare and contrast the concept of 'teacher professionalism' in Hong Kong and Finland. Give me 3 key differences.</div>
+    <p style="margin-top:.75rem;"><strong>Reflection Prompt:</strong> Post a 150-word response on the LMS discussion board answering:</p>
+    <p style="font-style:italic;font-size:.875rem;margin-top:.4rem;">"What limitations or biases did you observe in the AI's answer? Was it overly simplistic? Did it over-generalize? What important cultural aspects did it miss? Did you accept or reject its analysis? Why?"</p>
+  </div>
+  <div class="tool-card purple">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)"><span>How to Access ChatGPT / Claude</span><span class="arrow">▼</span></div>
+    <div class="collapsible-body">
+      <p><strong>Purpose:</strong> Build initial awareness of AI limitations in cultural contextualization before class</p>
+      <ol>
+        <li>Go to <a href="https://chat.openai.com" target="_blank">https://chat.openai.com</a> or Claude at <a href="https://claude.ai" target="_blank">https://claude.ai</a></li>
+        <li>Create a free account if you don't have one</li>
+        <li>Type the prompt exactly as given above</li>
+        <li>Screenshot or copy the AI's response</li>
+        <li>Reflect on the response before class using the reflection prompt</li>
+      </ol>
+    </div>
+  </div>
+  <button class="complete-btn" onclick="markComplete('s2')">Mark as Complete</button>
+</section>
+<!-- ════════════════ SECTION 3: INTRODUCTION ════════════════ -->
+<section class="section-page" id="s3">
+  <div class="section-header">
+    <h2>Introduction</h2>
+    <p>15 minutes &nbsp;·&nbsp; Hook + AI Critique + Pre-Test</p>
+  </div>
+  <div class="timer-box">
+    <div class="timer-display" id="timer-s3" data-duration="900">15:00</div>
+    <button class="timer-btn start" onclick="timerStart('s3')">Start</button>
+    <button class="timer-btn pause" onclick="timerPause('s3')">Pause</button>
+    <button class="timer-btn reset" onclick="timerReset('s3')">Reset</button>
+    <span class="timer-label">Total: 15 minutes</span>
+  </div>
+  <!-- Activity 1 -->
+  <div class="activity-block">
+    <div class="activity-header" onclick="toggleActivity(this)"><div class="act-num">1</div><div class="act-title">Hook — Opening Scenario</div><div class="act-time">5 min</div><span class="arrow">▼</span></div>
+    <div class="activity-body">
+      <div class="scenario-card"><strong>Scenario</strong>"A Hong Kong teacher is penalised for sharing a personal political view on social media, while a teacher in the Netherlands is praised for doing the same. Are they both 'professional'?"</div>
+      <p><strong>Discussion prompts:</strong></p>
+      <ul><li>What factors make the same action "professional" in one context and "unprofessional" in another?</li><li>What does this tell us about the nature of professionalism?</li></ul>
+    </div>
+  </div>
+  <!-- Activity 2 -->
+  <div class="activity-block">
+    <div class="activity-header" onclick="toggleActivity(this)"><div class="act-num">2</div><div class="act-title">AI-Generated Scenario Critique</div><div class="act-time">5 min</div><span class="arrow">▼</span></div>
+    <div class="activity-body">
+      <p>Show the class the original AI response from pre-class. Discussion questions:</p>
+      <ul>
+        <li>How many of you found the AI's comparison of Hong Kong and Finland to be accurate?</li>
+        <li>What was its biggest blind spot?</li>
+        <li>How did the AI's response reflect a Western-centric view of professionalism?</li>
+      </ul>
+      <div class="highlight-box info" style="margin-top:.75rem;"><strong>Note:</strong> This models critical analysis of AI outputs — a key skill for this lesson.</div>
+    </div>
+  </div>
+  <!-- Activity 3 -->
+  <div class="activity-block">
+    <div class="activity-header" onclick="toggleActivity(this)"><div class="act-num">3</div><div class="act-title">Pre-Test with Mentimeter</div><div class="act-time">5 min</div><span class="arrow">▼</span></div>
+    <div class="activity-body">
+      <div class="tool-card blue" style="margin-bottom:1rem;">
+        <div class="collapsible-header" onclick="toggleCollapsible(this)"><span>Mentimeter Setup Instructions (Instructor)</span><span class="arrow">▼</span></div>
+        <div class="collapsible-body">
+          <p><strong>Purpose:</strong> Real-time misconception check before the lesson</p>
+          <ol>
+            <li>Go to <a href="https://www.mentimeter.com" target="_blank">https://www.mentimeter.com</a> and log in</li>
+            <li>Click "New Presentation" → Select "Quiz" type</li>
+            <li>Add Q1: "Is teacher professionalism the same in every country?" (Yes / No / It depends)</li>
+            <li>Add Q2: "Is professionalism primarily about individual autonomy or collective responsibility?" (Individual autonomy / Collective responsibility / Both equally)</li>
+            <li>Add Q3: "Which model best describes HK teacher professionalism?" (Civil Servant / Transformative Intellectual / Collaborative Professional / Unsure)</li>
+            <li>Click "Present" and share the voting code with students (displayed on screen)</li>
+            <li>Students vote on their devices at <a href="https://menti.com" target="_blank">menti.com</a></li>
+          </ol>
+        </div>
+      </div>
+      <p style="font-weight:600;margin-bottom:.75rem;">Simulated Pre-Test Quiz — Try it yourself:</p>
+      <!-- Quiz Q1 -->
+      <div class="quiz-block" id="quiz-s3-q1">
+        <div class="quiz-q">Q1: Is teacher professionalism the same everywhere?</div>
+        <div class="quiz-option" onclick="selectQuizOption(this,'s3-q1','A')"><span class="opt-letter">A</span><span>Yes, good teaching is universal</span></div>
+        <div class="quiz-option" onclick="selectQuizOption(this,'s3-q1','B')"><span class="opt-letter">B</span><span>No, it is shaped by cultural, political, and economic context</span></div>
+        <div class="quiz-option" onclick="selectQuizOption(this,'s3-q1','C')"><span class="opt-letter">C</span><span>Only in Western countries</span></div>
+        <div class="quiz-feedback correct" id="fb-s3-q1-correct">Correct! Professionalism is context-specific. This is a central theme of today's lesson.</div>
+        <div class="quiz-feedback incorrect" id="fb-s3-q1-incorrect">Not quite. Professionalism varies significantly by cultural and political context.</div>
+      </div>
+      <!-- Quiz Q2 -->
+      <div class="quiz-block" id="quiz-s3-q2">
+        <div class="quiz-q">Q2: Is professionalism about individual autonomy or collective responsibility?</div>
+        <div class="quiz-option" onclick="selectQuizOption(this,'s3-q2','A')"><span class="opt-letter">A</span><span>Purely individual autonomy</span></div>
+        <div class="quiz-option" onclick="selectQuizOption(this,'s3-q2','B')"><span class="opt-letter">B</span><span>Purely collective responsibility</span></div>
+        <div class="quiz-option" onclick="selectQuizOption(this,'s3-q2','C')"><span class="opt-letter">C</span><span>Both — it varies by context and model</span></div>
+        <div class="quiz-option" onclick="selectQuizOption(this,'s3-q2','D')"><span class="opt-letter">D</span><span>Neither</span></div>
+        <div class="quiz-feedback correct" id="fb-s3-q2-correct">Right! Different professional models emphasise different aspects. We'll explore both today.</div>
+        <div class="quiz-feedback incorrect" id="fb-s3-q2-incorrect">Not quite. Both dimensions matter — their balance depends on context and the model of professionalism.</div>
+      </div>
+    </div>
+  </div>
+  <button class="complete-btn" onclick="markComplete('s3')">Mark as Complete</button>
+</section>
+<!-- ════════════════ SECTION 4: PHASE 1 ════════════════ -->
+<section class="section-page" id="s4">
+  <div class="section-header">
+    <div class="phase-badge">Phase 1 · Co-construction &amp; AI Critique</div>
+    <h2>Local–International Tension</h2>
+  </div>
+  <div class="timer-box">
+    <div class="timer-display" id="timer-s4" data-duration="1800">30:00</div>
+    <button class="timer-btn start" onclick="timerStart('s4')">Start</button>
+    <button class="timer-btn pause" onclick="timerPause('s4')">Pause</button>
+    <button class="timer-btn reset" onclick="timerReset('s4')">Reset</button>
+    <span class="timer-label">Total: 30 minutes</span>
+  </div>
+  <!-- Activity 1 -->
+  <div class="activity-block">
+    <div class="activity-header" onclick="toggleActivity(this)"><div class="act-num">1</div><div class="act-title">Interactive Lecture — Two Models</div><div class="act-time">10 min</div><span class="arrow">▼</span></div>
+    <div class="activity-body">
+      <div class="card-grid">
+        <div class="card accent-left"><div class="card-title">High Stakes Accountability Model<br><small style="font-weight:400;color:var(--text-muted)">Hong Kong / Singapore</small></div><ul><li>Centralized curriculum</li><li>Teacher as implementer</li><li>Education Bureau oversight</li><li>Performance metrics</li></ul></div>
+        <div class="card accent-left green"><div class="card-title">High Trust, High Autonomy Model<br><small style="font-weight:400;color:var(--text-muted)">Finland / Scotland</small></div><ul><li>Teacher as professional expert</li><li>School-based curriculum</li><li>Collaborative culture</li><li>Trust-based accountability</li></ul></div>
+      </div>
+      <!-- Venn Diagram -->
+      <div class="venn-wrap">
+        <div class="venn-circle venn-left"><div class="venn-title">Hong Kong</div><ul class="venn-items"><li>Centralized Control</li><li>Civil Servant Role</li><li>EDB Guidelines</li><li>Accountability Metrics</li></ul></div>
+        <div class="venn-overlap"><div style="font-weight:700;font-size:.72rem;margin-bottom:.3rem;">Both</div><div style="font-size:.68rem;color:var(--text-muted);">Quality Teaching<br>Student Welfare<br>Ethical Conduct<br>Prof. Learning</div></div>
+        <div class="venn-circle venn-right"><div class="venn-title">Finland</div><ul class="venn-items"><li>Autonomy</li><li>Research-based Practice</li><li>Teacher Union Power</li><li>Collaborative Networks</li></ul></div>
+      </div>
+      <div class="highlight-box info"><strong>Key Question:</strong> Where does your own context sit on this spectrum?</div>
+    </div>
+  </div>
+  <!-- Activity 2 -->
+  <div class="activity-block">
+    <div class="activity-header" onclick="toggleActivity(this)"><div class="act-num">2</div><div class="act-title">Group AI-Enabled Activity</div><div class="act-time">20 min</div><span class="arrow">▼</span></div>
+    <div class="activity-body">
+      <p style="font-weight:600;margin-bottom:.75rem;">In groups of 4-5, return to the pre-class AI response.</p>
+      <div class="card" style="margin-bottom:1rem;"><div class="card-title">Task Steps</div><ol><li>Review the AI's comparison of HK and Finnish professionalism</li><li>Accept or reject the AI's claims, citing class readings (Hargreaves &amp; EDB guidelines)</li><li>Write a new, improved analysis explaining where the AI's cultural bias was strongest</li><li>Document your decision: "We rejected the AI's point about Finnish autonomy because..." or "We accepted the AI's point about HK centralization because..."</li></ol></div>
+      <div class="highlight-box warning"><strong>Instructor Circulation Prompts:</strong><ul><li>"Does the AI ignore the role of the teacher union in Finland?"</li><li>"Does it oversimplify the role of the Education Bureau in Hong Kong?"</li><li>"Does the AI assume 'autonomy = better'? Where does that assumption come from?"</li></ul></div>
+      <div class="ai-card"><div class="ai-label">Challenge Task</div><p><strong>Prompt:</strong> Ask the AI: 'What are the weaknesses of your own answer?' Then evaluate whether it correctly identifies its own biases.</p><div class="prompt-box">What are the limitations and potential biases in your previous comparison of teacher professionalism in Hong Kong and Finland?</div></div>
+    </div>
+  </div>
+  <button class="complete-btn" onclick="markComplete('s4')">Mark as Complete</button>
+</section>
+<!-- ════════════════ SECTION 5: PHASE 2 ════════════════ -->
+<section class="section-page" id="s5">
+  <div class="section-header">
+    <div class="phase-badge green">Phase 2 · Social Constructivism &amp; Peer Critique</div>
+    <h2>The Professional Spectrum</h2>
+  </div>
+  <div class="timer-box">
+    <div class="timer-display" id="timer-s5" data-duration="2400">40:00</div>
+    <button class="timer-btn start" onclick="timerStart('s5')">Start</button>
+    <button class="timer-btn pause" onclick="timerPause('s5')">Pause</button>
+    <button class="timer-btn reset" onclick="timerReset('s5')">Reset</button>
+    <span class="timer-label">Total: 40 minutes</span>
+  </div>
+  <div class="activity-block">
+    <div class="activity-header" onclick="toggleActivity(this)"><div class="act-num">1</div><div class="act-title">Group Digital Storyboard Task</div><div class="act-time">35 min</div><span class="arrow">▼</span></div>
+    <div class="activity-body">
+      <div class="card-grid">
+        <div class="card accent-left"><div class="card-title">Group A: Teacher as Civil Servant</div><p style="font-size:.85rem;"><strong>Focus:</strong> Loyalty, rule-following, institutional compliance<br><strong>Context:</strong> Hong Kong<br><strong>Crisis:</strong> Declining student mental health<br><strong>Task:</strong> Argue this is the MOST appropriate model</p></div>
+        <div class="card accent-left secondary"><div class="card-title">Group B: Teacher as Transformative Intellectual</div><p style="font-size:.85rem;"><strong>Focus:</strong> Critical thinking, autonomy, change-making<br><strong>Context:</strong> Western/International<br><strong>Crisis:</strong> Rise of AI in the classroom<br><strong>Task:</strong> Argue this is the MOST appropriate model</p></div>
+        <div class="card accent-left green"><div class="card-title">Group C: Teacher as Collaborative Professional</div><p style="font-size:.85rem;"><strong>Focus:</strong> Networks, shared expertise, community<br><strong>Context:</strong> Finland model<br><strong>Crisis:</strong> Post-pandemic learning recovery<br><strong>Task:</strong> Argue this is the MOST appropriate model</p></div>
+      </div>
+      <div class="tool-card green" style="margin-top:1rem;">
+        <div class="collapsible-header" onclick="toggleCollapsible(this)"><span>Padlet Setup Instructions</span><span class="arrow">▼</span></div>
+        <div class="collapsible-body">
+          <p><strong>Purpose:</strong> Visual co-construction of group arguments for gallery walk</p>
+          <ol>
+            <li>Go to <a href="https://padlet.com" target="_blank">https://padlet.com</a> and click "Sign up free"</li>
+            <li>Click "Make a Padlet" → choose "Wall" layout for storyboard</li>
+            <li>Title your Padlet: "[Group X] – [Model Name] – Teacher Professionalism"</li>
+            <li>Add at least 4 posts: (1) Model overview, (2) Key evidence from readings, (3) How it addresses the crisis, (4) Limitations of the model</li>
+            <li>Add images, arrows, or colour coding to make it visually clear</li>
+            <li>Click "Share" → copy the link and post it in the LMS for gallery walk</li>
+          </ol>
+        </div>
+      </div>
+      <div class="card" style="margin-top:1rem;"><div class="card-title">Peer Assessment Rubric</div>
+        <table class="data-table"><thead><tr><th>Criteria</th><th>Excellent (A)</th><th>Satisfactory (C)</th><th>Unsatisfactory (F)</th></tr></thead>
+        <tbody>
+          <tr><td>Clarity of argument</td><td>Clear, compelling, well-structured</td><td>Present but lacks focus</td><td>Unclear or missing</td></tr>
+          <tr><td>Use of evidence from readings</td><td>Both Hargreaves &amp; EDB cited accurately</td><td>One source used</td><td>No readings cited</td></tr>
+          <tr><td>Identification of contextual limitations</td><td>Sophisticated analysis of model's limits</td><td>Brief mention</td><td>Not addressed</td></tr>
+        </tbody></table>
+      </div>
+    </div>
+  </div>
+  <div class="activity-block">
+    <div class="activity-header" onclick="toggleActivity(this)"><div class="act-num">2</div><div class="act-title">Gallery Walk &amp; Calibration</div><div class="act-time">5 min</div><span class="arrow">▼</span></div>
+    <div class="activity-body">
+      <p>Groups view one another's Padlets and leave one "Critical Friend" feedback comment.</p>
+      <div class="highlight-box info" style="margin-top:.75rem;"><strong>Prompt template:</strong> "Your model works well in [context X], but what about [context Y]?"</div>
+    </div>
+  </div>
+  <button class="complete-btn" onclick="markComplete('s5')">Mark as Complete</button>
+</section>
+<!-- ════════════════ SECTION 6: PHASE 3 ════════════════ -->
+<section class="section-page" id="s6">
+  <div class="section-header">
+    <div class="phase-badge purple">Phase 3 · AI Literacy &amp; Independent Judgment</div>
+    <h2>AI as a Professional Partner</h2>
+  </div>
+  <div class="timer-box">
+    <div class="timer-display" id="timer-s6" data-duration="2100">35:00</div>
+    <button class="timer-btn start" onclick="timerStart('s6')">Start</button>
+    <button class="timer-btn pause" onclick="timerPause('s6')">Pause</button>
+    <button class="timer-btn reset" onclick="timerReset('s6')">Reset</button>
+    <span class="timer-label">Total: 35 minutes</span>
+  </div>
+  <div class="scenario-card"><strong>Scenario</strong>"You are a newly qualified teacher asked by your principal to draft a new 'Professional Code of Conduct' for the school's AI policy."</div>
+  <div class="activity-block">
+    <div class="activity-header" onclick="toggleActivity(this)"><div class="act-num">1</div><div class="act-title">AI-Enabled Task — 3 Steps</div><div class="act-time">25 min</div><span class="arrow">▼</span></div>
+    <div class="activity-body">
+      <div class="card" style="margin-bottom:1rem;"><div class="card-title">Step 1 — AI Generation</div>
+        <p style="margin-bottom:.5rem;">Use this prompt to generate an AI-drafted code of conduct:</p>
+        <div class="prompt-box">Write a professional code of conduct for teachers regarding their use of AI in the classroom. Include 5 rules.</div>
+        <p style="font-size:.8rem;font-weight:600;margin:.75rem 0 .4rem;">Example AI Output:</p>
+        <div class="ai-output-box"><div class="ai-out-label">AI-Generated Response</div>1. Teachers must declare any AI-generated content to students.<br>2. AI tools must not replace teacher judgment in grading.<br>3. Teachers should use AI to enhance, not replace, lesson planning.<br>4. All AI use must comply with school data privacy policies.<br>5. Teachers should undergo regular AI literacy training.</div>
+      </div>
+      <div class="card" style="margin-bottom:1rem;"><div class="card-title">Step 2 — Critical Interrogation</div>
+        <p style="margin-bottom:.6rem;">Groups must:</p>
+        <ol><li>Identify at least one bias in the AI's code (Does it assume all teachers have equal tech access? Does it focus too much on surveillance and not enough on pedagogy?)</li><li>Modify the AI's response: Rewrite two rules to make them more culturally appropriate for a Hong Kong school context</li><li>Justify rejection: Explain clearly why the AI's original rule was insufficient or problematic</li></ol>
+        <div class="highlight-box warning" style="margin-top:.75rem;"><strong>Critique Prompts:</strong><ul><li>"Does the AI's code assume all schools have the same tech infrastructure?"</li><li>"Is the focus on 'declaring AI use' more surveillance-oriented than pedagogy-oriented?"</li><li>"Does the code account for Hong Kong's specific EDB guidelines or cultural context?"</li><li>"What power dynamics has the AI missed? (e.g., teacher-admin, teacher-student)"</li></ul></div>
+      </div>
+      <div class="card"><div class="card-title">Step 3 — Final Product</div>
+        <p style="margin-bottom:.75rem;">Each group submits a revised, critically-examined "AI + Human" code of conduct to the LMS.</p>
+        <p style="font-weight:600;margin-bottom:.5rem;">Deliverable Checklist:</p>
+        <ul class="check-list">
+          <li><input type="checkbox"> Original AI-generated code (screenshot or copy)</li>
+          <li><input type="checkbox"> At least 2 rewritten/modified rules</li>
+          <li><input type="checkbox"> Written justification for each change (citing readings where possible)</li>
+          <li><input type="checkbox"> At least 1 identified AI bias with explanation</li>
+          <li><input type="checkbox"> Submit to LMS before end of class</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="activity-block">
+    <div class="activity-header" onclick="toggleActivity(this)"><div class="act-num">2</div><div class="act-title">Class Synthesis — Debrief</div><div class="act-time">10 min</div><span class="arrow">▼</span></div>
+    <div class="activity-body">
+      <div class="highlight-box purple"><strong>Discussion Questions:</strong><ul><li>"What patterns did you see in the AI's advice across all groups?"</li><li>"When should you trust an AI suggestion versus your own professional judgment?"</li><li>"How do you decide which AI outputs to accept, modify, or reject?"</li><li>"What did the AI consistently fail to account for?"</li></ul></div>
+    </div>
+  </div>
+  <button class="complete-btn" onclick="markComplete('s6')">Mark as Complete</button>
+</section>
+<!-- ════════════════ SECTION 7: CLOSURE ════════════════ -->
+<section class="section-page" id="s7">
+  <div class="section-header">
+    <div class="phase-badge warning">Closure · Consolidating Understanding</div>
+    <h2>Synthesis &amp; Closure</h2>
+  </div>
+  <div class="timer-box">
+    <div class="timer-display" id="timer-s7" data-duration="900">15:00</div>
+    <button class="timer-btn start" onclick="timerStart('s7')">Start</button>
+    <button class="timer-btn pause" onclick="timerPause('s7')">Pause</button>
+    <button class="timer-btn reset" onclick="timerReset('s7')">Reset</button>
+    <span class="timer-label">Total: 15 minutes</span>
+  </div>
+  <!-- Post-Test -->
+  <div class="activity-block">
+    <div class="activity-header" onclick="toggleActivity(this)"><div class="act-num">1</div><div class="act-title">Post-Test — Compare with Pre-Test Results</div><div class="act-time">5 min</div><span class="arrow">▼</span></div>
+    <div class="activity-body">
+      <p style="margin-bottom:.75rem;">Same Mentimeter questions as pre-test — compare results to show learning growth. Discuss visible misconceptions that shifted.</p>
+      <div class="tool-card blue"><div class="collapsible-header" onclick="toggleCollapsible(this)"><span>Mentimeter — Compare Pre/Post Results</span><span class="arrow">▼</span></div>
+        <div class="collapsible-body"><p>Show change in results; discuss visible misconceptions that shifted. Display both the opening results and the closing results side-by-side if possible.</p></div>
+      </div>
+      <p style="font-weight:600;margin:.75rem 0 .5rem;">Post-Test — Same Questions, Revisited:</p>
+      <div class="quiz-block" id="quiz-s7-q1">
+        <div class="quiz-q">Q1: Is teacher professionalism the same everywhere? (After learning)</div>
+        <div class="quiz-option" onclick="selectQuizOption(this,'s7-q1','A')"><span class="opt-letter">A</span><span>Yes, good teaching is universal</span></div>
+        <div class="quiz-option" onclick="selectQuizOption(this,'s7-q1','B')"><span class="opt-letter">B</span><span>No, it is shaped by cultural, political, and economic context</span></div>
+        <div class="quiz-option" onclick="selectQuizOption(this,'s7-q1','C')"><span class="opt-letter">C</span><span>Only in Western countries</span></div>
+        <div class="quiz-feedback correct" id="fb-s7-q1-correct">Correct! You've internalized a key lesson theme — professionalism is always context-specific.</div>
+        <div class="quiz-feedback incorrect" id="fb-s7-q1-incorrect">Revisit today's Venn diagram. Context shapes professionalism fundamentally.</div>
+      </div>
+      <div class="quiz-block" id="quiz-s7-q2">
+        <div class="quiz-q">Q2: Is professionalism about individual autonomy or collective responsibility? (After learning)</div>
+        <div class="quiz-option" onclick="selectQuizOption(this,'s7-q2','A')"><span class="opt-letter">A</span><span>Purely individual autonomy</span></div>
+        <div class="quiz-option" onclick="selectQuizOption(this,'s7-q2','B')"><span class="opt-letter">B</span><span>Purely collective responsibility</span></div>
+        <div class="quiz-option" onclick="selectQuizOption(this,'s7-q2','C')"><span class="opt-letter">C</span><span>Both — it varies by context and model</span></div>
+        <div class="quiz-option" onclick="selectQuizOption(this,'s7-q2','D')"><span class="opt-letter">D</span><span>Neither</span></div>
+        <div class="quiz-feedback correct" id="fb-s7-q2-correct">Well done! Both dimensions co-exist — their balance is shaped by context and professional model.</div>
+        <div class="quiz-feedback incorrect" id="fb-s7-q2-incorrect">Revisit Phase 1 and 2. The HK and Finland models both illuminate different aspects of this question.</div>
+      </div>
+    </div>
+  </div>
+  <div class="activity-block">
+    <div class="activity-header" onclick="toggleActivity(this)"><div class="act-num">2</div><div class="act-title">Peer-Teaching Summary</div><div class="act-time">5 min</div><span class="arrow">▼</span></div>
+    <div class="activity-body">
+      <p>2-3 randomly selected groups share one key insight.</p>
+      <div class="highlight-box info" style="margin-top:.75rem;"><strong>Prompt:</strong> "What is the single most important thing you learned today about how 'professionalism' is NOT universal?"</div>
+    </div>
+  </div>
+  <div class="activity-block">
+    <div class="activity-header" onclick="toggleActivity(this)"><div class="act-num">3</div><div class="act-title">AI Reflection Discussion</div><div class="act-time">5 min</div><span class="arrow">▼</span></div>
+    <div class="activity-body">
+      <p style="margin-bottom:.75rem;">Whole-class discussion: "How did AI support your learning today? Where did it hold you back?"</p>
+      <div class="card"><div class="card-title">Self-Rating Scale — Your Critical AI Engagement</div>
+        <p style="font-size:.875rem;margin-bottom:.75rem;">How critically did you engage with AI today? Click a rating:</p>
+        <div class="rating-wrap">
+          <button class="rating-btn" onclick="selectRating(1)">1</button>
+          <button class="rating-btn" onclick="selectRating(2)">2</button>
+          <button class="rating-btn" onclick="selectRating(3)">3</button>
+          <button class="rating-btn" onclick="selectRating(4)">4</button>
+          <button class="rating-btn" onclick="selectRating(5)">5</button>
+        </div>
+        <div class="rating-label" id="ratingLabel">1 = Blindly trusted the AI &nbsp;·&nbsp; 3 = Accepted and rejected in equal measure &nbsp;·&nbsp; 5 = Constantly and rigorously challenged AI</div>
+        <p style="margin-top:.75rem;font-size:.85rem;font-style:italic;" id="ratingConfirm"></p>
+      </div>
+    </div>
+  </div>
+  <button class="complete-btn" onclick="markComplete('s7')">Mark as Complete</button>
+</section>
+<!-- ════════════════ SECTION 8: ASSESSMENT ════════════════ -->
+<section class="section-page" id="s8">
+  <div class="section-header">
+    <h2>Assessment</h2>
+    <p>Formative (during class) &amp; Summative (post-class essay)</p>
+  </div>
+  <div class="card"><div class="card-title">Formative Assessment (During Class)</div>
+    <p style="margin-bottom:.75rem;"><strong>Two Methods:</strong></p>
+    <div class="card accent-left" style="margin-bottom:.75rem;">
+      <strong>1. Instructor Observation:</strong> Notes on collaboration quality (Social Constructivism — are they building on each other's ideas?) and Critical AI engagement (Are they blindly accepting AI or actively critiquing it?)
+    </div>
+    <div class="card accent-left green">
+      <strong>2. AI-Supported Formative Check:</strong> After Phase 3, students submit their revised AI code of conduct + brief justification document. Instructor scans for common patterns in student critique.
+    </div>
+  </div>
+  <div class="card"><div class="card-title">Summative Assessment (Post-Class — 1 week deadline)</div>
+    <p style="font-weight:700;margin-bottom:.5rem;">Critical Essay &amp; AI Audit</p>
+    <p style="margin-bottom:.75rem;"><strong>Task:</strong> "Critically analyse how the concept of 'teacher professionalism' is negotiated in a local (Hong Kong) vs. international context. You MUST use an AI tool (e.g., ChatGPT) to generate a first draft. Then provide an 'AI Audit' page documenting:</p>
+    <ol style="margin:.5rem 0 .75rem 1.25rem;">
+      <li>What did you ask the AI?</li>
+      <li>What specific content from the AI did you use (quote it)?</li>
+      <li>What did you modify or reject from the AI, and why? (Provide reasoning based on class readings)</li>
+      <li>Where did human judgment take precedence over the AI's suggestion, and why was that essential for this topic?"</li>
+    </ol>
+    <p style="font-size:.85rem;"><strong>Grading:</strong> 25% of module grade, includes 'Critical AI Engagement' criterion</p>
+  </div>
+  <div class="card"><div class="card-title">Assessment Rubric</div>
+    <table class="data-table"><thead><tr><th>Criteria (Bloom's Level)</th><th>Excellent (A)</th><th>Satisfactory (C)</th><th>Unsatisfactory (F)</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Analysis of Contextual Factors</strong> (C5)</td><td>Nuanced comparison of HK &amp; international models, with clear cultural/political analysis</td><td>Identifies key differences but lacks depth on cultural context</td><td>Superficial comparison or factual errors</td></tr>
+      <tr><td><strong>Evidence &amp; Argumentation</strong> (C6)</td><td>Compelling, well-supported argument using both EDB &amp; Hargreaves. Demonstrates independent synthesis</td><td>Argument is present but relies heavily on AI's initial structure</td><td>Shows poor use of evidence or relies uncritically on AI</td></tr>
+      <tr><td><strong>Critical AI Engagement</strong> (C5)</td><td>SUPERB: Clearly identifies AI biases, explains why specific AI content was rejected, provides strong rationale for human judgment</td><td>ADEQUATE: Reports what was used/modified but has weak reasoning</td><td>MISSING/POOR: No AI Audit, or blindly copies AI output without critique</td></tr>
+    </tbody></table>
+  </div>
+  <div class="card"><div class="card-title">AI-Supported Feedback Process</div>
+    <ol style="margin:.5rem 0 0 1.25rem;">
+      <li style="margin:.4rem 0;">Students submit essay + AI Audit to AI-powered feedback tool (Turnitin Draft Coach)</li>
+      <li style="margin:.4rem 0;">Tool generates feedback on argument structure and evidence integration</li>
+      <li style="margin:.4rem 0;">Instructor reviews AI-generated feedback AND student's AI Audit</li>
+      <li style="margin:.4rem 0;">Instructor adds personalized human comment highlighting what the AI feedback missed</li>
+      <li style="margin:.4rem 0;">Students have 24 hours to respond to both AI and instructor feedback</li>
+    </ol>
+  </div>
+  <button class="complete-btn" onclick="markComplete('s8')">Mark as Complete</button>
+</section>
+<!-- ════════════════ SECTION 9: ALIGNMENT MATRIX ════════════════ -->
+<section class="section-page" id="s9">
+  <div class="section-header">
+    <h2>Constructive Alignment Matrix</h2>
+    <p>How ILOs, teaching activities, assessment, pedagogy, and AI integration connect</p>
+  </div>
+  <div style="overflow-x:auto;">
+  <table class="data-table"><thead><tr><th>Learning Outcome</th><th>Teaching Activity</th><th>Assessment Method</th><th>Pedagogy Link</th><th>AI Integration</th></tr></thead>
+  <tbody>
+    <tr><td><strong>ILO 1:</strong> Analyze key characteristics</td><td>Pre-class readings; Lecture on HK vs. Finland</td><td>Pre-test &amp; Post-test; Summative essay analysis</td><td>Social Constructivism: Knowledge built comparing established frameworks</td><td>Pre-class AI Task: Students use AI to explore differences</td></tr>
+    <tr><td><strong>ILO 2:</strong> Evaluate role of context</td><td>Group AI-Enabled Activity (local vs. international)</td><td>Formative: Group observation; Summative: AI Audit justification</td><td>Social Constructivism: Contextual understanding co-constructed through group critique</td><td>Phase 1 Activity: Students critically evaluate AI's contextual analysis</td></tr>
+    <tr><td><strong>ILO 3:</strong> Collaboratively construct argument</td><td>Group digital storyboard (Padlet) &amp; Gallery Walk</td><td>Summative: Peer assessment rubric; Final essay</td><td>Social Constructivism: Groups build shared argument (collective knowledge)</td><td>Phase 1: Groups build on the AI's flawed starting point</td></tr>
+    <tr><td><strong>ILO 4:</strong> Critically evaluate AI-generated analysis</td><td>Pre-class task; Phase 1 &amp; 3 AI critique activities</td><td>Summative: AI Audit page in final essay</td><td>Social Constructivism: Critiquing AI is a social learning process</td><td>Primary AI Literacy Outcome: Central to all activities</td></tr>
+    <tr><td><strong>ILO 5:</strong> Justify use/rejection of AI</td><td>Phase 3: AI as Professional Partner task</td><td>Summative: AI Audit justification; Instructor feedback on rationale</td><td>Social Constructivism: Justifying decisions is professional dialogue</td><td>Core AI Task: Students document rejection/modification rationale</td></tr>
+  </tbody></table>
+  </div>
+  <button class="complete-btn" onclick="markComplete('s9')">Mark as Complete</button>
+</section>
+<!-- ════════════════ SECTION 10: RESOURCES ════════════════ -->
+<section class="section-page" id="s10">
+  <div class="section-header">
+    <h2>Resources &amp; Technology</h2>
+  </div>
+  <div class="card-grid">
+    <div class="card accent-left">
+      <div class="card-title">Platforms</div>
+      <ul style="list-style:none;font-size:.875rem;">
+        <li style="margin:.4rem 0;"><strong>LMS:</strong> Moodle or Blackboard — discussion board, AI Audit submission, file sharing</li>
+        <li style="margin:.4rem 0;"><strong>Padlet:</strong> <a href="https://padlet.com" target="_blank">padlet.com</a> — visual co-construction for gallery walk</li>
+        <li style="margin:.4rem 0;"><strong>Mentimeter:</strong> <a href="https://www.mentimeter.com" target="_blank">mentimeter.com</a> — real-time polling &amp; pre/post-test</li>
+      </ul>
+    </div>
+    <div class="card accent-left secondary">
+      <div class="card-title">AI Tools</div>
+      <ul style="list-style:none;font-size:.875rem;">
+        <li style="margin:.4rem 0;"><strong>ChatGPT:</strong> <a href="https://chat.openai.com" target="_blank">chat.openai.com</a> — pre-class task &amp; in-class AI interaction</li>
+        <li style="margin:.4rem 0;"><strong>Claude:</strong> <a href="https://claude.ai" target="_blank">claude.ai</a> — alternative to ChatGPT</li>
+        <li style="margin:.4rem 0;"><strong>Turnitin Draft Coach:</strong> Initial AI-powered feedback on essays</li>
+        <li style="margin:.4rem 0;"><strong>AI Literacy Resources:</strong> Campus library shared document on "Identifying Bias in AI Language Models"</li>
+      </ul>
+    </div>
+    <div class="card accent-left warning">
+      <div class="card-title">Physical Materials</div>
+      <ul style="list-style:none;font-size:.875rem;">
+        <li style="margin:.4rem 0;">Printed copies of EDB "Teachers' Professional Conduct" excerpt</li>
+        <li style="margin:.4rem 0;">Printed rubric for Peer Assessment</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card"><div class="card-title">Technology Checklist</div>
+    <ul class="check-list">
+      <li><input type="checkbox"> LMS discussion board set up for pre-class reflection posts</li>
+      <li><input type="checkbox"> Mentimeter presentation created with pre/post-test questions</li>
+      <li><input type="checkbox"> AI Audit submission folder created on LMS</li>
+      <li><input type="checkbox"> Shared AI Literacy resource document linked on LMS</li>
+      <li><input type="checkbox"> Student devices available or BYOD confirmed</li>
+    </ul>
+  </div>
+  <button class="complete-btn" onclick="markComplete('s10')">Mark as Complete</button>
+</section>
+<!-- ════════════════ SECTION 11: DIFFERENTIATION ════════════════ -->
+<section class="section-page" id="s11">
+  <div class="section-header">
+    <h2>Differentiation &amp; Inclusivity</h2>
+  </div>
+  <div class="card"><div class="card-title">Multiple Entry Points (Social Constructivism-tailored)</div>
+    <ul style="font-size:.875rem;margin-left:1.25rem;">
+      <li style="margin:.35rem 0;"><strong>Visual learners:</strong> Padlet storyboards for visual argument construction</li>
+      <li style="margin:.35rem 0;"><strong>Auditory learners:</strong> Structured discussion and peer-teaching summary</li>
+      <li style="margin:.35rem 0;"><strong>Kinesthetic/reading learners:</strong> AI chatbot interaction for hands-on exploration</li>
+    </ul>
+  </div>
+  <div class="card accent-left warning"><div class="card-title">Scaffolding for Struggling Groups</div>
+    <p style="font-size:.875rem;margin-bottom:.6rem;">If your group is struggling with AI critique, try these scaffold prompts:</p>
+    <div class="prompt-box" style="font-size:.78rem;">Ask the AI: "What are the weaknesses of your own answer?"
+Ask the AI: "What cultural biases might be present in your analysis?"
+Ask the AI: "What would a Hong Kong educator say is missing from your answer?"</div>
+  </div>
+  <div class="card-grid">
+    <div class="card accent-left"><div class="card-title">For Struggling Learners</div><p style="font-size:.875rem;">Use the AI tool to generate simplified explanations of Hargreaves' "four ages" of professionalism in bullet points.</p></div>
+    <div class="card accent-left secondary"><div class="card-title">For Advanced Learners</div><p style="font-size:.875rem;">Challenge: "Prompt the AI to create a new model of professionalism that combines the best of East and West, then critique that AI-generated hybrid for feasibility."</p></div>
+  </div>
+  <div class="card"><div class="card-title">Accessibility</div>
+    <ul style="font-size:.875rem;margin-left:1.25rem;">
+      <li style="margin:.35rem 0;">All AI interactions via text-based chat (text-to-speech enabled)</li>
+      <li style="margin:.35rem 0;">Mentimeter and Padlet have screen-reader compatibility</li>
+      <li style="margin:.35rem 0;">Captioned video links for any pre-class materials</li>
+      <li style="margin:.35rem 0;">5-minute "How to prompt effectively" mini-workshop at start of class for students new to AI</li>
+    </ul>
+  </div>
+  <div class="activity-block">
+    <div class="activity-header" onclick="toggleActivity(this)"><div class="act-num">!</div><div class="act-title">Instructor's 5-Minute AI Prompting Workshop</div><div class="act-time">5 min</div><span class="arrow">▼</span></div>
+    <div class="activity-body">
+      <p style="font-weight:600;margin-bottom:.6rem;">Key principles for effective AI prompting:</p>
+      <ol style="margin:0 0 0 1.25rem;">
+        <li style="margin:.4rem 0;"><strong>Be specific:</strong> Include context, constraints, and format in your prompt</li>
+        <li style="margin:.4rem 0;"><strong>Iterate:</strong> If the first answer is poor, refine your prompt and try again</li>
+        <li style="margin:.4rem 0;"><strong>Be critical:</strong> AI responses reflect training data biases — always question them</li>
+        <li style="margin:.4rem 0;"><strong>Compare:</strong> Ask the same question to two different AI tools and compare</li>
+        <li style="margin:.4rem 0;"><strong>Cite:</strong> Never use AI output directly — always paraphrase, cite, and critique</li>
+      </ol>
+    </div>
+  </div>
+  <button class="complete-btn" onclick="markComplete('s11')">Mark as Complete</button>
+</section>
+<!-- ════════════════ SECTION 12: REFLECTION ════════════════ -->
+<section class="section-page" id="s12">
+  <div class="section-header">
+    <h2>Reflection &amp; Improvement</h2>
+  </div>
+  <div class="card"><div class="card-title">Success Indicators</div>
+    <div class="card accent-left" style="margin-bottom:.75rem;"><strong>Group Collaboration Efficacy:</strong> Were all members active? Did groups build on each other's ideas? Measured via instructor observation &amp; Padlet "comment" feature.</div>
+    <div class="card accent-left green"><strong>Post-Class Survey (AI-specific, anonymous):</strong> "Did the AI tools enhance or distract from your learning? Did you feel you maintained independent thinking, or did you rely too much on AI? Rate 1–5."</div>
+  </div>
+  <div class="card"><div class="card-title">Instructor Reflection Questions</div>
+    <ul style="font-size:.875rem;margin-left:1.25rem;">
+      <li style="margin:.4rem 0;">Where did students struggle most with AI criticality — Phase 1 (cultural bias) or Phase 3 (professional code)?</li>
+      <li style="margin:.4rem 0;">Did the AI feedback tool on the essay help or hinder deeper analysis?</li>
+      <li style="margin:.4rem 0;">What patterns emerged in students' AI Audit documents?</li>
+    </ul>
+  </div>
+  <div class="card"><div class="card-title">Data on AI Engagement</div>
+    <p style="font-size:.875rem;">Review the "AI Audits" from summative assessment. Count instances where students rejected AI suggestions vs. accepted them. This reveals whether the lesson fostered independent judgment or passive consumption.</p>
+  </div>
+  <div class="card"><div class="card-title">Modification Strategies</div>
+    <div class="highlight-box warning" style="margin-bottom:.75rem;"><strong>If students blindly accept AI:</strong> "In the next iteration, provide groups with a deliberately flawed AI analysis. Make the task entirely about 'Identify and fix the AI's 3 critical errors.'"</div>
+    <div class="highlight-box info"><strong>If students find theory too complex:</strong> "Replace academic readings (Hargreaves) with a shorter AI-generated summary of the 'Four Ages of Professionalism' and ask students to evaluate the summary itself for accuracy."</div>
+  </div>
+  <button class="complete-btn" onclick="markComplete('s12')">Mark as Complete</button>
+</section>
+</main>
+<!-- SCROLL TO TOP -->
+<button id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Scroll to top">&#8679;</button>
+<script>
+// ─────────────────────────────────────────────────────────────
+//  SECTION NAVIGATION
+// ─────────────────────────────────────────────────────────────
+function showSection(id) {
+  // Hide all sections
+  document.querySelectorAll('.section-page').forEach(s => s.classList.remove('active'));
+  // Remove active from all nav items
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  // Show target section
+  const section = document.getElementById(id);
+  if (section) section.classList.add('active');
+  // Activate nav item
+  const navItem = document.getElementById('nav-' + id);
+  if (navItem) navItem.classList.add('active');
+  // On mobile close sidebar
+  const sidebar = document.getElementById('sidebar');
+  if (sidebar.classList.contains('open')) toggleSidebar();
+  // Scroll to top
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ─────────────────────────────────────────────────────────────
+//  MOBILE SIDEBAR
+// ─────────────────────────────────────────────────────────────
+function toggleSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('overlay');
+  sidebar.classList.toggle('open');
+  overlay.classList.toggle('open');
+}
+
+// ─────────────────────────────────────────────────────────────
+//  COLLAPSIBLE (tool instruction cards, external tools)
+// ─────────────────────────────────────────────────────────────
+function toggleCollapsible(header) {
+  header.classList.toggle('open');
+  const body = header.nextElementSibling;
+  if (body && body.classList.contains('collapsible-body')) {
+    body.classList.toggle('open');
+  }
+}
+
+// ─────────────────────────────────────────────────────────────
+//  ACTIVITY BLOCKS
+// ─────────────────────────────────────────────────────────────
+function toggleActivity(header) {
+  header.classList.toggle('open');
+  const body = header.nextElementSibling;
+  if (body && body.classList.contains('activity-body')) {
+    body.classList.toggle('open');
+  }
+}
+
+// ─────────────────────────────────────────────────────────────
+//  TIMERS
+// ─────────────────────────────────────────────────────────────
+const timers = {}; // { sectionId: { remaining, interval, initial } }
+
+function timerStart(id) {
+  if (timers[id] && timers[id].interval) return; // Already running
+  const display = document.getElementById('timer-' + id);
+  if (!timers[id]) {
+    const dur = parseInt(display.dataset.duration, 10);
+    timers[id] = { remaining: dur, initial: dur, interval: null };
+  }
+  timers[id].interval = setInterval(() => {
+    timers[id].remaining--;
+    updateTimerDisplay(id);
+    if (timers[id].remaining <= 0) {
+      clearInterval(timers[id].interval);
+      timers[id].interval = null;
+      display.textContent = '00:00';
+      display.classList.add('urgent');
+    }
+  }, 1000);
+}
+
+function timerPause(id) {
+  if (timers[id] && timers[id].interval) {
+    clearInterval(timers[id].interval);
+    timers[id].interval = null;
+  }
+}
+
+function timerReset(id) {
+  if (timers[id] && timers[id].interval) {
+    clearInterval(timers[id].interval);
+    timers[id].interval = null;
+  }
+  const display = document.getElementById('timer-' + id);
+  const dur = parseInt(display.dataset.duration, 10);
+  timers[id] = { remaining: dur, initial: dur, interval: null };
+  display.classList.remove('urgent');
+  updateTimerDisplay(id);
+}
+
+function updateTimerDisplay(id) {
+  const display = document.getElementById('timer-' + id);
+  if (!display || !timers[id]) return;
+  const r = timers[id].remaining;
+  const m = Math.floor(r / 60).toString().padStart(2, '0');
+  const s = (r % 60).toString().padStart(2, '0');
+  display.textContent = m + ':' + s;
+  if (r < 60) { display.classList.add('urgent'); }
+  else { display.classList.remove('urgent'); }
+}
+
+// ─────────────────────────────────────────────────────────────
+//  QUIZ INTERACTIVITY
+// ─────────────────────────────────────────────────────────────
+// Correct answers map: quizId -> correct option letter
+const CORRECT = {
+  's3-q1': 'B',
+  's3-q2': 'C',
+  's7-q1': 'B',
+  's7-q2': 'C'
+};
+
+function selectQuizOption(optEl, quizId, letter) {
+  const block = document.getElementById('quiz-' + quizId);
+  if (!block) return;
+  // Clear previous selections
+  block.querySelectorAll('.quiz-option').forEach(o => {
+    o.classList.remove('selected', 'correct', 'incorrect');
+  });
+  // Hide feedback
+  const fbCorrect = document.getElementById('fb-' + quizId + '-correct');
+  const fbIncorrect = document.getElementById('fb-' + quizId + '-incorrect');
+  if (fbCorrect) { fbCorrect.classList.remove('show'); }
+  if (fbIncorrect) { fbIncorrect.classList.remove('show'); }
+
+  // Mark selected
+  optEl.classList.add('selected');
+  const isCorrect = (CORRECT[quizId] === letter);
+  if (isCorrect) {
+    optEl.classList.remove('selected');
+    optEl.classList.add('correct');
+    if (fbCorrect) { fbCorrect.classList.add('show'); }
+  } else {
+    optEl.classList.remove('selected');
+    optEl.classList.add('incorrect');
+    if (fbIncorrect) { fbIncorrect.classList.add('show'); }
+    // Also highlight correct option
+    block.querySelectorAll('.quiz-option').forEach(o => {
+      if (o.querySelector('.opt-letter') &&
+          o.querySelector('.opt-letter').textContent === CORRECT[quizId]) {
+        o.classList.add('correct');
+      }
+    });
+  }
+}
+
+// ─────────────────────────────────────────────────────────────
+//  AI SELF-RATING
+// ─────────────────────────────────────────────────────────────
+const RATING_LABELS = {
+  1: 'Blindly trusted the AI without questioning',
+  2: 'Mostly accepted AI with minor questioning',
+  3: 'Accepted and rejected in equal measure',
+  4: 'Mostly challenged AI outputs critically',
+  5: 'Constantly and rigorously challenged AI throughout'
+};
+
+function selectRating(value) {
+  document.querySelectorAll('.rating-btn').forEach((btn, i) => {
+    btn.classList.toggle('selected', (i + 1) === value);
+  });
+  const confirm = document.getElementById('ratingConfirm');
+  if (confirm) confirm.textContent = 'Your rating: ' + value + ' — ' + (RATING_LABELS[value] || '');
+  localStorage.setItem('aiRating', value);
+}
+
+// ─────────────────────────────────────────────────────────────
+//  SECTION COMPLETION + PROGRESS
+// ─────────────────────────────────────────────────────────────
+const TOTAL_SECTIONS = 12;
+
+function markComplete(id) {
+  const btn = document.querySelector('#' + id + ' .complete-btn');
+  if (btn && btn.classList.contains('done')) return; // Already done
+  localStorage.setItem('complete-' + id, 'true');
+  if (btn) {
+    btn.textContent = '✓ Completed';
+    btn.classList.add('done');
+  }
+  // Update nav check
+  const chk = document.getElementById('chk-' + id);
+  if (chk) chk.classList.add('done');
+  chk.innerHTML = '✓';
+  updateProgress();
+}
+
+function updateProgress() {
+  let count = 0;
+  for (let i = 1; i <= TOTAL_SECTIONS; i++) {
+    if (localStorage.getItem('complete-s' + i) === 'true') count++;
+  }
+  const pct = Math.round((count / TOTAL_SECTIONS) * 100);
+  const bar = document.getElementById('progressBar');
+  const text = document.getElementById('progressText');
+  if (bar) bar.style.width = pct + '%';
+  if (text) text.textContent = pct + '%';
+}
+
+// ─────────────────────────────────────────────────────────────
+//  SCROLL TO TOP BUTTON
+// ─────────────────────────────────────────────────────────────
+const scrollTopBtn = document.getElementById('scrollTop');
+window.addEventListener('scroll', () => {
+  if (scrollTopBtn) {
+    scrollTopBtn.classList.toggle('show', window.scrollY > 300);
+  }
+});
+
+// ─────────────────────────────────────────────────────────────
+//  RESTORE STATE FROM localStorage ON PAGE LOAD
+// ─────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  // Restore section completions
+  for (let i = 1; i <= TOTAL_SECTIONS; i++) {
+    const sid = 's' + i;
+    if (localStorage.getItem('complete-' + sid) === 'true') {
+      const btn = document.querySelector('#' + sid + ' .complete-btn');
+      if (btn) { btn.textContent = '✓ Completed'; btn.classList.add('done'); }
+      const chk = document.getElementById('chk-' + sid);
+      if (chk) { chk.classList.add('done'); chk.innerHTML = '✓'; }
+    }
+  }
+  updateProgress();
+
+  // Restore AI rating
+  const savedRating = localStorage.getItem('aiRating');
+  if (savedRating) selectRating(parseInt(savedRating, 10));
+
+  // Open all activity blocks by default for readability (optional: comment out to start collapsed)
+  // document.querySelectorAll('.activity-header').forEach(h => { h.classList.add('open'); h.nextElementSibling.classList.add('open'); });
+});
+</script>
 </body>
 </html>
