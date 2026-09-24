@@ -1,16 +1,820 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Basic HTML Project</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Teaching Practicum Observation Log</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <style>
+    [x-cloak] { display: none !important; }
+
+    body { font-family: 'Segoe UI', system-ui, sans-serif; }
+
+    .rating-btn {
+      transition: all 0.15s ease;
+    }
+    .rating-btn:hover {
+      transform: scale(1.08);
+    }
+    .rating-btn.selected-1 { background: #fee2e2; border-color: #ef4444; color: #b91c1c; }
+    .rating-btn.selected-2 { background: #fef9c3; border-color: #eab308; color: #854d0e; }
+    .rating-btn.selected-3 { background: #dcfce7; border-color: #22c55e; color: #15803d; }
+    .rating-btn.selected-4 { background: #dbeafe; border-color: #3b82f6; color: #1d4ed8; }
+
+    .domain-card {
+      border-left: 4px solid #e2e8f0;
+      transition: border-color 0.2s;
+    }
+    .domain-card.rated { border-left-color: #3b82f6; }
+
+    @media print {
+      .no-print { display: none !important; }
+      body { background: white !important; }
+      .print-page { box-shadow: none !important; border: none !important; }
+      .page-break { page-break-before: always; }
+      input, textarea, select {
+        border: 1px solid #d1d5db !important;
+        background: white !important;
+      }
+    }
+
+    .progress-ring {
+      transform: rotate(-90deg);
+      transform-origin: 50% 50%;
+    }
+
+    textarea:focus, input:focus, select:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+    }
+
+    .fade-in {
+      animation: fadeIn 0.3s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .toast {
+      animation: slideUp 0.3s ease, fadeOut 0.3s ease 2.2s forwards;
+    }
+    @keyframes slideUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes fadeOut {
+      to { opacity: 0; }
+    }
+
+    .indicator-row:hover {
+      background: #f8fafc;
+    }
+  </style>
 </head>
-<body>
-  <div class="container">
-    <h1>Hello World!</h1>
-    <p>Welcome to your new project.</p>
+<body class="bg-slate-100 min-h-screen" x-data="observationLog()" x-init="init()">
+
+  <!-- Toast Notification -->
+  <div x-cloak x-show="toast.show" class="fixed bottom-6 right-6 z-50 no-print">
+    <div class="toast flex items-center gap-3 bg-slate-800 text-white px-5 py-3 rounded-xl shadow-xl text-sm font-medium">
+      <svg class="w-4 h-4 text-green-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+      </svg>
+      <span x-text="toast.message"></span>
+    </div>
   </div>
-  <script src="script.js"></script>
+
+  <!-- Header Bar -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-40 no-print">
+    <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
+          <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+          </svg>
+        </div>
+        <div>
+          <h1 class="font-bold text-slate-800 text-base leading-tight">Practicum Observation Log</h1>
+          <p class="text-xs text-slate-500 leading-tight">Student Teacher Evaluation</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <!-- Completion Indicator -->
+        <div class="hidden sm:flex items-center gap-2 text-xs text-slate-500 mr-2">
+          <div class="w-24 h-1.5 bg-slate-200 rounded-full overflow-hidden">
+            <div class="h-full bg-blue-500 rounded-full transition-all duration-500" :style="`width: ${completionPercent}%`"></div>
+          </div>
+          <span x-text="`${completionPercent}% complete`"></span>
+        </div>
+        <button @click="saveDraft()" class="hidden sm:flex items-center gap-1.5 px-3 py-1.5 text-sm text-slate-600 hover:text-slate-800 border border-slate-200 hover:border-slate-300 rounded-lg transition-colors">
+          <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+          </svg>
+          Save Draft
+        </button>
+        <button @click="printLog()" class="flex items-center gap-1.5 px-3 py-1.5 text-sm text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors">
+          <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+          </svg>
+          Print / Export
+        </button>
+        <button @click="confirmReset()" class="p-1.5 text-slate-400 hover:text-red-500 rounded-lg transition-colors" title="Reset form">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="max-w-5xl mx-auto px-4 py-6 print-page">
+
+    <!-- Print Header (only shows when printing) -->
+    <div class="hidden print:block mb-6 text-center border-b border-slate-300 pb-4">
+      <h1 class="text-2xl font-bold text-slate-800">Teaching Practicum Observation Log</h1>
+      <p class="text-slate-500 text-sm mt-1">Student Teacher Evaluation Form</p>
+    </div>
+
+    <!-- Section 1: Context Information -->
+    <section class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 mb-5 fade-in">
+      <h2 class="text-sm font-semibold text-blue-600 uppercase tracking-wider mb-4 flex items-center gap-2">
+        <span class="w-5 h-5 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-xs font-bold">1</span>
+        Observation Context
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div>
+          <label class="block text-xs font-medium text-slate-600 mb-1">Date of Observation</label>
+          <input type="date" x-model="form.date" class="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:border-blue-400 bg-slate-50" />
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-slate-600 mb-1">Observation #</label>
+          <select x-model="form.observationNumber" class="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:border-blue-400 bg-slate-50">
+            <option value="">Select...</option>
+            <option>1st Visit</option>
+            <option>2nd Visit</option>
+            <option>3rd Visit</option>
+            <option>4th Visit</option>
+            <option>Final Visit</option>
+            <option>Unannounced</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-slate-600 mb-1">School Name</label>
+          <input type="text" x-model="form.school" placeholder="e.g., Westview Elementary" class="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:border-blue-400 bg-slate-50" />
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-slate-600 mb-1">Student Teacher Name</label>
+          <input type="text" x-model="form.studentTeacher" placeholder="Full name" class="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:border-blue-400 bg-slate-50" />
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-slate-600 mb-1">Cooperating Teacher</label>
+          <input type="text" x-model="form.cooperatingTeacher" placeholder="Full name" class="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:border-blue-400 bg-slate-50" />
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-slate-600 mb-1">University Supervisor</label>
+          <input type="text" x-model="form.supervisor" placeholder="Full name" class="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:border-blue-400 bg-slate-50" />
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-slate-600 mb-1">Grade Level</label>
+          <select x-model="form.gradeLevel" class="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:border-blue-400 bg-slate-50">
+            <option value="">Select grade...</option>
+            <option>Pre-K</option>
+            <option>Kindergarten</option>
+            <option>Grade 1</option><option>Grade 2</option><option>Grade 3</option>
+            <option>Grade 4</option><option>Grade 5</option><option>Grade 6</option>
+            <option>Grade 7</option><option>Grade 8</option><option>Grade 9</option>
+            <option>Grade 10</option><option>Grade 11</option><option>Grade 12</option>
+            <option>Multi-grade</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-slate-600 mb-1">Subject / Course</label>
+          <input type="text" x-model="form.subject" placeholder="e.g., Mathematics, ELA" class="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:border-blue-400 bg-slate-50" />
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-slate-600 mb-1">Number of Students</label>
+          <input type="number" x-model="form.studentCount" placeholder="e.g., 28" min="1" max="60" class="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:border-blue-400 bg-slate-50" />
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: Lesson Information -->
+    <section class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 mb-5 fade-in">
+      <h2 class="text-sm font-semibold text-violet-600 uppercase tracking-wider mb-4 flex items-center gap-2">
+        <span class="w-5 h-5 bg-violet-100 text-violet-600 rounded-full flex items-center justify-center text-xs font-bold">2</span>
+        Lesson Information
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+        <div>
+          <label class="block text-xs font-medium text-slate-600 mb-1">Lesson Topic / Title</label>
+          <input type="text" x-model="form.lessonTopic" placeholder="e.g., Introduction to Fractions" class="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:border-blue-400 bg-slate-50" />
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-slate-600 mb-1">Curriculum Standards Referenced</label>
+          <input type="text" x-model="form.standards" placeholder="e.g., CCSS.Math.3.NF.A.1" class="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:border-blue-400 bg-slate-50" />
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-slate-600 mb-1">Lesson Start Time</label>
+          <input type="time" x-model="form.startTime" class="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:border-blue-400 bg-slate-50" />
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-slate-600 mb-1">Lesson End Time</label>
+          <input type="time" x-model="form.endTime" class="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:border-blue-400 bg-slate-50" />
+        </div>
+      </div>
+      <div>
+        <label class="block text-xs font-medium text-slate-600 mb-1">Stated Learning Objectives</label>
+        <textarea x-model="form.objectives" rows="2" placeholder="What did the lesson aim for students to know or be able to do?" class="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:border-blue-400 bg-slate-50 resize-none"></textarea>
+      </div>
+    </section>
+
+    <!-- Section 3: Rating Scale Legend -->
+    <section class="bg-gradient-to-r from-slate-50 to-blue-50 rounded-2xl border border-slate-200 p-4 mb-5 no-print">
+      <h3 class="text-xs font-semibold text-slate-600 uppercase tracking-wider mb-3">Rating Scale</h3>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+        <template x-for="r in ratingScale" :key="r.value">
+          <div class="flex items-start gap-2 bg-white rounded-xl p-3 border border-slate-200">
+            <span class="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5"
+              :class="r.chipClass" x-text="r.value"></span>
+            <div>
+              <div class="text-xs font-semibold text-slate-700" x-text="r.label"></div>
+              <div class="text-xs text-slate-500 leading-tight" x-text="r.desc"></div>
+            </div>
+          </div>
+        </template>
+      </div>
+    </section>
+
+    <!-- Print-only rating scale -->
+    <div class="hidden print:block mb-4 border border-slate-200 rounded p-3">
+      <div class="text-xs font-semibold text-slate-600 mb-2">Rating Scale: 1 = Does Not Meet | 2 = Approaching | 3 = Meets Standards | 4 = Exceeds Standards | N/O = Not Observed</div>
+    </div>
+
+    <!-- Section 4: Observation Domains -->
+    <section class="mb-5">
+      <h2 class="text-sm font-semibold text-emerald-600 uppercase tracking-wider mb-3 flex items-center gap-2">
+        <span class="w-5 h-5 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-xs font-bold">3</span>
+        Performance Indicators
+      </h2>
+
+      <template x-for="(domain, di) in domains" :key="di">
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm mb-4 overflow-hidden domain-card fade-in"
+          :class="{ 'rated': isDomainRated(di) }">
+          <!-- Domain Header -->
+          <button @click="domain.expanded = !domain.expanded"
+            class="w-full flex items-center justify-between px-5 py-4 hover:bg-slate-50 transition-colors no-print">
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded-lg flex items-center justify-center text-white text-sm font-bold flex-shrink-0"
+                :class="domain.color" x-text="di + 1"></div>
+              <div class="text-left">
+                <div class="font-semibold text-slate-800 text-sm" x-text="domain.name"></div>
+                <div class="text-xs text-slate-500" x-text="domain.subtitle"></div>
+              </div>
+            </div>
+            <div class="flex items-center gap-3">
+              <div class="text-xs text-slate-500 hidden sm:block">
+                <span x-text="getDomainRatedCount(di)"></span>/<span x-text="domain.indicators.length"></span> rated
+              </div>
+              <!-- Domain avg badge -->
+              <div x-show="getDomainAvg(di) > 0"
+                class="px-2.5 py-1 rounded-full text-xs font-bold"
+                :class="getDomainAvgClass(di)"
+                x-text="getDomainAvg(di).toFixed(1)"></div>
+              <svg class="w-4 h-4 text-slate-400 transition-transform" :class="{ 'rotate-180': domain.expanded }" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+          </button>
+
+          <!-- Domain print header (always visible when printing) -->
+          <div class="hidden print:block px-5 py-3 border-b border-slate-100">
+            <div class="font-semibold text-slate-800" x-text="(di+1) + '. ' + domain.name"></div>
+            <div class="text-xs text-slate-500" x-text="domain.subtitle"></div>
+          </div>
+
+          <!-- Indicators -->
+          <div x-show="domain.expanded || isPrinting" class="border-t border-slate-100">
+            <!-- Column headers -->
+            <div class="grid grid-cols-12 gap-2 px-5 py-2 bg-slate-50 border-b border-slate-100 no-print">
+              <div class="col-span-6 text-xs font-medium text-slate-500">Indicator</div>
+              <div class="col-span-4 text-xs font-medium text-slate-500 text-center">Rating</div>
+              <div class="col-span-2 text-xs font-medium text-slate-500 text-right">N/O</div>
+            </div>
+
+            <template x-for="(ind, ii) in domain.indicators" :key="ii">
+              <div class="indicator-row grid grid-cols-12 gap-3 px-5 py-3 border-b border-slate-50 items-center">
+                <div class="col-span-12 sm:col-span-6">
+                  <div class="text-sm font-medium text-slate-700" x-text="ind.name"></div>
+                  <div class="text-xs text-slate-500 mt-0.5" x-text="ind.description"></div>
+                </div>
+                <!-- Rating buttons -->
+                <div class="col-span-10 sm:col-span-4 flex gap-1.5 no-print">
+                  <template x-for="r in [1,2,3,4]" :key="r">
+                    <button
+                      @click="setRating(di, ii, r)"
+                      :disabled="ratings[di][ii].notObserved"
+                      class="rating-btn flex-1 h-8 text-xs font-bold border-2 rounded-lg transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+                      :class="[
+                        ratings[di][ii].value === r ? `selected-${r}` : 'border-slate-200 text-slate-500 hover:border-slate-300',
+                        ratings[di][ii].notObserved ? '' : ''
+                      ]"
+                      x-text="r">
+                    </button>
+                  </template>
+                </div>
+                <!-- N/O toggle -->
+                <div class="col-span-2 sm:col-span-2 flex justify-end items-center no-print">
+                  <button @click="toggleNotObserved(di, ii)"
+                    class="text-xs px-2 py-1.5 rounded-lg border-2 font-medium transition-all"
+                    :class="ratings[di][ii].notObserved ? 'bg-slate-700 border-slate-700 text-white' : 'border-slate-200 text-slate-400 hover:border-slate-300'">
+                    N/O
+                  </button>
+                </div>
+                <!-- Print rating display -->
+                <div class="col-span-12 hidden print:flex items-center gap-2 mt-1">
+                  <div class="flex gap-1">
+                    <template x-for="r in [1,2,3,4]" :key="r">
+                      <div class="w-6 h-6 border rounded text-xs flex items-center justify-center font-bold"
+                        :class="ratings[di][ii].value === r ? (r===1?'bg-red-100 border-red-400 text-red-700':r===2?'bg-yellow-100 border-yellow-400 text-yellow-700':r===3?'bg-green-100 border-green-400 text-green-700':'bg-blue-100 border-blue-400 text-blue-700') : 'border-slate-300 text-slate-300'"
+                        x-text="r"></div>
+                    </template>
+                    <div class="w-8 h-6 border rounded text-xs flex items-center justify-center font-bold"
+                      :class="ratings[di][ii].notObserved ? 'bg-slate-700 text-white border-slate-700' : 'border-slate-300 text-slate-300'">N/O</div>
+                  </div>
+                </div>
+              </div>
+            </template>
+
+            <!-- Domain Comments -->
+            <div class="px-5 py-4 bg-slate-50">
+              <label class="block text-xs font-medium text-slate-600 mb-1.5">
+                Comments for <span x-text="domain.name"></span>
+              </label>
+              <textarea
+                x-model="domainComments[di]"
+                rows="2"
+                :placeholder="`Evidence and specific observations for ${domain.name.toLowerCase()}...`"
+                class="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:border-blue-400 bg-white resize-none">
+              </textarea>
+            </div>
+          </div>
+        </div>
+      </template>
+    </section>
+
+    <!-- Section 5: Narrative Notes -->
+    <section class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 mb-5 fade-in page-break">
+      <h2 class="text-sm font-semibold text-amber-600 uppercase tracking-wider mb-4 flex items-center gap-2">
+        <span class="w-5 h-5 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center text-xs font-bold">4</span>
+        Narrative Observations
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        <div>
+          <label class="flex items-center gap-1.5 text-xs font-semibold text-emerald-700 mb-2">
+            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.096l-.391 3.124A2 2 0 0118.163 17H9.382a2 2 0 01-1.941-1.515L6 10h8z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10V6a2 2 0 00-2-2H8a2 2 0 00-2 2v4" />
+            </svg>
+            Areas of Strength
+          </label>
+          <textarea x-model="form.strengths" rows="5"
+            placeholder="Describe specific examples of effective teaching observed. What is the student teacher doing well?"
+            class="w-full px-3 py-2 text-sm border border-slate-200 rounded-xl focus:border-emerald-400 bg-slate-50 resize-none"></textarea>
+        </div>
+        <div>
+          <label class="flex items-center gap-1.5 text-xs font-semibold text-orange-600 mb-2">
+            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+            </svg>
+            Areas for Growth
+          </label>
+          <textarea x-model="form.areasForGrowth" rows="5"
+            placeholder="Identify specific areas where the student teacher should focus on improving. Be constructive and specific."
+            class="w-full px-3 py-2 text-sm border border-slate-200 rounded-xl focus:border-orange-400 bg-slate-50 resize-none"></textarea>
+        </div>
+        <div class="sm:col-span-2">
+          <label class="flex items-center gap-1.5 text-xs font-semibold text-blue-600 mb-2">
+            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+            </svg>
+            Action Steps & Goals for Next Observation
+          </label>
+          <textarea x-model="form.actionSteps" rows="3"
+            placeholder="What specific, measurable steps will the student teacher take before the next observation? Set 2–3 concrete goals."
+            class="w-full px-3 py-2 text-sm border border-slate-200 rounded-xl focus:border-blue-400 bg-slate-50 resize-none"></textarea>
+        </div>
+        <div class="sm:col-span-2">
+          <label class="flex items-center gap-1.5 text-xs font-semibold text-slate-600 mb-2">
+            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+            </svg>
+            Student Teacher's Self-Reflection Notes
+          </label>
+          <textarea x-model="form.selfReflection" rows="3"
+            placeholder="Space for the student teacher to record their own observations and reflections (may be completed after the post-conference)."
+            class="w-full px-3 py-2 text-sm border border-slate-200 rounded-xl focus:border-slate-400 bg-slate-50 resize-none"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 6: Overall Summary -->
+    <section class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 mb-5 fade-in">
+      <h2 class="text-sm font-semibold text-slate-600 uppercase tracking-wider mb-5 flex items-center gap-2">
+        <span class="w-5 h-5 bg-slate-100 text-slate-600 rounded-full flex items-center justify-center text-xs font-bold">5</span>
+        Overall Evaluation Summary
+      </h2>
+
+      <!-- Score Summary Cards -->
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mb-6">
+        <template x-for="(domain, di) in domains" :key="di">
+          <div class="text-center p-3 rounded-xl border border-slate-100 bg-slate-50">
+            <div class="text-xs text-slate-500 mb-1 leading-tight" x-text="domain.shortName"></div>
+            <div class="text-2xl font-bold"
+              :class="getDomainAvgClass(di)"
+              x-text="getDomainAvg(di) > 0 ? getDomainAvg(di).toFixed(1) : '—'"></div>
+          </div>
+        </template>
+      </div>
+
+      <!-- Overall Average -->
+      <div class="flex flex-col sm:flex-row items-center gap-5 p-5 bg-gradient-to-r from-blue-50 to-violet-50 rounded-2xl border border-blue-100 mb-5">
+        <div class="text-center">
+          <div class="text-5xl font-black"
+            :class="overallAvg >= 3.5 ? 'text-blue-600' : overallAvg >= 2.5 ? 'text-green-600' : overallAvg >= 1.5 ? 'text-yellow-600' : overallAvg > 0 ? 'text-red-600' : 'text-slate-300'"
+            x-text="overallAvg > 0 ? overallAvg.toFixed(2) : '—'"></div>
+          <div class="text-xs text-slate-500 mt-1">Overall Average</div>
+        </div>
+        <div class="flex-1">
+          <div class="h-3 bg-slate-200 rounded-full overflow-hidden mb-2">
+            <div class="h-full rounded-full transition-all duration-700"
+              :class="overallAvg >= 3.5 ? 'bg-blue-500' : overallAvg >= 2.5 ? 'bg-green-500' : overallAvg >= 1.5 ? 'bg-yellow-500' : 'bg-red-500'"
+              :style="`width: ${overallAvg > 0 ? (overallAvg / 4 * 100) : 0}%`"></div>
+          </div>
+          <div class="text-sm font-semibold text-slate-700" x-text="overallLabel"></div>
+          <div class="text-xs text-slate-500 mt-0.5" x-text="ratedCount + ' of ' + totalIndicators + ' indicators rated'"></div>
+        </div>
+      </div>
+
+      <!-- Overall Rating Selection -->
+      <div>
+        <label class="block text-xs font-medium text-slate-600 mb-3">Overall Performance Rating (Supervisor Judgment)</label>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <template x-for="r in ratingScale" :key="r.value">
+            <button @click="form.overallRating = r.value"
+              class="p-3 rounded-xl border-2 text-left transition-all hover:scale-[1.02]"
+              :class="form.overallRating === r.value ? r.selectedClass : 'border-slate-200 hover:border-slate-300'">
+              <div class="text-lg font-black" x-text="r.value"></div>
+              <div class="text-xs font-semibold mt-0.5" x-text="r.label"></div>
+              <div class="text-xs text-slate-500" x-text="r.desc"></div>
+            </button>
+          </template>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 7: Post-Conference & Signatures -->
+    <section class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 mb-5 fade-in">
+      <h2 class="text-sm font-semibold text-rose-600 uppercase tracking-wider mb-4 flex items-center gap-2">
+        <span class="w-5 h-5 bg-rose-100 text-rose-600 rounded-full flex items-center justify-center text-xs font-bold">6</span>
+        Post-Conference & Signatures
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-5">
+        <div>
+          <label class="block text-xs font-medium text-slate-600 mb-1">Post-Conference Date</label>
+          <input type="date" x-model="form.conferenceDate" class="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:border-blue-400 bg-slate-50" />
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-slate-600 mb-1">Post-Conference Time</label>
+          <input type="time" x-model="form.conferenceTime" class="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:border-blue-400 bg-slate-50" />
+        </div>
+        <div class="sm:col-span-2">
+          <label class="block text-xs font-medium text-slate-600 mb-1">Post-Conference Notes</label>
+          <textarea x-model="form.conferenceNotes" rows="3"
+            placeholder="Key discussion points from the post-observation conference..."
+            class="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:border-blue-400 bg-slate-50 resize-none"></textarea>
+        </div>
+      </div>
+
+      <!-- Signature Lines -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-4 border-t border-slate-100">
+        <div>
+          <div class="h-10 border-b-2 border-slate-300 mb-2 print:border-b-2"></div>
+          <div class="text-xs text-slate-500">University Supervisor Signature</div>
+          <div class="text-xs text-slate-400 mt-0.5">Date: _______________</div>
+        </div>
+        <div>
+          <div class="h-10 border-b-2 border-slate-300 mb-2"></div>
+          <div class="text-xs text-slate-500">Cooperating Teacher Signature</div>
+          <div class="text-xs text-slate-400 mt-0.5">Date: _______________</div>
+        </div>
+        <div>
+          <div class="h-10 border-b-2 border-slate-300 mb-2"></div>
+          <div class="text-xs text-slate-500">Student Teacher Signature</div>
+          <div class="text-xs text-slate-400 mt-0.5">Date: _______________</div>
+        </div>
+      </div>
+      <p class="text-xs text-slate-400 mt-4 italic">Signatures indicate that the observation and post-conference discussion have taken place. Student teacher signature does not imply agreement with all evaluations.</p>
+    </section>
+
+    <!-- Action Buttons -->
+    <div class="flex flex-wrap items-center justify-between gap-3 pb-8 no-print">
+      <button @click="confirmReset()" class="flex items-center gap-2 px-4 py-2.5 text-sm text-red-600 border border-red-200 hover:bg-red-50 rounded-xl transition-colors">
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+        </svg>
+        Clear Form
+      </button>
+      <div class="flex items-center gap-2">
+        <button @click="saveDraft()" class="flex items-center gap-2 px-4 py-2.5 text-sm text-slate-700 border border-slate-200 hover:border-slate-300 bg-white rounded-xl transition-colors shadow-sm">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+          </svg>
+          Save Draft
+        </button>
+        <button @click="printLog()" class="flex items-center gap-2 px-5 py-2.5 text-sm text-white bg-blue-600 hover:bg-blue-700 rounded-xl transition-colors shadow-sm font-medium">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+          </svg>
+          Print / Export PDF
+        </button>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    function observationLog() {
+      return {
+        isPrinting: false,
+        toast: { show: false, message: '' },
+
+        ratingScale: [
+          { value: 1, label: 'Does Not Meet', desc: 'Significant improvement needed', chipClass: 'bg-red-100 text-red-700', selectedClass: 'border-red-400 bg-red-50' },
+          { value: 2, label: 'Approaching', desc: 'Developing toward standard', chipClass: 'bg-yellow-100 text-yellow-700', selectedClass: 'border-yellow-400 bg-yellow-50' },
+          { value: 3, label: 'Meets Standards', desc: 'Consistently proficient', chipClass: 'bg-green-100 text-green-700', selectedClass: 'border-green-400 bg-green-50' },
+          { value: 4, label: 'Exceeds Standards', desc: 'Exemplary performance', chipClass: 'bg-blue-100 text-blue-700', selectedClass: 'border-blue-400 bg-blue-50' },
+        ],
+
+        domains: [
+          {
+            name: 'Planning & Preparation',
+            shortName: 'Planning',
+            subtitle: 'Lesson design, objectives, and materials',
+            color: 'bg-violet-500',
+            expanded: true,
+            indicators: [
+              { name: 'Clear Learning Objectives', description: 'Lesson goals are measurable and communicated to students' },
+              { name: 'Curriculum Alignment', description: 'Lesson connects to relevant standards and curriculum sequence' },
+              { name: 'Differentiation', description: 'Plans accommodate diverse learner needs and abilities' },
+              { name: 'Appropriate Materials', description: 'Resources are age-appropriate, relevant, and ready for use' },
+            ]
+          },
+          {
+            name: 'Classroom Environment',
+            shortName: 'Environment',
+            subtitle: 'Management, routines, and climate',
+            color: 'bg-emerald-500',
+            expanded: false,
+            indicators: [
+              { name: 'Classroom Management', description: 'Transitions are smooth; routines are established and followed' },
+              { name: 'Behavior Management', description: 'Addresses behavior calmly and consistently using positive strategies' },
+              { name: 'Physical Space', description: 'Room arrangement supports the lesson type and student movement' },
+              { name: 'Inclusive Climate', description: 'Creates a respectful, welcoming environment for all learners' },
+            ]
+          },
+          {
+            name: 'Instructional Delivery',
+            shortName: 'Instruction',
+            subtitle: 'Clarity, pacing, and pedagogy',
+            color: 'bg-blue-500',
+            expanded: false,
+            indicators: [
+              { name: 'Content Accuracy', description: 'Teaches content correctly with appropriate depth and detail' },
+              { name: 'Clarity of Explanation', description: 'Concepts are explained clearly using examples and analogies' },
+              { name: 'Lesson Pacing', description: 'Pacing is appropriate; no significant wait time or rushing' },
+              { name: 'Questioning Techniques', description: 'Uses varied question types including higher-order thinking prompts' },
+              { name: 'Modeling & Demonstration', description: 'Uses think-alouds or demonstrations to make thinking visible' },
+              { name: 'Use of Technology', description: 'Integrates technology effectively when appropriate' },
+            ]
+          },
+          {
+            name: 'Student Engagement',
+            shortName: 'Engagement',
+            subtitle: 'Participation, motivation, and check-ins',
+            color: 'bg-amber-500',
+            expanded: false,
+            indicators: [
+              { name: 'Active Participation', description: 'Most students are actively engaged throughout the lesson' },
+              { name: 'Checks for Understanding', description: 'Regularly monitors learning through formative strategies' },
+              { name: 'Student-Centered Learning', description: 'Students have meaningful opportunities to collaborate and discuss' },
+              { name: 'Motivation & Relevance', description: 'Connects content to student interests and real-world contexts' },
+            ]
+          },
+          {
+            name: 'Assessment & Feedback',
+            shortName: 'Assessment',
+            subtitle: 'Formative checks and student feedback',
+            color: 'bg-rose-500',
+            expanded: false,
+            indicators: [
+              { name: 'Formative Assessment', description: 'Uses evidence of student learning to inform instruction in real time' },
+              { name: 'Quality of Feedback', description: 'Provides specific, actionable, and timely feedback to students' },
+              { name: 'Adjusting Instruction', description: 'Modifies approach when students are not understanding' },
+            ]
+          },
+          {
+            name: 'Professional Practice',
+            shortName: 'Professional',
+            subtitle: 'Communication, reflection, and growth',
+            color: 'bg-slate-500',
+            expanded: false,
+            indicators: [
+              { name: 'Professional Demeanor', description: 'Maintains appropriate dress, language, and composure' },
+              { name: 'Communication Skills', description: 'Speaks clearly, models standard language, and listens actively' },
+              { name: 'Collaboration with Cooperating Teacher', description: 'Works effectively alongside the cooperating teacher' },
+              { name: 'Reflective Practice', description: 'Demonstrates ability to reflect on teaching and identify growth areas' },
+            ]
+          },
+        ],
+
+        ratings: [],
+        domainComments: [],
+
+        form: {
+          date: '',
+          observationNumber: '',
+          school: '',
+          studentTeacher: '',
+          cooperatingTeacher: '',
+          supervisor: '',
+          gradeLevel: '',
+          subject: '',
+          studentCount: '',
+          lessonTopic: '',
+          standards: '',
+          startTime: '',
+          endTime: '',
+          objectives: '',
+          strengths: '',
+          areasForGrowth: '',
+          actionSteps: '',
+          selfReflection: '',
+          overallRating: null,
+          conferenceDate: '',
+          conferenceTime: '',
+          conferenceNotes: '',
+        },
+
+        init() {
+          // Initialize ratings grid
+          this.domains.forEach((domain, di) => {
+            this.ratings[di] = domain.indicators.map(() => ({ value: null, notObserved: false }));
+            this.domainComments[di] = '';
+          });
+          // Load saved draft
+          this.loadDraft();
+          // Set today's date if empty
+          if (!this.form.date) {
+            this.form.date = new Date().toISOString().split('T')[0];
+          }
+        },
+
+        setRating(di, ii, value) {
+          this.ratings[di][ii].value = this.ratings[di][ii].value === value ? null : value;
+          this.ratings[di][ii].notObserved = false;
+        },
+
+        toggleNotObserved(di, ii) {
+          this.ratings[di][ii].notObserved = !this.ratings[di][ii].notObserved;
+          if (this.ratings[di][ii].notObserved) {
+            this.ratings[di][ii].value = null;
+          }
+        },
+
+        isDomainRated(di) {
+          return this.ratings[di].some(r => r.value !== null || r.notObserved);
+        },
+
+        getDomainRatedCount(di) {
+          return this.ratings[di].filter(r => r.value !== null || r.notObserved).length;
+        },
+
+        getDomainAvg(di) {
+          const rated = this.ratings[di].filter(r => r.value !== null);
+          if (rated.length === 0) return 0;
+          return rated.reduce((sum, r) => sum + r.value, 0) / rated.length;
+        },
+
+        getDomainAvgClass(di) {
+          const avg = this.getDomainAvg(di);
+          if (avg === 0) return 'text-slate-300';
+          if (avg >= 3.5) return 'text-blue-600 bg-blue-100 rounded-full px-2 py-0.5';
+          if (avg >= 2.5) return 'text-green-700 bg-green-100 rounded-full px-2 py-0.5';
+          if (avg >= 1.5) return 'text-yellow-700 bg-yellow-100 rounded-full px-2 py-0.5';
+          return 'text-red-700 bg-red-100 rounded-full px-2 py-0.5';
+        },
+
+        get totalIndicators() {
+          return this.domains.reduce((sum, d) => sum + d.indicators.length, 0);
+        },
+
+        get ratedCount() {
+          return this.ratings.reduce((sum, domainRatings) =>
+            sum + domainRatings.filter(r => r.value !== null).length, 0);
+        },
+
+        get overallAvg() {
+          const allRated = this.ratings.flatMap(d => d.filter(r => r.value !== null));
+          if (allRated.length === 0) return 0;
+          return allRated.reduce((sum, r) => sum + r.value, 0) / allRated.length;
+        },
+
+        get overallLabel() {
+          const avg = this.overallAvg;
+          if (avg === 0) return 'No ratings entered yet';
+          if (avg >= 3.5) return 'Exceeds Standards — Exceptional performance';
+          if (avg >= 2.5) return 'Meets Standards — Proficient performance';
+          if (avg >= 1.5) return 'Approaching Standards — Developing';
+          return 'Does Not Meet Standards — Significant support needed';
+        },
+
+        get completionPercent() {
+          const fields = [
+            this.form.date, this.form.studentTeacher, this.form.school,
+            this.form.gradeLevel, this.form.subject, this.form.lessonTopic,
+            this.form.objectives, this.form.strengths, this.form.areasForGrowth
+          ];
+          const filledFields = fields.filter(f => f && f.trim()).length;
+          const fieldScore = (filledFields / fields.length) * 50;
+          const ratingScore = (this.ratedCount / this.totalIndicators) * 50;
+          return Math.round(fieldScore + ratingScore);
+        },
+
+        saveDraft() {
+          const data = {
+            form: this.form,
+            ratings: this.ratings,
+            domainComments: this.domainComments,
+            savedAt: new Date().toISOString()
+          };
+          localStorage.setItem('practicum_obs_draft', JSON.stringify(data));
+          this.showToast('Draft saved successfully');
+        },
+
+        loadDraft() {
+          try {
+            const saved = localStorage.getItem('practicum_obs_draft');
+            if (saved) {
+              const data = JSON.parse(saved);
+              if (data.form) this.form = { ...this.form, ...data.form };
+              if (data.ratings) {
+                data.ratings.forEach((domainRatings, di) => {
+                  if (this.ratings[di]) {
+                    domainRatings.forEach((r, ii) => {
+                      if (this.ratings[di][ii]) {
+                        this.ratings[di][ii] = { ...this.ratings[di][ii], ...r };
+                      }
+                    });
+                  }
+                });
+              }
+              if (data.domainComments) this.domainComments = data.domainComments;
+            }
+          } catch(e) { /* ignore parse errors */ }
+        },
+
+        confirmReset() {
+          if (confirm('Clear all form data? This cannot be undone.')) {
+            localStorage.removeItem('practicum_obs_draft');
+            this.form = Object.fromEntries(Object.keys(this.form).map(k => [k, '']));
+            this.form.overallRating = null;
+            this.domains.forEach((domain, di) => {
+              this.ratings[di] = domain.indicators.map(() => ({ value: null, notObserved: false }));
+              this.domainComments[di] = '';
+            });
+            this.form.date = new Date().toISOString().split('T')[0];
+            this.showToast('Form cleared');
+          }
+        },
+
+        printLog() {
+          // Expand all domains for printing
+          this.isPrinting = true;
+          this.domains.forEach(d => d.expanded = true);
+          this.$nextTick(() => {
+            window.print();
+            this.isPrinting = false;
+          });
+        },
+
+        showToast(message) {
+          this.toast = { show: true, message };
+          setTimeout(() => { this.toast.show = false; }, 2600);
+        }
+      };
+    }
+  </script>
 </body>
 </html>
