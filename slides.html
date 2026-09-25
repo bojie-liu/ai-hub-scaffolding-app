@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Slides — Introduction to Learning Theories</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgen.bundle.js"></script>
+  <style>
+.slide-stage {
+  width: 100%; max-width: 900px; margin: 0 auto;
+  aspect-ratio: 16/9; background: white;
+  border-radius: 10px; box-shadow: 0 4px 24px rgba(0,0,0,.12);
+  overflow: hidden; position: relative;
+}
+.slide { display: none; width: 100%; height: 100%; flex-direction: column; }
+.slide.active { display: flex; }
+.slide-header {
+  background: #2563EB; color: white;
+  padding: 0.5rem 1.5rem; display: flex;
+  justify-content: space-between; align-items: center;
+  font-size: 0.78rem; flex-shrink: 0;
+}
+.slide-body {
+  flex: 1; padding: 1.8rem 2.5rem;
+  overflow: hidden; display: flex; flex-direction: column;
+}
+.slide-body h2 { font-size: 26px; font-weight: 800; color: #2563EB; margin-bottom: 14px; font-family: Georgia, serif; }
+.slide-body h3 { font-size: 16px; font-weight: 700; color: #7C3AED; margin: 10px 0 6px; }
+.slide-body p { font-size: 15px; line-height: 1.55; margin-bottom: 8px; }
+.slide-body li { font-size: 14px; line-height: 1.5; margin-bottom: 5px; }
+.slide-body .theory-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; flex: 1; }
+.slide-body .theory-box { padding: 12px; border-radius: 8px; }
+.slide-body .theory-box h4 { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+.slide-body .theory-box p, .slide-body .theory-box li { font-size: 12px; }
+.slide-controls { display: flex; justify-content: center; align-items: center; gap: 12px; margin: 12px 0; flex-wrap: wrap; }
+.slide-counter { font-size: 14px; font-weight: 600; color: #64748B; min-width: 60px; text-align: center; }
+.slide-stage:fullscreen { max-width: 100%; border-radius: 0; }
+.slide-stage:-webkit-full-screen { max-width: 100%; }
+.slide-stage:-moz-full-screen { max-width: 100%; }
+  </style>
+</head>
+<body>
+  <nav class="site-nav">
+    <div class="nav-brand">Learning Theories</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="section-1.html">ILOs</a></li>
+      <li><a href="section-2.html">Pre-Class</a></li>
+      <li><a href="section-3.html">Activities</a></li>
+      <li><a href="section-4.html">Assessment</a></li>
+      <li><a href="section-5.html">Alignment</a></li>
+      <li><a href="section-6.html">Resources</a></li>
+      <li><a href="section-7.html">Differentiation</a></li>
+      <li><a href="section-8.html">Reflection</a></li>
+      <li><a href="slides.html">Slides</a></li>
+      <li><a href="assessment.html">Quiz</a></li>
+      <li><a href="resources.html">Library</a></li>
+    </ul>
+    <div class="role-toggle">
+      <button class="role-btn teacher" data-role="teacher">Teacher</button>
+      <button class="role-btn student" data-role="student">Student</button>
+    </div>
+  </nav>
+  <div id="role-banner" class="role-banner student">📚 Student View</div>
+  <div class="container">
+    <header class="page-header">
+      <h1>Presentation Slides</h1>
+      <p class="subtitle">Introduction to Learning Theories — 10 Slides</p>
+    </header>
+    <div class="slide-stage">
+      <div class="slide active" id="slide-1">
+        <div class="slide-header">
+          <span>Introduction to Learning Theories</span>
+          <span>Slide 1 / 10</span>
+        </div>
+        <div class="slide-body" style="background: linear-gradient(135deg, #EFF6FF 0%, #F5F3FF 100%); justify-content: center; align-items: center; text-align: center;">
+          <h2 style="font-size: 32px; margin-bottom: 10px;">Introduction to Learning Theories</h2>
+          <p style="font-size: 18px; color: #7C3AED; font-weight: 600; margin-bottom: 20px;">Behaviourism, Cognitivism &amp; Constructivism</p>
+          <div style="background: white; border-radius: 8px; padding: 16px 32px; display: inline-block; box-shadow: 0 2px 8px rgba(0,0,0,.08);">
+            <p style="margin: 4px 0; font-size: 14px; color: #475569;">📚 Educational Psychology | First-Year Undergraduates</p>
+            <p style="margin: 4px 0; font-size: 14px; color: #475569;">⏱ 150 Minutes | 👥 90 Students</p>
+            <p style="margin: 4px 0; font-size: 14px; color: #475569;">🎓 Pedagogy: Social Constructivism + AI Integration</p>
+          </div>
+        </div>
+      </div>
+      <div class="slide" id="slide-2">
+        <div class="slide-header">
+          <span>Introduction to Learning Theories</span>
+          <span>Slide 2 / 10</span>
+        </div>
+        <div class="slide-body">
+          <h2>What You Will Be Able To Do</h2>
+          <ol>
+            <li>Compare core assumptions of behaviourist, cognitivist, and constructivist theories</li>
+            <li>Apply social constructivist principles to design a peer-teaching segment</li>
+            <li>Critically evaluate an AI-generated explanation of a learning theory</li>
+            <li>Generate a revised, more accurate version of an AI explanation</li>
+            <li>Reflect on when human judgment should override AI suggestions</li>
+          </ol>
+          <div style="margin-top: 16px; background: #EDE9FE; border-left: 4px solid #7C3AED; padding: 10px 16px; border-radius: 4px;">
+            <p style="margin: 0; font-size: 13px; color: #5B21B6;">🤖 <strong>AI Literacy:</strong> ILOs 3–5 develop critical AI literacy skills essential for 21st-century learning.</p>
+          </div>
+        </div>
+      </div>
+      <div class="slide" id="slide-3">
+        <div class="slide-header">
+          <span>Introduction to Learning Theories</span>
+          <span>Slide 3 / 10</span>
+        </div>
+        <div class="slide-body">
+          <h2>Behaviourism</h2>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; flex: 1;">
+            <div>
+              <h3>Key Assumptions</h3>
+              <ul>
+                <li>Observable behaviour only</li>
+                <li>Stimulus–response relationships</li>
+                <li>Reinforcement &amp; punishment shape behaviour</li>
+                <li>Blank slate (tabula rasa)</li>
+              </ul>
+              <h3>Key Theorists</h3>
+              <p>Watson, Pavlov, Skinner, Thorndike</p>
+              <h3>Classroom Applications</h3>
+              <ul>
+                <li>Drills &amp; repetition</li>
+                <li>Reward systems</li>
+                <li>Immediate feedback</li>
+                <li>Programmed instruction</li>
+              </ul>
+            </div>
+            <div>
+              <h3>Example</h3>
+              <p style="background: #DBEAFE; padding: 10px; border-radius: 6px; font-size: 13px;">Skinner's operant conditioning: positive reinforcement in homework management systems increases desired behaviours.</p>
+              <h3>Famous Quote</h3>
+              <blockquote style="border-left: 3px solid #2563EB; padding: 8px 12px; margin: 0; background: #F8FAFC; border-radius: 0 6px 6px 0;">
+                <p style="font-size: 13px; font-style: italic; margin: 0;">"Give me a dozen healthy infants... and I'll guarantee to take any one at random and train him to become any type of specialist..."</p>
+                <p style="font-size: 12px; color: #64748B; margin: 4px 0 0;">— J.B. Watson</p>
+              </blockquote>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="slide" id="slide-4">
+        <div class="slide-header">
+          <span>Introduction to Learning Theories</span>
+          <span>Slide 4 / 10</span>
+        </div>
+        <div class="slide-body">
+          <h2>Cognitivism</h2>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; flex: 1;">
+            <div>
+              <h3>Key Assumptions</h3>
+              <ul>
+                <li>Mental processes matter</li>
+                <li>Information processing model</li>
+                <li>Schema theory — organising knowledge</li>
+                <li>Cognitive load limits learning</li>
+              </ul>
+              <h3>Key Theorists</h3>
+              <p>Piaget (early), Bruner, Ausubel, Sweller, Gagné</p>
+              <h3>Classroom Applications</h3>
+              <ul>
+                <li>Advance organisers</li>
+                <li>Mnemonics &amp; chunking</li>
+                <li>Worked examples</li>
+                <li>Graphic organisers</li>
+              </ul>
+            </div>
+            <div>
+              <h3>Example</h3>
+              <p style="background: #EDE9FE; padding: 10px; border-radius: 6px; font-size: 13px;">Ausubel's meaningful learning: connect new concepts to existing schema (advance organisers) to improve retention.</p>
+              <h3>Contrast with Behaviourism</h3>
+              <p style="font-size: 13px; background: #F0FDF4; padding: 10px; border-radius: 6px;">Internal mental states <strong>are</strong> valid objects of study — we can investigate memory, attention, and reasoning.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="slide" id="slide-5">
+        <div class="slide-header">
+          <span>Introduction to Learning Theories</span>
+          <span>Slide 5 / 10</span>
+        </div>
+        <div class="slide-body">
+          <h2>Constructivism</h2>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; flex: 1;">
+            <div>
+              <h3>Key Assumptions</h3>
+              <ul>
+                <li>Learners actively construct knowledge</li>
+                <li>Prior knowledge is central</li>
+                <li>Social interaction is key (Vygotsky)</li>
+                <li>Learning is contextual &amp; situated</li>
+              </ul>
+              <h3>Key Theorists</h3>
+              <p>Piaget, Vygotsky, Bruner, Dewey</p>
+              <h3>Classroom Applications</h3>
+              <ul>
+                <li>Problem-based learning</li>
+                <li>Collaborative tasks</li>
+                <li>Authentic activities</li>
+                <li>ZPD scaffolding</li>
+              </ul>
+            </div>
+            <div>
+              <h3>Social Constructivism (Vygotsky)</h3>
+              <p style="background: #D1FAE5; padding: 10px; border-radius: 6px; font-size: 13px;">Knowledge is co-constructed through dialogue. Learning happens first between people (inter-psychological), then within (intra-psychological).</p>
+              <div style="background: #FEF3C7; border-left: 3px solid #D97706; padding: 10px; border-radius: 0 6px 6px 0; margin-top: 10px;">
+                <p style="font-size: 13px; margin: 0;"><strong>⚠️ Note:</strong> Constructivism DOES build on prior knowledge — counter to a common AI-generated misconception we will examine in class.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="slide" id="slide-6">
+        <div class="slide-header">
+          <span>Introduction to Learning Theories</span>
+          <span>Slide 6 / 10</span>
+        </div>
+        <div class="slide-body">
+          <h2>Three Theories at a Glance</h2>
+          <div class="theory-grid">
+            <div class="theory-box" style="background: #DBEAFE;">
+              <h4 style="color: #1D4ED8;">🔵 Behaviourism</h4>
+              <ul style="padding-left: 16px; margin: 0;">
+                <li>Learner as <strong>passive recipient</strong></li>
+                <li>Teacher as authority</li>
+                <li>Drill, reward, test</li>
+                <li>Watson, Skinner</li>
+              </ul>
+            </div>
+            <div class="theory-box" style="background: #EDE9FE;">
+              <h4 style="color: #6D28D9;">🟣 Cognitivism</h4>
+              <ul style="padding-left: 16px; margin: 0;">
+                <li>Learner as <strong>information processor</strong></li>
+                <li>Teacher as organiser</li>
+                <li>Schema building, chunking</li>
+                <li>Piaget, Ausubel</li>
+              </ul>
+            </div>
+            <div class="theory-box" style="background: #D1FAE5;">
+              <h4 style="color: #065F46;">🟢 Constructivism</h4>
+              <ul style="padding-left: 16px; margin: 0;">
+                <li>Learner as <strong>active meaning-maker</strong></li>
+                <li>Teacher as facilitator</li>
+                <li>Collaboration, problem-solving</li>
+                <li>Vygotsky, Dewey</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="slide" id="slide-7">
+        <div class="slide-header">
+          <span>Introduction to Learning Theories</span>
+          <span>Slide 7 / 10</span>
+        </div>
+        <div class="slide-body">
+          <h2>Learning by Doing Together</h2>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; flex: 1;">
+            <div>
+              <h3>What This Means in Practice</h3>
+              <ul>
+                <li>Knowledge is built through dialogue &amp; collaboration</li>
+                <li><strong>Jigsaw activity:</strong> learning by teaching others</li>
+                <li><strong>Jamboard/Miro:</strong> co-constructing a shared framework</li>
+                <li><strong>Peer feedback:</strong> validating and refining understanding</li>
+              </ul>
+              <h3>Zone of Proximal Development</h3>
+              <p style="font-size: 13px; background: #F0FDF4; padding: 10px; border-radius: 6px;">What you can do <em>with support</em> today vs. what you can do <em>alone</em> — the gap is where learning happens.</p>
+            </div>
+            <div style="display: flex; align-items: center; justify-content: center;">
+              <blockquote style="border-left: 4px solid #10B981; padding: 16px 20px; background: #ECFDF5; border-radius: 0 10px 10px 0; max-width: 320px;">
+                <p style="font-size: 15px; font-style: italic; color: #065F46; margin: 0 0 10px;">"What a child can do in cooperation today, he can do alone tomorrow."</p>
+                <p style="font-size: 13px; color: #6B7280; margin: 0;">— Lev Vygotsky</p>
+              </blockquote>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="slide" id="slide-8">
+        <div class="slide-header">
+          <span>Introduction to Learning Theories</span>
+          <span>Slide 8 / 10</span>
+        </div>
+        <div class="slide-body">
+          <h2>AI as a Learning Tool — Handle with Care</h2>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; flex: 1;">
+            <div style="background: #D1FAE5; padding: 14px; border-radius: 8px;">
+              <h3 style="color: #065F46; margin-top: 0;">✅ Opportunities</h3>
+              <ul>
+                <li>Generate examples quickly</li>
+                <li>Scaffold explanations</li>
+                <li>Support brainstorming</li>
+                <li>Personalised practice</li>
+              </ul>
+            </div>
+            <div style="background: #FEE2E2; padding: 14px; border-radius: 8px;">
+              <h3 style="color: #991B1B; margin-top: 0;">⚠️ Risks</h3>
+              <ul>
+                <li>Hallucination</li>
+                <li>Oversimplification</li>
+                <li>Hidden bias</li>
+                <li>Over-reliance</li>
+                <li>Lack of disciplinary nuance</li>
+              </ul>
+            </div>
+          </div>
+          <div style="background: #FEF3C7; border-left: 4px solid #D97706; padding: 10px 16px; border-radius: 4px; margin-top: 12px;">
+            <p style="margin: 0; font-size: 13px;"><strong>Key message:</strong> AI should <em>supplement</em>, not replace, human reasoning. The "AI literacy" imperative: <strong>evaluate → modify → override</strong>.</p>
+          </div>
+        </div>
+      </div>
+      <div class="slide" id="slide-9">
+        <div class="slide-header">
+          <span>Introduction to Learning Theories</span>
+          <span>Slide 9 / 10</span>
+        </div>
+        <div class="slide-body">
+          <h2>Today's Learning Journey</h2>
+          <div style="display: flex; gap: 8px; flex: 1; align-items: stretch;">
+            <div style="flex: 1; background: #DBEAFE; border-radius: 8px; padding: 10px 12px; text-align: center;">
+              <p style="font-size: 11px; font-weight: 700; color: #1D4ED8; margin: 0 0 4px;">⏱ 15 min</p>
+              <p style="font-size: 13px; font-weight: 700; margin: 0 0 6px;">Introduction</p>
+              <p style="font-size: 11px; margin: 0; color: #374151;">Warm-up → AI scenario → Video clip</p>
+            </div>
+            <div style="display: flex; align-items: center; font-size: 18px; color: #94A3B8;">→</div>
+            <div style="flex: 1; background: #EDE9FE; border-radius: 8px; padding: 10px 12px; text-align: center;">
+              <p style="font-size: 11px; font-weight: 700; color: #6D28D9; margin: 0 0 4px;">⏱ 40 min</p>
+              <p style="font-size: 13px; font-weight: 700; margin: 0 0 6px;">Part A</p>
+              <p style="font-size: 11px; margin: 0; color: #374151;">Collaborative theory mapping + AI interrogation</p>
+            </div>
+            <div style="display: flex; align-items: center; font-size: 18px; color: #94A3B8;">→</div>
+            <div style="flex: 1; background: #D1FAE5; border-radius: 8px; padding: 10px 12px; text-align: center;">
+              <p style="font-size: 11px; font-weight: 700; color: #065F46; margin: 0 0 4px;">⏱ 40 min</p>
+              <p style="font-size: 13px; font-weight: 700; margin: 0 0 6px;">Part B</p>
+              <p style="font-size: 11px; margin: 0; color: #374151;">Peer-teaching jigsaw</p>
+            </div>
+            <div style="display: flex; align-items: center; font-size: 18px; color: #94A3B8;">→</div>
+            <div style="flex: 1; background: #FEF3C7; border-radius: 8px; padding: 10px 12px; text-align: center;">
+              <p style="font-size: 11px; font-weight: 700; color: #92400E; margin: 0 0 4px;">⏱ 30 min</p>
+              <p style="font-size: 13px; font-weight: 700; margin: 0 0 6px;">Part C</p>
+              <p style="font-size: 11px; margin: 0; color: #374151;">Gallery walk + AI reflection debrief</p>
+            </div>
+            <div style="display: flex; align-items: center; font-size: 18px; color: #94A3B8;">→</div>
+            <div style="flex: 1; background: #FEE2E2; border-radius: 8px; padding: 10px 12px; text-align: center;">
+              <p style="font-size: 11px; font-weight: 700; color: #991B1B; margin: 0 0 4px;">⏱ 15 min</p>
+              <p style="font-size: 13px; font-weight: 700; margin: 0 0 6px;">Closure</p>
+              <p style="font-size: 11px; margin: 0; color: #374151;">Mentimeter quiz + insights + preview</p>
+            </div>
+          </div>
+          <p style="font-size: 12px; color: #6B7280; margin-top: 10px; margin-bottom: 0;"><strong>Key materials:</strong> Jamboard / Miro, Mentimeter, ChatGPT / Claude</p>
+        </div>
+      </div>
+      <div class="slide" id="slide-10">
+        <div class="slide-header">
+          <span>Introduction to Learning Theories</span>
+          <span>Slide 10 / 10</span>
+        </div>
+        <div class="slide-body">
+          <h2>What We Learned Today</h2>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; flex: 1;">
+            <div>
+              <h3>Key Takeaways</h3>
+              <ol>
+                <li>Three major theories explain learning differently — know when to use each</li>
+                <li>Social constructivism: learning is strongest when built collaboratively</li>
+                <li>AI can generate plausible-sounding but inaccurate content — always interrogate</li>
+                <li>Critical AI use = evaluate, modify, document reasoning, reflect</li>
+                <li>Human judgment remains essential in educational contexts</li>
+              </ol>
+            </div>
+            <div>
+              <h3>Next Session</h3>
+              <p style="background: #EFF6FF; padding: 10px; border-radius: 6px; font-size: 13px;">📖 <strong>Pre-reading:</strong> Cognitive Load Theory — available on LMS</p>
+              <h3>Summative Assignment</h3>
+              <p style="background: #F5F3FF; padding: 10px; border-radius: 6px; font-size: 13px;">📝 <strong>AI Critique &amp; Revision</strong> — generate, evaluate, revise, and reflect on an AI explanation of a learning theory. Due date to be confirmed.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-controls">
+      <button id="btn-prev" class="btn btn-secondary">← Previous</button>
+      <span class="slide-counter" id="slide-counter">1 / 10</span>
+      <button id="btn-next" class="btn btn-primary">Next →</button>
+      <button id="btn-fs" class="btn btn-secondary">⛶ Fullscreen</button>
+      <button onclick="downloadPptx()" class="btn btn-accent">⬇ Download PPTX</button>
+    </div>
+  </div>
+  <script src="app.js" defer></script>
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const counter = document.getElementById('slide-counter');
+
+    function showSlide(n) {
+      slides.forEach(s => s.classList.remove('active'));
+      currentSlide = Math.max(0, Math.min(n, slides.length - 1));
+      slides[currentSlide].classList.add('active');
+      if (counter) counter.textContent = (currentSlide + 1) + ' / ' + slides.length;
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') showSlide(currentSlide + 1);
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') showSlide(currentSlide - 1);
+      if (e.key === 'Escape') document.exitFullscreen && document.exitFullscreen();
+    });
+
+    document.getElementById('btn-prev').addEventListener('click', () => showSlide(currentSlide - 1));
+    document.getElementById('btn-next').addEventListener('click', () => showSlide(currentSlide + 1));
+    document.getElementById('btn-fs').addEventListener('click', () => {
+      const stage = document.querySelector('.slide-stage');
+      if (!document.fullscreenElement) {
+        stage.requestFullscreen();
+        document.getElementById('btn-fs').textContent = '⛶ Exit Fullscreen';
+      } else {
+        document.exitFullscreen();
+        document.getElementById('btn-fs').textContent = '⛶ Fullscreen';
+      }
+    });
+
+    showSlide(0);
+
+    async function downloadPptx() {
+      const pptx = new PptxGenJS();
+      pptx.layout = 'LAYOUT_WIDE';
+      pptx.title = 'Introduction to Learning Theories';
+
+      function addHeader(slide, slideNum) {
+        slide.addShape(pptx.ShapeType.rect, {x:0, y:0, w:10, h:0.5, fill:{color:'2563EB'}});
+        slide.addText('Slide ' + slideNum + ' / 10  |  Introduction to Learning Theories', {x:0.1, y:0.05, w:9.8, h:0.4, fontSize:10, color:'FFFFFF', fontFace:'Arial'});
+      }
+
+      // Slide 1 - Title
+      const s1 = pptx.addSlide();
+      s1.background = {color:'EFF6FF'};
+      addHeader(s1, 1);
+      s1.addText('Introduction to Learning Theories', {x:1, y:1.2, w:8, h:1, fontSize:32, bold:true, color:'2563EB', fontFace:'Georgia', align:'center'});
+      s1.addText('Behaviourism, Cognitivism & Constructivism', {x:1, y:2.3, w:8, h:0.6, fontSize:18, bold:true, color:'7C3AED', fontFace:'Arial', align:'center'});
+      s1.addText('Educational Psychology | First-Year Undergraduates\n150 Minutes | 90 Students\nPedagogy: Social Constructivism + AI Integration', {x:2, y:3.2, w:6, h:1.5, fontSize:13, color:'475569', fontFace:'Arial', align:'center', lineSpacingMultiple:1.4});
+
+      // Slide 2 - ILOs
+      const s2 = pptx.addSlide();
+      s2.background = {color:'FFFFFF'};
+      addHeader(s2, 2);
+      s2.addText('What You Will Be Able To Do', {x:0.4, y:0.6, w:9.2, h:0.8, fontSize:26, bold:true, color:'2563EB', fontFace:'Georgia'});
+      const ilos = [
+        '1. Compare core assumptions of behaviourist, cognitivist, and constructivist theories',
+        '2. Apply social constructivist principles to design a peer-teaching segment',
+        '3. Critically evaluate an AI-generated explanation of a learning theory',
+        '4. Generate a revised, more accurate version of an AI explanation',
+        '5. Reflect on when human judgment should override AI suggestions'
+      ];
+      s2.addText(ilos.join('\n'), {x:0.4, y:1.5, w:9.2, h:2.8, fontSize:14, color:'0F172A', fontFace:'Arial', lineSpacingMultiple:1.6});
+      s2.addText('AI Literacy: ILOs 3–5 develop critical AI literacy skills.', {x:0.4, y:4.5, w:9.2, h:0.6, fontSize:12, color:'5B21B6', fontFace:'Arial', italic:true});
+
+      // Slide 3 - Behaviourism
+      const s3 = pptx.addSlide();
+      s3.background = {color:'FFFFFF'};
+      addHeader(s3, 3);
+      s3.addText('Behaviourism', {x:0.4, y:0.6, w:9.2, h:0.7, fontSize:26, bold:true, color:'2563EB', fontFace:'Georgia'});
+      s3.addText('Key Assumptions', {x:0.4, y:1.4, w:4.4, h:0.4, fontSize:14, bold:true, color:'7C3AED', fontFace:'Arial'});
+      s3.addText('• Observable behaviour only\n• Stimulus–response relationships\n• Reinforcement & punishment\n• Blank slate (tabula rasa)', {x:0.4, y:1.85, w:4.4, h:1.0, fontSize:12, color:'0F172A', fontFace:'Arial', lineSpacingMultiple:1.4});
+      s3.addText('Key Theorists: Watson, Pavlov, Skinner, Thorndike', {x:0.4, y:2.95, w:4.4, h:0.4, fontSize:12, color:'374151', fontFace:'Arial'});
+      s3.addText('Classroom Applications', {x:0.4, y:3.45, w:4.4, h:0.4, fontSize:14, bold:true, color:'7C3AED', fontFace:'Arial'});
+      s3.addText('• Drills & repetition\n• Reward systems\n• Immediate feedback\n• Programmed instruction', {x:0.4, y:3.9, w:4.4, h:1.0, fontSize:12, color:'0F172A', fontFace:'Arial', lineSpacingMultiple:1.4});
+      s3.addShape(pptx.ShapeType.rect, {x:5.1, y:1.4, w:4.5, h:1.5, fill:{color:'DBEAFE'}, line:{color:'DBEAFE'}});
+      s3.addText("Example: Skinner's operant conditioning — positive reinforcement in homework systems.", {x:5.2, y:1.45, w:4.3, h:1.4, fontSize:12, color:'1D4ED8', fontFace:'Arial', lineSpacingMultiple:1.4});
+      s3.addShape(pptx.ShapeType.rect, {x:5.1, y:3.1, w:4.5, h:1.7, fill:{color:'F8FAFC'}, line:{color:'DBEAFE'}});
+      s3.addText('"Give me a dozen healthy infants... I\'ll guarantee to take any one at random and train him to become any type of specialist..." — J.B. Watson', {x:5.2, y:3.15, w:4.3, h:1.6, fontSize:11, color:'374151', fontFace:'Arial', italic:true, lineSpacingMultiple:1.4});
+
+      // Slide 4 - Cognitivism
+      const s4 = pptx.addSlide();
+      s4.background = {color:'FFFFFF'};
+      addHeader(s4, 4);
+      s4.addText('Cognitivism', {x:0.4, y:0.6, w:9.2, h:0.7, fontSize:26, bold:true, color:'2563EB', fontFace:'Georgia'});
+      s4.addText('Key Assumptions', {x:0.4, y:1.4, w:4.4, h:0.4, fontSize:14, bold:true, color:'7C3AED', fontFace:'Arial'});
+      s4.addText('• Mental processes matter\n• Information processing model\n• Schema theory\n• Cognitive load limits learning', {x:0.4, y:1.85, w:4.4, h:1.0, fontSize:12, color:'0F172A', fontFace:'Arial', lineSpacingMultiple:1.4});
+      s4.addText('Key Theorists: Piaget (early), Bruner, Ausubel, Sweller, Gagné', {x:0.4, y:2.95, w:4.4, h:0.4, fontSize:12, color:'374151', fontFace:'Arial'});
+      s4.addText('Classroom Applications', {x:0.4, y:3.45, w:4.4, h:0.4, fontSize:14, bold:true, color:'7C3AED', fontFace:'Arial'});
+      s4.addText('• Advance organisers\n• Mnemonics & chunking\n• Worked examples\n• Graphic organisers', {x:0.4, y:3.9, w:4.4, h:1.0, fontSize:12, color:'0F172A', fontFace:'Arial', lineSpacingMultiple:1.4});
+      s4.addShape(pptx.ShapeType.rect, {x:5.1, y:1.4, w:4.5, h:1.5, fill:{color:'EDE9FE'}, line:{color:'EDE9FE'}});
+      s4.addText("Example: Ausubel's meaningful learning — connect new concepts to existing schema via advance organisers.", {x:5.2, y:1.45, w:4.3, h:1.4, fontSize:12, color:'5B21B6', fontFace:'Arial', lineSpacingMultiple:1.4});
+      s4.addShape(pptx.ShapeType.rect, {x:5.1, y:3.1, w:4.5, h:1.7, fill:{color:'F0FDF4'}, line:{color:'D1FAE5'}});
+      s4.addText('Contrast with Behaviourism: Internal mental states ARE valid objects of study — we can investigate memory, attention, and reasoning.', {x:5.2, y:3.15, w:4.3, h:1.6, fontSize:12, color:'065F46', fontFace:'Arial', lineSpacingMultiple:1.4});
+
+      // Slide 5 - Constructivism
+      const s5 = pptx.addSlide();
+      s5.background = {color:'FFFFFF'};
+      addHeader(s5, 5);
+      s5.addText('Constructivism', {x:0.4, y:0.6, w:9.2, h:0.7, fontSize:26, bold:true, color:'2563EB', fontFace:'Georgia'});
+      s5.addText('Key Assumptions', {x:0.4, y:1.4, w:4.4, h:0.4, fontSize:14, bold:true, color:'7C3AED', fontFace:'Arial'});
+      s5.addText('• Learners actively construct knowledge\n• Prior knowledge is central\n• Social interaction is key (Vygotsky)\n• Learning is contextual & situated', {x:0.4, y:1.85, w:4.4, h:1.0, fontSize:12, color:'0F172A', fontFace:'Arial', lineSpacingMultiple:1.4});
+      s5.addText('Key Theorists: Piaget, Vygotsky, Bruner, Dewey', {x:0.4, y:2.95, w:4.4, h:0.4, fontSize:12, color:'374151', fontFace:'Arial'});
+      s5.addText('Classroom Applications', {x:0.4, y:3.45, w:4.4, h:0.4, fontSize:14, bold:true, color:'7C3AED', fontFace:'Arial'});
+      s5.addText('• Problem-based learning\n• Collaborative tasks\n• Authentic activities\n• ZPD scaffolding', {x:0.4, y:3.9, w:4.4, h:1.0, fontSize:12, color:'0F172A', fontFace:'Arial', lineSpacingMultiple:1.4});
+      s5.addShape(pptx.ShapeType.rect, {x:5.1, y:1.4, w:4.5, h:1.7, fill:{color:'D1FAE5'}, line:{color:'D1FAE5'}});
+      s5.addText("Social Constructivism (Vygotsky): Knowledge is co-constructed through dialogue. Learning happens first between people, then within.", {x:5.2, y:1.45, w:4.3, h:1.6, fontSize:12, color:'065F46', fontFace:'Arial', lineSpacingMultiple:1.4});
+      s5.addShape(pptx.ShapeType.rect, {x:5.1, y:3.2, w:4.5, h:1.6, fill:{color:'FEF3C7'}, line:{color:'FDE68A'}});
+      s5.addText('Note: Constructivism DOES build on prior knowledge — counter to a common AI-generated misconception examined in class.', {x:5.2, y:3.25, w:4.3, h:1.5, fontSize:12, color:'92400E', fontFace:'Arial', lineSpacingMultiple:1.4});
+
+      // Slide 6 - Comparison
+      const s6 = pptx.addSlide();
+      s6.background = {color:'FFFFFF'};
+      addHeader(s6, 6);
+      s6.addText('Three Theories at a Glance', {x:0.4, y:0.6, w:9.2, h:0.7, fontSize:26, bold:true, color:'2563EB', fontFace:'Georgia'});
+      s6.addShape(pptx.ShapeType.rect, {x:0.3, y:1.5, w:3.0, h:3.6, fill:{color:'DBEAFE'}, line:{color:'DBEAFE'}});
+      s6.addText('Behaviourism', {x:0.4, y:1.55, w:2.8, h:0.45, fontSize:14, bold:true, color:'1D4ED8', fontFace:'Arial'});
+      s6.addText('• Learner as passive recipient\n• Teacher as authority\n• Drill, reward, test\n• Watson, Skinner', {x:0.4, y:2.05, w:2.8, h:2.9, fontSize:13, color:'0F172A', fontFace:'Arial', lineSpacingMultiple:1.6});
+      s6.addShape(pptx.ShapeType.rect, {x:3.5, y:1.5, w:3.0, h:3.6, fill:{color:'EDE9FE'}, line:{color:'EDE9FE'}});
+      s6.addText('Cognitivism', {x:3.6, y:1.55, w:2.8, h:0.45, fontSize:14, bold:true, color:'6D28D9', fontFace:'Arial'});
+      s6.addText('• Learner as information processor\n• Teacher as organiser\n• Schema building, chunking\n• Piaget, Ausubel', {x:3.6, y:2.05, w:2.8, h:2.9, fontSize:13, color:'0F172A', fontFace:'Arial', lineSpacingMultiple:1.6});
+      s6.addShape(pptx.ShapeType.rect, {x:6.7, y:1.5, w:3.0, h:3.6, fill:{color:'D1FAE5'}, line:{color:'D1FAE5'}});
+      s6.addText('Constructivism', {x:6.8, y:1.55, w:2.8, h:0.45, fontSize:14, bold:true, color:'065F46', fontFace:'Arial'});
+      s6.addText('• Learner as active meaning-maker\n• Teacher as facilitator\n• Collaboration, problem-solving\n• Vygotsky, Dewey', {x:6.8, y:2.05, w:2.8, h:2.9, fontSize:13, color:'0F172A', fontFace:'Arial', lineSpacingMultiple:1.6});
+
+      // Slide 7 - Social Constructivism
+      const s7 = pptx.addSlide();
+      s7.background = {color:'FFFFFF'};
+      addHeader(s7, 7);
+      s7.addText('Learning by Doing Together', {x:0.4, y:0.6, w:9.2, h:0.7, fontSize:26, bold:true, color:'2563EB', fontFace:'Georgia'});
+      s7.addText('What This Means in Practice', {x:0.4, y:1.4, w:4.4, h:0.4, fontSize:14, bold:true, color:'7C3AED', fontFace:'Arial'});
+      s7.addText('• Knowledge is built through dialogue & collaboration\n• Jigsaw activity: learning by teaching others\n• Jamboard/Miro: co-constructing a shared framework\n• Peer feedback: validating and refining understanding', {x:0.4, y:1.85, w:4.4, h:1.6, fontSize:12, color:'0F172A', fontFace:'Arial', lineSpacingMultiple:1.5});
+      s7.addText('Zone of Proximal Development', {x:0.4, y:3.55, w:4.4, h:0.4, fontSize:14, bold:true, color:'7C3AED', fontFace:'Arial'});
+      s7.addShape(pptx.ShapeType.rect, {x:0.4, y:4.0, w:4.4, h:1.3, fill:{color:'F0FDF4'}, line:{color:'D1FAE5'}});
+      s7.addText('What you can do with support today vs. alone — the gap is where learning happens.', {x:0.5, y:4.05, w:4.2, h:1.2, fontSize:12, color:'065F46', fontFace:'Arial', lineSpacingMultiple:1.4});
+      s7.addShape(pptx.ShapeType.rect, {x:5.2, y:1.4, w:4.4, h:3.9, fill:{color:'ECFDF5'}, line:{color:'10B981'}});
+      s7.addText('"What a child can do in cooperation today, he can do alone tomorrow."\n\n— Lev Vygotsky', {x:5.4, y:1.9, w:4.0, h:3.2, fontSize:16, color:'065F46', fontFace:'Georgia', italic:true, align:'center', lineSpacingMultiple:1.6});
+
+      // Slide 8 - AI
+      const s8 = pptx.addSlide();
+      s8.background = {color:'FFFFFF'};
+      addHeader(s8, 8);
+      s8.addText('AI as a Learning Tool — Handle with Care', {x:0.4, y:0.6, w:9.2, h:0.7, fontSize:24, bold:true, color:'2563EB', fontFace:'Georgia'});
+      s8.addShape(pptx.ShapeType.rect, {x:0.3, y:1.4, w:4.5, h:2.8, fill:{color:'D1FAE5'}, line:{color:'D1FAE5'}});
+      s8.addText('Opportunities', {x:0.4, y:1.45, w:4.3, h:0.45, fontSize:14, bold:true, color:'065F46', fontFace:'Arial'});
+      s8.addText('• Generate examples quickly\n• Scaffold explanations\n• Support brainstorming\n• Personalised practice', {x:0.4, y:1.95, w:4.3, h:2.2, fontSize:13, color:'0F172A', fontFace:'Arial', lineSpacingMultiple:1.5});
+      s8.addShape(pptx.ShapeType.rect, {x:5.2, y:1.4, w:4.5, h:2.8, fill:{color:'FEE2E2'}, line:{color:'FEE2E2'}});
+      s8.addText('Risks', {x:5.3, y:1.45, w:4.3, h:0.45, fontSize:14, bold:true, color:'991B1B', fontFace:'Arial'});
+      s8.addText('• Hallucination\n• Oversimplification\n• Hidden bias\n• Over-reliance\n• Lack of disciplinary nuance', {x:5.3, y:1.95, w:4.3, h:2.2, fontSize:13, color:'0F172A', fontFace:'Arial', lineSpacingMultiple:1.5});
+      s8.addShape(pptx.ShapeType.rect, {x:0.3, y:4.4, w:9.4, h:0.9, fill:{color:'FEF3C7'}, line:{color:'FDE68A'}});
+      s8.addText('Key message: AI should supplement, not replace, human reasoning. The "AI literacy" imperative: evaluate → modify → override.', {x:0.4, y:4.45, w:9.2, h:0.8, fontSize:12, color:'92400E', fontFace:'Arial', lineSpacingMultiple:1.3});
+
+      // Slide 9 - Activity Overview
+      const s9 = pptx.addSlide();
+      s9.background = {color:'FFFFFF'};
+      addHeader(s9, 9);
+      s9.addText("Today's Learning Journey", {x:0.4, y:0.6, w:9.2, h:0.7, fontSize:26, bold:true, color:'2563EB', fontFace:'Georgia'});
+      const stages = [
+        {x:0.2, color:'DBEAFE', tc:'1D4ED8', time:'15 min', title:'Introduction', desc:'Warm-up → AI scenario → Video clip'},
+        {x:2.2, color:'EDE9FE', tc:'6D28D9', time:'40 min', title:'Part A', desc:'Collaborative theory mapping + AI interrogation'},
+        {x:4.2, color:'D1FAE5', tc:'065F46', time:'40 min', title:'Part B', desc:'Peer-teaching jigsaw'},
+        {x:6.2, color:'FEF3C7', tc:'92400E', time:'30 min', title:'Part C', desc:'Gallery walk + AI reflection debrief'},
+        {x:8.2, color:'FEE2E2', tc:'991B1B', time:'15 min', title:'Closure', desc:'Mentimeter quiz + insights + preview'}
+      ];
+      stages.forEach(st => {
+        s9.addShape(pptx.ShapeType.rect, {x:st.x, y:1.5, w:1.8, h:3.5, fill:{color:st.color}, line:{color:st.color}});
+        s9.addText(st.time, {x:st.x+0.05, y:1.55, w:1.7, h:0.45, fontSize:11, bold:true, color:st.tc, fontFace:'Arial', align:'center'});
+        s9.addText(st.title, {x:st.x+0.05, y:2.05, w:1.7, h:0.45, fontSize:13, bold:true, color:'0F172A', fontFace:'Arial', align:'center'});
+        s9.addText(st.desc, {x:st.x+0.05, y:2.6, w:1.7, h:2.3, fontSize:11, color:'374151', fontFace:'Arial', align:'center', lineSpacingMultiple:1.4});
+      });
+      s9.addText('Key materials: Jamboard / Miro, Mentimeter, ChatGPT / Claude', {x:0.4, y:5.1, w:9.2, h:0.4, fontSize:11, color:'6B7280', fontFace:'Arial', italic:true});
+
+      // Slide 10 - Summary
+      const s10 = pptx.addSlide();
+      s10.background = {color:'FFFFFF'};
+      addHeader(s10, 10);
+      s10.addText('What We Learned Today', {x:0.4, y:0.6, w:9.2, h:0.7, fontSize:26, bold:true, color:'2563EB', fontFace:'Georgia'});
+      s10.addText('Key Takeaways', {x:0.4, y:1.4, w:4.8, h:0.45, fontSize:14, bold:true, color:'7C3AED', fontFace:'Arial'});
+      s10.addText('1. Three major theories explain learning differently — know when to use each\n2. Social constructivism: learning is strongest when built collaboratively\n3. AI can generate plausible-sounding but inaccurate content — always interrogate\n4. Critical AI use = evaluate, modify, document reasoning, reflect\n5. Human judgment remains essential in educational contexts', {x:0.4, y:1.9, w:4.8, h:2.8, fontSize:12, color:'0F172A', fontFace:'Arial', lineSpacingMultiple:1.6});
+      s10.addShape(pptx.ShapeType.rect, {x:5.5, y:1.4, w:4.2, h:1.5, fill:{color:'EFF6FF'}, line:{color:'DBEAFE'}});
+      s10.addText('Next Session', {x:5.6, y:1.45, w:4.0, h:0.4, fontSize:13, bold:true, color:'1D4ED8', fontFace:'Arial'});
+      s10.addText('Pre-reading: Cognitive Load Theory — available on LMS', {x:5.6, y:1.9, w:4.0, h:0.9, fontSize:12, color:'374151', fontFace:'Arial', lineSpacingMultiple:1.3});
+      s10.addShape(pptx.ShapeType.rect, {x:5.5, y:3.1, w:4.2, h:2.0, fill:{color:'F5F3FF'}, line:{color:'EDE9FE'}});
+      s10.addText('Summative Assignment', {x:5.6, y:3.15, w:4.0, h:0.4, fontSize:13, bold:true, color:'5B21B6', fontFace:'Arial'});
+      s10.addText('AI Critique & Revision — generate, evaluate, revise, and reflect on an AI explanation of a learning theory. Due date TBC.', {x:5.6, y:3.6, w:4.0, h:1.4, fontSize:12, color:'374151', fontFace:'Arial', lineSpacingMultiple:1.3});
+
+      pptx.writeFile({fileName: 'LearningTheories_Slides.pptx'});
+    }
+  </script>
+</body>
+</html>
