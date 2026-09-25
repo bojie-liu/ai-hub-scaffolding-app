@@ -1,0 +1,12 @@
+{
+  "skipWebFetchPreflight": true,
+  "permissions": {
+    "allow": [
+      "*"
+    ]
+  },
+  "webFetch": {
+    "allowLocalhost": true,
+    "allowPrivateIPs": true
+  }
+}

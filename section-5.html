@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Constructive Alignment Matrix – Introduction to Learning Theories</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <nav class="site-nav">
+    <div class="nav-brand">
+      <a href="index.html">Learning Theories</a>
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="section-1.html">ILOs</a></li>
+      <li><a href="section-2.html">Pre-Class</a></li>
+      <li><a href="section-3.html">Activities</a></li>
+      <li><a href="section-4.html">Assessment</a></li>
+      <li><a href="section-5.html">Alignment</a></li>
+      <li><a href="section-6.html">Resources</a></li>
+      <li><a href="section-7.html">Differentiation</a></li>
+      <li><a href="section-8.html">Reflection</a></li>
+      <li><a href="slides.html">Slides</a></li>
+      <li><a href="assessment.html">Quiz</a></li>
+      <li><a href="resources.html">Library</a></li>
+    </ul>
+    <div class="role-toggle">
+      <button class="role-btn teacher" data-role="teacher">Teacher</button>
+      <button class="role-btn student" data-role="student">Student</button>
+    </div>
+  </nav>
+  <div id="role-banner" class="role-banner student">📚 Student View — focus on activities and learning tasks</div>
+  <div class="container">
+    <div class="page-header">
+      <h1>Constructive Alignment Matrix</h1>
+      <p>How ILOs, teaching activities, and assessments connect across this lesson.</p>
+    </div>
+    <div class="callout callout-info">
+      <strong>What is Constructive Alignment?</strong>
+      Constructive alignment ensures that ILOs, teaching activities, and assessments are coherently linked — each element supports and is supported by the others, creating a unified learning experience.
+    </div>
+    <div class="section-block">
+      <h2>Alignment Table</h2>
+      <div class="student-only">
+        <div style="margin-bottom:1rem; display:flex; gap:.5rem; flex-wrap:wrap; align-items:center;">
+          <span style="font-weight:600; font-size:.9rem;">Filter by focus:</span>
+          <button class="btn btn-sm btn-outline" id="filter-all" onclick="filterRows('all')">All</button>
+          <button class="btn btn-sm" id="filter-sc" onclick="filterRows('sc')" style="background:#7c3aed;color:#fff;border:none;padding:.35rem .8rem;border-radius:.4rem;cursor:pointer;">Social Constructivism</button>
+          <button class="btn btn-sm" id="filter-ai" onclick="filterRows('ai')" style="background:#0891b2;color:#fff;border:none;padding:.35rem .8rem;border-radius:.4rem;cursor:pointer;">AI Literacy</button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table id="alignment-table">
+          <thead>
+            <tr>
+              <th>ILO</th>
+              <th>Teaching Activity</th>
+              <th>Assessment Method</th>
+              <th>Pedagogy Link</th>
+              <th>AI Integration Link</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-focus="sc ai">
+              <td>Compare theories collaboratively</td>
+              <td>Part A: Collaborative theory mapping with AI-generated content as discussion starter</td>
+              <td>Instructor observation of group charts &amp; discussion quality; exit ticket on AI limitations</td>
+              <td><span class="badge badge-purple">Social Constructivism</span> Co-construction of comparative framework</td>
+              <td><span class="badge badge-ai">AI Literacy</span> AI prompts used to generate content, then critically evaluated</td>
+            </tr>
+            <tr data-focus="sc ai">
+              <td>Apply social constructivist peer teaching</td>
+              <td>Part B: Jigsaw — students design and deliver a peer-teaching segment</td>
+              <td>Peer feedback during jigsaw; instructor observation of teaching quality</td>
+              <td><span class="badge badge-purple">Social Constructivism</span> Learning by teaching (ZPD, scaffolding)</td>
+              <td><span class="badge badge-ai">AI (Optional)</span> AI support for analogy generation — groups evaluate suggestions</td>
+            </tr>
+            <tr data-focus="ai">
+              <td>Critically evaluate an AI-generated explanation</td>
+              <td>Part A: Group critique of AI-generated theory definition</td>
+              <td>Exit ticket: name one AI limitation; summative assignment AI critique section</td>
+              <td>—</td>
+              <td><span class="badge badge-ai">AI Literacy</span> Evaluation of accuracy, bias, and gaps</td>
+            </tr>
+            <tr data-focus="ai">
+              <td>Generate a revised AI explanation</td>
+              <td>Part A: Groups modify AI output; summative assignment revision task</td>
+              <td>Summative assignment: revised AI explanation + reflection on changes</td>
+              <td>—</td>
+              <td><span class="badge badge-ai">AI Literacy</span> Independent judgment, documentation of modifications</td>
+            </tr>
+            <tr data-focus="sc ai">
+              <td>Reflect on human judgment vs. AI</td>
+              <td>Synthesis discussion; summative assignment reflection section</td>
+              <td>Reflection section of summative assignment</td>
+              <td><span class="badge badge-purple">Social Constructivism</span> Metacognitive dialogue about knowledge sources</td>
+              <td><span class="badge badge-ai">AI Literacy</span> Articulates when and why human judgment overrides AI</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div><!-- /section-block -->
+
+    <!-- Visual Legend -->
+    <div class="section-block">
+      <h2>Colour Legend</h2>
+      <div style="display:flex; gap:1rem; flex-wrap:wrap; align-items:center;">
+        <span class="badge badge-purple" style="font-size:.9rem; padding:.4rem .9rem;">Social Constructivism</span>
+        <span class="badge badge-ai" style="font-size:.9rem; padding:.4rem .9rem;">AI Literacy</span>
+        <span class="badge" style="font-size:.9rem; padding:.4rem .9rem; background:linear-gradient(90deg,#7c3aed,#0891b2); color:#fff; border:none;">Both (Social Constructivism + AI Literacy)</span>
+      </div>
+      <p style="margin-top:.75rem; font-size:.9rem; color:var(--color-text-muted, #6b7280);">Rows tagged with both colours indicate moments where social learning and AI evaluation coincide most strongly.</p>
+    </div>
+
+    <!-- Teacher Notes -->
+    <div class="card teacher-only" style="margin-top:1.5rem;">
+      <h3>📌 Using This Matrix for Planning <span class="badge badge-teacher">Teacher Only</span></h3>
+      <p>This matrix is a living planning tool. When adapting this lesson for a new cohort:</p>
+      <ul>
+        <li><strong>Start from ILOs:</strong> if you add or modify an ILO, trace its row to ensure an activity and assessment match.</li>
+        <li><strong>Check for orphaned activities:</strong> any activity without a clear ILO link should be cut or repurposed.</li>
+        <li><strong>AI integration column:</strong> if AI tools change (e.g., new LLM), update the AI Integration column to reflect new capabilities or risks.</li>
+        <li><strong>Use the filter (student view)</strong> to preview what students see when focusing on a specific strand.</li>
+      </ul>
+    </div>
+  </div><!-- /.container -->
+
+  <script>
+    function filterRows(focus) {
+      const rows = document.querySelectorAll('#alignment-table tbody tr');
+      rows.forEach(function(row) {
+        if (focus === 'all') {
+          row.style.display = '';
+        } else {
+          const rowFocus = row.getAttribute('data-focus') || '';
+          row.style.display = rowFocus.includes(focus) ? '' : 'none';
+        }
+      });
+      // Update active button state
+      document.querySelectorAll('#filter-all, #filter-sc, #filter-ai').forEach(function(btn) {
+        btn.style.opacity = '0.6';
+      });
+      var activeId = focus === 'all' ? 'filter-all' : focus === 'sc' ? 'filter-sc' : 'filter-ai';
+      var activeBtn = document.getElementById(activeId);
+      if (activeBtn) activeBtn.style.opacity = '1';
+    }
+  </script>
+  <script src="app.js" defer></script>
+</body>
+</html>

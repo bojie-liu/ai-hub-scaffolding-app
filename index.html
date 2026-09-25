@@ -3,14 +3,149 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Basic HTML Project</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Introduction to Learning Theories — Lesson Plan</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <nav class="site-nav">
+    <div class="nav-brand">📘 Learning Theories</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="section-1.html">ILOs</a></li>
+      <li><a href="section-2.html">Pre-Class</a></li>
+      <li><a href="section-3.html">Activities</a></li>
+      <li><a href="section-4.html">Assessment</a></li>
+      <li><a href="section-5.html">Alignment</a></li>
+      <li><a href="section-6.html">Resources</a></li>
+      <li><a href="section-7.html">Differentiation</a></li>
+      <li><a href="section-8.html">Reflection</a></li>
+      <li><a href="slides.html">Slides</a></li>
+      <li><a href="assessment.html">Quiz</a></li>
+      <li><a href="resources.html">Library</a></li>
+    </ul>
+    <div class="role-toggle">
+      <button class="role-btn teacher" data-role="teacher">Teacher</button>
+      <button class="role-btn student" data-role="student">Student</button>
+    </div>
+  </nav>
+
+  <div id="role-banner" class="role-banner student">📚 Student View — focus on activities and learning tasks</div>
+
   <div class="container">
-    <h1>Hello World!</h1>
-    <p>Welcome to your new project.</p>
-  </div>
-  <script src="script.js"></script>
+
+    <div class="hero-card">
+      <div class="badges">
+        <span class="badge badge-primary">150 Minutes</span>
+        <span class="badge badge-primary">90 Students</span>
+        <span class="badge badge-success">Social Constructivism</span>
+        <span class="badge badge-ai">AI-Enhanced</span>
+        <span class="badge badge-purple">HK Curriculum</span>
+      </div>
+      <h1>Introduction to Learning Theories</h1>
+      <p><strong>Course:</strong> Educational Psychology &nbsp;&bull;&nbsp; <strong>Level:</strong> First-year Undergraduates &nbsp;&bull;&nbsp; <strong>Language:</strong> English</p>
+      <p><strong>Pedagogy:</strong> Social Constructivism + AI Integration &nbsp;&bull;&nbsp; <strong>Duration:</strong> 150 min &nbsp;&bull;&nbsp; <strong>Class size:</strong> 90 students</p>
+    </div>
+
+    <!-- Progress Tracker -->
+    <div class="section-block">
+      <h2>Your Progress</h2>
+      <p>Track which sections you have reviewed. Progress is saved automatically.</p>
+      <div style="background:#e9ecef;border-radius:8px;height:18px;overflow:hidden;margin-bottom:0.4rem;">
+        <div id="progress-bar" style="width:0%;height:100%;background:var(--color-primary,#4a6fa5);border-radius:8px;transition:width 0.4s;"></div>
+      </div>
+      <p id="progress-label" style="font-size:0.85rem;color:#666;">0 of 12 sections visited</p>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="section-block">
+      <h2>Course Map</h2>
+      <div class="toc-grid">
+        <a href="index.html" class="toc-card">
+          <div class="toc-num">Home</div>
+          <div class="toc-title">Overview &amp; Navigation</div>
+          <div class="toc-desc">Course details, progress tracker, and links to all sections</div>
+        </a>
+        <a href="section-1.html" class="toc-card">
+          <div class="toc-num">Section 1</div>
+          <div class="toc-title">ILOs</div>
+          <div class="toc-desc">5 learning outcomes with Bloom's verbs and AI literacy goals</div>
+        </a>
+        <a href="section-2.html" class="toc-card">
+          <div class="toc-num">Section 2</div>
+          <div class="toc-title">Pre-Class Prep</div>
+          <div class="toc-desc">Optional reading and student preparation guidance</div>
+        </a>
+        <a href="section-3.html" class="toc-card">
+          <div class="toc-num">Section 3</div>
+          <div class="toc-title">Teaching Activities</div>
+          <div class="toc-desc">Introduction → Development (Parts A/B/C) → Closure — full 150 min</div>
+        </a>
+        <a href="section-4.html" class="toc-card">
+          <div class="toc-num">Section 4</div>
+          <div class="toc-title">Assessment</div>
+          <div class="toc-desc">Formative + summative "AI Critique &amp; Revision" assignment</div>
+        </a>
+        <a href="section-5.html" class="toc-card">
+          <div class="toc-num">Section 5</div>
+          <div class="toc-title">Alignment Matrix</div>
+          <div class="toc-desc">ILO × Activity × Assessment constructive alignment table</div>
+        </a>
+
+        <a href="section-6.html" class="toc-card">
+          <div class="toc-num">Section 6</div>
+          <div class="toc-title">Resources &amp; Technology</div>
+          <div class="toc-desc">LMS tools, AI tools, handouts, and external platforms</div>
+        </a>
+        <a href="section-7.html" class="toc-card">
+          <div class="toc-num">Section 7</div>
+          <div class="toc-title">Differentiation</div>
+          <div class="toc-desc">Inclusivity, scaffolding, and AI-supported differentiation strategies</div>
+        </a>
+        <a href="section-8.html" class="toc-card">
+          <div class="toc-num">Section 8</div>
+          <div class="toc-title">Reflection</div>
+          <div class="toc-desc">Success indicators, AI feedback survey, and modification strategies</div>
+        </a>
+        <a href="slides.html" class="toc-card">
+          <div class="toc-num">Slides</div>
+          <div class="toc-title">Presentation</div>
+          <div class="toc-desc">10-slide academic presentation with PPTX download</div>
+        </a>
+        <a href="assessment.html" class="toc-card">
+          <div class="toc-num">Quiz</div>
+          <div class="toc-title">Interactive Quiz</div>
+          <div class="toc-desc">Concept-check questions with instant feedback</div>
+        </a>
+        <a href="resources.html" class="toc-card">
+          <div class="toc-num">Library</div>
+          <div class="toc-title">Resource Library</div>
+          <div class="toc-desc">Key readings, AI literacy guide, and downloadable templates</div>
+        </a>
+      </div><!-- /toc-grid -->
+    </div><!-- /section-block: TOC -->
+
+    <!-- Course Overview Card -->
+    <div class="section-block">
+      <h2>Course Overview</h2>
+      <div class="card">
+        <h3>What students will learn in this 150-minute lesson</h3>
+        <ol>
+          <li><strong>ILO 1 — Compare:</strong> Contrast the key assumptions of Behaviourism, Cognitivism, and Social Constructivism.</li>
+          <li><strong>ILO 2 — Apply:</strong> Apply a learning theory to a real-world teaching scenario with justification.</li>
+          <li><strong>ILO 3 — Critically Evaluate:</strong> Evaluate AI-generated explanations of learning theories and identify inaccuracies.</li>
+          <li><strong>ILO 4 — Generate:</strong> Create an AI-assisted analogy for a learning theory and assess its pedagogical accuracy.</li>
+          <li><strong>ILO 5 — Reflect:</strong> Reflect on personal AI use and articulate one change to future practices.</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- AI Integration Note -->
+    <div class="ai-callout">
+      <span class="ai-label">🤖 AI Integration in This Lesson</span>
+      <p><strong>ILOs 3, 4, and 5 specifically target AI literacy.</strong> Students will interrogate a flawed AI-generated definition, use AI to scaffold an analogy (then critique it), and reflect metacognitively on their relationship with AI tools. This lesson treats AI as an object of study — not merely a productivity tool — building the critical AI fluency expected of 21st-century educators.</p>
+    </div>
+
+  </div><!-- /container -->
+  <script src="app.js" defer></script>
 </body>
 </html>

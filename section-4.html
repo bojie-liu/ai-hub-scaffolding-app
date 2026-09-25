@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Assessment Methods – Introduction to Learning Theories</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <nav class="site-nav">
+    <div class="nav-brand">
+      <a href="index.html">Learning Theories</a>
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="section-1.html">ILOs</a></li>
+      <li><a href="section-2.html">Pre-Class</a></li>
+      <li><a href="section-3.html">Activities</a></li>
+      <li><a href="section-4.html">Assessment</a></li>
+      <li><a href="section-5.html">Alignment</a></li>
+      <li><a href="section-6.html">Resources</a></li>
+      <li><a href="section-7.html">Differentiation</a></li>
+      <li><a href="section-8.html">Reflection</a></li>
+      <li><a href="slides.html">Slides</a></li>
+      <li><a href="assessment.html">Quiz</a></li>
+      <li><a href="resources.html">Library</a></li>
+    </ul>
+    <div class="role-toggle">
+      <button class="role-btn teacher" data-role="teacher">Teacher</button>
+      <button class="role-btn student" data-role="student">Student</button>
+    </div>
+  </nav>
+  <div id="role-banner" class="role-banner student">📚 Student View — focus on activities and learning tasks</div>
+  <div class="container">
+    <div class="page-header">
+      <h1>Assessment Methods</h1>
+      <p>Formative and summative assessments aligned with Social Constructivism and AI literacy goals.</p>
+    </div>
+    <div class="section-block">
+      <h2>Formative Assessment</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Method</th>
+              <th>Pedagogy Link</th>
+              <th>AI Integration</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Observation of group collaboration</td>
+              <td><span class="badge badge-purple">Social Constructivism</span> Focus on co-construction of knowledge</td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td>Real-time peer feedback during jigsaw</td>
+              <td><span class="badge badge-purple">Social Constructivism</span> Peer assessment as a learning process</td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td>AI criticality exit ticket</td>
+              <td>—</td>
+              <td><span class="badge badge-ai">AI-Integrated</span> Demonstrates ability to evaluate AI limitations</td>
+            </tr>
+            <tr>
+              <td>Instructor review of AI prompt documentation</td>
+              <td>—</td>
+              <td><span class="badge badge-ai">AI-Integrated</span> Documents critical engagement with AI</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Observation Rubric (teacher-only) -->
+      <div class="card teacher-only" style="margin-top:1.5rem;">
+        <h3>📋 Dialogue Observation Rubric <span class="badge badge-teacher">Teacher Only</span></h3>
+        <p>Use this rubric during group work to assess the quality of collaborative dialogue.</p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Quality Indicator</th><th>1 — Minimal</th><th>2 — Some</th><th>3 — Clear</th><th>4 — Exemplary</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Evidence of co-construction</td>
+                <td>One student dominates; others passive</td>
+                <td>Some back-and-forth but uneven</td>
+                <td>Multiple students contributing ideas</td>
+                <td>Ideas clearly build on each other; negotiated meaning evident</td>
+              </tr>
+              <tr>
+                <td>Use of academic language</td>
+                <td>Vague or colloquial throughout</td>
+                <td>Some correct terminology</td>
+                <td>Mostly accurate use of theory terms</td>
+                <td>Precise, contextual use of theory vocabulary</td>
+              </tr>
+              <tr>
+                <td>Critical engagement with AI output</td>
+                <td>AI output accepted without question</td>
+                <td>Some hesitation but no challenge</td>
+                <td>At least one error or gap identified</td>
+                <td>Multiple errors identified with evidence from readings</td>
+              </tr>
+              <tr>
+                <td>Peer questioning</td>
+                <td>No questions asked between peers</td>
+                <td>1–2 clarifying questions</td>
+                <td>Regular probing questions</td>
+                <td>Questions that deepen reasoning and invite justification</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div><!-- /section-block -->
+
+    <!-- AI Criticality Exit Ticket -->
+    <div class="section-block">
+      <h2>AI Criticality Exit Ticket</h2>
+      <div class="callout callout-info">
+        Complete this at the end of the session. Your responses are saved locally in your browser and are not submitted anywhere.
+      </div>
+      <div class="card">
+        <form class="exit-ticket-form" onsubmit="saveTicket(event)">
+          <div style="margin-bottom:1.25rem;">
+            <label style="display:block; font-weight:600; margin-bottom:.4rem;" for="exit-q1">
+              1. What is one limitation of AI you noticed today?
+            </label>
+            <textarea id="exit-q1" data-persist="exit-q1" rows="3"
+              placeholder="e.g. The AI described Vygotsky's ZPD without mentioning the role of cultural context…"
+              style="width:100%; padding:.6rem; border:1px solid var(--color-border,#d1d5db); border-radius:.4rem; font-size:.95rem; resize:vertical;"></textarea>
+          </div>
+          <div style="margin-bottom:1.25rem;">
+            <label style="display:block; font-weight:600; margin-bottom:.4rem;" for="exit-q2">
+              2. Give a specific example of when the AI was misleading or incomplete today.
+            </label>
+            <textarea id="exit-q2" data-persist="exit-q2" rows="3"
+              placeholder="e.g. The AI said behaviourism 'ignores the mind entirely' — this overstates the position…"
+              style="width:100%; padding:.6rem; border:1px solid var(--color-border,#d1d5db); border-radius:.4rem; font-size:.95rem; resize:vertical;"></textarea>
+          </div>
+          <div style="margin-bottom:1.25rem;">
+            <label style="display:block; font-weight:600; margin-bottom:.4rem;" for="exit-q3">
+              3. Did you override any AI suggestion? What was your reasoning?
+            </label>
+            <textarea id="exit-q3" data-persist="exit-q3" rows="3"
+              placeholder="e.g. We removed the AI's claim that Piaget and Vygotsky 'agreed' on development because the reading showed clear disagreements…"
+              style="width:100%; padding:.6rem; border:1px solid var(--color-border,#d1d5db); border-radius:.4rem; font-size:.95rem; resize:vertical;"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary save-ticket-btn">💾 Save Responses</button>
+          <span id="ticket-saved-msg" style="display:none; margin-left:1rem; color:green; font-weight:600;">✓ Saved!</span>
+        </form>
+      </div>
+    </div>
+
+    <!-- Summative Assessment -->
+    <div class="section-block">
+      <h2>Summative Assessment: AI Critique &amp; Revision</h2>
+      <div class="card">
+        <div style="display:flex; align-items:center; gap:.75rem; flex-wrap:wrap; margin-bottom:1rem;">
+          <h3 style="margin:0;">AI Critique &amp; Revision Assignment</h3>
+          <span class="badge badge-warning">15% of module grade</span>
+        </div>
+        <p>Use AI as a critical thinking tool — not a shortcut. Generate content with AI, identify its flaws, correct them, and reflect on the process.</p>
+        <h4 style="margin-top:1rem;">Task Steps</h4>
+        <ol>
+          <li><strong>Generate:</strong> Use an AI tool to produce a 500-word explanation of one learning theory (Behaviourism, Cognitivism, or Social Constructivism). Paste the AI output into your document.</li>
+          <li><strong>Critically evaluate:</strong> Identify at least <strong>two inaccuracies, omissions, or biases</strong> in the AI output. Support each with evidence from the assigned readings.</li>
+          <li><strong>Revise:</strong> Write a corrected version in <strong>300–400 words</strong> that addresses every error or gap identified.</li>
+          <li><strong>Reflect:</strong> Write a <strong>200-word reflection</strong> addressing: what changed and why; where human judgment was essential; under what future conditions you would or would not use AI for this kind of task.</li>
+        </ol>
+      </div>
+      <h3 style="margin-top:1.5rem;">Marking Rubric</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Criterion</th><th>Weight</th><th>Pedagogy Link</th><th>AI Integration Link</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Accurate understanding of theory (content knowledge)</td>
+              <td><span class="badge badge-primary">40%</span></td>
+              <td>Applies knowledge from readings and session</td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td>Quality of critical evaluation of AI output (errors identified + evidence provided)</td>
+              <td><span class="badge badge-primary">30%</span></td>
+              <td>—</td>
+              <td><span class="badge badge-ai">AI Literacy</span> Critical evaluation of accuracy, bias, and gaps</td>
+            </tr>
+            <tr>
+              <td>Quality of revision (improvement over original AI output)</td>
+              <td><span class="badge badge-primary">15%</span></td>
+              <td>—</td>
+              <td><span class="badge badge-ai">AI Literacy</span> Independent judgment and correction</td>
+            </tr>
+            <tr>
+              <td>Reflection depth (AI limitations + human judgment awareness)</td>
+              <td><span class="badge badge-primary">15%</span></td>
+              <td>—</td>
+              <td><span class="badge badge-ai">AI Literacy</span> Responsible AI use decisions</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- AI-Supported Feedback -->
+    <div class="section-block">
+      <h2>AI-Supported Feedback</h2>
+      <div class="card">
+        <h3>Turnitin Draft Coach Workflow</h3>
+        <p>Students submit drafts through Turnitin Draft Coach (or a similar AI-feedback tool) before the instructor review stage.</p>
+        <ol>
+          <li><strong>Initial AI feedback:</strong> Draft Coach reviews grammar, clarity, and similarity. It flags passive voice, long sentences, and potential plagiarism matches.</li>
+          <li><strong>Instructor oversight:</strong> The instructor reviews AI-generated comments before they reach students, adds pedagogical content feedback, and contextualises AI suggestions.</li>
+        </ol>
+        <div class="callout callout-info">
+          <strong>Example note from instructor:</strong> "Passive voice is acceptable and sometimes preferable when describing theoretical positions (e.g., 'learning is said to be…'). Override the AI suggestion if context warrants."
+        </div>
+        <h4 style="margin-top:1.25rem;">Student Reflection on Feedback</h4>
+        <ol>
+          <li>Did you agree with the AI feedback? What might the AI have missed about your argument or context?</li>
+          <li>Did you override any AI suggestions? Explain the reasoning behind your decision.</li>
+        </ol>
+      </div>
+      <div class="card teacher-only" style="margin-top:1rem;">
+        <h3>🗓️ Calibration Session <span class="badge badge-teacher">Teacher Only</span></h3>
+        <p>Before returning graded work, run a brief class calibration:</p>
+        <ul>
+          <li>Share 2–3 anonymised examples of AI feedback from Draft Coach.</li>
+          <li>Class discusses: <em>When should you trust the AI feedback? When should you push back?</em></li>
+          <li>Record consensus norms on the board for future reference.</li>
+        </ul>
+      </div>
+      <div class="ai-callout" style="margin-top:1rem;">
+        <span class="ai-label">AI Integration Principle</span>
+        <p>This ensures AI serves as a supplement, not a replacement, for human pedagogical judgment.</p>
+      </div>
+    </div>
+  </div><!-- /.container -->
+
+  <script>
+    function saveTicket(e) {
+      e.preventDefault();
+      ['exit-q1','exit-q2','exit-q3'].forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) localStorage.setItem(id, el.value);
+      });
+      var msg = document.getElementById('ticket-saved-msg');
+      if (msg) { msg.style.display = 'inline'; setTimeout(function(){ msg.style.display = 'none'; }, 2500); }
+    }
+    // Restore persisted values
+    ['exit-q1','exit-q2','exit-q3'].forEach(function(id) {
+      var el = document.getElementById(id);
+      var saved = localStorage.getItem(id);
+      if (el && saved) el.value = saved;
+    });
+  </script>
+  <script src="app.js" defer></script>
+</body>
+</html>

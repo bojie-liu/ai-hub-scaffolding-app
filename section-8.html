@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reflection &amp; Improvement – Introduction to Learning Theories</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <nav class="site-nav">
+    <div class="nav-brand">
+      <a href="index.html">Learning Theories</a>
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="section-1.html">ILOs</a></li>
+      <li><a href="section-2.html">Pre-Class</a></li>
+      <li><a href="section-3.html">Activities</a></li>
+      <li><a href="section-4.html">Assessment</a></li>
+      <li><a href="section-5.html">Alignment</a></li>
+      <li><a href="section-6.html">Resources</a></li>
+      <li><a href="section-7.html">Differentiation</a></li>
+      <li><a href="section-8.html">Reflection</a></li>
+      <li><a href="slides.html">Slides</a></li>
+      <li><a href="assessment.html">Quiz</a></li>
+      <li><a href="resources.html">Library</a></li>
+    </ul>
+    <div class="role-toggle">
+      <button class="role-btn teacher" data-role="teacher">Teacher</button>
+      <button class="role-btn student" data-role="student">Student</button>
+    </div>
+  </nav>
+  <div id="role-banner" class="role-banner student">📚 Student View — focus on activities and learning tasks</div>
+  <div class="container">
+    <div class="page-header">
+      <h1>Reflection &amp; Improvement</h1>
+      <p>Evaluate what worked, gather evidence of learning, and plan adjustments for next time.</p>
+    </div>
+
+    <div class="section-block">
+      <h2>Pedagogy-Specific Success Indicators</h2>
+      <div class="card-grid card-grid-3">
+        <div class="card">
+          <h3>💬 Quality of Peer Dialogue</h3>
+          <span class="badge badge-purple">Social Constructivism</span>
+          <p style="margin-top:.75rem;">Observable indicators during jigsaw and group mapping:</p>
+          <ul>
+            <li>Number of questions asked between peers</li>
+            <li>Use of evidence from readings to support claims</li>
+            <li>Students building on each other's contributions</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🧩 Degree of Co-Construction</h3>
+          <span class="badge badge-purple">Social Constructivism</span>
+          <p style="margin-top:.75rem;">Group comparison charts show:</p>
+          <ul>
+            <li>Shared contributions from multiple group members</li>
+            <li>Revisions made collaboratively (not one person's work)</li>
+            <li>Evidence of negotiated meaning in language used</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🎓 Confidence in Teaching Peers</h3>
+          <span class="badge badge-success">Self-Report</span>
+          <p style="margin-top:.75rem;">Captured via exit ticket self-report:</p>
+          <ul>
+            <li>Students rate their confidence explaining their assigned theory</li>
+            <li>Peer evaluators note clarity and accuracy</li>
+            <li>Instructor tracks change from pre-class to post-activity</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI-Specific Reflection: Student Feedback Survey -->
+    <div class="section-block">
+      <h2>AI-Specific Reflection: Student Feedback Survey</h2>
+      <div class="callout callout-info">
+        Your responses are stored locally in your browser and are not submitted anywhere. This survey is for your own reflection.
+      </div>
+      <div class="card">
+        <form onsubmit="submitReflection(event)">
+          <div style="margin-bottom:1.25rem;">
+            <label style="display:block;font-weight:600;margin-bottom:.4rem;" for="reflect-q1">
+              1. Did interacting with AI deepen your understanding of learning theories, or distract you? Why?
+            </label>
+            <textarea id="reflect-q1" data-persist="reflect-q1" rows="4"
+              style="width:100%;padding:.6rem;border:1px solid var(--color-border,#d1d5db);border-radius:.4rem;font-size:.95rem;resize:vertical;"
+              placeholder="Share your honest experience…"></textarea>
+          </div>
+          <div style="margin-bottom:1.25rem;">
+            <label style="display:block;font-weight:600;margin-bottom:.4rem;">
+              2. Were you able to maintain your own thinking when using AI, or did you feel tempted to rely on it?
+            </label>
+            <div style="display:flex;flex-direction:column;gap:.5rem;margin-bottom:.75rem;">
+              <label><input type="radio" name="reflect-q2" value="maintained"> Maintained own thinking</label>
+              <label><input type="radio" name="reflect-q2" value="slightly"> Slightly tempted to rely on AI</label>
+              <label><input type="radio" name="reflect-q2" value="often"> Often relied on AI</label>
+            </div>
+            <label style="display:block;font-size:.9rem;color:var(--color-text-muted,#6b7280);margin-bottom:.3rem;">Explain your choice:</label>
+            <textarea id="reflect-q2-explain" data-persist="reflect-q2-explain" rows="3"
+              style="width:100%;padding:.6rem;border:1px solid var(--color-border,#d1d5db);border-radius:.4rem;font-size:.95rem;resize:vertical;"
+              placeholder="What helped you maintain independent thinking, or what pulled you toward AI?"></textarea>
+          </div>
+          <div style="margin-bottom:1.25rem;">
+            <label style="display:block;font-weight:600;margin-bottom:.4rem;" for="reflect-q3">
+              3. What would improve the AI integration in future lessons?
+            </label>
+            <textarea id="reflect-q3" data-persist="reflect-q3" rows="4"
+              style="width:100%;padding:.6rem;border:1px solid var(--color-border,#d1d5db);border-radius:.4rem;font-size:.95rem;resize:vertical;"
+              placeholder="Suggestions for the instructor…"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">💾 Save Responses Locally</button>
+          <span id="reflect-saved-msg" style="display:none;margin-left:1rem;color:green;font-weight:600;">✓ Saved!</span>
+        </form>
+      </div>
+    </div>
+
+    <!-- Instructor Reflection Prompts (teacher-only) -->
+    <div class="card teacher-only" style="margin-bottom:1.5rem;">
+      <h3>📝 Instructor Reflection Prompts <span class="badge badge-teacher">Teacher Only</span></h3>
+      <p>Reflect on the lesson after delivery. Responses are saved locally.</p>
+      <div class="accordion">
+        <button class="accordion-header">1. Which AI interaction was most effective? <span class="arrow">▼</span></button>
+        <div class="accordion-body">
+          <p>Consider: evaluating an AI definition vs. generating an analogy. Which produced richer critical thinking?</p>
+          <textarea data-persist="instructor-r1" rows="4"
+            style="width:100%;padding:.6rem;border:1px solid var(--color-border,#d1d5db);border-radius:.4rem;font-size:.95rem;resize:vertical;margin-top:.5rem;"
+            placeholder="Your reflection…"></textarea>
+        </div>
+      </div>
+      <div class="accordion" style="margin-top:.75rem;">
+        <button class="accordion-header">2. Where did students struggle with criticality? <span class="arrow">▼</span></button>
+        <div class="accordion-body">
+          <p>Did students trust AI output too readily? Were there particular theories where AI errors were harder to spot?</p>
+          <textarea data-persist="instructor-r2" rows="4"
+            style="width:100%;padding:.6rem;border:1px solid var(--color-border,#d1d5db);border-radius:.4rem;font-size:.95rem;resize:vertical;margin-top:.5rem;"
+            placeholder="Your reflection…"></textarea>
+        </div>
+      </div>
+      <div class="accordion" style="margin-top:.75rem;">
+        <button class="accordion-header">3. Were there technical issues with AI tool access or equity? <span class="arrow">▼</span></button>
+        <div class="accordion-body">
+          <p>Note any device access issues, login problems, or students who felt left out of the AI tasks.</p>
+          <textarea data-persist="instructor-r3" rows="4"
+            style="width:100%;padding:.6rem;border:1px solid var(--color-border,#d1d5db);border-radius:.4rem;font-size:.95rem;resize:vertical;margin-top:.5rem;"
+            placeholder="Your reflection…"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- Data on Critical Engagement (teacher-only) -->
+    <div class="section-block teacher-only">
+      <h2>Data on Critical Engagement <span class="badge badge-teacher">Teacher Only</span></h2>
+      <p>Track how each group engaged with AI output during Part A of the lesson.</p>
+      <div class="table-wrap">
+        <table id="engagement-table">
+          <thead>
+            <tr>
+              <th>Group #</th><th>AI Errors Spotted</th><th>Accepted from AI</th>
+              <th>Modified</th><th>Rejected</th><th>Notes</th>
+            </tr>
+          </thead>
+          <tbody id="engagement-tbody">
+            <tr>
+              <td contenteditable="true">1</td>
+              <td contenteditable="true"></td>
+              <td contenteditable="true"></td>
+              <td contenteditable="true"></td>
+              <td contenteditable="true"></td>
+              <td contenteditable="true"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="display:flex;gap:.75rem;flex-wrap:wrap;margin-top:1rem;">
+        <button class="btn btn-outline btn-sm" onclick="addEngagementRow()">+ Add Row</button>
+        <button class="btn btn-outline btn-sm" onclick="exportCSV()">⬇ Export as CSV</button>
+      </div>
+    </div>
+
+    <!-- Modification Strategies -->
+    <div class="section-block">
+      <h2>Modification Strategies</h2>
+      <p>Use these targeted adjustments based on what you observe during or after the lesson.</p>
+      <div class="card-grid card-grid-2">
+        <div class="card">
+          <h3>🔍 Hallucination Hunt</h3>
+          <span class="badge badge-warning">If students over-trust AI</span>
+          <p style="margin-top:.75rem;">Add a dedicated activity where groups are given an AI output known to contain factual errors and tasked specifically with finding them. Celebrating the act of correction shifts students' relationship to AI output.</p>
+        </div>
+        <div class="card">
+          <h3>🧱 Structured Prompts</h3>
+          <span class="badge badge-warning">If students under-engage with AI</span>
+          <p style="margin-top:.75rem;">Reduce open-endedness: provide specific prompts for students to copy verbatim, then evaluate the output. Reduces the cognitive load of prompt design and focuses attention on critique.</p>
+        </div>
+        <div class="card">
+          <h3>🎯 Theory Focus</h3>
+          <span class="badge badge-warning">If mapping takes too long</span>
+          <p style="margin-top:.75rem;">Assign one theory per group rather than all three. Groups become true experts in a single theory, then share out during the jigsaw. Reduces coverage breadth but deepens engagement.</p>
+        </div>
+        <div class="card">
+          <h3>📋 Peer Feedback Forms</h3>
+          <span class="badge badge-warning">If peer dialogue lacks depth</span>
+          <p style="margin-top:.75rem;">Introduce structured peer feedback forms with specific prompts: "Name one strength of the explanation," "Identify one inaccuracy or gap," "Ask one clarifying question." More structure deepens critical dialogue.</p>
+        </div>
+      </div>
+    </div>
+  </div><!-- /.container -->
+
+  <script>
+    function submitReflection(e) {
+      e.preventDefault();
+      ['reflect-q1','reflect-q2-explain','reflect-q3'].forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) localStorage.setItem(id, el.value);
+      });
+      // Save radio
+      var radio = document.querySelector('input[name="reflect-q2"]:checked');
+      if (radio) localStorage.setItem('reflect-q2-radio', radio.value);
+      var msg = document.getElementById('reflect-saved-msg');
+      if (msg) { msg.style.display = 'inline'; setTimeout(function(){ msg.style.display = 'none'; }, 2500); }
+    }
+    // Restore textarea and radio values
+    ['reflect-q1','reflect-q2-explain','reflect-q3'].forEach(function(id) {
+      var el = document.getElementById(id);
+      var saved = localStorage.getItem(id);
+      if (el && saved) el.value = saved;
+    });
+    var savedRadio = localStorage.getItem('reflect-q2-radio');
+    if (savedRadio) {
+      var r = document.querySelector('input[name="reflect-q2"][value="' + savedRadio + '"]');
+      if (r) r.checked = true;
+    }
+    function addEngagementRow() {
+      var count = parseInt(localStorage.getItem('engagement-row-count') || '1', 10) + 1;
+      localStorage.setItem('engagement-row-count', count);
+      var tbody = document.getElementById('engagement-tbody');
+      if (!tbody) return;
+      var tr = document.createElement('tr');
+      for (var i = 0; i < 6; i++) {
+        var td = document.createElement('td');
+        td.setAttribute('contenteditable', 'true');
+        if (i === 0) td.textContent = count;
+        tr.appendChild(td);
+      }
+      tbody.appendChild(tr);
+    }
+    function exportCSV() {
+      var table = document.getElementById('engagement-table');
+      if (!table) return;
+      var rows = table.querySelectorAll('tr');
+      var csv = Array.from(rows).map(function(row) {
+        var cells = row.querySelectorAll('th, td');
+        return Array.from(cells).map(function(c) {
+          return '"' + (c.textContent || '').replace(/"/g,'""') + '"';
+        }).join(',');
+      }).join('\n');
+      var blob = new Blob([csv], { type: 'text/csv' });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a'); a.href = url;
+      a.download = 'critical-engagement-data.csv';
+      document.body.appendChild(a); a.click();
+      document.body.removeChild(a); URL.revokeObjectURL(url);
+    }
+  </script>
+  <script src="app.js" defer></script>
+</body>
+</html>
