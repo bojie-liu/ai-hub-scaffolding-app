@@ -1,16 +1,843 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Basic HTML Project</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Climate Change &amp; Sustainability Quiz</title>
+  <style>
+    /* ── Reset & base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green-dark:  #1a4731;
+      --green:       #2d7a4f;
+      --green-mid:   #3d9b65;
+      --green-light: #5cbf83;
+      --teal:        #1e8a7e;
+      --sky:         #d4edda;
+      --sand:        #f5f0e8;
+      --white:       #ffffff;
+      --gray-100:    #f0f4f0;
+      --gray-300:    #c8d8c8;
+      --gray-600:    #5a6e5a;
+      --gray-800:    #2c3e2c;
+      --accent-warn: #e8a020;
+      --accent-err:  #c0392b;
+      --accent-ok:   #27ae60;
+      --radius:      14px;
+      --shadow:      0 4px 24px rgba(0,0,0,.12);
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(145deg, #0d2b1e 0%, #1a4731 40%, #0f3328 100%);
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      color: var(--gray-800);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    /* ── Card shell ── */
+    .card {
+      background: var(--white);
+      border-radius: 24px;
+      box-shadow: 0 8px 48px rgba(0,0,0,.35);
+      width: 100%;
+      max-width: 760px;
+      overflow: hidden;
+    }
+
+    /* ── Header banner ── */
+    .header {
+      background: linear-gradient(135deg, var(--green-dark) 0%, var(--teal) 100%);
+      color: var(--white);
+      padding: 28px 36px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .header::after {
+      content: '';
+      position: absolute;
+      right: -30px; top: -30px;
+      width: 180px; height: 180px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.06);
+    }
+    .header h1 {
+      font-size: clamp(1.25rem, 3vw, 1.75rem);
+      font-weight: 700;
+      letter-spacing: -.4px;
+      position: relative;
+      z-index: 1;
+    }
+    .header p {
+      font-size: .9rem;
+      opacity: .82;
+      margin-top: 4px;
+      position: relative;
+      z-index: 1;
+    }
+    .leaf-icon { font-size: 2rem; margin-right: 10px; vertical-align: middle; }
+
+    /* ── Progress row ── */
+    .progress-bar-wrap {
+      background: var(--gray-100);
+      padding: 16px 36px 12px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      border-bottom: 1px solid var(--gray-300);
+    }
+    .progress-label {
+      font-size: .8rem;
+      font-weight: 600;
+      color: var(--gray-600);
+      white-space: nowrap;
+    }
+    .progress-track {
+      flex: 1;
+      height: 8px;
+      background: var(--gray-300);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--green-mid), var(--green-light));
+      border-radius: 99px;
+      transition: width .5s cubic-bezier(.4,0,.2,1);
+    }
+    .timer-badge {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: .82rem;
+      font-weight: 700;
+      color: var(--green-dark);
+      background: var(--sky);
+      border-radius: 99px;
+      padding: 4px 12px;
+      white-space: nowrap;
+      transition: background .3s, color .3s;
+    }
+    .timer-badge.warn  { background: #fff3cd; color: var(--accent-warn); }
+    .timer-badge.urgent{ background: #fde8e8; color: var(--accent-err); }
+
+    /* ── Body ── */
+    .body { padding: 32px 36px 28px; }
+
+    /* ── Screen management ── */
+    .screen { display: none; }
+    .screen.active { display: block; }
+
+    /* ── Start screen ── */
+    .start-screen { text-align: center; padding: 12px 0 8px; }
+    .start-screen h2 { font-size: 1.5rem; color: var(--green-dark); margin-bottom: 12px; }
+    .start-screen p  { color: var(--gray-600); line-height: 1.7; margin-bottom: 20px; max-width: 480px; margin-left: auto; margin-right: auto; }
+    .info-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 32px;
+    }
+    .pill {
+      background: var(--sky);
+      color: var(--green-dark);
+      border-radius: 99px;
+      padding: 6px 16px;
+      font-size: .82rem;
+      font-weight: 600;
+    }
+
+    /* ── Buttons ── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 32px;
+      border: none;
+      border-radius: 99px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform .15s, box-shadow .15s, filter .15s;
+    }
+    .btn:focus-visible { outline: 3px solid var(--green-light); outline-offset: 3px; }
+    .btn:active { transform: scale(.97); }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--green) 0%, var(--green-mid) 100%);
+      color: var(--white);
+      box-shadow: 0 4px 16px rgba(45,122,79,.35);
+    }
+    .btn-primary:hover { filter: brightness(1.08); box-shadow: 0 6px 20px rgba(45,122,79,.45); }
+    .btn-outline {
+      background: transparent;
+      color: var(--green);
+      border: 2px solid var(--green);
+    }
+    .btn-outline:hover { background: var(--sky); }
+
+    /* ── Question ── */
+    .q-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .q-number {
+      font-size: .8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .8px;
+      color: var(--green-mid);
+    }
+    .q-category {
+      font-size: .75rem;
+      background: var(--sand);
+      color: var(--gray-600);
+      padding: 3px 10px;
+      border-radius: 99px;
+      font-weight: 600;
+    }
+    .q-text {
+      font-size: clamp(1rem, 2.5vw, 1.15rem);
+      font-weight: 600;
+      line-height: 1.55;
+      color: var(--gray-800);
+      margin-bottom: 24px;
+    }
+
+    /* ── Options ── */
+    .options { display: grid; gap: 12px; }
+    .option {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 14px 18px;
+      border: 2px solid var(--gray-300);
+      border-radius: var(--radius);
+      background: var(--white);
+      cursor: pointer;
+      transition: border-color .18s, background .18s, transform .12s;
+      text-align: left;
+      font-size: .95rem;
+      color: var(--gray-800);
+      line-height: 1.5;
+    }
+    .option:hover:not(:disabled) {
+      border-color: var(--green-mid);
+      background: var(--sky);
+      transform: translateY(-1px);
+    }
+    .option:focus-visible { outline: 3px solid var(--green-light); outline-offset: 2px; }
+    .option .opt-letter {
+      flex-shrink: 0;
+      width: 28px; height: 28px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 50%;
+      background: var(--gray-100);
+      font-weight: 700;
+      font-size: .82rem;
+      color: var(--gray-600);
+      transition: background .18s, color .18s;
+    }
+    .option:hover:not(:disabled) .opt-letter {
+      background: var(--green-mid);
+      color: var(--white);
+    }
+    .option.correct {
+      border-color: var(--accent-ok);
+      background: #eafaf1;
+      animation: pop .3s ease;
+    }
+    .option.correct .opt-letter { background: var(--accent-ok); color: var(--white); }
+    .option.wrong {
+      border-color: var(--accent-err);
+      background: #fdf0f0;
+    }
+    .option.wrong .opt-letter { background: var(--accent-err); color: var(--white); }
+    .option.reveal {
+      border-color: var(--accent-ok);
+      background: #eafaf1;
+    }
+    .option.reveal .opt-letter { background: var(--accent-ok); color: var(--white); }
+    .option:disabled { cursor: default; }
+
+    @keyframes pop {
+      0%   { transform: scale(1); }
+      50%  { transform: scale(1.025); }
+      100% { transform: scale(1); }
+    }
+
+    /* ── Feedback box ── */
+    .feedback {
+      margin-top: 20px;
+      border-radius: var(--radius);
+      padding: 14px 18px;
+      font-size: .9rem;
+      line-height: 1.6;
+      display: none;
+      animation: fadeIn .35s ease;
+    }
+    .feedback.show { display: flex; gap: 12px; align-items: flex-start; }
+    .feedback.ok  { background: #eafaf1; border-left: 4px solid var(--accent-ok); }
+    .feedback.err { background: #fdf0f0; border-left: 4px solid var(--accent-err); }
+    .feedback.timeout { background: #fff8e1; border-left: 4px solid var(--accent-warn); }
+    .feedback-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 1px; }
+    .feedback strong { display: block; font-size: .95rem; margin-bottom: 3px; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Next button row ── */
+    .action-row {
+      margin-top: 22px;
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+    }
+
+    /* ── Score screen ── */
+    .score-screen { text-align: center; }
+    .score-ring-wrap {
+      position: relative;
+      width: 140px; height: 140px;
+      margin: 0 auto 20px;
+    }
+    .score-ring {
+      transform: rotate(-90deg);
+    }
+    .ring-bg  { fill: none; stroke: var(--gray-300); stroke-width: 10; }
+    .ring-fill{ fill: none; stroke: url(#grad); stroke-width: 10; stroke-linecap: round; transition: stroke-dashoffset 1s cubic-bezier(.4,0,.2,1); }
+    .score-num {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--green-dark);
+    }
+    .score-num span { font-size: 1rem; font-weight: 500; color: var(--gray-600); }
+    .score-label {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--green-dark);
+      margin-bottom: 6px;
+    }
+    .score-sub { color: var(--gray-600); font-size: .9rem; margin-bottom: 28px; }
+
+    .breakdown {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 12px;
+      margin-bottom: 28px;
+      text-align: left;
+    }
+    .bd-card {
+      background: var(--gray-100);
+      border-radius: var(--radius);
+      padding: 14px 18px;
+    }
+    .bd-card .bd-label { font-size: .75rem; text-transform: uppercase; letter-spacing: .6px; color: var(--gray-600); font-weight: 600; margin-bottom: 4px; }
+    .bd-card .bd-val   { font-size: 1.3rem; font-weight: 800; color: var(--green-dark); }
+    .bd-card .bd-val.ok  { color: var(--accent-ok); }
+    .bd-card .bd-val.err { color: var(--accent-err); }
+
+    /* ── Review list ── */
+    .review-toggle {
+      background: none;
+      border: none;
+      color: var(--green);
+      font-size: .9rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: underline;
+      margin-bottom: 16px;
+    }
+    .review-list { display: none; text-align: left; margin-bottom: 24px; }
+    .review-list.open { display: block; }
+    .review-item {
+      border: 1px solid var(--gray-300);
+      border-radius: var(--radius);
+      padding: 12px 16px;
+      margin-bottom: 10px;
+      font-size: .88rem;
+      line-height: 1.6;
+    }
+    .review-item.ok-item  { border-left: 4px solid var(--accent-ok); }
+    .review-item.err-item { border-left: 4px solid var(--accent-err); }
+    .review-item .ri-q  { font-weight: 600; color: var(--gray-800); margin-bottom: 4px; }
+    .review-item .ri-a  { color: var(--gray-600); }
+    .ri-badge {
+      display: inline-block;
+      font-size: .72rem;
+      font-weight: 700;
+      padding: 1px 8px;
+      border-radius: 99px;
+      margin-right: 6px;
+    }
+    .ri-badge.ok  { background: #eafaf1; color: var(--accent-ok); }
+    .ri-badge.err { background: #fdf0f0; color: var(--accent-err); }
+
+    /* ── Responsive ── */
+    @media (max-width: 520px) {
+      .header, .body, .progress-bar-wrap { padding-left: 20px; padding-right: 20px; }
+      .body { padding-top: 24px; }
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Hello World!</h1>
-    <p>Welcome to your new project.</p>
+<div class="card" role="main">
+
+  <!-- Header -->
+  <div class="header">
+    <h1><span class="leaf-icon" aria-hidden="true">🌍</span>Climate Change &amp; Sustainability</h1>
+    <p>University-level quiz · 10 questions · 30 seconds per question</p>
   </div>
-  <script src="script.js"></script>
+
+  <!-- Progress row (hidden on start) -->
+  <div class="progress-bar-wrap" id="progressRow" style="display:none" aria-label="Quiz progress">
+    <span class="progress-label" id="qCounter" aria-live="polite">Q 1 / 10</span>
+    <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="10" aria-valuenow="0" id="progressAria">
+      <div class="progress-fill" id="progressFill" style="width:0%"></div>
+    </div>
+    <div class="timer-badge" id="timerBadge" aria-live="polite" aria-label="Time remaining">
+      ⏱ <span id="timerNum">30</span>s
+    </div>
+  </div>
+
+  <!-- Body -->
+  <div class="body">
+
+    <!-- ── Start screen ── -->
+    <div class="screen active" id="startScreen">
+      <div class="start-screen">
+        <h2>Ready to test your knowledge?</h2>
+        <p>
+          This quiz covers climate science, international policy, sustainability frameworks,
+          and environmental justice at a university level. Each question has a 30-second timer.
+        </p>
+        <div class="info-pills">
+          <span class="pill">📋 10 Questions</span>
+          <span class="pill">⏱ 30 sec / question</span>
+          <span class="pill">💡 Explanations included</span>
+          <span class="pill">📊 Score breakdown</span>
+        </div>
+        <button class="btn btn-primary" id="startBtn" onclick="startQuiz()">
+          Start Quiz ➜
+        </button>
+      </div>
+    </div>
+
+    <!-- ── Question screen ── -->
+    <div class="screen" id="questionScreen" aria-live="polite">
+      <div class="q-meta">
+        <span class="q-number" id="qNumLabel">Question 1</span>
+        <span class="q-category" id="qCategory">Climate Science</span>
+      </div>
+      <p class="q-text" id="qText"></p>
+      <div class="options" id="optionsList" role="list"></div>
+      <div class="feedback" id="feedbackBox" role="alert" aria-live="assertive"></div>
+      <div class="action-row">
+        <button class="btn btn-primary" id="nextBtn" style="display:none" onclick="nextQuestion()">
+          Next Question ➜
+        </button>
+      </div>
+    </div>
+
+    <!-- ── Score screen ── -->
+    <div class="screen" id="scoreScreen">
+      <div class="score-screen">
+
+        <div class="score-ring-wrap" aria-label="Score ring">
+          <svg class="score-ring" width="140" height="140" viewBox="0 0 140 140">
+            <defs>
+              <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%"   stop-color="#2d7a4f"/>
+                <stop offset="100%" stop-color="#5cbf83"/>
+              </linearGradient>
+            </defs>
+            <circle class="ring-bg"   cx="70" cy="70" r="57"/>
+            <circle class="ring-fill" cx="70" cy="70" r="57" id="ringFill"
+              stroke-dasharray="358.14"
+              stroke-dashoffset="358.14"/>
+          </svg>
+          <div class="score-num" id="scoreNum">0<span>/10</span></div>
+        </div>
+
+        <div class="score-label" id="scoreLabel">Well done!</div>
+        <div class="score-sub"  id="scoreSub">Here's how you did:</div>
+
+        <div class="breakdown">
+          <div class="bd-card">
+            <div class="bd-label">Correct</div>
+            <div class="bd-val ok" id="bdCorrect">0</div>
+          </div>
+          <div class="bd-card">
+            <div class="bd-label">Incorrect</div>
+            <div class="bd-val err" id="bdWrong">0</div>
+          </div>
+          <div class="bd-card">
+            <div class="bd-label">Timed Out</div>
+            <div class="bd-val" id="bdTimeout">0</div>
+          </div>
+          <div class="bd-card">
+            <div class="bd-label">Avg. Time</div>
+            <div class="bd-val" id="bdAvgTime">—</div>
+          </div>
+        </div>
+
+        <button class="review-toggle" onclick="toggleReview()" id="reviewToggleBtn">
+          ▼ Show question review
+        </button>
+        <div class="review-list" id="reviewList"></div>
+
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+          <button class="btn btn-primary" onclick="restartQuiz()">🔄 Play Again</button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /.body -->
+</div><!-- /.card -->
+
+<script>
+/* ══════════════════════════════════════════════
+   QUESTION BANK
+   ══════════════════════════════════════════════ */
+const questions = [
+  {
+    category: "Climate Science",
+    text: "The IPCC's Sixth Assessment Report (AR6, 2021–22) states that limiting global warming to 1.5 °C above pre-industrial levels requires global net CO₂ emissions to reach net zero by approximately which year?",
+    options: ["2030", "2040", "2050", "2070"],
+    correct: 2,
+    explanation: "AR6 Working Group I finds that reaching net-zero CO₂ by around 2050 is necessary to stay within a 1.5 °C carbon budget with limited overshoot. Deeper cuts before 2050 reduce reliance on carbon dioxide removal later."
+  },
+  {
+    category: "Greenhouse Gases",
+    text: "Which greenhouse gas has the highest 100-year Global Warming Potential (GWP₁₀₀) among the options below?",
+    options: ["CO₂ (carbon dioxide)", "CH₄ (methane)", "N₂O (nitrous oxide)", "SF₆ (sulfur hexafluoride)"],
+    correct: 3,
+    explanation: "SF₆ has a GWP₁₀₀ of approximately 23,500–25,200, far exceeding CO₂ (1), CH₄ (~27–30 for fossil methane) and N₂O (~273). Although its atmospheric concentration is tiny, SF₆ is extremely potent and long-lived (~3,200 years)."
+  },
+  {
+    category: "Sustainability Frameworks",
+    text: "The 'planetary boundaries' framework, which identifies nine Earth-system processes that define a 'safe operating space' for humanity, was primarily introduced by which researcher?",
+    options: ["James Hansen", "Johan Rockström", "Nicholas Stern", "William Nordhaus"],
+    correct: 1,
+    explanation: "Johan Rockström (Stockholm Resilience Centre) led the team that proposed the planetary boundaries concept in a landmark 2009 Nature paper. As of the 2023 update, six of the nine boundaries have been transgressed."
+  },
+  {
+    category: "Climate Policy",
+    text: "Under the 2015 Paris Agreement, countries submit voluntary national climate action plans. What are these plans officially called?",
+    options: ["Carbon Budget Plans (CBPs)", "Green New Deals (GNDs)", "Nationally Determined Contributions (NDCs)", "Common But Differentiated Targets (CBDTs)"],
+    correct: 2,
+    explanation: "Article 4 of the Paris Agreement requires each Party to prepare, communicate and maintain a Nationally Determined Contribution (NDC). NDCs are updated every five years in a 'ratchet mechanism' intended to progressively raise ambition."
+  },
+  {
+    category: "Food & Land Use",
+    text: "Roughly what share of global anthropogenic greenhouse gas emissions is attributed to the food system, including agriculture, land-use change, and food waste?",
+    options: ["~5–10%", "~21–37%", "~45–52%", "~60–65%"],
+    correct: 1,
+    explanation: "The IPCC AR6 Working Group III (2022) and the landmark Clark et al. (2020) study in Science estimate the food system contributes 21–37% of global GHG emissions when accounting for land clearing, on-farm production, processing, transport, and waste."
+  },
+  {
+    category: "Climate Science",
+    text: "In climate science, a 'positive feedback loop' is one that:",
+    options: [
+      "Has beneficial effects on human wellbeing",
+      "Amplifies the initial climate perturbation, intensifying warming",
+      "Stabilises global temperatures by counteracting the initial change",
+      "Generates positive economic returns from carbon markets"
+    ],
+    correct: 1,
+    explanation: "In systems science, 'positive' means self-reinforcing, not desirable. An example is the ice-albedo feedback: melting sea ice exposes darker ocean, which absorbs more solar radiation, causing further warming and more ice melt. A 'negative feedback' (e.g., the lapse-rate feedback) counteracts the initial change."
+  },
+  {
+    category: "Carbon Budgets",
+    text: "The concept of a 'carbon budget' in climate science refers to:",
+    options: [
+      "Government expenditure allocated to low-carbon technology",
+      "The financial cost per tonne of CO₂ avoided",
+      "The total cumulative CO₂ emissions consistent with staying below a specific warming level",
+      "A company's annual carbon accounting statement"
+    ],
+    correct: 2,
+    explanation: "A carbon budget is the maximum cumulative amount of CO₂ (and sometimes CO₂-equivalent gases) that can be emitted while keeping warming below a specific threshold (e.g., 1.5 °C or 2 °C). IPCC AR6 estimated the remaining 1.5 °C budget at ~400 GtCO₂ from 2020 (50% probability)."
+  },
+  {
+    category: "Sustainability Frameworks",
+    text: "The United Nations 2030 Agenda for Sustainable Development, adopted in 2015, comprises how many Sustainable Development Goals (SDGs)?",
+    options: ["10", "15", "17", "21"],
+    correct: 2,
+    explanation: "The 2030 Agenda includes 17 SDGs and 169 associated targets. SDG 13 (Climate Action) specifically calls for urgent measures to combat climate change and its impacts, while SDGs 7 (Affordable and Clean Energy) and 12 (Responsible Consumption) are closely related."
+  },
+  {
+    category: "Ocean & Ecosystems",
+    text: "The term 'ocean acidification' describes which process?",
+    options: [
+      "Increased nutrient run-off causing algal blooms (eutrophication)",
+      "The absorption of anthropogenic CO₂ by seawater, lowering ocean pH",
+      "Thermal stratification reducing deep-water circulation",
+      "Oxygen depletion in coastal dead zones (hypoxia)"
+    ],
+    correct: 1,
+    explanation: "When CO₂ dissolves in seawater it forms carbonic acid (H₂CO₃), releasing hydrogen ions and lowering pH. Since industrialisation, ocean surface pH has dropped from ~8.2 to ~8.1 — a 26% increase in acidity — threatening calcifying organisms (corals, molluscs, echinoderms)."
+  },
+  {
+    category: "Climate Justice",
+    text: "The concept of 'climate justice' is primarily concerned with:",
+    options: [
+      "Legal frameworks for prosecuting major corporate polluters",
+      "Equal per-capita distribution of renewable energy infrastructure globally",
+      "The disproportionate burden of climate impacts on historically marginalised and vulnerable communities, and equitable solutions",
+      "Standardised carbon tax revenue allocation across nations"
+    ],
+    correct: 2,
+    explanation: "Climate justice links environmental sustainability with human rights and social equity. It recognises that low-income countries, indigenous peoples, and marginalised groups — who contribute least to emissions — face the most severe climate impacts. The concept underpins debates about 'loss and damage' finance and just transition policies."
+  }
+];
+
+/* ══════════════════════════════════════════════
+   STATE
+   ══════════════════════════════════════════════ */
+let currentQ   = 0;
+let score      = 0;
+let answered   = false;
+let timerID    = null;
+let timeLeft   = 30;
+let results    = [];   // {correct, timedOut, timeTaken}
+let startTime  = 0;
+
+const TIMER_MAX = 30;
+
+/* ══════════════════════════════════════════════
+   HELPERS
+   ══════════════════════════════════════════════ */
+function show(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function startQuiz() {
+  currentQ = 0; score = 0; results = [];
+  document.getElementById('progressRow').style.display = 'flex';
+  show('questionScreen');
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const q = questions[currentQ];
+  answered = false;
+
+  // Meta
+  document.getElementById('qNumLabel').textContent  = `Question ${currentQ + 1}`;
+  document.getElementById('qCategory').textContent  = q.category;
+  document.getElementById('qText').textContent      = q.text;
+  document.getElementById('qCounter').textContent   = `Q ${currentQ + 1} / 10`;
+
+  const pct = (currentQ / 10) * 100;
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressAria').setAttribute('aria-valuenow', currentQ);
+
+  // Options
+  const list = document.getElementById('optionsList');
+  list.innerHTML = '';
+  const letters = ['A','B','C','D'];
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option';
+    btn.setAttribute('role','listitem');
+    btn.setAttribute('aria-label', `Option ${letters[i]}: ${opt}`);
+    btn.innerHTML = `<span class="opt-letter" aria-hidden="true">${letters[i]}</span><span>${opt}</span>`;
+    btn.onclick = () => selectAnswer(i);
+    list.appendChild(btn);
+  });
+
+  // Feedback & Next
+  const fb = document.getElementById('feedbackBox');
+  fb.className = 'feedback';
+  fb.innerHTML = '';
+  document.getElementById('nextBtn').style.display = 'none';
+
+  // Timer
+  startTime = Date.now();
+  resetTimer();
+}
+
+function resetTimer() {
+  clearInterval(timerID);
+  timeLeft = TIMER_MAX;
+  updateTimerUI();
+  timerID = setInterval(tickTimer, 1000);
+}
+
+function tickTimer() {
+  timeLeft--;
+  updateTimerUI();
+  if (timeLeft <= 0) {
+    clearInterval(timerID);
+    handleTimeout();
+  }
+}
+
+function updateTimerUI() {
+  const el = document.getElementById('timerNum');
+  const badge = document.getElementById('timerBadge');
+  el.textContent = timeLeft;
+  badge.className = 'timer-badge';
+  if (timeLeft <= 10) badge.classList.add('urgent');
+  else if (timeLeft <= 15) badge.classList.add('warn');
+}
+
+function selectAnswer(choiceIdx) {
+  if (answered) return;
+  answered = true;
+  clearInterval(timerID);
+
+  const timeTaken = Math.round((Date.now() - startTime) / 1000);
+  const q = questions[currentQ];
+  const isCorrect = (choiceIdx === q.correct);
+  if (isCorrect) score++;
+
+  results.push({ correct: isCorrect, timedOut: false, timeTaken });
+
+  // Style options
+  const opts = document.querySelectorAll('.option');
+  opts.forEach((btn, i) => {
+    btn.disabled = true;
+    if (i === q.correct) btn.classList.add('correct');
+    else if (i === choiceIdx && !isCorrect) btn.classList.add('wrong');
+  });
+
+  // Feedback
+  showFeedback(isCorrect ? 'ok' : 'err', isCorrect, q.explanation, null);
+  document.getElementById('nextBtn').style.display = 'inline-flex';
+}
+
+function handleTimeout() {
+  if (answered) return;
+  answered = true;
+
+  const q = questions[currentQ];
+  results.push({ correct: false, timedOut: true, timeTaken: TIMER_MAX });
+
+  const opts = document.querySelectorAll('.option');
+  opts.forEach((btn, i) => {
+    btn.disabled = true;
+    if (i === q.correct) btn.classList.add('reveal');
+  });
+
+  showFeedback('timeout', false, q.explanation, true);
+  document.getElementById('nextBtn').style.display = 'inline-flex';
+}
+
+function showFeedback(type, correct, explanation, timeout) {
+  const fb = document.getElementById('feedbackBox');
+  let icon, heading;
+  if (timeout) {
+    icon = '⏰'; heading = "Time's up!";
+  } else if (correct) {
+    icon = '✅'; heading = 'Correct!';
+  } else {
+    icon = '❌'; heading = 'Not quite.';
+  }
+  fb.className = `feedback show ${type}`;
+  fb.innerHTML = `
+    <span class="feedback-icon" aria-hidden="true">${icon}</span>
+    <div><strong>${heading}</strong>${explanation}</div>`;
+}
+
+function nextQuestion() {
+  currentQ++;
+  if (currentQ >= questions.length) {
+    clearInterval(timerID);
+    showScore();
+  } else {
+    renderQuestion();
+  }
+}
+
+/* ══════════════════════════════════════════════
+   SCORE SCREEN
+   ══════════════════════════════════════════════ */
+function showScore() {
+  document.getElementById('progressRow').style.display = 'none';
+  show('scoreScreen');
+
+  const correct  = results.filter(r => r.correct).length;
+  const wrong    = results.filter(r => !r.correct && !r.timedOut).length;
+  const timeout  = results.filter(r => r.timedOut).length;
+  const totalSec = results.reduce((a,r) => a + r.timeTaken, 0);
+  const avgTime  = (totalSec / results.length).toFixed(1);
+
+  document.getElementById('scoreNum').innerHTML = `${correct}<span>/10</span>`;
+  document.getElementById('bdCorrect').textContent  = correct;
+  document.getElementById('bdWrong').textContent    = wrong;
+  document.getElementById('bdTimeout').textContent  = timeout;
+  document.getElementById('bdAvgTime').textContent  = `${avgTime}s`;
+
+  // Label
+  let label, sub;
+  const pct = correct / 10;
+  if      (pct === 1)   { label = '🏆 Perfect Score!';     sub = 'Outstanding — you aced every question!'; }
+  else if (pct >= .8)   { label = '🌟 Excellent!';          sub = 'You have a strong grasp of climate science and sustainability.'; }
+  else if (pct >= .6)   { label = '👍 Good Work!';          sub = 'Solid understanding — review the explanations to fill any gaps.'; }
+  else if (pct >= .4)   { label = '📚 Keep Learning!';      sub = 'A fair attempt — re-read the explanations and try again.'; }
+  else                  { label = '🌱 Just Getting Started'; sub = 'Climate literacy is a journey. Review the explanations and give it another go!'; }
+
+  document.getElementById('scoreLabel').textContent = label;
+  document.getElementById('scoreSub').textContent   = sub;
+
+  // Animate ring
+  const circumference = 358.14;
+  const offset = circumference - (correct / 10) * circumference;
+  setTimeout(() => {
+    document.getElementById('ringFill').style.strokeDashoffset = offset;
+  }, 100);
+
+  // Build review
+  const list = document.getElementById('reviewList');
+  list.innerHTML = '';
+  questions.forEach((q, i) => {
+    const r   = results[i];
+    const cls = r.correct ? 'ok-item' : 'err-item';
+    const badge = r.correct
+      ? '<span class="ri-badge ok">✓ Correct</span>'
+      : (r.timedOut ? '<span class="ri-badge err">⏰ Timed out</span>' : '<span class="ri-badge err">✗ Wrong</span>');
+    const ans = r.correct
+      ? `Your answer: <strong>${q.options[q.correct]}</strong>`
+      : `Correct answer: <strong>${q.options[q.correct]}</strong>`;
+    list.innerHTML += `
+      <div class="review-item ${cls}">
+        <div class="ri-q">${badge}Q${i+1}. ${q.text}</div>
+        <div class="ri-a">${ans}</div>
+      </div>`;
+  });
+}
+
+function toggleReview() {
+  const list = document.getElementById('reviewList');
+  const btn  = document.getElementById('reviewToggleBtn');
+  list.classList.toggle('open');
+  btn.textContent = list.classList.contains('open')
+    ? '▲ Hide question review'
+    : '▼ Show question review';
+}
+
+function restartQuiz() {
+  document.getElementById('ringFill').style.strokeDashoffset = '358.14';
+  document.getElementById('reviewList').classList.remove('open');
+  document.getElementById('reviewToggleBtn').textContent = '▼ Show question review';
+  show('startScreen');
+  document.getElementById('progressRow').style.display = 'none';
+}
+</script>
 </body>
 </html>
