@@ -1,16 +1,1179 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Basic HTML Project</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Introduction to Learning Theories — Interactive Lesson Plan</title>
+<style>
+  :root{
+    --bg:#0f1424;
+    --bg-soft:#161d33;
+    --card:#1c2540;
+    --card-2:#212c4d;
+    --ink:#eef2ff;
+    --ink-soft:#aeb8d6;
+    --muted:#8492b8;
+    --line:#2e3a60;
+    --brand:#6d8cff;
+    --brand-2:#8b6bff;
+    --accent:#28d3b0;
+    --amber:#ffb020;
+    --rose:#ff6b8b;
+    --shadow:0 10px 30px rgba(0,0,0,.35);
+    --radius:18px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    font-family:'Segoe UI',system-ui,-apple-system,'Helvetica Neue',Arial,sans-serif;
+    background:radial-gradient(1200px 600px at 10% -10%, #1d2850 0%, var(--bg) 55%) fixed;
+    color:var(--ink);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--accent);text-decoration:none;border-bottom:1px dotted rgba(40,211,176,.5)}
+  a:hover{color:#7cf3dc;border-bottom-style:solid}
+
+  /* ---------- Layout ---------- */
+  .wrap{max-width:1180px;margin:0 auto;padding:0 20px 90px}
+  header.hero{
+    position:relative;
+    padding:46px 20px 30px;
+    background:
+      linear-gradient(135deg, rgba(109,140,255,.18), rgba(139,107,255,.10)),
+      linear-gradient(180deg, rgba(255,255,255,.03), transparent);
+    border-bottom:1px solid var(--line);
+  }
+  .hero-inner{max-width:1180px;margin:0 auto}
+  .eyebrow{
+    display:inline-block;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--accent);font-weight:700;margin-bottom:10px;
+    border:1px solid rgba(40,211,176,.35);border-radius:999px;padding:5px 14px;
+    background:rgba(40,211,176,.06)
+  }
+  h1{margin:.15em 0 .25em;font-size:clamp(1.7rem,4vw,2.7rem);line-height:1.15;letter-spacing:-.02em}
+  .subtitle{color:var(--ink-soft);max-width:820px;font-size:1.05rem;margin:0 0 20px}
+  .meta-chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:8px}
+  .chip{
+    font-size:.82rem;background:var(--card);border:1px solid var(--line);
+    padding:7px 13px;border-radius:999px;color:var(--ink-soft)
+  }
+  .chip b{color:var(--ink)}
+
+  /* ---------- Progress ---------- */
+  .progress-dock{
+    position:sticky;top:0;z-index:50;
+    backdrop-filter:blur(10px);
+    background:rgba(15,20,36,.86);
+    border-bottom:1px solid var(--line);
+    padding:11px 0;
+  }
+  .progress-inner{max-width:1180px;margin:0 auto;padding:0 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .progress-label{font-size:.82rem;color:var(--ink-soft);white-space:nowrap;font-weight:600}
+  .bar-track{flex:1;min-width:180px;height:11px;background:#131a30;border-radius:999px;overflow:hidden;border:1px solid var(--line)}
+  .bar-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--brand),var(--brand-2),var(--accent));transition:width .45s ease;border-radius:999px}
+  .progress-pct{font-variant-numeric:tabular-nums;font-size:.9rem;font-weight:800;color:var(--accent);min-width:46px;text-align:right}
+  .btn-reset{
+    background:transparent;border:1px solid var(--line);color:var(--muted);
+    border-radius:9px;padding:6px 12px;font-size:.78rem;cursor:pointer;transition:.2s
+  }
+  .btn-reset:hover{border-color:var(--rose);color:var(--rose)}
+
+  /* ---------- Nav ---------- */
+  nav.tabs{
+    display:flex;gap:8px;flex-wrap:wrap;margin:26px 0 8px;
+  }
+  nav.tabs a{
+    font-size:.82rem;padding:8px 14px;border-radius:10px;border:1px solid var(--line);
+    background:var(--card);color:var(--ink-soft);border-bottom:1px solid var(--line)
+  }
+  nav.tabs a:hover{background:var(--card-2);color:var(--ink)}
+
+  /* ---------- Sections & cards ---------- */
+  section{margin-top:44px;scroll-margin-top:80px}
+  .sec-head{display:flex;align-items:center;gap:14px;margin-bottom:6px}
+  .sec-num{
+    flex:0 0 auto;width:42px;height:42px;border-radius:12px;
+    display:grid;place-items:center;font-weight:800;font-size:1.05rem;
+    background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#fff;
+    box-shadow:0 6px 18px rgba(109,140,255,.35)
+  }
+  h2{margin:0;font-size:clamp(1.25rem,2.6vw,1.65rem);letter-spacing:-.01em}
+  .sec-sub{color:var(--muted);font-size:.9rem;margin:2px 0 22px 56px}
+
+  .card{
+    background:linear-gradient(180deg,var(--card),var(--bg-soft));
+    border:1px solid var(--line);border-radius:var(--radius);
+    padding:22px 24px;margin-bottom:18px;box-shadow:var(--shadow);
+    position:relative;overflow:hidden
+  }
+  .card::before{
+    content:"";position:absolute;inset:0 auto 0 0;width:4px;
+    background:linear-gradient(180deg,var(--brand),var(--accent));opacity:.85
+  }
+  .card.accent::before{background:linear-gradient(180deg,var(--amber),var(--rose))}
+  .card.construct::before{background:linear-gradient(180deg,var(--accent),var(--brand))}
+  .card h3{margin:0 0 10px;font-size:1.06rem;letter-spacing:-.01em;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+  .card h4{margin:18px 0 6px;font-size:.95rem;color:var(--ink)}
+  .card p{margin:8px 0;color:var(--ink-soft)}
+  .card ul,.card ol{color:var(--ink-soft);margin:8px 0;padding-left:22px}
+  .card li{margin:6px 0}
+  .card li strong,.card p strong{color:var(--ink)}
+  .lede{font-size:1rem;color:var(--ink)!important}
+
+  .tag{
+    font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+    padding:4px 9px;border-radius:999px;white-space:nowrap
+  }
+  .tag.ai{background:rgba(139,107,255,.16);color:#c3b0ff;border:1px solid rgba(139,107,255,.4)}
+  .tag.ped{background:rgba(40,211,176,.14);color:#7cf3dc;border:1px solid rgba(40,211,176,.4)}
+  .tag.time{background:rgba(255,176,32,.14);color:#ffcf78;border:1px solid rgba(255,176,32,.4)}
+  .tag.assess{background:rgba(255,107,139,.14);color:#ffa9bd;border:1px solid rgba(255,107,139,.4)}
+  .tag.tool{background:rgba(109,140,255,.16);color:#b7c6ff;border:1px solid rgba(109,140,255,.4)}
+
+  /* ---------- ILOs ---------- */
+  .ilo-grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+  .ilo{
+    background:var(--card-2);border:1px solid var(--line);border-radius:14px;padding:16px 18px;
+    display:flex;gap:14px;align-items:flex-start;transition:.2s
+  }
+  .ilo:hover{transform:translateY(-3px);border-color:var(--brand)}
+  .ilo .num{
+    flex:0 0 auto;width:34px;height:34px;border-radius:10px;display:grid;place-items:center;
+    font-weight:800;background:rgba(109,140,255,.16);color:#b7c6ff;border:1px solid rgba(109,140,255,.4)
+  }
+  .ilo p{margin:0;font-size:.92rem;color:var(--ink-soft)}
+  .ilo p strong{color:var(--ink)}
+  .verb{color:var(--accent);font-weight:800}
+
+  /* ---------- Collapsible ---------- */
+  details{
+    background:var(--card-2);border:1px solid var(--line);border-radius:14px;
+    margin:10px 0;overflow:hidden
+  }
+  details[open]{border-color:var(--brand)}
+  summary{
+    cursor:pointer;padding:14px 18px;font-weight:700;font-size:.94rem;color:var(--ink);
+    list-style:none;display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+    background:linear-gradient(90deg,rgba(109,140,255,.10),transparent)
+  }
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"▾";margin-left:auto;color:var(--brand);transition:.25s;font-size:.85rem}
+  details[open] summary::after{transform:rotate(180deg)}
+  .details-body{padding:2px 18px 18px;border-top:1px solid var(--line)}
+
+  /* ---------- Timeline ---------- */
+  .timeline{position:relative;margin:6px 0 0 8px;padding-left:26px;border-left:2px solid var(--line)}
+  .tl-item{position:relative;margin:0 0 22px}
+  .tl-item:last-child{margin-bottom:0}
+  .tl-item::before{
+    content:"";position:absolute;left:-35px;top:6px;width:14px;height:14px;border-radius:50%;
+    background:var(--brand);border:3px solid var(--bg);box-shadow:0 0 0 2px var(--brand)
+  }
+  .tl-item.done::before{background:var(--accent);box-shadow:0 0 0 2px var(--accent)}
+  .tl-time{font-size:.76rem;font-weight:700;color:var(--amber);letter-spacing:.04em;text-transform:uppercase}
+
+  /* ---------- Tables ---------- */
+  .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px;margin-top:6px}
+  table{border-collapse:collapse;width:100%;min-width:760px;font-size:.85rem}
+  th,td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top;color:var(--ink-soft)}
+  th{background:var(--card-2);color:var(--ink);font-weight:700;font-size:.78rem;text-transform:uppercase;letter-spacing:.05em}
+  tbody tr:hover{background:rgba(109,140,255,.06)}
+  td strong{color:var(--ink)}
+
+  /* ---------- Checklist ---------- */
+  .check-row{
+    display:flex;gap:12px;align-items:flex-start;padding:11px 4px;border-bottom:1px dashed var(--line)
+  }
+  .check-row:last-child{border-bottom:none}
+  .check-row input[type=checkbox]{
+    appearance:none;width:21px;height:21px;flex:0 0 auto;margin-top:2px;border-radius:6px;
+    border:2px solid var(--line);background:var(--bg);cursor:pointer;position:relative;transition:.18s
+  }
+  .check-row input[type=checkbox]:checked{background:var(--accent);border-color:var(--accent)}
+  .check-row input[type=checkbox]:checked::after{
+    content:"✓";position:absolute;inset:0;display:grid;place-items:center;color:#06251f;font-weight:900;font-size:.82rem
+  }
+  .check-row label{cursor:pointer;font-size:.9rem;color:var(--ink-soft);user-select:none}
+  .check-row input:checked + label{color:var(--muted);text-decoration:line-through}
+
+  /* ---------- Misc ---------- */
+  .callout{
+    border-left:4px solid var(--amber);background:rgba(255,176,32,.07);
+    padding:13px 16px;border-radius:0 12px 12px 0;margin:14px 0;font-size:.9rem;color:var(--ink-soft)
+  }
+  .callout.ai{border-left-color:var(--brand-2);background:rgba(139,107,255,.08)}
+  .callout.ped{border-left-color:var(--accent);background:rgba(40,211,176,.08)}
+  .callout b{color:var(--ink)}
+  .prompt{
+    font-family:'SFMono-Regular',Consolas,monospace;font-size:.83rem;color:#d7e0ff;
+    background:#0c1224;border:1px solid var(--line);border-radius:10px;padding:12px 14px;
+    margin:10px 0;white-space:pre-wrap;position:relative;overflow-x:auto
+  }
+  .prompt::before{content:"PROMPT";position:absolute;top:-9px;left:12px;font-size:.6rem;letter-spacing:.1em;
+    background:#0c1224;padding:0 6px;color:var(--muted)}
+  .grid-2{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(290px,1fr))}
+  .grid-3{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+  .mini{
+    background:var(--card-2);border:1px solid var(--line);border-radius:14px;padding:16px
+  }
+  .mini h4{margin:0 0 8px;font-size:.92rem;color:var(--ink)}
+  .mini p,.mini ul{font-size:.86rem;color:var(--ink-soft);margin:6px 0}
+  .mini ul{padding-left:18px}
+  .stat{font-size:1.5rem;font-weight:800;color:var(--accent);line-height:1.1}
+  .rubric-bar{display:flex;height:12px;border-radius:999px;overflow:hidden;margin:8px 0 16px;border:1px solid var(--line)}
+  .rubric-bar span{height:100%}
+  .footer{
+    margin-top:60px;padding-top:24px;border-top:1px solid var(--line);
+    color:var(--muted);font-size:.8rem;text-align:center
+  }
+  .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+  @media(max-width:640px){
+    .sec-sub{margin-left:0}
+    .card{padding:18px 16px}
+    header.hero{padding:32px 16px 22px}
+  }
+</style>
 </head>
 <body>
-  <div class="container">
-    <h1>Hello World!</h1>
-    <p>Welcome to your new project.</p>
+
+<header class="hero">
+  <div class="hero-inner">
+    <span class="eyebrow">Foundations of Educational Psychology</span>
+    <h1>Introduction to Learning Theories</h1>
+    <p class="subtitle">
+      Behaviorism · Cognitivism · Constructivism — an AI-integrated, social-constructivist lesson
+      where 90 first-year undergraduates co-construct a shared understanding of how people learn,
+      while critically interrogating AI-generated knowledge.
+    </p>
+    <div class="meta-chips">
+      <span class="chip"><b>Duration:</b> 150 minutes</span>
+      <span class="chip"><b>Level:</b> First-Year Undergraduates</span>
+      <span class="chip"><b>Class Size:</b> 90 students</span>
+      <span class="chip"><b>Language:</b> English</span>
+      <span class="chip"><b>Pedagogy:</b> Social Constructivism</span>
+      <span class="chip"><b>AI Integration:</b> ILOs · Activities · Assessment · Feedback</span>
+    </div>
   </div>
-  <script src="script.js"></script>
+</header>
+
+<div class="progress-dock">
+  <div class="progress-inner">
+    <span class="progress-label">Lesson preparation progress</span>
+    <div class="bar-track"><div class="bar-fill" id="barFill"></div></div>
+    <span class="progress-pct" id="pct">0%</span>
+    <button class="btn-reset" id="resetBtn" type="button">Reset</button>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <nav class="tabs" aria-label="Section navigation">
+    <a href="#ilos">1. Intended Learning Outcomes</a>
+    <a href="#preclass">2. Pre-Class Preparation</a>
+    <a href="#activities">3. Teaching &amp; Learning Activities</a>
+    <a href="#assessment">4. Assessment Methods</a>
+    <a href="#alignment">5. Constructive Alignment</a>
+    <a href="#resources">6. Resources &amp; Technology</a>
+    <a href="#differentiation">7. Differentiation &amp; Inclusivity</a>
+    <a href="#reflection">8. Reflection &amp; Improvement</a>
+    <a href="#tools">9. External Tool Guides</a>
+  </nav>
+
+  <!-- ================= 1. ILOs ================= -->
+  <section id="ilos">
+    <div class="sec-head"><div class="sec-num">1</div><h2>Intended Learning Outcomes (ILOs)</h2></div>
+    <p class="sec-sub">By the end of this 150-minute session, students will be able to:</p>
+
+    <div class="ilo-grid">
+      <div class="ilo">
+        <div class="num">1</div>
+        <p><span class="verb">Analyze</span> and <span class="verb">compare</span> the core principles of Behaviorism, Cognitivism, and Constructivism using collaborative discussion and peer critique.
+        <br><span class="tag ped">Social Constructivism</span></p>
+      </div>
+      <div class="ilo">
+        <div class="num">2</div>
+        <p><span class="verb">Apply</span> the key tenets of each theory to <span class="verb">evaluate</span> a real-world educational scenario in a small group, justifying their theoretical selection with evidence from the literature.</p>
+      </div>
+      <div class="ilo">
+        <div class="num">3</div>
+        <p><span class="verb">Co-construct</span> a shared conceptual map of learning theories within their learning community, integrating multiple perspectives.
+        <br><span class="tag ped">Social Constructivism</span></p>
+      </div>
+      <div class="ilo">
+        <div class="num">4</div>
+        <p><span class="verb">Critically evaluate</span> AI-generated explanations of learning theories, identifying strengths, limitations, and potential biases in the AI's output.
+        <br><span class="tag ai">AI Literacy</span></p>
+      </div>
+      <div class="ilo">
+        <div class="num">5</div>
+        <p><span class="verb">Demonstrate</span> independent judgment by deciding when, whether, and how to use or modify AI-generated content to deepen their understanding of learning theories.
+        <br><span class="tag ai">AI Literacy</span></p>
+      </div>
+    </div>
+
+    <div class="callout ai" style="margin-top:20px">
+      <b>AI Integration across ILOs 4 &amp; 5:</b> These outcomes are deliberately framed as <em>critical evaluation</em> and
+      <em>independent judgment</em> — never uncritical use. Every AI touchpoint in this lesson is paired with a
+      human-interrogation task (accept / modify / reject, with justification).
+    </div>
+
+    <details>
+      <summary>📋 Preparation checklist — ILOs</summary>
+      <div class="details-body">
+        <div class="check-row"><input type="checkbox" id="c1-1"><label for="c1-1">Confirm the five ILOs map to the three assessment criteria and rubric weights.</label></div>
+        <div class="check-row"><input type="checkbox" id="c1-2"><label for="c1-2">Share ILOs with students on the LMS before class (visible from week start).</label></div>
+        <div class="check-row"><input type="checkbox" id="c1-3"><label for="c1-3">Prepare AI-literacy framing language that positions AI as a "starting point, not the final answer."</label></div>
+      </div>
+    </details>
+  </section>
+
+  <!-- ================= 2. PRE-CLASS ================= -->
+  <section id="preclass">
+    <div class="sec-head"><div class="sec-num">2</div><h2>Pre-Class Preparation</h2></div>
+    <p class="sec-sub">Flipped-learning component — completed on the LMS before the 150-minute session.</p>
+
+    <div class="card">
+      <h3>📖 Pre-Reading <span class="tag time">~30 min</span></h3>
+      <p>Read the chapter <strong>"Theoretical Perspectives on Learning"</strong> (posted on the LMS).</p>
+    </div>
+
+    <div class="card">
+      <h3>🧠 Diagnostic Quiz <span class="tag assess">5 questions</span></h3>
+      <p>A short MCQ quiz checking existing knowledge of key terms — <em>Classical Conditioning, Schema, Zone of Proximal Development</em>, and two further terms.</p>
+      <p><strong>Adaptive feedback:</strong> Based on incorrect answers, students are routed to the specific pre-reading section that addresses the missed concept.</p>
+    </div>
+
+    <div class="card construct">
+      <h3>💬 Pedagogy-Specific Guiding Question <span class="tag ped">Social Constructivism</span></h3>
+      <p><em>"As you read, find one example from your own life (or a hypothetical classroom) that you think best illustrates each of the three theories. Be ready to share this with your small group."</em></p>
+    </div>
+
+    <div class="card accent">
+      <h3>🤖 AI Pre-Class Task <span class="tag ai">AI Literacy</span></h3>
+      <p>Interact with an AI tool (e.g., <a href="https://chat.openai.com" target="_blank">ChatGPT</a>, <a href="https://claude.ai" target="_blank">Claude</a>, or <a href="https://www.bing.com/chat" target="_blank">Bing Chat</a>) and ask it to compare the three theories in simple terms.</p>
+      <div class="prompt">Explain the difference between behaviorism, cognitivism, and constructivism in simple terms.</div>
+      <h4>Guided Reflection Prompt</h4>
+      <p>Write <strong>2–3 sentences</strong> on what the AI got right, what it might have missed, and whether its explanation seemed biased toward any one theory. Did it oversimplify a concept?</p>
+      <div class="callout ai">
+        <b>Why this matters:</b> This pre-task creates a shared, lived experience of AI fallibility that the in-class
+        critique activities (Sections 3 &amp; 4) build upon — students arrive already having noticed limitations.
+      </div>
+    </div>
+
+    <details>
+      <summary>📋 Preparation checklist — Pre-Class</summary>
+      <div class="details-body">
+        <div class="check-row"><input type="checkbox" id="c2-1"><label for="c2-1">Upload the chapter and publish the 5-question diagnostic quiz with adaptive feedback paths.</label></div>
+        <div class="check-row"><input type="checkbox" id="c2-2"><label for="c2-2">Post the guiding question and the AI pre-class reflection prompt.</label></div>
+        <div class="check-row"><input type="checkbox" id="c2-3"><label for="c2-3">Publish the "AI in Higher Ed: A Critical Guide" resource page on the LMS.</label></div>
+        <div class="check-row"><input type="checkbox" id="c2-4"><label for="c2-4">Review quiz analytics before class to identify the top 2–3 misconceptions to address in the pre-test review.</label></div>
+      </div>
+    </details>
+  </section>
+
+  <!-- ================= 3. ACTIVITIES ================= -->
+  <section id="activities">
+    <div class="sec-head"><div class="sec-num">3</div><h2>Teaching &amp; Learning Activities</h2></div>
+    <p class="sec-sub">150 minutes total — Introduction (20) · Development (105) · Synthesis &amp; Closure (25).</p>
+
+    <!-- Timeline overview -->
+    <div class="card">
+      <h3>🗺️ Session Timeline</h3>
+      <div class="timeline">
+        <div class="tl-item"><span class="tl-time">0–5 min</span><p><strong>Provocative Problem Hook</strong> — raise hands on a failing-math scenario.</p></div>
+        <div class="tl-item"><span class="tl-time">5–10 min</span><p><strong>Pre-Test Review</strong> — poll on key concepts; think-pair-share on top misconceptions.</p></div>
+        <div class="tl-item"><span class="tl-time">10–15 min</span><p><strong>Real-World Connection</strong> — "learning theories as a tool belt".</p></div>
+        <div class="tl-item"><span class="tl-time">15–20 min</span><p><strong>AI Scenario Introduction</strong> — critique an AI-generated "How Students Learn" summary.</p></div>
+        <div class="tl-item"><span class="tl-time">20–60 min</span><p><strong>Activity 1 — Jigsaw Expert Groups</strong> (40 min, incl. 15 min AI-integrated task).</p></div>
+        <div class="tl-item"><span class="tl-time">60–105 min</span><p><strong>Activity 2 — Jigsaw Home Groups &amp; Concept Mapping</strong> (45 min, incl. 20 min AI bridging).</p></div>
+        <div class="tl-item"><span class="tl-time">105–110 min</span><p><strong>Post-Test</strong> — scenario-based quiz targeting pre-test misconceptions.</p></div>
+        <div class="tl-item"><span class="tl-time">110–120 min</span><p><strong>Peer-Teaching Reflection</strong> — "aha!" moments shared in home groups.</p></div>
+        <div class="tl-item"><span class="tl-time">120–130 min</span><p><strong>AI Reflection Discussion</strong> — class-wide critique of AI use.</p></div>
+        <div class="tl-item"><span class="tl-time">130–150 min</span><p><strong>Preview &amp; close</strong> — next week: design a single lesson plan.</p></div>
+      </div>
+      <div class="callout"><b>Note:</b> The timeline above reflects the full 150-minute session; blocks may flex by a few minutes to protect dialogue quality.</div>
+    </div>
+
+    <!-- Introduction -->
+    <div class="card">
+      <h3>🚀 Introduction <span class="tag time">20 min</span></h3>
+
+      <h4>Pedagogy-Aligned Hook <span class="tag time">5 min</span></h4>
+      <p><strong>Provocative Problem:</strong> <em>"A student is failing math. Should we (a) give them more rewards for completing homework, (b) teach them better note-taking and memory strategies, or (c) let them work on real-world problems with peers to discover math concepts themselves?"</em></p>
+      <p>Raise hands for each option. This primes the need for theory — each option maps to a different theory of learning.</p>
+
+      <h4>Pre-Test Review <span class="tag time">5 min</span></h4>
+      <p>Quick poll on three key concepts to surface common misconceptions from the diagnostic quiz. The instructor uses a <strong>think-pair-share</strong> format to address the top 2–3 misconceptions collaboratively.</p>
+
+      <h4>Real-World Connection <span class="tag time">5 min</span></h4>
+      <p><em>"Your future students will learn in complex ways. Understanding these theories is like having a tool belt — you'll need to choose the right tool for the task."</em></p>
+
+      <h4>AI Integration: AI Scenario Introduction <span class="tag time">5 min</span> <span class="tag ai">AI Literacy</span></h4>
+      <ul>
+        <li><strong>Activity:</strong> Display a 3-paragraph AI-generated summary of "How Students Learn" on screen.</li>
+        <li><strong>Task:</strong> "Read this summary generated by an AI. With the person next to you, identify one statement that is accurate, one that is misleading, and one potential bias. For example, does it over-emphasize technology or ignore social learning?"</li>
+        <li><strong>Purpose:</strong> Models critical questioning of AI outputs from the very start.</li>
+      </ul>
+
+      <details>
+        <summary>🔧 Run the pre-test poll with Mentimeter</summary>
+        <div class="details-body">
+          <p><strong>Purpose:</strong> Surface misconceptions in real time and give every one of the 90 students a voice in a low-stakes format.</p>
+          <p><strong>Learning objective:</strong> ILO 1 (analyze/compare) — activate prior knowledge before the jigsaw.</p>
+          <ol>
+            <li>Go to <a href="https://www.mentimeter.com" target="_blank">Mentimeter</a> and log in (or create a free account).</li>
+            <li>Click <strong>"New presentation"</strong> → <strong>"Add slide"</strong> → choose the <strong>Multiple Choice</strong> or <strong>Word Cloud</strong> slide type.</li>
+            <li>Enter the three concept questions drawn from the diagnostic quiz (e.g., "Which term best describes 'learning as a change in observable behavior'?").</li>
+            <li>Go to <strong>Present</strong> and display the <strong>join code</strong> on the main screen (<code>menti.com</code> + code).</li>
+            <li>Ask students to open <a href="https://www.menti.com" target="_blank">menti.com</a> on their phones and enter the code.</li>
+            <li>Give 60 seconds; watch responses appear live, then reveal the chart to launch think-pair-share on the most-missed item.</li>
+          </ol>
+        </div>
+      </details>
+    </div>
+
+    <!-- Activity 1 -->
+    <div class="card construct">
+      <h3>🧩 Activity 1 — Jigsaw Expert Groups <span class="tag time">40 min</span> <span class="tag ped">Social Constructivism</span></h3>
+      <p>Students are divided into three "Expert Groups" (30 students each):</p>
+      <div class="grid-3">
+        <div class="mini"><h4>Expert Group A</h4><p>Behaviorism</p></div>
+        <div class="mini"><h4>Expert Group B</h4><p>Cognitivism</p></div>
+        <div class="mini"><h4>Expert Group C</h4><p>Constructivism</p></div>
+      </div>
+
+      <h4>Task: Expert Fact Sheet</h4>
+      <p>Each group collaborates to create a one-page "Expert Fact Sheet" on their theory. It must include:</p>
+      <ul>
+        <li><strong>3 core principles</strong></li>
+        <li><strong>2 key theorists</strong></li>
+        <li><strong>1 classroom application</strong></li>
+        <li><strong>1 limitation of the theory</strong></li>
+      </ul>
+
+      <h4>AI-Integrated Activity <span class="tag time">15 min of this block</span> <span class="tag ai">AI Literacy</span></h4>
+      <div class="prompt">As a group, use one AI tool (e.g., ChatGPT) to generate a list of potential classroom activities that align with your theory. For example:
+"Give me 5 classroom activities based on Behaviorism."</div>
+
+      <p><strong>Critical Interrogation Task</strong> — do <em>NOT</em> simply copy the AI's suggestions. Your group must:</p>
+      <ol>
+        <li><strong>Criticize</strong> each AI suggestion. Is it truly aligned with your theory? Is it too simplistic or outdated? Does it contain a potential bias (e.g., favoring technology)?</li>
+        <li><strong>Refine</strong> at least 2 of the AI's activities. Modify them to be more pedagogically sound or more appropriate for adult learners.</li>
+        <li><strong>Document</strong> your decision: for each AI suggestion, note whether you <em>accepted</em> it as-is, <em>modified</em> it, or <em>rejected</em> it — and <em>why</em>.</li>
+      </ol>
+
+      <div class="callout ai">
+        <b>Instructor guidance (circulate and prompt):</b> "Why did you override that AI suggestion? What human judgment did you use that the AI lacked?"
+        "Is the AI just repeating a textbook definition, or is it adding new insight?"
+      </div>
+
+      <details>
+        <summary>🔧 Capture group decisions with Padlet</summary>
+        <div class="details-body">
+          <p><strong>Purpose:</strong> Give each of the three expert groups a visible, shared wall where they post accepted / modified / rejected AI suggestions — making the critique process public and comparable.</p>
+          <p><strong>Learning objective:</strong> ILO 2 &amp; ILO 5 — apply theory and document independent judgment.</p>
+          <ol>
+            <li>Go to <a href="https://padlet.com" target="_blank">Padlet</a> and sign in.</li>
+            <li>Click <strong>"Make a Padlet"</strong> → choose the <strong>Wall</strong> or <strong>Columns</strong> format.</li>
+            <li>Create three columns titled <em>Accepted</em>, <em>Modified</em>, <em>Rejected</em>.</li>
+            <li>Under <strong>Share</strong>, set privacy to <strong>"Secret"</strong> or "Anyone with the link can write", then copy the link.</li>
+            <li>Share the link in the LMS / chat. Each expert group posts a card per AI suggestion with a one-line justification.</li>
+            <li>Project all three walls side-by-side for a rapid cross-group comparison at minute 40.</li>
+          </ol>
+        </div>
+      </details>
+
+      <details>
+        <summary>🔧 Run a knowledge check with Kahoot!</summary>
+        <div class="details-body">
+          <p><strong>Purpose:</strong> A fast, gamified mid-point check that each expert group has correctly internalized the core principles of its theory.</p>
+          <p><strong>Learning objective:</strong> ILO 1 — analyze and compare core principles.</p>
+          <ol>
+            <li>Go to <a href="https://kahoot.com" target="_blank">Kahoot!</a> and log in, then click <strong>"Create"</strong>.</li>
+            <li>Add 5 questions — one per theory plus two comparison items.</li>
+            <li>Set a 20-second timer per question; save and click <strong>"Play"</strong> → <strong>"Teach"</strong>.</li>
+            <li>Display the <strong>game PIN</strong>. Students join at <a href="https://kahoot.it" target="_blank">kahoot.it</a>.</li>
+            <li>Run the quiz in team mode (one device per expert group) to reinforce collaboration.</li>
+          </ol>
+        </div>
+      </details>
+    </div>
+
+    <!-- Activity 2 -->
+    <div class="card construct">
+      <h3>🏠 Activity 2 — Jigsaw Home Groups &amp; Concept Mapping <span class="tag time">45 min</span> <span class="tag ped">Social Constructivism</span></h3>
+      <p>Students reorganize into <strong>"Home Groups"</strong> (30 groups of 3 students — one from each expert group).</p>
+
+      <h4>Task: Teach Your Theory</h4>
+      <p>Each member teaches their theory to the group.</p>
+      <p><strong>AI-Enhanced Peer Teaching:</strong> "Briefly show your group the AI-generated activity suggestions you modified. Explain why you changed them. This helps others see how AI can be a starting point, not the final answer."</p>
+
+      <h4>Collaborative Concept Map</h4>
+      <p>Groups co-construct a visual concept map comparing the three theories (e.g., using <a href="https://miro.com" target="_blank">Miro</a> or a large sheet of paper). They label key similarities and differences.</p>
+
+      <h4>AI Integration &amp; Bridging <span class="tag time">20 min of this block</span> <span class="tag ai">AI Literacy</span></h4>
+      <div class="prompt">Create a concept map comparing behaviorism, cognitivism, and constructivism.</div>
+      <p><strong>Critical Comparison Task:</strong> Compare the AI's map to your own.</p>
+      <ul>
+        <li>Which elements did the AI prioritize?</li>
+        <li>Which connections did it miss?</li>
+        <li>What does this tell you about the human role in synthesizing complex knowledge?</li>
+      </ul>
+      <p>Groups annotate their own map with notes on what the AI did better or worse.</p>
+
+      <div class="callout ped">
+        <b>Scaffolding &amp; cross-pedagogy elements:</b> Throughout, the instructor uses short interactive lectures (with think-pair-share)
+        to clarify tricky concepts. Animated visualizations (e.g., <em>Pavlov's Dog</em>, <em>Atkinson–Shiffrin Memory Model</em>,
+        <em>Vygotsky's ZPD</em>) are shown. A digital flashcard deck is available via the LMS for independent review.
+      </div>
+
+      <details>
+        <summary>🔧 Co-construct the concept map in Miro</summary>
+        <div class="details-body">
+          <p><strong>Purpose:</strong> Provide a shared digital canvas where home groups build and compare maps simultaneously.</p>
+          <p><strong>Learning objective:</strong> ILO 3 — co-construct a shared conceptual map.</p>
+          <ol>
+            <li>Go to <a href="https://miro.com" target="_blank">Miro</a> and log in.</li>
+            <li>Click <strong>"+ New board"</strong> and choose the <strong>Mind Map</strong> or blank template.</li>
+            <li>Create one frame per home group (Board → Frames → drop 30 frames, or duplicate a group template).</li>
+            <li>Set board sharing to <strong>"Anyone with the link can edit"</strong> and distribute via LMS.</li>
+            <li>Ask each group to place the three theories as central nodes and add sticky-note connections for similarities/differences.</li>
+            <li>After the AI comparison, ask groups to add red sticky notes labelled <em>"AI missed this"</em> and green ones labelled <em>"AI got this right"</em>.</li>
+          </ol>
+        </div>
+      </details>
+    </div>
+
+    <!-- Synthesis -->
+    <div class="card accent">
+      <h3>🎯 Synthesis &amp; Closure <span class="tag time">25 min</span></h3>
+
+      <h4>Post-Test <span class="tag time">5 min</span> <span class="tag assess">Formative</span></h4>
+      <p>A short, scenario-based quiz that targets the initial misconceptions from the pre-test.</p>
+
+      <h4>Peer-Teaching Reflection <span class="tag time">10 min</span></h4>
+      <p>In their home groups, students share one "aha!" moment from today. One student from each group shares a key takeaway with the whole class.</p>
+
+      <h4>AI Reflection Discussion <span class="tag time">10 min</span> <span class="tag ai">AI Literacy</span></h4>
+      <p><strong>Class-Wide Discussion:</strong> "Today we used AI in several ways. Let's reflect:"</p>
+      <ul>
+        <li>"Was there a time when the AI's suggestions were genuinely <em>unhelpful</em> or <em>misleading</em>? How did you handle that?"</li>
+        <li>"When did you feel it was <em>essential</em> to use your own human judgment to override the AI? Was it about accuracy, ethics, or context?"</li>
+        <li>"How can AI <em>support</em> social constructivism (collaborative learning) rather than <em>replace</em> it?"</li>
+      </ul>
+      <div class="callout ai">
+        <b>Instructor models:</b> "For example, when a group in Expert Group A rejected the AI's suggestion of a 'sticker chart' as the only
+        behaviorist activity, they added a 'self-monitoring' component. That was a critical human judgment about developmental psychology that the AI missed."
+      </div>
+
+      <h4>Preview</h4>
+      <p><em>"Next week, we will apply these theories to design a single lesson plan. Bring your concept maps and your AI notes."</em></p>
+
+      <details>
+        <summary>🔧 Run the post-test and exit reflection with Google Forms</summary>
+        <div class="details-body">
+          <p><strong>Purpose:</strong> Collect scenario-based post-test answers and the 2-sentence AI reflection in one instrument, automatically tied to student identity for formative tracking.</p>
+          <p><strong>Learning objective:</strong> ILO 4 — critically evaluate AI-generated explanations.</p>
+          <ol>
+            <li>Go to <a href="https://forms.google.com" target="_blank">Google Forms</a> and click <strong>Blank form</strong>.</li>
+            <li>Title it <em>"Learning Theories — Post-Test &amp; AI Reflection"</em>.</li>
+            <li>Add 5 scenario-based multiple-choice items (one per core concept) mirroring the pre-test misconceptions.</li>
+            <li>Add a <strong>Paragraph</strong> question: "What AI suggestion did your group modify and why?" (2-sentence reflection).</li>
+            <li>Settings → <strong>Collect email addresses</strong> (or link to LMS ID) and turn on <strong>Quiz mode</strong> for auto-scoring of MCQs.</li>
+            <li>Share the link at minute 105 and give students 5 minutes to complete it on their phones.</li>
+            <li>Review the Linked Sheet afterward to spot the top misconception and the AI-literacy snapshot.</li>
+          </ol>
+        </div>
+      </details>
+
+      <details>
+        <summary>🔧 Brainstorm the AI reflection with Jamboard</summary>
+        <div class="details-body">
+          <p><strong>Purpose:</strong> Let the whole class post anonymous responses to the three AI reflection questions simultaneously, then cluster themes live.</p>
+          <p><strong>Learning objective:</strong> ILO 4 &amp; ILO 5 — evaluate AI and demonstrate independent judgment.</p>
+          <ol>
+            <li>Go to <a href="https://jamboard.google.com" target="_blank">Google Jamboard</a> and create a new board.</li>
+            <li>Name it <em>"AI in the Learning-Theories Classroom"</em>.</li>
+            <li>Add three text boxes as column headers matching the three reflection questions.</li>
+            <li>Click <strong>Share</strong> → set to "Anyone with the link can edit", then distribute.</li>
+            <li>Students add a sticky note (double-click the board) under the relevant column; give 5 minutes.</li>
+            <li>Drag similar notes together to cluster themes, and use the clustering as the launch point for the whole-class discussion.</li>
+          </ol>
+        </div>
+      </details>
+    </div>
+
+    <details>
+      <summary>📋 Preparation checklist — Activities</summary>
+      <div class="details-body">
+        <div class="check-row"><input type="checkbox" id="c3-1"><label for="c3-1">Pre-assign the three Expert Groups (30 each) and design the Home Group composition (30 × 3).</label></div>
+        <div class="check-row"><input type="checkbox" id="c3-2"><label for="c3-2">Prepare the AI-generated 3-paragraph "How Students Learn" summary for the intro scenario.</label></div>
+        <div class="check-row"><input type="checkbox" id="c3-3"><label for="c3-3">Set up the Mentimeter poll, Miro board, Padlet walls, Kahoot quiz, and Google Form in advance.</label></div>
+        <div class="check-row"><input type="checkbox" id="c3-4"><label for="c3-4">Load the three animated visualizations (Pavlov, Atkinson–Shiffrin, ZPD) and the LMS flashcard deck.</label></div>
+        <div class="check-row"><input type="checkbox" id="c3-5"><label for="c3-5">Print large concept-map paper and gather markers/sticky notes as the low-tech fallback.</label></div>
+      </div>
+    </details>
+  </section>
+
+  <!-- ================= 4. ASSESSMENT ================= -->
+  <section id="assessment">
+    <div class="sec-head"><div class="sec-num">4</div><h2>Assessment Methods</h2></div>
+    <p class="sec-sub">Formative assessment during class · Summative pedagogy-aligned portfolio entry.</p>
+
+    <div class="card">
+      <h3>🔄 Formative Assessment <span class="tag assess">During Class</span></h3>
+
+      <h4>Pedagogy-Aligned Observations</h4>
+      <p>The instructor observes group dynamics and the depth of discussion in Jigsaw groups. Are students truly co-creating their fact sheets?</p>
+
+      <h4>Real-Time Polling</h4>
+      <p>Used during the Introduction and Synthesis for quick checks on concept clarity (see Mentimeter instructions above).</p>
+
+      <h4>Peer Assessment</h4>
+      <p>During the concept map activity, home groups use a simple checklist to assess each expert member's teaching clarity.</p>
+
+      <h4>AI-Supported Formative Check <span class="tag ai">AI Literacy</span></h4>
+      <ul>
+        <li><strong>Task:</strong> Students submit a 2-sentence reflection via the LMS: <em>"What AI suggestion did your group modify and why?"</em></li>
+        <li><strong>Instructor review:</strong> The instructor reviews these submissions for evidence of <em>critical engagement</em>. Are students merely accepting AI output? Are they identifying bias or accuracy issues? This gives a quick snapshot of AI-literacy development.</li>
+      </ul>
+
+      <details>
+        <summary>🔧 Collect the formative reflection via Google Forms</summary>
+        <div class="details-body">
+          <p><strong>Purpose:</strong> A rapid, sortable snapshot of whether students are engaging critically or passively with AI output.</p>
+          <p><strong>Learning objective:</strong> ILO 4 — critically evaluate AI-generated explanations.</p>
+          <ol>
+            <li>Open <a href="https://forms.google.com" target="_blank">Google Forms</a> → <strong>Blank form</strong>.</li>
+            <li>Title: <em>"AI Suggestion — Accept, Modify, or Reject?"</em></li>
+            <li>Add a <strong>Short answer</strong>: "Which AI suggestion did your group modify, and why?"</li>
+            <li>Add a <strong>Multiple choice</strong>: "Did your group accept, modify, or reject it?" (Accepted / Modified / Rejected).</li>
+            <li>In <strong>Responses</strong>, open the linked Google Sheet and sort by response type to see the distribution at a glance.</li>
+            <li>Use the responses to select 2–3 exemplary critiques to read aloud in the AI reflection discussion.</li>
+          </ol>
+        </div>
+      </details>
+    </div>
+
+    <div class="card accent">
+      <h3>🎓 Summative Assessment — "The Real-World Application Report" <span class="tag assess">Pedagogy-Aligned Portfolio Entry</span></h3>
+
+      <h4>Task</h4>
+      <ol>
+        <li>Choose a real or hypothetical learning scenario (e.g., teaching a language, learning a musical instrument, training in a corporate setting).</li>
+        <li>Provide an analysis from the perspective of <strong>two</strong> of the three learning theories.</li>
+        <li><strong>AI-Integrated Requirement (Mandatory):</strong>
+          <div class="prompt">Use an AI tool to generate a draft analysis of your scenario from one theoretical perspective.</div>
+          <p><strong>Critical Engagement Documentation</strong> — submit a document with two columns:</p>
+          <ul>
+            <li><strong>Column A:</strong> AI-Generated Text (from your prompts).</li>
+            <li><strong>Column B:</strong> Your Critique &amp; Modification.</li>
+          </ul>
+          <p>You must <strong>explicitly discuss</strong>:</p>
+          <ul>
+            <li>What parts of the AI's analysis were accurate? Inaccurate?</li>
+            <li>What limitations or biases did the AI have?</li>
+            <li>Where did you <strong>override</strong> the AI and rely on your own human judgment? Why?</li>
+            <li>What part of your <em>own</em> analysis is superior to the AI's, and why?</li>
+          </ul>
+        </li>
+        <li>Conclude by justifying which theoretical framework you would prioritize and why.</li>
+      </ol>
+
+      <h4>Rubric Criteria</h4>
+      <div class="rubric-bar" aria-hidden="true">
+        <span style="width:30%;background:var(--brand)"></span>
+        <span style="width:30%;background:var(--brand-2)"></span>
+        <span style="width:30%;background:var(--accent)"></span>
+        <span style="width:10%;background:var(--amber)"></span>
+      </div>
+      <div class="grid-2">
+        <div class="mini"><h4 style="color:#b7c6ff">Factual Accuracy — 30%</h4><p>Correct application of theoretical principles.</p></div>
+        <div class="mini"><h4 style="color:#c3b0ff">Critical Analysis — 30%</h4><p>Depth of comparison between theories; identification of trade-offs.</p></div>
+        <div class="mini"><h4 style="color:#7cf3dc">Critical AI Engagement — 30%</h4><p>Quality of critique; evidence of independent judgment; documentation of decision-making.</p></div>
+        <div class="mini"><h4 style="color:#ffcf78">Written Communication — 10%</h4><p>Clarity and structure.</p></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>🤝 AI-Supported Feedback &amp; Learning Support <span class="tag assess">Summative Context</span> <span class="tag ai">AI Literacy</span></h3>
+
+      <h4>Process</h4>
+      <p>Students submit their report drafts to an AI-powered feedback tool (e.g., <a href="https://www.gradescope.com" target="_blank">Gradescope's Feedback Studio</a> with an AI rubric) designed by the instructor.</p>
+
+      <h4>AI Role</h4>
+      <p>The AI provides initial, structured feedback on factual accuracy — e.g., <em>"Your application of 'operant conditioning' is correct, but you missed the role of the 'antecedent.'"</em></p>
+
+      <h4>Instructor Oversight &amp; Student Interrogation</h4>
+      <ol>
+        <li><strong>Instructor review:</strong> The instructor reviews and <em>adjusts</em> all AI-generated feedback before releasing it to students, to ensure it is pedagogically sound and not misleading.</li>
+        <li><strong>Student task:</strong> "After reading the AI's feedback on your draft, write a 1-paragraph reflection answering: <em>'Do you agree with the AI's assessment? What might it have missed about your argument? Where did you need to use your own judgment to overrule its feedback?'</em>"</li>
+        <li><strong>Calibration:</strong> In the following tutorial, the instructor facilitates a 10-minute session where students share one example of where the AI feedback was helpful and one where it was not. This builds a shared understanding of AI's limits.</li>
+      </ol>
+
+      <div class="callout ai">
+        <b>Human-in-the-loop principle:</b> No AI-generated feedback reaches a student without instructor review. The AI is a
+        first-pass annotator; the instructor remains the pedagogical authority, and students remain the final judges of their own argument.
+      </div>
+
+      <details>
+        <summary>📋 Preparation checklist — Assessment</summary>
+        <div class="details-body">
+          <div class="check-row"><input type="checkbox" id="c4-1"><label for="c4-1">Publish the summative task brief and the four-criteria rubric on the LMS.</label></div>
+          <div class="check-row"><input type="checkbox" id="c4-2"><label for="c4-2">Configure the Gradescope AI rubric and test it against a sample report.</label></div>
+          <div class="check-row"><input type="checkbox" id="c4-3"><label for="c4-3">Design the two-column (Column A / Column B) submission template.</label></div>
+          <div class="check-row"><input type="checkbox" id="c4-4"><label for="c4-4">Schedule the 10-minute feedback-calibration session in the following tutorial.</label></div>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ================= 5. ALIGNMENT ================= -->
+  <section id="alignment">
+    <div class="sec-head"><div class="sec-num">5</div><h2>Constructive Alignment Matrix</h2></div>
+    <p class="sec-sub">Every learning outcome is aligned to an activity, an assessment, a pedagogy link, and an AI-integration link.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Learning Outcome</th>
+            <th>Teaching Activity</th>
+            <th>Assessment Method</th>
+            <th>Pedagogy Link</th>
+            <th>AI Integration Link</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>1.</strong> Analyze and compare core principles</td>
+            <td>Jigsaw Expert Group discussion &amp; Home Group concept mapping</td>
+            <td>Peer assessment of expert teaching; real-time observation by instructor</td>
+            <td>Social Constructivism (peer teaching, co-construction)</td>
+            <td>AI used to generate activity ideas, but groups critically interrogate and refine them</td>
+          </tr>
+          <tr>
+            <td><strong>2.</strong> Apply theory to a real-world scenario</td>
+            <td>Jigsaw expert groups apply theory to potential classroom activities</td>
+            <td>Summative: Real-World Application Report with a requirement to critique AI's application</td>
+            <td>Social Constructivism (contextual learning)</td>
+            <td>AI used to draft analysis; students must evaluate and modify AI's output, documenting human-override decisions</td>
+          </tr>
+          <tr>
+            <td><strong>3.</strong> Co-construct shared conceptual map</td>
+            <td>Home Group concept mapping on Miro</td>
+            <td>Observation of group collaboration; final concept map quality</td>
+            <td>Social Constructivism (shared artifact)</td>
+            <td>AI generates a comparative concept map; students compare it to their own to identify AI limitations (e.g., oversimplification, missing nuance)</td>
+          </tr>
+          <tr>
+            <td><strong>4.</strong> Critically evaluate AI-generated explanations</td>
+            <td>AI Scenario Introduction; AI prompt and critique in Expert Groups; AI reflection discussion</td>
+            <td>Formative: 2-sentence reflection on what AI suggestion was modified and why</td>
+            <td>Social Constructivism (critical peer &amp; AI dialogue)</td>
+            <td>Students evaluate AI for accuracy, bias, and limitations in multiple structured activities throughout the lesson</td>
+          </tr>
+          <tr>
+            <td><strong>5.</strong> Demonstrate independent judgment</td>
+            <td>Home Group concept map comparison; AI reflection discussion</td>
+            <td>Summative: Documentation of decision-making (Column A vs. Column B in report)</td>
+            <td>Social Constructivism (negotiation of meaning)</td>
+            <td>Students explicitly decide when to accept, modify, or reject AI outputs, justifying their choices</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ================= 6. RESOURCES ================= -->
+  <section id="resources">
+    <div class="sec-head"><div class="sec-num">6</div><h2>Required Resources &amp; Technology</h2></div>
+    <p class="sec-sub">Everything needed to run the session as designed.</p>
+
+    <div class="grid-2">
+      <div class="card">
+        <h3>🖥️ Learning Management System</h3>
+        <p><strong>Blackboard / Moodle</strong> — used for pre-reading, the diagnostic quiz, submissions, and AI-feedback release.</p>
+      </div>
+      <div class="card">
+        <h3>🤖 AI Tools</h3>
+        <p><a href="https://chat.openai.com" target="_blank">ChatGPT</a> / <a href="https://claude.ai" target="_blank">Claude</a> / <a href="https://www.bing.com/chat" target="_blank">Bing Chat</a> for student AI interactions; <a href="https://www.gradescope.com" target="_blank">Gradescope</a> for AI-supported feedback on the summative draft.</p>
+      </div>
+      <div class="card">
+        <h3>🧰 Other Platforms</h3>
+        <p><a href="https://miro.com" target="_blank">Miro</a> (concept mapping), <a href="https://www.mentimeter.com" target="_blank">Mentimeter</a> (polls), <a href="https://kahoot.com" target="_blank">Kahoot!</a> (knowledge checks), <a href="https://padlet.com" target="_blank">Padlet</a> (critique walls), <a href="https://forms.google.com" target="_blank">Google Forms</a> (post-test/reflections), <a href="https://jamboard.google.com" target="_blank">Jamboard</a> (brainstorm), LMS-internal flashcards.</p>
+      </div>
+      <div class="card">
+        <h3>📦 Physical Materials</h3>
+        <p>Large concept-map paper, markers, sticky notes (for the low-tech fallback if digital tools fail).</p>
+      </div>
+      <div class="card">
+        <h3>📚 AI Literacy Resources</h3>
+        <p>A short LMS page: <strong>"AI in Higher Ed: A Critical Guide"</strong> outlining common biases and how to prompt effectively for learning.</p>
+      </div>
+      <div class="card">
+        <h3>🎞️ Media Assets</h3>
+        <p>Animated visualizations: Pavlov's Dog, Atkinson–Shiffrin Memory Model, Vygotsky's ZPD. All captioned for accessibility.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 7. DIFFERENTIATION ================= -->
+  <section id="differentiation">
+    <div class="sec-head"><div class="sec-num">7</div><h2>Differentiation &amp; Inclusivity</h2></div>
+    <p class="sec-sub">Pedagogy-tailored supports, AI-supported differentiation, and accessibility accommodations.</p>
+
+    <div class="card construct">
+      <h3>🧩 Pedagogy-Tailored Supports <span class="tag ped">Social Constructivism</span></h3>
+      <h4>Struggling Learners</h4>
+      <p>AI tools can generate simplified explanations or step-by-step summaries of a theory on demand. The instructor directs these students to use this as a starting scaffold <em>before</em> group discussion.</p>
+      <div class="prompt">Explain Vygotsky's ZPD in three sentences with an example.</div>
+      <h4>Advanced Learners</h4>
+      <p>The instructor provides a prompt to deepen critical thinking:</p>
+      <div class="prompt">Argue against your assigned learning theory's core principles using the perspective of another theory. What are the weaknesses?</div>
+    </div>
+
+    <div class="card">
+      <h3>♿ AI-Supported Differentiation <span class="tag ai">AI Literacy</span></h3>
+      <h4>Accessibility</h4>
+      <ul>
+        <li>AI-generated captions for any videos shown.</li>
+        <li>Text-to-speech for the pre-reading.</li>
+        <li>AI-powered language translation for non-native speakers (e.g., <a href="https://translate.google.com" target="_blank">Google Translate</a> integration).</li>
+      </ul>
+      <h4>Varying AI Familiarity</h4>
+      <ul>
+        <li>The instructor provides a <strong>"Prompt Bank"</strong> (e.g., "5 Prompts to Analyze a Theory") for students less comfortable with AI tools, while advanced users can craft their own.</li>
+        <li>Clear guidance: <em>"If you've never used AI for learning, start with the suggested prompts."</em></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>🦾 Accessibility Accommodations</h3>
+      <ul>
+        <li>Captioned videos</li>
+        <li>Large-print handouts</li>
+        <li>Alternative group roles (e.g., timekeeper, note-taker) as needed</li>
+      </ul>
+    </div>
+
+    <details>
+      <summary>📋 Preparation checklist — Differentiation</summary>
+      <div class="details-body">
+        <div class="check-row"><input type="checkbox" id="c7-1"><label for="c7-1">Build the "Prompt Bank" handout for less confident AI users.</label></div>
+        <div class="check-row"><input type="checkbox" id="c7-2"><label for="c7-2">Prepare simplified-explanation and advanced-critique prompts for differentiated pathways.</label></div>
+        <div class="check-row"><input type="checkbox" id="c7-3"><label for="c7-3">Verify captions, text-to-speech, and translation routes work on the LMS.</label></div>
+      </div>
+    </details>
+  </section>
+
+  <!-- ================= 8. REFLECTION ================= -->
+  <section id="reflection">
+    <div class="sec-head"><div class="sec-num">8</div><h2>Reflection &amp; Improvement</h2></div>
+    <p class="sec-sub">How we know it worked, and what we change if it didn't.</p>
+
+    <div class="grid-2">
+      <div class="card">
+        <h3>📈 Pedagogy-Specific Success Indicators</h3>
+        <ul>
+          <li><strong>Social Constructivism:</strong> Did groups engage in authentic, critical dialogue? Were concept maps co-constructed, not just copied from a single source? (Observational data from the instructor.)</li>
+          <li><strong>Collaboration Efficacy:</strong> Did all members contribute equally in Jigsaw groups? (Assessed via peer feedback.)</li>
+        </ul>
+      </div>
+      <div class="card accent">
+        <h3>🗣️ Student Feedback <span class="tag ai">Aligned with Pedagogical Goals</span></h3>
+        <h4>AI-Specific Reflection Question</h4>
+        <p><em>"Did the AI tools help you understand the theories better, or did they distract you from building your own understanding? Were you able to maintain your own critical thinking while using AI?"</em></p>
+        <h4>General</h4>
+        <p><em>"Which activity (the Jigsaw, the concept map, the AI critique) most helped you learn? What could be improved?"</em></p>
+      </div>
+    </div>
+
+    <div class="card construct">
+      <h3>🔍 Instructor Reflection &amp; Modification</h3>
+      <h4>Data on AI Critical Engagement</h4>
+      <p>The instructor reviews students' "Column A vs. Column B" submissions and their 2-sentence formative reflections to assess whether the <em>critical engagement</em> criteria were met.</p>
+      <div class="callout">
+        <b>Reflective question:</b> "Where did students struggle most with criticality? Did they simply accept AI's first suggestion?
+        Did they identify bias? Did they understand when human judgment was essential?"
+      </div>
+      <h4>Modification Strategy</h4>
+      <p>If students struggled with AI critical thinking, the <em>next</em> lesson will include a focused 10-minute workshop on <strong>"AI prompt crafting for critique"</strong> (e.g., <em>"Write a prompt that forces the AI to identify its own limitations"</em>). The AI prompts for the Jigsaw activity will be refined to be more specific, e.g.:</p>
+      <div class="prompt">Generate a behaviorist activity that does *not* rely on rewards.</div>
+    </div>
+
+    <details>
+      <summary>📋 Preparation checklist — Reflection</summary>
+      <div class="details-body">
+        <div class="check-row"><input type="checkbox" id="c8-1"><label for="c8-1">Create an exit-ticket form containing the AI-specific and general reflection questions.</label></div>
+        <div class="check-row"><input type="checkbox" id="c8-2"><label for="c8-2">Set a calendar reminder to review Column A/B submissions within one week.</label></div>
+        <div class="check-row"><input type="checkbox" id="c8-3"><label for="c8-3">Draft the contingency "AI prompt crafting for critique" mini-workshop for the next lesson.</label></div>
+      </div>
+    </details>
+  </section>
+
+  <!-- ================= 9. TOOLS ================= -->
+  <section id="tools">
+    <div class="sec-head"><div class="sec-num">9</div><h2>External Tool Guides</h2></div>
+    <p class="sec-sub">Step-by-step setup for every external platform used in this lesson. Each guide states its purpose and the learning objective it serves.</p>
+
+    <!-- Mentimeter -->
+    <div class="card">
+      <h3>🗳️ Mentimeter — Live Polling <span class="tag tool">Introduction · Synthesis</span></h3>
+      <p><strong>Purpose:</strong> Anonymous, real-time polling to surface misconceptions and check clarity across all 90 students.</p>
+      <p><strong>Learning objectives:</strong> ILO 1 (analyze/compare) · Formative assessment of concept clarity.</p>
+      <details open>
+        <summary>Numbered setup steps</summary>
+        <div class="details-body">
+          <ol>
+            <li>Go to <a href="https://www.mentimeter.com" target="_blank">create a Mentimeter poll</a> and sign in or register free.</li>
+            <li>Click <strong>New presentation</strong> → <strong>Add slide</strong>. Choose <strong>Multiple Choice</strong> for the concept questions and <strong>Word Cloud</strong> for the hook brainstorm.</li>
+            <li>Type the three pre-test concept questions and their answer options.</li>
+            <li>Click <strong>Present</strong>. The join code appears on screen next to <code>menti.com</code>.</li>
+            <li>Ask students to open <a href="https://www.menti.com" target="_blank">menti.com</a> on their phones and enter the code.</li>
+            <li>Allow 60 seconds, then <strong>reveal the results chart</strong> and lead a think-pair-share on the most-missed item.</li>
+            <li>Reuse the same poll in the Synthesis to show improvement on the same concepts.</li>
+          </ol>
+        </div>
+      </details>
+    </div>
+
+    <!-- Kahoot -->
+    <div class="card">
+      <h3>❓ Kahoot! — Gamified Knowledge Check <span class="tag tool">Development</span></h3>
+      <p><strong>Purpose:</strong> A fast, competitive mid-point check that each expert group knows its theory's core principles.</p>
+      <p><strong>Learning objectives:</strong> ILO 1 (analyze/compare core principles).</p>
+      <details>
+        <summary>Numbered setup steps</summary>
+        <div class="details-body">
+          <ol>
+            <li>Go to <a href="https://kahoot.com" target="_blank">build a Kahoot quiz</a> and log in.</li>
+            <li>Click <strong>Create</strong> → <strong>New kahoot</strong>.</li>
+            <li>Add 5 questions: one per theory plus two comparison items; set a 20-second timer each.</li>
+            <li>Click <strong>Save</strong>, then <strong>Play</strong> → <strong>Teach</strong>.</li>
+            <li>Display the <strong>game PIN</strong>; students join at <a href="https://kahoot.it" target="_blank">kahoot.it</a>.</li>
+            <li>Run in <strong>team mode</strong> (one device per expert group) to reinforce collaboration.</li>
+          </ol>
+        </div>
+      </details>
+    </div>
+
+    <!-- Padlet -->
+    <div class="card">
+      <h3>📌 Padlet — Critique Walls <span class="tag tool">Activity 1</span></h3>
+      <p><strong>Purpose:</strong> A shared, visible wall where expert groups post accepted / modified / rejected AI suggestions with justifications.</p>
+      <p><strong>Learning objectives:</strong> ILO 2 (apply theory) · ILO 5 (document independent judgment).</p>
+      <details>
+        <summary>Numbered setup steps</summary>
+        <div class="details-body">
+          <ol>
+            <li>Go to <a href="https://padlet.com" target="_blank">create a Padlet wall</a> and sign in.</li>
+            <li>Click <strong>Make a Padlet</strong> → choose <strong>Columns</strong>.</li>
+            <li>Title three columns: <em>Accepted</em>, <em>Modified</em>, <em>Rejected</em>.</li>
+            <li>Under <strong>Share</strong>, set "Anyone with the link can write" and copy the URL.</li>
+            <li>Distribute the link via LMS or classroom chat.</li>
+            <li>Each group adds one card per AI suggestion with a one-line justification.</li>
+            <li>Project all three walls side-by-side at the end of Activity 1 for cross-group comparison.</li>
+          </ol>
+        </div>
+      </details>
+    </div>
+
+    <!-- Google Forms -->
+    <div class="card">
+      <h3>📝 Google Forms — Post-Test &amp; Reflections <span class="tag tool">Synthesis · Formative</span></h3>
+      <p><strong>Purpose:</strong> One instrument to collect the scenario-based post-test and the 2-sentence AI reflection, auto-tied to student identity.</p>
+      <p><strong>Learning objectives:</strong> ILO 4 (critically evaluate AI) · Formative assessment of misconceptions.</p>
+      <details>
+        <summary>Numbered setup steps</summary>
+        <div class="details-body">
+          <ol>
+            <li>Go to <a href="https://forms.google.com" target="_blank">open Google Forms</a> → <strong>Blank form</strong>.</li>
+            <li>Title it <em>"Learning Theories — Post-Test &amp; AI Reflection"</em>.</li>
+            <li>Add 5 scenario-based multiple-choice questions mirroring the pre-test misconceptions.</li>
+            <li>Add a <strong>Paragraph</strong> question: "What AI suggestion did your group modify and why?"</li>
+            <li>Open <strong>Settings</strong> → enable <strong>Quiz mode</strong> (auto-score MCQs) and <strong>Collect email addresses</strong>.</li>
+            <li>Click <strong>Send</strong> and share the link at minute 105; allow 5 minutes.</li>
+            <li>Open the <strong>Responses → Linked Sheet</strong> to spot the top misconception and the AI-literacy snapshot.</li>
+          </ol>
+        </div>
+      </details>
+    </div>
+
+    <!-- Jamboard -->
+    <div class="card">
+      <h3>🧑‍🏫 Google Jamboard — Reflective Brainstorm <span class="tag tool">Synthesis</span></h3>
+      <p><strong>Purpose:</strong> Anonymous, simultaneous class-wide posting of AI reflection responses, clustered live into themes.</p>
+      <p><strong>Learning objectives:</strong> ILO 4 &amp; ILO 5 (evaluate AI; demonstrate independent judgment).</p>
+      <details>
+        <summary>Numbered setup steps</summary>
+        <div class="details-body">
+          <ol>
+            <li>Go to <a href="https://jamboard.google.com" target="_blank">create a Jamboard</a>.</li>
+            <li>Name it <em>"AI in the Learning-Theories Classroom"</em>.</li>
+            <li>Add three text boxes as column headers — one per reflection question.</li>
+            <li>Click <strong>Share</strong> → "Anyone with the link can edit" → copy the link.</li>
+            <li>Students click the link, then double-click the board to add a sticky note under the relevant column (5 min).</li>
+            <li>Drag similar notes together to cluster themes live; use the clusters to launch the whole-class discussion.</li>
+          </ol>
+        </div>
+      </details>
+    </div>
+
+    <!-- Miro -->
+    <div class="card">
+      <h3>🗺️ Miro — Collaborative Concept Mapping <span class="tag tool">Activity 2</span></h3>
+      <p><strong>Purpose:</strong> A shared digital canvas where 30 home groups build, compare, and annotate concept maps simultaneously.</p>
+      <p><strong>Learning objectives:</strong> ILO 3 (co-construct a shared map) · ILO 5 (compare with AI output).</p>
+      <details>
+        <summary>Numbered setup steps</summary>
+        <div class="details-body">
+          <ol>
+            <li>Go to <a href="https://miro.com" target="_blank">open Miro</a> and log in.</li>
+            <li>Click <strong>+ New board</strong> → choose the <strong>Mind Map</strong> template.</li>
+            <li>Create one <strong>frame</strong> per home group (or duplicate a group template 30 times).</li>
+            <li>Set sharing to <strong>"Anyone with the link can edit"</strong> and post the link on the LMS.</li>
+            <li>Each group places the three theories as central nodes and adds sticky-note connections for similarities/differences.</li>
+            <li>After the AI comparison, add <span style="color:#ff6b8b">red</span> sticky notes labelled <em>"AI missed this"</em> and <span style="color:#28d3b0">green</span> ones labelled <em>"AI got this right"</em>.</li>
+          </ol>
+        </div>
+      </details>
+    </div>
+
+    <!-- AI chat tools -->
+    <div class="card accent">
+      <h3>💬 AI Chat Tools — ChatGPT / Claude / Bing Chat <span class="tag ai">Across the Lesson</span></h3>
+      <p><strong>Purpose:</strong> The AI "interlocutor" students prompt, critique, and override at multiple points in the lesson.</p>
+      <p><strong>Learning objectives:</strong> ILO 2, ILO 4, ILO 5 (apply, critically evaluate, exercise independent judgment).</p>
+      <details>
+        <summary>Numbered setup steps &amp; safe-use protocol</summary>
+        <div class="details-body">
+          <ol>
+            <li>Direct students to <a href="https://chat.openai.com" target="_blank">ChatGPT</a>, <a href="https://claude.ai" target="_blank">Claude</a>, or <a href="https://www.bing.com/chat" target="_blank">Bing Chat</a> and create/sign in to an account.</li>
+            <li>Share the class <strong>Prompt Bank</strong> (pre-class comparison prompt, activity-generation prompt, concept-map prompt, critique prompt).</li>
+            <li>Instruct students to <strong>copy AI output into Column A</strong> and their critique into Column B for every task.</li>
+            <li>Remind students <strong>not to enter personal or sensitive data</strong> and to verify all factual claims against the pre-reading.</li>
+            <li>For the AI Scenario Introduction, display the instructor's own pre-generated 3-paragraph summary so the whole class critiques the same text.</li>
+            <li>Close the loop: every AI output must be tagged <em>accepted / modified / rejected</em> with a reason.</li>
+          </ol>
+        </div>
+      </details>
+    </div>
+
+    <!-- Gradescope -->
+    <div class="card">
+      <h3>📊 Gradescope — AI-Supported Feedback <span class="tag tool">Summative Feedback</span></h3>
+      <p><strong>Purpose:</strong> A first-pass, structured AI annotation on factual accuracy that the instructor reviews before releasing.</p>
+      <p><strong>Learning objectives:</strong> ILO 4 (critically evaluate AI feedback) · Summative rubric feedback.</p>
+      <details>
+        <summary>Numbered setup steps</summary>
+        <div class="details-body">
+          <ol>
+            <li>Go to <a href="https://www.gradescope.com" target="_blank">sign in to Gradescope</a> and open your course.</li>
+            <li>Create an assignment and upload the <strong>grading rubric</strong> matching the four report criteria.</li>
+            <li>Enable the <strong>AI-assisted feedback</strong> / Feedback Studio option built into the rubric.</li>
+            <li>Test the AI against one anonymised sample draft and adjust the rubric wording until feedback is accurate.</li>
+            <li>Publish the assignment; students upload their report drafts.</li>
+            <li><strong>Review and edit every AI comment before release</strong> — the human veto is mandatory.</li>
+            <li>Assign the 1-paragraph student reflection on the AI feedback, then run the 10-minute calibration session in the tutorial.</li>
+          </ol>
+        </div>
+      </details>
+    </div>
+
+    <details>
+      <summary>📋 Preparation checklist — External Tools</summary>
+      <div class="details-body">
+        <div class="check-row"><input type="checkbox" id="c9-1"><label for="c9-1">Mentimeter poll drafted and tested on the projector.</label></div>
+        <div class="check-row"><input type="checkbox" id="c9-2"><label for="c9-2">Kahoot quiz built (5 questions, team mode).</label></div>
+        <div class="check-row"><input type="checkbox" id="c9-3"><label for="c9-3">Padlet columns (Accepted / Modified / Rejected) created and shared.</label></div>
+        <div class="check-row"><input type="checkbox" id="c9-4"><label for="c9-4">Google Form post-test + reflection built and link ready.</label></div>
+        <div class="check-row"><input type="checkbox" id="c9-5"><label for="c9-5">Jamboard created with three column headers and share link.</label></div>
+        <div class="check-row"><input type="checkbox" id="c9-6"><label for="c9-6">Miro board with 30 frames and edit link ready.</label></div>
+        <div class="check-row"><input type="checkbox" id="c9-7"><label for="c9-7">Gradescope AI rubric configured and sample-tested.</label></div>
+        <div class="check-row"><input type="checkbox" id="c9-8"><label for="c9-8">Prompt Bank printed/shared for less confident AI users.</label></div>
+      </div>
+    </details>
+  </section>
+
+  <div class="footer">
+    <p><strong>Introduction to Learning Theories</strong> — Interactive Lesson Plan · 150 minutes · Social Constructivism · AI-Integrated.</p>
+    <p>Progress is saved automatically in your browser (localStorage). Clearing site data resets it.</p>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "lt-lesson-plan-progress-v1";
+
+  function allBoxes(){
+    return Array.prototype.slice.call(document.querySelectorAll('.check-row input[type=checkbox]'));
+  }
+
+  function load(){
+    try { return JSON.parse(localStorage.getItem(KEY)) || {}; }
+    catch(e){ return {}; }
+  }
+
+  function save(state){
+    try { localStorage.setItem(KEY, JSON.stringify(state)); } catch(e){}
+  }
+
+  function paint(){
+    var boxes = allBoxes();
+    var total = boxes.length;
+    var done = boxes.filter(function(b){ return b.checked; }).length;
+    var pct = total ? Math.round((done / total) * 100) : 0;
+    var fill = document.getElementById('barFill');
+    var label = document.getElementById('pct');
+    fill.style.width = pct + '%';
+    label.textContent = pct + '%';
+    label.setAttribute('aria-label', pct + ' percent complete');
+  }
+
+  function init(){
+    var state = load();
+    var boxes = allBoxes();
+
+    boxes.forEach(function(box){
+      // restore
+      if (state[box.id]) box.checked = true;
+      // persist on change
+      box.addEventListener('change', function(){
+        var s = load();
+        if (box.checked) s[box.id] = true; else delete s[box.id];
+        save(s);
+        paint();
+      });
+      // clickable label rows
+      var label = document.querySelector('label[for="' + box.id + '"]');
+      if (label){
+        label.addEventListener('click', function(ev){
+          // allow default label behaviour, just repaint after
+          setTimeout(paint, 0);
+        });
+      }
+    });
+
+    document.getElementById('resetBtn').addEventListener('click', function(){
+      boxes.forEach(function(b){ b.checked = false; });
+      save({});
+      paint();
+    });
+
+    paint();
+  }
+
+  if (document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
 </body>
 </html>
