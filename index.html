@@ -1,16 +1,1309 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Basic HTML Project</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Introduction to Learning Theories — Interactive Lesson Plan</title>
+<style>
+  :root{
+    --bg:#f6f7fb; --surface:#ffffff; --surface-2:#f0f2f8; --border:#e2e6f0;
+    --text:#1a2233; --muted:#5b6780; --faint:#8791a8;
+    --brand:#4f46e5; --brand-2:#6366f1; --brand-soft:#eef0ff;
+    --behav:#0ea5e9; --behav-soft:#e6f6fe;
+    --cogni:#8b5cf6; --cogni-soft:#f1ecfe;
+    --constr:#10b981; --constr-soft:#e7f8f2;
+    --ai:#f59e0b; --ai-soft:#fff4e0;
+    --ok:#16a34a; --warn:#d97706; --bad:#dc2626;
+    --shadow:0 1px 2px rgba(16,24,40,.05),0 8px 24px rgba(16,24,40,.06);
+    --shadow-lg:0 12px 40px rgba(16,24,40,.12);
+    --radius:16px; --radius-sm:10px;
+  }
+  html[data-theme="dark"]{
+    --bg:#0e1117; --surface:#161b26; --surface-2:#1d2330; --border:#2a3242;
+    --text:#e8ecf4; --muted:#a6b0c4; --faint:#7d879c;
+    --brand:#818cf8; --brand-2:#a5b4fc; --brand-soft:#1e2340;
+    --behav:#38bdf8; --behav-soft:#12283a;
+    --cogni:#a78bfa; --cogni-soft:#241d38;
+    --constr:#34d399; --constr-soft:#122c26;
+    --ai:#fbbf24; --ai-soft:#33270f;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35);
+    --shadow-lg:0 12px 40px rgba(0,0,0,.5);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.6; -webkit-font-smoothing:antialiased;
+    transition:background .3s ease,color .3s ease;
+  }
+  a{color:var(--brand); text-decoration:none}
+  a:hover{text-decoration:underline}
+  h1,h2,h3,h4{line-height:1.25; margin:0 0 .4em}
+  h1{font-size:1.7rem; letter-spacing:-.02em}
+  h2{font-size:1.4rem; letter-spacing:-.01em}
+  h3{font-size:1.08rem}
+  p{margin:.4em 0}
+  code{background:var(--surface-2); padding:.1em .4em; border-radius:6px; font-size:.9em}
+
+  /* ---------- Layout ---------- */
+  .app{max-width:1180px; margin:0 auto; padding:0 16px 80px}
+  header.top{
+    position:sticky; top:0; z-index:50;
+    background:color-mix(in srgb,var(--surface) 88%, transparent);
+    backdrop-filter:saturate(180%) blur(12px);
+    border-bottom:1px solid var(--border);
+    margin:0 -16px 22px; padding:12px 16px;
+  }
+  .top-inner{max-width:1180px; margin:0 auto; display:flex; gap:16px; align-items:center; flex-wrap:wrap}
+  .brandmark{display:flex; align-items:center; gap:12px; min-width:0}
+  .logo{
+    width:42px;height:42px;border-radius:12px;flex:none;
+    background:linear-gradient(135deg,var(--brand),var(--cogni));
+    display:grid;place-items:center;color:#fff;font-size:1.3rem;box-shadow:var(--shadow);
+  }
+  .brandmark .t{min-width:0}
+  .brandmark .t strong{display:block; font-size:1rem}
+  .brandmark .t span{display:block; font-size:.78rem; color:var(--muted)}
+  .top-tools{margin-left:auto; display:flex; align-items:center; gap:10px}
+  .iconbtn{
+    border:1px solid var(--border); background:var(--surface); color:var(--text);
+    width:40px;height:40px;border-radius:11px; cursor:pointer; font-size:1.05rem;
+    display:grid;place-items:center; transition:.2s;
+  }
+  .iconbtn:hover{border-color:var(--brand); color:var(--brand)}
+
+  .progress-wrap{display:flex;align-items:center;gap:10px;font-size:.78rem;color:var(--muted)}
+  .progress-track{width:140px;height:8px;border-radius:99px;background:var(--surface-2);overflow:hidden;border:1px solid var(--border)}
+  .progress-fill{height:100%;width:0;background:linear-gradient(90deg,var(--brand),var(--constr));transition:width .5s cubic-bezier(.22,1,.36,1)}
+
+  /* ---------- Nav tabs ---------- */
+  nav.tabs{
+    display:flex; gap:8px; overflow-x:auto; padding:6px 2px 12px;
+    scrollbar-width:none; -ms-overflow-style:none;
+  }
+  nav.tabs::-webkit-scrollbar{display:none}
+  .tab{
+    flex:none; border:1px solid var(--border); background:var(--surface); color:var(--muted);
+    padding:8px 15px; border-radius:99px; cursor:pointer; font-size:.85rem; font-weight:600;
+    display:flex; align-items:center; gap:7px; transition:.2s; white-space:nowrap;
+  }
+  .tab:hover{color:var(--text); border-color:var(--brand)}
+  .tab.active{background:var(--brand); border-color:var(--brand); color:#fff; box-shadow:var(--shadow)}
+  .tab .dot{width:7px;height:7px;border-radius:50%;background:var(--faint)}
+  .tab.active .dot{background:#fff}
+  .tab.done .dot{background:var(--ok)}
+
+  /* ---------- Sections ---------- */
+  section.panel{display:none; animation:fade .35s ease}
+  section.panel.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+  .card{
+    background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
+    padding:22px; margin-bottom:18px; box-shadow:var(--shadow);
+  }
+  .card.pad-sm{padding:16px}
+  .section-head{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+  .section-head .num{
+    width:34px;height:34px;flex:none;border-radius:10px;background:var(--brand-soft);color:var(--brand);
+    display:grid;place-items:center;font-weight:700;font-size:.95rem;
+  }
+  .lede{color:var(--muted);font-size:.95rem;margin-bottom:4px}
+
+  .grid{display:grid; gap:16px}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  @media(max-width:820px){.g2,.g3{grid-template-columns:1fr}}
+
+  .pill{
+    display:inline-flex;align-items:center;gap:6px;font-size:.72rem;font-weight:700;
+    padding:3px 10px;border-radius:99px;letter-spacing:.02em;text-transform:uppercase;
+  }
+  .pill.brand{background:var(--brand-soft);color:var(--brand)}
+  .pill.behav{background:var(--behav-soft);color:var(--behav)}
+  .pill.cogni{background:var(--cogni-soft);color:var(--cogni)}
+  .pill.constr{background:var(--constr-soft);color:var(--constr)}
+  .pill.ai{background:var(--ai-soft);color:var(--ai)}
+  .pill.muted{background:var(--surface-2);color:var(--muted)}
+
+  /* ---------- ILO list ---------- */
+  .ilo{
+    border:1px solid var(--border); border-left:4px solid var(--brand);
+    border-radius:var(--radius-sm); padding:14px 16px; margin-bottom:12px;
+    display:flex; gap:14px; align-items:flex-start; background:var(--surface);
+    transition:.2s;
+  }
+  .ilo.ai{border-left-color:var(--ai)}
+  .ilo:hover{box-shadow:var(--shadow)}
+  .ilo .chk{margin-top:3px}
+  .ilo .body{flex:1;min-width:0}
+  .ilo .body p{margin:0;font-size:.95rem}
+  .bloom{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--faint)}
+
+  input[type=checkbox]{
+    appearance:none;-webkit-appearance:none;width:20px;height:20px;flex:none;
+    border:2px solid var(--border); border-radius:6px; cursor:pointer; position:relative; transition:.15s;
+    background:var(--surface);
+  }
+  input[type=checkbox]:checked{background:var(--ok);border-color:var(--ok)}
+  input[type=checkbox]:checked::after{content:"✓";position:absolute;color:#fff;font-size:.8rem;font-weight:800;left:3px;top:-1px}
+  input[type=checkbox]:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+
+  /* ---------- Station cards ---------- */
+  .station{border-radius:var(--radius);border:1px solid var(--border);overflow:hidden;background:var(--surface);box-shadow:var(--shadow);display:flex;flex-direction:column}
+  .station .head{padding:14px 16px;color:#fff;display:flex;align-items:center;gap:10px}
+  .station.s-behav .head{background:linear-gradient(120deg,#0284c7,#0ea5e9)}
+  .station.s-cogni .head{background:linear-gradient(120deg,#7c3aed,#8b5cf6)}
+  .station.s-constr .head{background:linear-gradient(120deg,#059669,#10b981)}
+  .station .head .n{width:30px;height:30px;border-radius:9px;background:rgba(255,255,255,.22);display:grid;place-items:center;font-weight:800}
+  .station .head h3{margin:0;font-size:1rem}
+  .station .head .time{margin-left:auto;font-size:.75rem;background:rgba(255,255,255,.22);padding:3px 9px;border-radius:99px;font-weight:700}
+  .station .body{padding:16px;flex:1;display:flex;flex-direction:column;gap:10px}
+  .station .body ul{margin:.2em 0;padding-left:1.1em}
+  .station .body li{margin:.25em 0;font-size:.92rem}
+
+  .callout{
+    border-radius:var(--radius-sm);padding:12px 14px;font-size:.9rem;border:1px solid var(--border);
+    background:var(--surface-2);
+  }
+  .callout.ai{background:var(--ai-soft);border-color:color-mix(in srgb,var(--ai) 30%,transparent)}
+  .callout.constr{background:var(--constr-soft);border-color:color-mix(in srgb,var(--constr) 30%,transparent)}
+  .callout.behav{background:var(--behav-soft);border-color:color-mix(in srgb,var(--behav) 30%,transparent)}
+  .callout.cogni{background:var(--cogni-soft);border-color:color-mix(in srgb,var(--cogni) 30%,transparent)}
+  .callout strong{display:block;margin-bottom:2px}
+
+  /* ---------- Details / collapsible ---------- */
+  details.tool{
+    border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);
+    margin-bottom:14px;overflow:hidden;box-shadow:var(--shadow);
+  }
+  details.tool>summary{
+    cursor:pointer;padding:15px 18px;font-weight:700;display:flex;align-items:center;gap:12px;
+    list-style:none;user-select:none;
+  }
+  details.tool>summary::-webkit-details-marker{display:none}
+  details.tool>summary .chev{margin-left:auto;transition:transform .25s;color:var(--faint)}
+  details.tool[open]>summary .chev{transform:rotate(90deg)}
+  details.tool>summary .ico{width:36px;height:36px;flex:none;border-radius:10px;display:grid;place-items:center;font-size:1.1rem;background:var(--brand-soft)}
+  details.tool>summary .tt{min-width:0}
+  details.tool>summary .tt small{display:block;font-weight:500;color:var(--muted);font-size:.78rem}
+  .tool-body{padding:0 18px 18px;border-top:1px solid var(--border)}
+  ol.steps{margin:12px 0;padding-left:0;list-style:none;counter-reset:s}
+  ol.steps>li{
+    counter-increment:s;position:relative;padding:8px 0 8px 40px;font-size:.92rem;
+    border-bottom:1px dashed var(--border);
+  }
+  ol.steps>li:last-child{border-bottom:none}
+  ol.steps>li::before{
+    content:counter(s);position:absolute;left:0;top:8px;width:26px;height:26px;border-radius:8px;
+    background:var(--brand);color:#fff;display:grid;place-items:center;font-size:.78rem;font-weight:800;
+  }
+  .obj-box{background:var(--surface-2);border-radius:var(--radius-sm);padding:12px 14px;font-size:.88rem;margin-top:10px}
+  .obj-box b{color:var(--brand)}
+
+  /* ---------- Table ---------- */
+  .table-scroll{overflow-x:auto;border-radius:var(--radius-sm);border:1px solid var(--border)}
+  table{border-collapse:collapse;width:100%;font-size:.86rem;min-width:640px}
+  th,td{padding:11px 13px;text-align:left;border-bottom:1px solid var(--border);vertical-align:top}
+  th{background:var(--surface-2);font-size:.75rem;text-transform:uppercase;letter-spacing:.03em;color:var(--muted);position:sticky;top:0}
+  tbody tr:hover{background:var(--surface-2)}
+  td b{color:var(--text)}
+
+  /* ---------- Quiz ---------- */
+  .quiz .q{border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;margin-bottom:14px;background:var(--surface)}
+  .quiz .q .qt{font-weight:700;margin-bottom:10px;font-size:.95rem}
+  .opt{
+    display:flex;align-items:center;gap:10px;padding:10px 13px;border:1px solid var(--border);
+    border-radius:9px;margin-bottom:8px;cursor:pointer;font-size:.9rem;transition:.15s;background:var(--surface)
+  }
+  .opt:hover{border-color:var(--brand)}
+  .opt .k{width:24px;height:24px;flex:none;border-radius:6px;background:var(--surface-2);display:grid;place-items:center;font-weight:700;font-size:.78rem}
+  .opt.correct{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 12%,transparent)}
+  .opt.correct .k{background:var(--ok);color:#fff}
+  .opt.wrong{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 10%,transparent)}
+  .opt.wrong .k{background:var(--bad);color:#fff}
+  .opt.disabled{pointer-events:none}
+  .explain{font-size:.85rem;color:var(--muted);margin-top:6px;padding:10px 12px;background:var(--surface-2);border-radius:8px;display:none}
+  .explain.show{display:block}
+  .quiz-score{font-weight:700;font-size:.95rem}
+
+  /* ---------- Flashcards ---------- */
+  .fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px}
+  .fc{
+    height:150px;perspective:1000px;cursor:pointer;
+  }
+  .fc .inner{position:relative;width:100%;height:100%;transition:transform .6s;transform-style:preserve-3d}
+  .fc.flipped .inner{transform:rotateY(180deg)}
+  .fc .face{
+    position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--radius-sm);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px;text-align:center;
+    border:1px solid var(--border);box-shadow:var(--shadow);
+  }
+  .fc .front{background:linear-gradient(135deg,var(--brand),var(--cogni));color:#fff}
+  .fc .front .name{font-weight:800;font-size:1.02rem}
+  .fc .front small{opacity:.85;font-size:.72rem;margin-top:4px}
+  .fc .back{background:var(--surface);transform:rotateY(180deg);font-size:.82rem;color:var(--text)}
+  .fc .back .tag{font-size:.65rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px}
+
+  /* ---------- Buttons ---------- */
+  .btn{
+    border:1px solid var(--border);background:var(--surface);color:var(--text);
+    padding:9px 16px;border-radius:10px;cursor:pointer;font-weight:600;font-size:.86rem;transition:.18s;
+    display:inline-flex;align-items:center;gap:8px;
+  }
+  .btn:hover{border-color:var(--brand);color:var(--brand)}
+  .btn.primary{background:var(--brand);color:#fff;border-color:var(--brand)}
+  .btn.primary:hover{background:var(--brand-2);color:#fff}
+  .btn.ghost{background:transparent}
+  .btn.small{padding:6px 12px;font-size:.8rem}
+
+  /* ---------- Textareas ---------- */
+  textarea{
+    width:100%;border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px;
+    font:inherit;font-size:.9rem;background:var(--surface-2);color:var(--text);resize:vertical;min-height:88px;
+  }
+  textarea:focus{outline:none;border-color:var(--brand);background:var(--surface)}
+  .save-hint{font-size:.72rem;color:var(--ok);margin-top:4px;height:14px}
+
+  /* ---------- Ruler poll ---------- */
+  .ruler{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+  .ruler button{
+    flex:1;min-width:52px;padding:12px 4px;border-radius:10px;border:1px solid var(--border);
+    background:var(--surface);cursor:pointer;font-weight:800;font-size:1rem;color:var(--muted);transition:.15s;
+  }
+  .ruler button:hover{border-color:var(--brand);color:var(--brand)}
+  .ruler button.sel{background:var(--brand);color:#fff;border-color:var(--brand);transform:translateY(-2px);box-shadow:var(--shadow)}
+
+  /* ---------- misc ---------- */
+  .tagrow{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+  .stat{text-align:center;padding:14px;border-radius:var(--radius-sm);background:var(--surface-2)}
+  .stat b{display:block;font-size:1.5rem;color:var(--brand)}
+  .stat span{font-size:.78rem;color:var(--muted)}
+  .footer{color:var(--faint);font-size:.8rem;text-align:center;padding:26px 0 0;border-top:1px solid var(--border);margin-top:24px}
+  .sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+  .noprint{}
+  @media print{
+    .top-tools,nav.tabs,.noprint{display:none!important}
+    section.panel{display:block!important;break-inside:avoid}
+    .card{box-shadow:none;border:1px solid #ccc}
+    body{background:#fff}
+  }
+  .kbd{font-family:ui-monospace,monospace;background:var(--surface-2);border:1px solid var(--border);border-bottom-width:2px;border-radius:6px;padding:1px 6px;font-size:.8em}
+</style>
 </head>
 <body>
-  <div class="container">
-    <h1>Hello World!</h1>
-    <p>Welcome to your new project.</p>
+<div class="app">
+
+  <!-- ===================== HEADER ===================== -->
+  <header class="top noprint">
+    <div class="top-inner">
+      <div class="brandmark">
+        <div class="logo">🧠</div>
+        <div class="t">
+          <strong>Introduction to Learning Theories</strong>
+          <span>Educational Psychology · First-Year Undergraduate · 150 min</span>
+        </div>
+      </div>
+      <div class="top-tools">
+        <div class="progress-wrap" title="Your progress is saved in this browser">
+          <div class="progress-track"><div class="progress-fill" id="globalFill"></div></div>
+          <span id="globalPct">0%</span>
+        </div>
+        <button class="iconbtn" id="themeBtn" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+        <button class="iconbtn" id="resetBtn" aria-label="Reset all progress" title="Reset progress">↺</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="tagrow noprint">
+    <span class="pill brand">Social Constructivism</span>
+    <span class="pill ai">AI-Integrated (All Sections)</span>
+    <span class="pill constr">Constructive Alignment</span>
+    <span class="pill muted">90 students · 15 groups × 6</span>
+    <span class="pill muted">Language: English</span>
   </div>
-  <script src="script.js"></script>
+
+  <nav class="tabs noprint" id="tabs">
+    <button class="tab active" data-tab="overview"><span class="dot"></span>Overview</button>
+    <button class="tab" data-tab="ilos"><span class="dot"></span>ILOs</button>
+    <button class="tab" data-tab="preclass"><span class="dot"></span>Pre-Class</button>
+    <button class="tab" data-tab="activities"><span class="dot"></span>Activities</button>
+    <button class="tab" data-tab="assessment"><span class="dot"></span>Assessment</button>
+    <button class="tab" data-tab="matrix"><span class="dot"></span>Alignment Matrix</button>
+    <button class="tab" data-tab="resources"><span class="dot"></span>Resources</button>
+    <button class="tab" data-tab="differentiation"><span class="dot"></span>Differentiation</button>
+    <button class="tab" data-tab="reflection"><span class="dot"></span>Reflection</button>
+    <button class="tab" data-tab="toolkit"><span class="dot"></span>Tool Guides</button>
+  </nav>
+
+  <!-- ===================== OVERVIEW ===================== -->
+  <section class="panel active" id="tab-overview">
+    <div class="card">
+      <div class="section-head"><div class="num">i</div><h2>Lesson at a Glance</h2></div>
+      <p class="lede">A 150-minute, social-constructivist lesson that builds conceptual understanding of behaviourism, cognitivism, and constructivism — while integrating <strong>AI as a tool for critical literacy, not a shortcut</strong>.</p>
+      <div class="grid g3" style="margin-top:14px">
+        <div class="stat"><b>150</b><span>minutes total</span></div>
+        <div class="stat"><b>90</b><span>students (15 groups of 6)</span></div>
+        <div class="stat"><b>3</b><span>rotating learning stations</span></div>
+        <div class="stat"><b>6</b><span>intended learning outcomes</span></div>
+        <div class="stat"><b>3×25</b><span>min stations + 5 min transitions</span></div>
+        <div class="stat"><b>25%</b><span>rubric weight on AI critical engagement</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-head"><div class="num">⏱</div><h2>Lesson Flow</h2></div>
+      <div class="grid g2">
+        <div class="callout brand">
+          <strong>Introduction · 15–20 min</strong>
+          Hook scenario → think-pair-share → Mentimeter pre-conception poll → AI summary critique (modelled by instructor).
+        </div>
+        <div class="callout constr">
+          <strong>Development · 100–110 min</strong>
+          Cooperative learning stations (Behaviourism / Cognitivism / Constructivism-AI), plus cross-pedagogy interactive lecture & flashcard review.
+        </div>
+        <div class="callout ai">
+          <strong>Synthesis &amp; Closure · 15–20 min</strong>
+          Gallery walk → post-test quiz → AI reflection discussion → one-minute reflection paper → preview of TPACK session.
+        </div>
+        <div class="callout cogni">
+          <strong>Preferred pedagogy</strong>
+          Social Constructivism (Vygotsky's ZPD): knowledge co-constructed through peer dialogue, shared critique, and group problem-solving.
+        </div>
+      </div>
+      <div class="callout" style="margin-top:14px">
+        <strong>⚑ Note to Instructor</strong>
+        This lesson implements constructive alignment through Social Constructivism and integrates AI as a tool for critical literacy. All AI components are structured to require active human reasoning and oversight, ensuring students develop both content knowledge and responsible AI practices.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-head"><div class="num">✓</div><h2>Your Progress</h2></div>
+      <p class="lede">Tick items as you plan and reflect. Everything saves automatically to this browser (localStorage) — no account needed.</p>
+      <div class="grid g3" style="margin-top:12px">
+        <div class="stat"><b id="statIlo">0/6</b><span>ILOs reviewed</span></div>
+        <div class="stat"><b id="statAct">0/0</b><span>Activity items checked</span></div>
+        <div class="stat"><b id="statTool">0/0</b><span>Tool guides explored</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ILOs ===================== -->
+  <section class="panel" id="tab-ilos">
+    <div class="card">
+      <div class="section-head"><div class="num">1</div><h2>Intended Learning Outcomes (ILOs)</h2></div>
+      <p class="lede">Social-Constructivism-aligned outcomes using Bloom's Taxonomy (<em>apply, analyse, evaluate, create</em>). Tick each outcome you have reviewed.</p>
+
+      <div id="iloList">
+        <label class="ilo">
+          <input type="checkbox" data-key="ilo1" class="track">
+          <div class="body"><span class="bloom">Analyse · ILO 1</span>
+            <p><strong>Compare and contrast</strong> the core principles of behaviourism, cognitivism, and constructivism using real-world learning scenarios.</p></div>
+        </label>
+        <label class="ilo">
+          <input type="checkbox" data-key="ilo2" class="track">
+          <div class="body"><span class="bloom">Apply · ILO 2</span>
+            <p><strong>Apply</strong> constructivist learning strategies (e.g., peer discussion, collaborative problem-solving) to analyse a case study of classroom learning.</p></div>
+        </label>
+        <label class="ilo">
+          <input type="checkbox" data-key="ilo3" class="track">
+          <div class="body"><span class="bloom">Evaluate · ILO 3</span>
+            <p><strong>Evaluate</strong> the strengths and limitations of each learning theory when applied to diverse learner groups, drawing on peer perspectives.</p></div>
+        </label>
+        <label class="ilo">
+          <input type="checkbox" data-key="ilo4" class="track">
+          <div class="body"><span class="bloom">Create · ILO 4</span>
+            <p><strong>Construct</strong> a group-generated concept map that synthesises the relationships between learning theories and illustrates their practical applications.</p></div>
+        </label>
+        <label class="ilo ai">
+          <input type="checkbox" data-key="ilo5" class="track">
+          <div class="body"><span class="bloom">Evaluate · AI ILO 5</span>
+            <p><strong>Critically evaluate</strong> AI-generated summaries of learning theories for accuracy, completeness, and potential bias, documenting instances where human judgment overrode AI suggestions.</p></div>
+        </label>
+        <label class="ilo ai">
+          <input type="checkbox" data-key="ilo6" class="track">
+          <div class="body"><span class="bloom">Apply · AI ILO 6</span>
+            <p><strong>Demonstrate</strong> independent decision-making by selecting when to use AI tools for research and when to rely on peer discussion and personal reasoning in collaborative knowledge-building.</p></div>
+        </label>
+      </div>
+
+      <div class="callout ai" style="margin-top:6px">
+        <strong>🤖 AI Literacy Thread</strong>
+        ILOs 5 and 6 are assessed via the dedicated rubric criterion <em>"Critical AI Engagement"</em> (25% of the summative grade) and the required "AI Use Log". They are not optional add-ons — they run through every section.
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PRE-CLASS ===================== -->
+  <section class="panel" id="tab-preclass">
+    <div class="card">
+      <div class="section-head"><div class="num">2</div><h2>Pre-Class Preparation</h2></div>
+      <div class="callout" style="border-left:4px solid var(--faint)">
+        <strong>Flipped Learning Component — Not selected</strong>
+        This section is omitted as per the pedagogy selection (Social Constructivism). AI integration in pre-class work can be offered <em>optionally</em>, but the core lesson uses in-class constructivist activities.
+      </div>
+
+      <div class="grid g2" style="margin-top:16px">
+        <div class="callout ai">
+          <strong>Optional AI pre-class extension</strong>
+          If you wish to add a flipped element, ask students to prompt an AI chatbot for a one-paragraph definition of each theory and bring it to class <em>for critique</em> — never as accepted fact. This primes the Station 3 critique activity.
+        </div>
+        <div class="callout constr">
+          <strong>Optional peer pre-activity</strong>
+          A shared Padlet board where students post "one learning experience that changed me" gives early social data to seed the opening hook discussion.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ACTIVITIES ===================== -->
+  <section class="panel" id="tab-activities">
+    <div class="card">
+      <div class="section-head"><div class="num">3</div><h2>Teaching &amp; Learning Activities</h2></div>
+      <p class="lede">Tick activities as you prepare them. All activity checkboxes count toward your global progress.</p>
+    </div>
+
+    <!-- Introduction -->
+    <div class="card">
+      <h3>Introduction <span class="pill muted">15–20 min</span></h3>
+
+      <label class="ilo"><input type="checkbox" class="track" data-key="act-hook">
+        <div class="body"><span class="bloom">Hook · Social Constructivism</span>
+          <p>Display the controversial classroom scenario on screen:
+          <em>"A teacher rewards students with stickers for correct answers; another teacher lets students discover concepts through group projects; a third uses step-by-step explanations. Which approach works best? Why?"</em>
+          Students discuss in pairs (<strong>think-pair-share</strong>) and share initial ideas.</p></div>
+      </label>
+
+      <label class="ilo"><input type="checkbox" class="track" data-key="act-map">
+        <div class="body"><span class="bloom">Pre-conception mapping</span>
+          <p>Use Mentimeter to poll students on what they already know about learning theories. Display results and highlight common misconceptions (e.g., "constructivism = no structure").</p></div>
+      </label>
+
+      <label class="ilo ai"><input type="checkbox" class="track" data-key="act-ai-summary">
+        <div class="body"><span class="bloom">🤖 AI Integration</span>
+          <p>Show students a ChatGPT-generated summary of learning theories (prepared by instructor). Ask: <em>"What did the AI get right? What might it have oversimplified or left out? Does the AI seem biased toward a particular theory?"</em>
+          Model critical questioning of the AI output — noting the importance of verifying sources and recognising that AI lacks real-world pedagogical context.</p></div>
+      </label>
+
+      <details class="tool">
+        <summary><span class="ico">📊</span><span class="tt">Mentimeter — Pre-conception Poll<small>Whole-class poll + misconception reveal</small></span><span class="chev">›</span></summary>
+        <div class="tool-body">
+          <div class="obj-box"><b>Purpose:</b> Surface prior knowledge and misconceptions before teaching.<br>
+          <b>Learning objective:</b> Activates ILO 1 — helps students compare initial beliefs against formal theory.</div>
+          <ol class="steps">
+            <li>Go to <a href="https://www.mentimeter.com" target="_blank">create a Mentimeter poll</a> and sign in (free educator account works).</li>
+            <li>Create a new presentation and add a <strong>Word Cloud</strong> slide titled <em>"What comes to mind when you hear 'learning theory'?"</em></li>
+            <li>Add a second slide: <strong>Multiple Choice</strong> — <em>"Which theory best explains learning by discovery?"</em> (Behaviourism / Cognitivism / Constructivism / Not sure).</li>
+            <li>Share the 6-digit code (or QR code) with students; project live results as they respond.</li>
+            <li>Highlight a common misconception aloud (e.g., "constructivism = no structure") and frame it as a question to revisit in the stations.</li>
+            <li>Keep this presentation open — you will reuse the "confidence rating" slide for the exit poll later.</li>
+          </ol>
+        </div>
+      </details>
+    </div>
+
+    <!-- Development -->
+    <div class="card">
+      <h3>Development Activities <span class="pill muted">100–110 min</span></h3>
+      <div class="callout constr"><strong>Social Constructivism — Cooperative Learning Stations</strong>
+        Divide students into <strong>15 groups of 6</strong>. Each group rotates through three <strong>25-minute stations</strong>, with <strong>5-minute transitions</strong>.</div>
+
+      <div class="grid g3" style="margin-top:16px">
+        <!-- Station 1 -->
+        <div class="station s-behav">
+          <div class="head"><div class="n">1</div><h3>Behaviourism</h3><span class="time">25 min</span></div>
+          <div class="body">
+            <span class="pill behav">Collaborative Jigsaw</span>
+            <p style="font-size:.9rem">Groups read a short case study about a teacher using reinforcement in a classroom. Using a provided critical analysis framework, they discuss:</p>
+            <ul>
+              <li>"What are the strengths and limitations of this approach?"</li>
+              <li>"How would a behaviourist explain learning differently from a cognitivist?"</li>
+            </ul>
+            <label class="ilo" style="border-left-color:var(--behav);padding:10px 12px">
+              <input type="checkbox" class="track" data-key="act-station1">
+              <div class="body"><span class="bloom">Quiz</span><p style="font-size:.88rem"><strong>Behaviourism Scenarios</strong> — Quiz with peer reasoning prompts.</p></div>
+            </label>
+          </div>
+        </div>
+        <!-- Station 2 -->
+        <div class="station s-cogni">
+          <div class="head"><div class="n">2</div><h3>Cognitivism</h3><span class="time">25 min</span></div>
+          <div class="body">
+            <span class="pill cogni">Group Concept Mapping</span>
+            <p style="font-size:.9rem">Groups receive a set of cognitivist key terms (<em>schema, information processing, metacognition</em>). They collaboratively build a concept map on large paper using markers, linking terms and adding real examples.</p>
+            <p style="font-size:.88rem;color:var(--muted)">The instructor circulates to scaffold group thinking.</p>
+            <label class="ilo" style="border-left-color:var(--cogni);padding:10px 12px">
+              <input type="checkbox" class="track" data-key="act-station2">
+              <div class="body"><span class="bloom">Output</span><p style="font-size:.88rem"><strong>Group concept map</strong> (externalised shared mental model — feeds ILO 4).</p></div>
+            </label>
+          </div>
+        </div>
+        <!-- Station 3 -->
+        <div class="station s-constr">
+          <div class="head"><div class="n">3</div><h3>Constructivism</h3><span class="time">25 min</span></div>
+          <div class="body">
+            <span class="pill ai">AI-Enabled Collaborative Critique</span>
+            <p style="font-size:.9rem">Each group prompts a pre-configured AI chatbot (Claude / ChatGPT) with:
+            <em>"Explain constructivism and give one example of how it is applied in higher education."</em></p>
+            <p style="font-size:.9rem">Students critically interrogate the output:</p>
+            <ul>
+              <li>Is the explanation complete? Does it mention social constructivism?</li>
+              <li>Does the example align with Vygotsky's ZPD? Any missing nuance?</li>
+              <li>What would you change if you were the teacher?</li>
+            </ul>
+            <label class="ilo ai" style="border-left-color:var(--ai);padding:10px 12px">
+              <input type="checkbox" class="track" data-key="act-station3">
+              <div class="body"><span class="bloom">Output</span><p style="font-size:.88rem">Document <strong>(1) accepted AI points</strong> and <strong>(2) rejected/modified points</strong> with reasoning. Share via Padlet.</p></div>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout ai" style="margin-top:16px">
+        <strong>🤖 AI Integration — Station 3 in detail</strong>
+        After 15 minutes, groups share their critiques with the class via Padlet. The instructor facilitates a discussion on when AI is helpful (e.g., generating initial ideas) and when human expertise is essential (e.g., interpreting complex pedagogical contexts).
+      </div>
+    </div>
+
+    <!-- Cross-pedagogy -->
+    <div class="card">
+      <h3>Cross-Pedagogy Elements <span class="pill muted">5 min each, between stations</span></h3>
+      <label class="ilo"><input type="checkbox" class="track" data-key="act-lecture">
+        <div class="body"><span class="bloom">Interactive Lecture</span>
+          <p>Short 5-minute segments with <strong>animated visualisations of Piaget vs. Vygotsky</strong>.</p></div>
+      </label>
+      <label class="ilo"><input type="checkbox" class="track" data-key="act-flashcard">
+        <div class="body"><span class="bloom">Flashcard Review</span>
+          <p><strong>Flashcard: Learning Theorists</strong> — with peer quiz. (See the interactive flashcards in the Tool Guides section.)</p></div>
+      </label>
+    </div>
+
+    <!-- Synthesis -->
+    <div class="card">
+      <h3>Synthesis &amp; Closure <span class="pill muted">15–20 min</span></h3>
+      <label class="ilo"><input type="checkbox" class="track" data-key="act-gallery">
+        <div class="body"><span class="bloom">Group Knowledge Sharing</span>
+          <p>Each station group sends a representative to a <strong>"gallery walk"</strong> — they present one key insight from their station. Other groups ask clarifying questions (social-constructivist peer teaching).</p></div>
+      </label>
+      <label class="ilo"><input type="checkbox" class="track" data-key="act-posttest">
+        <div class="body"><span class="bloom">Post-test Review</span>
+          <p>Quick online quiz (5 multiple-choice questions) covering the main theories, including: <em>"Which of the following best describes a limitation of behaviourism?"</em> — results compared to the pre-conception poll.</p></div>
+      </label>
+      <label class="ilo ai"><input type="checkbox" class="track" data-key="act-reflect">
+        <div class="body"><span class="bloom">🤖 AI Integration — Reflection Discussion</span>
+          <p>Whole-class discussion prompted by the instructor:
+          <br>• <em>"When you used the AI at Station 3, did you feel you needed to override its suggestions? Why? Share an example."</em>
+          <br>• <em>"How did the AI support or hinder your collaborative learning? Did it make you think less independently?"</em>
+          <br>• <em>"What will you remember about the importance of human judgment when using AI in future coursework?"</em></p>
+          <p>Students write a <strong>one-minute reflection paper</strong>: <em>"One thing I will do differently when using AI for my studies."</em></p></div>
+      </label>
+      <div class="callout brand" style="margin-top:6px"><strong>Preview · Next session</strong> "Applying Learning Theories to Instructional Design (TPACK Framework)".</div>
+
+      <details class="tool">
+        <summary><span class="ico">📌</span><span class="tt">Padlet — Sharing AI Critiques<small>Live collaborative wall for station outputs</small></span><span class="chev">›</span></summary>
+        <div class="tool-body">
+          <div class="obj-box"><b>Purpose:</b> Collect and display every group's AI critique side-by-side.<br>
+          <b>Learning objective:</b> ILOs 3 &amp; 5 — evaluating AI and building knowledge through shared critique.</div>
+          <ol class="steps">
+            <li>Go to <a href="https://padlet.com" target="_blank">create a Padlet wall</a> and sign in.</li>
+            <li>Click <strong>"Make a Padlet"</strong> → choose the <strong>Wall</strong> or <strong>Grid</strong> layout.</li>
+            <li>Title it <em>"Learning Theories — AI Critique Wall"</em> and add a prompt: <em>"Post: 1 thing you ACCEPTED from the AI, 1 thing you REJECTED, and WHY."</em></li>
+            <li>Set <strong>Privacy → Secret</strong> and enable <strong>comments</strong> so peers can ask clarifying questions (social constructivism).</li>
+            <li>Share the link/QR code in class; each group posts one entry during Station 3 and again during the gallery walk.</li>
+            <li>Project the wall for the whole-class discussion on when AI is helpful vs. when human expertise is essential.</li>
+          </ol>
+        </div>
+      </details>
+
+      <details class="tool">
+        <summary><span class="ico">🎮</span><span class="tt">Kahoot / Google Forms — Post-Test Quiz<small>5-question check for understanding</small></span><span class="chev">›</span></summary>
+        <div class="tool-body">
+          <div class="obj-box"><b>Purpose:</b> Rapid retrieval practice + comparing shift from the pre-poll.<br>
+          <b>Learning objective:</b> ILO 1 — check accurate comparison of the three theories.</div>
+          <ol class="steps">
+            <li>Go to <a href="https://kahoot.com" target="_blank">build a Kahoot quiz</a> (or use <a href="https://forms.google.com" target="_blank">Google Forms for a quieter self-paced quiz</a>).</li>
+            <li>Create <strong>5 multiple-choice questions</strong> — one per theory plus one synthesis question.</li>
+            <li>Include the anchor question: <em>"Which of the following best describes a limitation of behaviourism?"</em></li>
+            <li>Launch in class; share the game PIN / form link so all 90 students can respond.</li>
+            <li>Compare live results directly against the Mentimeter pre-conception poll to show conceptual change (visible learning).</li>
+            <li>Export the results for your formative records.</li>
+          </ol>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ===================== ASSESSMENT ===================== -->
+  <section class="panel" id="tab-assessment">
+    <div class="card">
+      <div class="section-head"><div class="num">4</div><h2>Assessment Methods</h2></div>
+      <p class="lede">Formative (in-class) + summative (collaborative project), with a dedicated AI-critical-engagement component.</p>
+    </div>
+
+    <div class="card">
+      <h3>Formative Assessment <span class="pill muted">During class</span></h3>
+      <label class="ilo"><input type="checkbox" class="track" data-key="ass-obs">
+        <div class="body"><span class="bloom">Social-Constructivism-aligned observations</span>
+          <p>Instructor uses a structured observation checklist to note quality of peer discussion, evidence of <strong>co-construction of knowledge</strong> (e.g., group concept map completeness), and ability to challenge or extend others' ideas.</p></div>
+      </label>
+      <label class="ilo"><input type="checkbox" class="track" data-key="ass-poll">
+        <div class="body"><span class="bloom">Real-time polling</span>
+          <p><strong>Mentimeter exit poll:</strong> <em>"Rate your confidence in explaining differences between learning theories (1–5)"</em> — used for adaptive closing.</p></div>
+      </label>
+      <label class="ilo"><input type="checkbox" class="track" data-key="ass-peer">
+        <div class="body"><span class="bloom">Peer assessment (group work)</span>
+          <p>Each group completes a brief peer contribution form: <em>"Who in your group helped the most? Who challenged assumptions?"</em></p></div>
+      </label>
+      <label class="ilo ai"><input type="checkbox" class="track" data-key="ass-aicheck">
+        <div class="body"><span class="bloom">🤖 AI Integration — Formative Check</span>
+          <p>After Station 3, instructor collects the group documentation of AI critiques (accepted / modified / rejected). The instructor quickly reviews a sample to gauge <strong>critical engagement</strong>. Students submit via LMS as a low-stakes participation check.</p></div>
+      </label>
+    </div>
+
+    <!-- Interactive confidence poll -->
+    <div class="card">
+      <h3>Try it — Confidence Exit Poll <span class="pill ai">Interactive</span></h3>
+      <p class="lede">"Rate your confidence in explaining differences between learning theories (1–5)." This mirrors the in-class Mentimeter exit ticket and saves to your browser.</p>
+      <div class="ruler" id="confRuler">
+        <button data-v="1">1</button><button data-v="2">2</button><button data-v="3">3</button><button data-v="4">4</button><button data-v="5">5</button>
+      </div>
+      <div class="save-hint" id="confHint"></div>
+    </div>
+
+    <div class="card">
+      <h3>Summative Assessment <span class="pill constr">Social Constructivism — Collaborative Project</span></h3>
+      <div class="callout constr">
+        <strong>Task — "Learning Theory Toolkit"</strong>
+        In the same groups, students create a <strong>3–5 minute video or infographic</strong> that compares the three theories and provides a scenario-based recommendation for a teacher. The project must incorporate:
+        <ul style="margin:.5em 0 0;padding-left:1.2em">
+          <li>One <strong>AI-generated component</strong> (e.g., summary, example) that the group critically evaluates and revises.</li>
+          <li>Explicit documentation of how the group decided to <strong>use (or not use)</strong> AI suggestions.</li>
+        </ul>
+      </div>
+
+      <h4 style="margin-top:18px">Rubric (100 points)</h4>
+      <div class="table-scroll">
+        <table>
+          <thead><tr>
+            <th>Criterion</th><th>Excellent (25)</th><th>Proficient (20)</th><th>Developing (15)</th><th>Needs Improvement (10)</th>
+          </tr></thead>
+          <tbody>
+            <tr><td><b>Theory Comparison</b></td><td>Clear, accurate comparison with nuanced examples</td><td>Accurate comparison with minor gaps</td><td>Basic comparison with some errors</td><td>Inaccurate or incomplete</td></tr>
+            <tr><td><b>Collaboration (Social Constructivism)</b></td><td>Evidence of co-construction, shared decision-making, peer critique</td><td>Good group work with some individual contributions</td><td>Uneven group work</td><td>No evidence of collaboration</td></tr>
+            <tr><td><b>Critical AI Engagement</b> <span class="pill ai" style="font-size:.6rem">25%</span></td><td>Thorough evaluation of AI output; clear rationale for acceptance/rejection; demonstrates independent judgment</td><td>Good evaluation but limited depth of critique</td><td>Surface-level AI use with little critique</td><td>AI used uncritically or irrelevant to task</td></tr>
+            <tr><td><b>Practical Application</b></td><td>Suggestive, context-aware recommendation</td><td>Clear recommendation with minor lapses</td><td>Vague recommendation</td><td>No application</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout ai" style="margin-top:16px">
+        <strong>🤖 AI Integration — Assessment Requirements</strong>
+        Students must submit a separate one-page <strong>"AI Use Log"</strong> documenting:
+        <ul style="margin:.5em 0 0;padding-left:1.2em">
+          <li>What AI tool(s) they used (e.g., ChatGPT, Claude).</li>
+          <li>What prompts they entered.</li>
+          <li>Which AI-generated ideas they kept, modified, or rejected — and why.</li>
+          <li><strong>Two specific instances</strong> where human judgment overrode AI suggestions.</li>
+        </ul>
+        The rubric includes a dedicated criterion "Critical AI Engagement" (<strong>25% of grade</strong>).
+      </div>
+
+      <details class="tool" style="margin-top:16px">
+        <summary><span class="ico">📄</span><span class="tt">Google Forms / LMS — AI Use Log Template<small>Structured submission for the AI log</small></span><span class="chev">›</span></summary>
+        <div class="tool-body">
+          <div class="obj-box"><b>Purpose:</b> Capture structured evidence of AI reasoning and human override decisions.<br>
+          <b>Learning objective:</b> ILOs 5 &amp; 6 — explicitly assessed by the "Critical AI Engagement" criterion.</div>
+          <ol class="steps">
+            <li>Open <a href="https://forms.google.com" target="_blank">Google Forms</a> (or your LMS quiz tool) and create a new form: <em>"AI Use Log"</em>.</li>
+            <li>Add short-answer fields: <em>AI tool used</em> · <em>Prompt(s) entered</em> · <em>What we kept / modified / rejected</em>.</li>
+            <li>Add two required long-answer fields: <em>Instance 1 where human judgment overrode the AI</em> and <em>Instance 2</em>.</li>
+            <li>Add a linear-scale question: <em>"How much did you trust the AI output?" (1–5)</em>.</li>
+            <li>Set the form to collect respondent email addresses and link it from your Moodle/Blackboard submission area.</li>
+            <li>One form per group; export responses to a spreadsheet for rubric grading.</li>
+          </ol>
+        </div>
+      </details>
+    </div>
+
+    <div class="card">
+      <h3>AI-Supported Feedback &amp; Learning Support</h3>
+      <div class="callout constr">
+        <strong>Integration</strong>
+        Students submit the draft toolkit (video script or infographic outline) to the LMS <strong>one week before</strong> the final deadline. An AI-powered feedback tool (e.g., Gradescope with feedback generation, or an instructor-customised GPT) provides initial formative comments on:
+        <ul style="margin:.5em 0 0;padding-left:1.2em">
+          <li>Accuracy of theory definitions.</li>
+          <li>Clarity of scenario recommendations.</li>
+          <li>Quality of AI use reflection (flagged for instructor review).</li>
+        </ul>
+      </div>
+      <div class="callout ai">
+        <strong>Process</strong>
+        <ol style="margin:.5em 0 0;padding-left:1.2em">
+          <li>Instructor reviews <strong>all</strong> AI-generated feedback before release (within 48 hours). Adjusts any misleading or overly generic comments.</li>
+          <li>Students receive <strong>both</strong> AI feedback and instructor annotations. They must respond to at least two AI feedback points: <em>"Do you agree with the AI's suggestion? What might it have missed? Would you override it?"</em></li>
+          <li>Instructor monitors student responses and holds a <strong>15-minute synchronous check-in</strong> to discuss the limitations of AI feedback (e.g., AI cannot assess collaboration quality or nuance).</li>
+          <li><strong>Final grade is assigned by the instructor, not by AI.</strong></li>
+        </ol>
+      </div>
+
+      <label class="ilo ai" style="margin-top:12px"><input type="checkbox" class="track" data-key="ass-aifeedback">
+        <div class="body"><span class="bloom">🤖 AI Feedback Loop</span><p style="font-size:.92rem">AI-supported draft feedback reviewed by instructor, then responded to by students (human-in-the-loop).</p></div>
+      </label>
+
+      <details class="tool">
+        <summary><span class="ico">🤖</span><span class="tt">AI-Powered Feedback — Gradescope / Custom GPT<small>Draft feedback with instructor oversight</small></span><span class="chev">›</span></summary>
+        <div class="tool-body">
+          <div class="obj-box"><b>Purpose:</b> Provide fast formative comments while keeping the instructor as final judge.<br>
+          <b>Learning objective:</b> Supports ILOs 1–6 in the draft phase; students respond to critique (meta-cognition).</div>
+          <ol class="steps">
+            <li>Set up <a href="https://www.gradescope.com" target="_blank">Gradescope's AI feedback</a> (or an instructor-customised GPT with a rubric-aligned prompt).</li>
+            <li>Configure the AI prompt to match the four rubric criteria — especially <em>Critical AI Engagement</em>.</li>
+            <li>Students submit draft scripts/outlines to the LMS one week before the deadline.</li>
+            <li>Generate AI comments, then <strong>instructor reviews and edits every comment</strong> before release (within 48 hours).</li>
+            <li>Release both AI feedback + instructor annotations; students respond to two AI points each.</li>
+            <li>Hold a 15-minute synchronous check-in on the limitations of AI feedback, then assign the final grade yourself.</li>
+          </ol>
+        </div>
+      </details>
+    </div>
+
+    <!-- Interactive quiz -->
+    <div class="card">
+      <h3>Interactive Check — Compare the Theories <span class="pill ai">Practice</span></h3>
+      <p class="lede">A quick 4-question self-check. Tap an answer to see instant feedback and reasoning.</p>
+      <div class="quiz" id="theoryQuiz"></div>
+      <div class="quiz-score" id="quizScore"></div>
+      <button class="btn ghost small noprint" id="quizReset">Reset quiz</button>
+    </div>
+  </section>
+
+  <!-- ===================== MATRIX ===================== -->
+  <section class="panel" id="tab-matrix">
+    <div class="card">
+      <div class="section-head"><div class="num">5</div><h2>Constructive Alignment Matrix</h2></div>
+      <p class="lede">Every outcome maps to a teaching activity, an assessment method, a social-constructivist link, and an AI integration link.</p>
+      <div class="table-scroll">
+        <table>
+          <thead><tr>
+            <th>Learning Outcome</th><th>Teaching Activity</th><th>Assessment Method</th><th>Pedagogy Link (Social Constructivism)</th><th>AI Integration Link</th>
+          </tr></thead>
+          <tbody>
+            <tr><td><b>1. Compare &amp; contrast learning theories</b></td><td>Collaborative jigsaw at Station 1; group concept map at Station 2</td><td>Formative: peer discussion observation; Summative: Toolkit comparison section</td><td>Co-construction of understanding through peer dialogue</td><td>AI-generated summary critique at Station 3 supports comparison</td></tr>
+            <tr><td><b>2. Apply constructivist learning strategies</b></td><td>All stations require collaborative problem-solving and peer teaching</td><td>Formative: group work checklist; Summative: collaboration quality in rubric</td><td>Zone of proximal development via group work</td><td>AI used as a tool for students to evaluate, not as a crutch</td></tr>
+            <tr><td><b>3. Evaluate strengths/limitations</b></td><td>Whole-class discussion on AI outputs; gallery walk critique</td><td>Summative: AI use log and critical evaluation</td><td>Knowledge built through shared critique</td><td>Students evaluate AI for bias/limitations; aligns with AI literacy outcome</td></tr>
+            <tr><td><b>4. Construct a group concept map</b></td><td>Station 2 hands-on concept mapping</td><td>Summative: concept map quality (part of Toolkit)</td><td>Externalization of shared mental model</td><td>AI not used for concept mapping (intentional)</td></tr>
+            <tr><td><b>5. Critically evaluate AI outputs</b></td><td>Station 3 AI critique; reflection discussion</td><td>Summative: AI evaluation in Toolkit + AI Use Log</td><td>Social negotiation of meaning around AI</td><td>Core outcome; assessed via explicit rubric criterion</td></tr>
+            <tr><td><b>6. Demonstrate independent judgment</b></td><td>AI reflection paper; responding to AI feedback</td><td>Formative: reflection paper; Summative: AI Use Log</td><td>Independent thinking within collaborative context</td><td>Students must document when/why they overrode AI</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== RESOURCES ===================== -->
+  <section class="panel" id="tab-resources">
+    <div class="card">
+      <div class="section-head"><div class="num">6</div><h2>Required Resources &amp; Technology</h2></div>
+
+      <div class="grid g2">
+        <div class="callout brand"><strong>Learning Management System</strong>Moodle or Blackboard for submission and AI feedback platform.</div>
+        <div class="callout constr"><strong>Social Constructivism-specific tools</strong>Large paper sheets, markers, sticky notes for group concept mapping · Padlet for sharing AI critiques · Mentimeter for polls and exit tickets.</div>
+        <div class="callout ai"><strong>AI Tools &amp; Platforms</strong>Pre-configured AI chatbot (ChatGPT or Claude) accessible via laptop/phone with a shared prompt handout · AI-powered feedback tool (Turnitin Revision Assistant or instructor's custom GPT, with clear guidelines) · AI literacy resource: short reading on AI bias (e.g., "How to Spot AI Hallucinations").</div>
+        <div class="callout cogni"><strong>Physical / Digital Materials</strong>Case study handouts for Station 1 · Critical analysis framework worksheets (one per group) · AI Use Log template (provided on LMS).</div>
+      </div>
+
+      <details class="tool">
+        <summary><span class="ico">💬</span><span class="tt">Claude / ChatGPT — Station 3 AI Chatbot<small>Pre-configured prompt for constructivism critique</small></span><span class="chev">›</span></summary>
+        <div class="tool-body">
+          <div class="obj-box"><b>Purpose:</b> Generate a critiquable AI explanation of constructivism.<br>
+          <b>Learning objective:</b> ILOs 5 &amp; 6 — students critique accuracy, completeness, and bias.</div>
+          <ol class="steps">
+            <li>Open <a href="https://claude.ai" target="_blank">Claude</a> or <a href="https://chat.openai.com" target="_blank">ChatGPT</a> and prepare a shared device per group (or BYOD).</li>
+            <li>Distribute the prompt handout. Groups enter: <em>"Explain constructivism and give one example of how it is applied in higher education."</em></li>
+            <li>Ask groups to probe the output: <em>"You didn't mention social constructivism — add it and cite Vygotsky's ZPD."</em></li>
+            <li>Have students log what they <strong>accept</strong>, <strong>modify</strong>, or <strong>reject</strong> with reasoning (feeds the AI Use Log).</li>
+            <li>Post the critique to the Padlet wall for the gallery-walk discussion.</li>
+            <li>Reiterate the rule: <em>"AI is a partner, not a replacement for your own thinking."</em></li>
+          </ol>
+        </div>
+      </details>
+
+      <details class="tool">
+        <summary><span class="ico">🎤</span><span class="tt">Otter.ai — Live Captions for Lecture Segments<small>Accessibility + AI-generated transcripts</small></span><span class="chev">›</span></summary>
+        <div class="tool-body">
+          <div class="obj-box"><b>Purpose:</b> Provide real-time captions for the interactive lecture segments.<br>
+          <b>Learning objective:</b> Accessibility support (ELL and D/deaf students) — differentiation.</div>
+          <ol class="steps">
+            <li>Go to <a href="https://otter.ai" target="_blank">set up Otter.ai live captions</a> and sign in.</li>
+            <li>Start a live recording before each 5-minute lecture segment (Piaget vs. Vygotsky).</li>
+            <li>Project the live transcript so students can read along.</li>
+            <li>Share the generated transcript afterwards as a revision resource on the LMS.</li>
+          </ol>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ===================== DIFFERENTIATION ===================== -->
+  <section class="panel" id="tab-differentiation">
+    <div class="card">
+      <div class="section-head"><div class="num">7</div><h2>Differentiation &amp; Inclusivity</h2></div>
+
+      <h3>Social-Constructivism-tailored supports</h3>
+      <div class="grid g2">
+        <div class="callout"><strong>Struggling learners</strong>Scaffolded question prompts at each station (e.g., "Hint: Compare reward schedules to feedback loops"). Peer mentoring within groups (instructor assigns mixed-ability teams).</div>
+        <div class="callout"><strong>Advanced learners</strong>Extension task at Station 3 — "Compare the AI's explanation of constructivism to Vygotsky's original writings. What philosophical assumptions does the AI miss?" They can create a critique video instead of a toolkit.</div>
+        <div class="callout"><strong>English Language Learners</strong>Key vocabulary flashcards with definitions in simple language; AI chatbot can provide simplified explanations on request.</div>
+        <div class="callout"><strong>Accessibility</strong>Captioned videos if used (none in this lesson); large-print handouts; flexible grouping (seated arrangement for wheelchairs).</div>
+      </div>
+
+      <h3 style="margin-top:20px">🤖 AI-supported differentiation</h3>
+      <div class="grid g2">
+        <div class="callout ai"><strong>Struggling learners</strong>Use the AI chatbot to generate simplified summaries of learning theories during station work (guided by instructor: "Use AI to get a basic definition, then discuss with your group whether it's accurate").</div>
+        <div class="callout ai"><strong>Advanced learners</strong>Use AI to explore connections between theories (e.g., "How does schema theory relate to constructivist scaffolding?") and then critique the AI's depth.</div>
+        <div class="callout ai"><strong>AI-generated captions</strong>For any live lecture segments (using Otter.ai or similar).</div>
+        <div class="callout ai"><strong>Clear guidance on acceptable AI use</strong><em>"AI is a partner, not a replacement for your own thinking."</em></div>
+      </div>
+
+      <details class="tool">
+        <summary><span class="ico">🧩</span><span class="tt">Jamboard / Concept-Map Tools — Station 2<small>Digital or physical collaborative mapping</small></span><span class="chev">›</span></summary>
+        <div class="tool-body">
+          <div class="obj-box"><b>Purpose:</b> Let groups externalise a shared concept map of cognitivist terms.<br>
+          <b>Learning objective:</b> ILO 4 — co-constructed visual synthesis.</div>
+          <ol class="steps">
+            <li>Create a <a href="https://jamboard.google.com" target="_blank">Jamboard whiteboard</a> (or use physical paper + markers).</li>
+            <li>Pre-place sticky notes with the key terms: <em>schema, information processing, metacognition</em>.</li>
+            <li>Give each group edit access (or one device per group in physical mode).</li>
+            <li>Groups drag terms, draw arrows, and add real examples linking them.</li>
+            <li>Instructor circulates to scaffold with prompt questions ("What connects metacognition to schema?").</li>
+            <li>Groups present their map in the gallery walk / export it into the Toolkit.</li>
+          </ol>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ===================== REFLECTION ===================== -->
+  <section class="panel" id="tab-reflection">
+    <div class="card">
+      <div class="section-head"><div class="num">8</div><h2>Reflection &amp; Improvement</h2></div>
+
+      <h3>Social-Constructivism-specific success indicators</h3>
+      <ul>
+        <li>Quality of group concept maps (depth of connections).</li>
+        <li>Number of peer-teaching moments observed during the gallery walk.</li>
+        <li>Student exit-poll self-assessed confidence increase (<strong>&gt;30% improvement</strong>).</li>
+      </ul>
+
+      <h3 style="margin-top:18px">Student feedback on pedagogy</h3>
+      <div class="callout constr">
+        Survey question: <em>"How much did group discussion help you understand learning theories?" (1–5)</em><br>
+        Open-ended: <em>"What aspect of collaboration was most valuable?"</em>
+      </div>
+
+      <h3 style="margin-top:18px">🤖 AI-specific reflection</h3>
+      <div class="grid g2">
+        <div class="callout ai"><strong>Student feedback on AI integration</strong>
+          • "Did the AI chatbot help or confuse your understanding? Did you feel you could think for yourself?"<br>
+          • "Was the AI feedback on your toolkit draft helpful? Did you trust it? Why/why not?"
+        </div>
+        <div class="callout ai"><strong>Instructor reflection on AI effectiveness</strong>
+          • Review AI Use Logs to see how many groups rejected or modified AI suggestions — <em>high numbers indicate critical engagement; low numbers suggest need for better guidance.</em><br>
+          • Check if AI feedback overrode the instructor's role — if students relied too heavily, adjust the process to require in-person consultation.<br>
+          • <strong>Data collection:</strong> Percentage of students who correctly identified an AI error in their critique (<strong>aim &gt;70%</strong>).
+        </div>
+      </div>
+
+      <h3 style="margin-top:18px">Modification strategies</h3>
+      <ul>
+        <li>If students struggle with AI critique → add a mini-workshop on AI evaluation in the next session.</li>
+        <li>If collaboration is uneven → incorporate peer assessment with explicit contribution tracking (e.g., <a href="https://www.catme.org" target="_blank">CATME</a>).</li>
+        <li>If AI feedback is too generic → customise the AI prompt to align with rubric criteria.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Your Reflection Notes <span class="pill ai">Interactive</span></h3>
+      <p class="lede">Notes save automatically to this browser. Use these to capture your own reactions as you plan the lesson.</p>
+      <label class="bloom" for="refl1">One thing I will do differently when using AI for my studies (student prompt)</label>
+      <textarea id="refl1" data-key="refl1" placeholder="Type here…"></textarea>
+      <div class="save-hint" data-hint="refl1"></div>
+      <label class="bloom" style="display:block;margin-top:14px" for="refl2">Instructor reflection: how will I check that AI stayed a partner, not a replacement?</label>
+      <textarea id="refl2" data-key="refl2" placeholder="Type here…"></textarea>
+      <div class="save-hint" data-hint="refl2"></div>
+    </div>
+  </section>
+
+  <!-- ===================== TOOLKIT / FLASHCARDS ===================== -->
+  <section class="panel" id="tab-toolkit">
+    <div class="card">
+      <div class="section-head"><div class="num">★</div><h2>External Tool Guides &amp; Flashcards</h2></div>
+      <p class="lede">Collapsible, step-by-step guides for every external tool referenced in the lesson, plus an interactive flashcard review. Expanding a guide marks it as explored.</p>
+
+      <details class="tool">
+        <summary><span class="ico">📊</span><span class="tt">Mentimeter<small>Polls, word clouds, exit tickets</small></span><span class="chev">›</span></summary>
+        <div class="tool-body">
+          <div class="obj-box"><b>Purpose:</b> Pre-conception poll + confidence exit poll. <b>Objective:</b> ILO 1.</div>
+          <ol class="steps">
+            <li><a href="https://www.mentimeter.com" target="_blank">Create a Mentimeter poll</a> and sign in.</li>
+            <li>Add a Word Cloud slide: "What comes to mind when you hear 'learning theory'?"</li>
+            <li>Add a Multiple-Choice slide and a final "1–5 confidence" rating slide for the exit ticket.</li>
+            <li>Share the code/QR; project live results; compare pre vs. post.</li>
+          </ol>
+        </div>
+      </details>
+
+      <details class="tool">
+        <summary><span class="ico">📌</span><span class="tt">Padlet<small>Collaborative wall for AI critiques</small></span><span class="chev">›</span></summary>
+        <div class="tool-body">
+          <div class="obj-box"><b>Purpose:</b> Shared critique wall. <b>Objective:</b> ILOs 3 &amp; 5.</div>
+          <ol class="steps">
+            <li><a href="https://padlet.com" target="_blank">Create a Padlet wall</a> → Wall/Grid layout.</li>
+            <li>Prompt: post 1 accepted + 1 rejected AI point with reasoning.</li>
+            <li>Set privacy to Secret; enable comments for peer questioning.</li>
+            <li>Post during Station 3 and the gallery walk; project for discussion.</li>
+          </ol>
+        </div>
+      </details>
+
+      <details class="tool">
+        <summary><span class="ico">🎮</span><span class="tt">Kahoot<small>Gamified post-test quiz</small></span><span class="chev">›</span></summary>
+        <div class="tool-body">
+          <div class="obj-box"><b>Purpose:</b> Retrieval practice. <b>Objective:</b> ILO 1.</div>
+          <ol class="steps">
+            <li><a href="https://kahoot.com" target="_blank">Build a Kahoot quiz</a> with 5 MCQs.</li>
+            <li>Include the "limitation of behaviourism" question.</li>
+            <li>Launch; share the PIN; compare with the pre-poll.</li>
+          </ol>
+        </div>
+      </details>
+
+      <details class="tool">
+        <summary><span class="ico">📄</span><span class="tt">Google Forms<small>AI Use Log + peer contribution form</small></span><span class="chev">›</span></summary>
+        <div class="tool-body">
+          <div class="obj-box"><b>Purpose:</b> Structured submission. <b>Objective:</b> ILOs 5 &amp; 6.</div>
+          <ol class="steps">
+            <li><a href="https://forms.google.com" target="_blank">Open Google Forms</a> and create the "AI Use Log".</li>
+            <li>Add fields: tool, prompts, kept/modified/rejected, and two human-override instances.</li>
+            <li>Add a peer contribution question ("Who helped most? Who challenged assumptions?").</li>
+            <li>Link from the LMS; export to a spreadsheet for grading.</li>
+          </ol>
+        </div>
+      </details>
+
+      <details class="tool">
+        <summary><span class="ico">🧩</span><span class="tt">Jamboard / Concept-Map Tools<small>Station 2 collaborative mapping</small></span><span class="chev">›</span></summary>
+        <div class="tool-body">
+          <div class="obj-box"><b>Purpose:</b> Shared concept map. <b>Objective:</b> ILO 4.</div>
+          <ol class="steps">
+            <li>Create a <a href="https://jamboard.google.com" target="_blank">Jamboard whiteboard</a>.</li>
+            <li>Pre-place sticky notes: schema, information processing, metacognition.</li>
+            <li>Groups link terms with arrows + real examples; present in gallery walk.</li>
+          </ol>
+        </div>
+      </details>
+
+      <details class="tool">
+        <summary><span class="ico">💬</span><span class="tt">Claude / ChatGPT<small>Station 3 AI critique target</small></span><span class="chev">›</span></summary>
+        <div class="tool-body">
+          <div class="obj-box"><b>Purpose:</b> Generate critiquable output. <b>Objective:</b> ILOs 5 &amp; 6.</div>
+          <ol class="steps">
+            <li>Open <a href="https://claude.ai" target="_blank">Claude</a> or <a href="https://chat.openai.com" target="_blank">ChatGPT</a> on a group device.</li>
+            <li>Enter the constructivism prompt from the handout.</li>
+            <li>Probe for social constructivism + ZPD; log accept/modify/reject.</li>
+          </ol>
+        </div>
+      </details>
+
+      <details class="tool">
+        <summary><span class="ico">🎤</span><span class="tt">Otter.ai<small>Live captions for lecture segments</small></span><span class="chev">›</span></summary>
+        <div class="tool-body">
+          <div class="obj-box"><b>Purpose:</b> Accessibility captions. <b>Objective:</b> Differentiation support.</div>
+          <ol class="steps">
+            <li><a href="https://otter.ai" target="_blank">Set up Otter.ai live captions</a>.</li>
+            <li>Start recording before each 5-minute lecture segment.</li>
+            <li>Project the live transcript; share it afterwards on the LMS.</li>
+          </ol>
+        </div>
+      </details>
+
+      <details class="tool">
+        <summary><span class="ico">📝</span><span class="tt">Gradescope / Custom GPT<small>AI draft feedback with oversight</small></span><span class="chev">›</span></summary>
+        <div class="tool-body">
+          <div class="obj-box"><b>Purpose:</b> Fast formative comments. <b>Objective:</b> Supports all ILOs in the draft phase.</div>
+          <ol class="steps">
+            <li>Set up <a href="https://www.gradescope.com" target="_blank">Gradescope AI feedback</a> (or a rubric-aligned custom GPT).</li>
+            <li>Align the AI prompt to the four rubric criteria.</li>
+            <li>Students submit drafts; instructor reviews every AI comment before release; students respond to two points.</li>
+          </ol>
+        </div>
+      </details>
+
+      <details class="tool">
+        <summary><span class="ico">📈</span><span class="tt">CATME<small>Peer contribution tracking</small></span><span class="chev">›</span></summary>
+        <div class="tool-body">
+          <div class="obj-box"><b>Purpose:</b> Even out collaboration. <b>Objective:</b> Peer assessment / collaboration criterion.</div>
+          <ol class="steps">
+            <li>Sign in to <a href="https://www.catme.org" target="_blank">CATME</a> (or your institution's peer-review tool).</li>
+            <li>Set up team-based peer evaluation aligned to group roles.</li>
+            <li>Review results to detect uneven contribution and adjust groups.</li>
+          </ol>
+        </div>
+      </details>
+    </div>
+
+    <div class="card">
+      <h3>Flashcard Review — Learning Theorists <span class="pill ai">Interactive</span></h3>
+      <p class="lede">Tap a card to flip it. Use with the peer-quiz activity between stations.</p>
+      <div class="fc-grid" id="flashcards"></div>
+    </div>
+  </section>
+
+  <div class="footer">
+    Introduction to Learning Theories · Educational Psychology · Social Constructivism + AI-Integrated Designed Lesson<br>
+    Progress is stored locally in your browser. <a href="#" id="footerReset">Reset all data</a>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   State + localStorage persistence
+   ============================================================ */
+const STORE_KEY = "learning-theories-lessonplan-v1";
+let state = load();
+
+function load(){
+  try{ return JSON.parse(localStorage.getItem(STORE_KEY)) || {}; }
+  catch(e){ return {}; }
+}
+function save(){
+  try{ localStorage.setItem(STORE_KEY, JSON.stringify(state)); }catch(e){}
+}
+
+/* ---------- Theme ---------- */
+(function(){
+  const t = state.theme || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark':'light');
+  document.documentElement.setAttribute('data-theme', t);
+  document.getElementById('themeBtn').textContent = t === 'dark' ? '☀️' : '🌙';
+})();
+document.getElementById('themeBtn').addEventListener('click', ()=>{
+  const cur = document.documentElement.getAttribute('data-theme');
+  const next = cur === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  document.getElementById('themeBtn').textContent = next === 'dark' ? '☀️' : '🌙';
+  state.theme = next; save();
+});
+
+/* ---------- Tabs ---------- */
+const tabs = document.querySelectorAll('.tab');
+tabs.forEach(tab=>{
+  tab.addEventListener('click', ()=>{
+    tabs.forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('tab-'+tab.dataset.tab).classList.add('active');
+    state.activeTab = tab.dataset.tab; save();
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+});
+if(state.activeTab){
+  const t = document.querySelector('.tab[data-tab="'+state.activeTab+'"]');
+  if(t) t.click();
+}
+
+/* ============================================================
+   Checkboxes (activity / ILO tracking)
+   ============================================================ */
+const trackBoxes = document.querySelectorAll('input.track');
+trackBoxes.forEach(cb=>{
+  const k = cb.dataset.key;
+  if(state[k]) cb.checked = true;
+  cb.addEventListener('change', ()=>{ state[k]=cb.checked; save(); updateProgress(); });
+});
+
+/* Count tool-guide details opened */
+const toolDetails = document.querySelectorAll('details.tool');
+toolDetails.forEach((d,i)=>{
+  const k = 'tool-'+i;
+  if(state[k]) d.open = true;
+  d.addEventListener('toggle', ()=>{
+    if(d.open){ state[k]=true; save(); updateProgress(); }
+  });
+});
+
+/* ---------- Progress computation ---------- */
+function updateProgress(){
+  const total = trackBoxes.length;
+  let done = 0;
+  trackBoxes.forEach(cb=>{ if(cb.checked) done++; });
+  const pct = total ? Math.round(done/total*100) : 0;
+  document.getElementById('globalFill').style.width = pct+'%';
+  document.getElementById('globalPct').textContent = pct+'%';
+
+  // per-section stats
+  const iloBoxes = [...trackBoxes].filter(b=>/^ilo/.test(b.dataset.key));
+  const iloDone = iloBoxes.filter(b=>b.checked).length;
+  document.getElementById('statIlo').textContent = iloDone+'/'+iloBoxes.length;
+
+  const actBoxes = [...trackBoxes].filter(b=>/^act-/.test(b.dataset.key));
+  document.getElementById('statAct').textContent = actBoxes.filter(b=>b.checked).length+'/'+actBoxes.length;
+
+  const toolOpen = [...toolDetails].filter(d=>d.open).length;
+  document.getElementById('statTool').textContent = toolOpen+'/'+toolDetails.length;
+
+  // tab "done" dots (mark tab when all its tracked boxes checked OR majority)
+  document.querySelectorAll('.tab').forEach(tab=>{
+    const id = tab.dataset.tab;
+    const panel = document.getElementById('tab-'+id);
+    if(!panel) return;
+    const boxes = panel.querySelectorAll('input.track');
+    if(boxes.length){
+      const all = [...boxes].every(b=>b.checked);
+      tab.classList.toggle('done', all);
+    }
+  });
+}
+
+/* ============================================================
+   Confidence ruler (exit poll)
+   ============================================================ */
+const confBtns = document.querySelectorAll('#confRuler button');
+confBtns.forEach(b=>{
+  if(String(state.confidence) === b.dataset.v) b.classList.add('sel');
+  b.addEventListener('click', ()=>{
+    confBtns.forEach(x=>x.classList.remove('sel'));
+    b.classList.add('sel');
+    state.confidence = b.dataset.v; save();
+    document.getElementById('confHint').textContent = 'Saved: confidence '+b.dataset.v+'/5';
+  });
+});
+if(state.confidence){ document.getElementById('confHint').textContent = 'Saved: confidence '+state.confidence+'/5'; }
+
+/* ============================================================
+   Textareas auto-save
+   ============================================================ */
+document.querySelectorAll('textarea[data-key]').forEach(ta=>{
+  const k = ta.dataset.key;
+  if(state[k]) ta.value = state[k];
+  let to;
+  ta.addEventListener('input', ()=>{
+    clearTimeout(to);
+    to = setTimeout(()=>{
+      state[k]=ta.value; save();
+      const h = document.querySelector('.save-hint[data-hint="'+k+'"]');
+      if(h){ h.textContent = '✓ Saved'; setTimeout(()=>h.textContent='',1500); }
+    }, 350);
+  });
+});
+
+/* ============================================================
+   Quiz
+   ============================================================ */
+const quizData = [
+  {
+    q: "Which theory best explains learning as the building of internal mental structures such as schemas?",
+    opts: ["Behaviourism","Cognitivism","Constructivism","None of these"],
+    a: 1,
+    ex: "Cognitivism focuses on information processing, schema, and metacognition — how learners encode, store, and retrieve knowledge."
+  },
+  {
+    q: "A teacher gives a sticker each time a student answers correctly. This strategy is grounded in…",
+    opts: ["Constructivism","Cognitivism","Behaviourism","Social constructivism"],
+    a: 2,
+    ex: "Behaviourism explains learning through stimulus–response and reinforcement schedules (see Station 1)."
+  },
+  {
+    q: "Which of the following best describes a limitation of behaviourism?",
+    opts: ["It ignores observable behaviour","It cannot explain internal thinking or meaning-making","It over-emphasises metacognition","It requires collaborative group work"],
+    a: 1,
+    ex: "Behaviourism's key limitation is that it treats the mind as a black box — it under-explains internal cognitive processes and meaning-making."
+  },
+  {
+    q: "Using Vygotsky's ZPD, the most effective constructivist support for a struggling learner is…",
+    opts: ["Independent silent study","Scaffolded peer or expert support just beyond current ability","A reward chart","Step-by-step rote instruction without dialogue"],
+    a: 1,
+    ex: "The ZPD is the gap between what a learner can do alone and with guidance — scaffolding within that gap drives development (Station 3 discussion point)."
+  }
+];
+
+function renderQuiz(){
+  const wrap = document.getElementById('theoryQuiz');
+  wrap.innerHTML = '';
+  let answered = 0, correct = 0;
+  quizData.forEach((item, qi)=>{
+    const div = document.createElement('div');
+    div.className = 'q';
+    div.innerHTML = '<div class="qt">Q'+(qi+1)+'. '+item.q+'</div>';
+    const keys = ['A','B','C','D'];
+    item.opts.forEach((opt, oi)=>{
+      const o = document.createElement('div');
+      o.className = 'opt';
+      o.innerHTML = '<span class="k">'+keys[oi]+'</span><span>'+opt+'</span>';
+      o.addEventListener('click', ()=>{
+        if(div.dataset.locked) return;
+        div.dataset.locked = '1';
+        div.querySelectorAll('.opt').forEach(x=>x.classList.add('disabled'));
+        const isRight = oi === item.a;
+        o.classList.add(isRight ? 'correct' : 'wrong');
+        if(!isRight){ div.querySelectorAll('.opt')[item.a].classList.add('correct'); }
+        ex.classList.add('show');
+        if(isRight) correct++;
+        answered++;
+        document.getElementById('quizScore').textContent = 'Score: '+correct+' / '+answered+' answered';
+      });
+      div.appendChild(o);
+    });
+    const ex = document.createElement('div');
+    ex.className = 'explain';
+    ex.textContent = '💡 '+item.ex;
+    div.appendChild(ex);
+    wrap.appendChild(div);
+  });
+  document.getElementById('quizScore').textContent = '';
+}
+renderQuiz();
+document.getElementById('quizReset').addEventListener('click', renderQuiz);
+
+/* ============================================================
+   Flashcards
+   ============================================================ */
+const fcData = [
+  {n:'Behaviourism', t:'Classical', b:'Learning as observable stimulus–response. Key figures: Pavlov, Skinner. Reinforcement & punishment shape behaviour.'},
+  {n:'Cognitivism', t:'Cognitive', b:'Learning as information processing. Schema, encoding, memory, metacognition. Mind as a computer.'},
+  {n:'Constructivism', t:'Constructivist', b:'Learners actively build knowledge on prior experience. Piaget (individual), Vygotsky (social).'},
+  {n:'Vygotsky', t:'Social', b:'Social constructivism. Zone of Proximal Development (ZPD) + scaffolding + peer dialogue drive learning.'},
+  {n:'Piaget', t:'Cognitive dev.', b:'Stages of cognitive development; assimilation & accommodation build schemas individually.'},
+  {n:'Schema', t:'Cognitivism', b:'An organised mental framework for storing and interpreting information.'},
+  {n:'Metacognition', t:'Cognitivism', b:'“Thinking about thinking” — monitoring and regulating your own learning.'},
+  {n:'ZPD', t:'Constructivism', b:'The gap between what a learner can do alone and with guidance — where learning happens.'}
+];
+const fcWrap = document.getElementById('flashcards');
+fcData.forEach(c=>{
+  const d = document.createElement('div');
+  d.className = 'fc';
+  d.innerHTML =
+    '<div class="inner">'+
+      '<div class="face front"><div class="name">'+c.n+'</div><small>tap to flip</small></div>'+
+      '<div class="face back"><div class="tag">'+c.t+'</div><div>'+c.b+'</div></div>'+
+    '</div>';
+  d.addEventListener('click', ()=> d.classList.toggle('flipped'));
+  fcWrap.appendChild(d);
+});
+
+/* ============================================================
+   Reset
+   ============================================================ */
+function resetAll(){
+  if(!confirm('Reset all progress, notes and saved data?')) return;
+  localStorage.removeItem(STORE_KEY);
+  location.reload();
+}
+document.getElementById('resetBtn').addEventListener('click', resetAll);
+document.getElementById('footerReset').addEventListener('click', e=>{ e.preventDefault(); resetAll(); });
+
+/* ---------- init ---------- */
+updateProgress();
+</script>
 </body>
 </html>
