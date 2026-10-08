@@ -460,6 +460,21 @@
         <label class="check"><input type="checkbox" data-key="pre-6"><span class="ctext">Ran the AI comparison prompt and logged 1 strength + 1 limitation + 1 bias/hallucination.</span></label>
         <button class="mark-complete" data-section="preclass">Mark section complete</button>
       </div>
+
+      <div class="card">
+        <h3>Quiz · Pre-class diagnostic <span class="pill">6 questions</span> <span class="pill ped">Misconception-first feedback</span></h3>
+        <p style="font-size:.9rem;color:var(--muted)">Answer all six, then press <strong>Check answers</strong>. Each explanation names the <em>misconception</em> first, then the accurate position — the same design as the 8-question adaptive pre-test in the LMS. Your answers and best score are saved in this browser.</p>
+        <div id="quizPre"></div>
+        <div class="btn-row">
+          <button class="btn" id="checkPre">Check answers</button>
+          <button class="btn ghost" id="resetPre">Retry quiz</button>
+        </div>
+        <div class="scorebar" id="scorePre"></div>
+        <div class="callout ai">
+          <span class="label">AI enhancement</span>
+          <p>Use AI to <strong>draft distractor rationales</strong> for each item: prompt <em>"For this misconception, write a 2-sentence explanation of why a first-year student might hold it and what the correct understanding is."</em> The instructor then verifies and edits every rationale — AI drafts, the human validates.</p>
+        </div>
+      </div>
     </section>
 
     <!-- ============ 3. INTRODUCTION ============ -->
@@ -534,6 +549,17 @@
         </div>
       </details>
 
+      <div class="card">
+        <h3>Quiz · Hook triage — is the AI claim trustworthy? <span class="pill">4 questions</span> <span class="pill ai">AI-ILO5</span></h3>
+        <p style="font-size:.9rem;color:var(--muted)">Use immediately after the sticker-reward hook. Students vote individually, then defend their answer to a partner before you reveal the explanations.</p>
+        <div id="quizHook"></div>
+        <div class="btn-row">
+          <button class="btn" id="checkHook">Check answers</button>
+          <button class="btn ghost" id="resetHook">Retry quiz</button>
+        </div>
+        <div class="scorebar" id="scoreHook"></div>
+      </div>
+
       <button class="mark-complete" data-section="intro">Mark section complete</button>
     </section>
 
@@ -571,6 +597,17 @@
           <span class="label">Suggested AI prompt to give groups</span>
           <p><em>"Summarise [theory] in 150 words: core assumptions, how learning happens, and two instructional implications. State your confidence level."</em></p>
         </div>
+
+        <div style="margin-top:18px;padding-top:16px;border-top:1px dashed var(--line)">
+          <h4 style="margin-top:0">Quiz · Expert-group check — assumption, mechanism, implication <span class="pill">6 questions</span></h4>
+          <p style="font-size:.88rem;color:var(--muted)">Every member of a jigsaw group should be able to answer all six before the group presents. Each question states a fragment of a theory and asks which one it belongs to — the fastest way to expose a group that has drifted.</p>
+          <div id="quizJigsaw"></div>
+          <div class="btn-row">
+            <button class="btn" id="checkJigsaw">Check answers</button>
+            <button class="btn ghost" id="resetJigsaw">Retry quiz</button>
+          </div>
+          <div class="scorebar" id="scoreJigsaw"></div>
+        </div>
       </div>
 
       <!-- Segment 2 -->
@@ -606,6 +643,17 @@
             </div>
           </div>
         </details>
+
+        <div style="margin-top:18px;padding-top:16px;border-top:1px dashed var(--line)">
+          <h4 style="margin-top:0">Quiz · AI Critique Lab drill <span class="pill">6 questions</span> <span class="pill ai">Accuracy · completeness · bias · fit</span></h4>
+          <p style="font-size:.88rem;color:var(--muted)">Run this once, as a whole class, <em>before</em> groups critique their own AI output. It trains the four rubric criteria on short cases, so the group discussion uses a shared vocabulary. Every item maps to AI-ILO5 or AI-ILO6.</p>
+          <div id="quizCritique"></div>
+          <div class="btn-row">
+            <button class="btn" id="checkCritique">Check answers</button>
+            <button class="btn ghost" id="resetCritique">Retry quiz</button>
+          </div>
+          <div class="scorebar" id="scoreCritique"></div>
+        </div>
       </div>
 
       <!-- Segment 3 -->
@@ -654,6 +702,17 @@
             </ol>
           </div>
         </details>
+
+        <div style="margin-top:18px;padding-top:16px;border-top:1px dashed var(--line)">
+          <h4 style="margin-top:0">Quiz · Station triage — which theory fits? <span class="pill">5 questions</span> <span class="pill ped">Think-pair-share</span></h4>
+          <p style="font-size:.88rem;color:var(--muted)">Give students 90 seconds to answer individually, 60 seconds to agree with a partner, then reveal. The final item rehearses the <strong>consultant-then-critique</strong> move they must repeat at every station.</p>
+          <div id="quizScenario"></div>
+          <div class="btn-row">
+            <button class="btn" id="checkScenario">Check answers</button>
+            <button class="btn ghost" id="resetScenario">Retry quiz</button>
+          </div>
+          <div class="scorebar" id="scoreScenario"></div>
+        </div>
       </div>
 
       <!-- Segment 4 -->
@@ -721,6 +780,17 @@
           <button class="btn ghost" id="resetMatch">Reset</button>
           <span id="matchResult" style="font-weight:700;font-size:.9rem"></span>
         </div>
+
+        <div style="margin-top:18px;padding-top:16px;border-top:1px dashed var(--line)">
+          <h4 style="margin-top:0">Quiz · Cross-theory dimensions <span class="pill">6 questions</span> <span class="pill">Learner · teacher · assessment</span></h4>
+          <p style="font-size:.88rem;color:var(--muted)">Closes the interactive lecture. Items 4–5 target the two nuances AI comparison tables most often lose: the false linear progression and the reinforcement / punishment confusion. Item 6 is deliberately counter-intuitive and makes a good discussion starter.</p>
+          <div id="quizSynthesis"></div>
+          <div class="btn-row">
+            <button class="btn" id="checkSynthesis">Check answers</button>
+            <button class="btn ghost" id="resetSynthesis">Retry quiz</button>
+          </div>
+          <div class="scorebar" id="scoreSynthesis"></div>
+        </div>
       </div>
 
       <button class="mark-complete" data-section="development">Mark section complete</button>
@@ -784,6 +854,21 @@
           </ol>
         </div>
       </details>
+
+      <div class="card">
+        <h3>Quiz · Post-test <span class="pill">5 questions</span> <span class="pill time">5 minutes</span> <span class="pill ped">Pre-test → post-test growth</span></h3>
+        <p style="font-size:.9rem;color:var(--muted)">These five items are <strong>parallel in content to the pre-class diagnostic</strong>, so you can compare the class's pre-test and post-test profiles directly and publish the shift next session. Answer, check, and record your score next to your pre-test score.</p>
+        <div id="quizPost"></div>
+        <div class="btn-row">
+          <button class="btn" id="checkPost">Check answers</button>
+          <button class="btn ghost" id="resetPost">Retry quiz</button>
+        </div>
+        <div class="scorebar" id="scorePost"></div>
+        <div class="callout ok">
+          <span class="label">Measuring growth</span>
+          <p>Compare this score with the pre-class diagnostic in Section 2. The <strong>Quizzes attempted</strong> panel in Section 13 keeps both best scores side by side, so you can see movement per misconception rather than a single average.</p>
+        </div>
+      </div>
 
       <button class="mark-complete" data-section="closure">Mark section complete</button>
     </section>
@@ -971,6 +1056,17 @@
           </ol>
         </div>
       </details>
+
+      <div class="card">
+        <h3>Quiz · Interrogate the AI's feedback <span class="pill">4 questions</span> <span class="pill ai">Human-in-the-loop</span></h3>
+        <p style="font-size:.9rem;color:var(--muted)">Use in the calibration session, after students have pasted real AI feedback on their drafts. The items model the exact judgement you want them to apply independently to their own feedback.</p>
+        <div id="quizFeedback"></div>
+        <div class="btn-row">
+          <button class="btn" id="checkFeedback">Check answers</button>
+          <button class="btn ghost" id="resetFeedback">Retry quiz</button>
+        </div>
+        <div class="scorebar" id="scoreFeedback"></div>
+      </div>
 
       <div class="card">
         <h3>Feedback self-check</h3>
@@ -1384,14 +1480,23 @@
       </div>
 
       <div class="card">
-        <h3>In-page adaptive quiz — Learning Theory Scenarios <span class="pill">8 questions</span></h3>
-        <p style="font-size:.9rem;color:var(--muted)">Answer all eight, then press <strong>Check answers</strong> for misconception-first feedback. Use this as the flipped pre-test or the closure post-test.</p>
+        <h3>In-page adaptive quiz — Learning Theory Scenarios <span class="pill">12 questions</span> <span class="pill ped">Mastery</span></h3>
+        <p style="font-size:.9rem;color:var(--muted)">The fullest quiz in this plan. Answer all twelve, then press <strong>Check answers</strong> for misconception-first feedback. Use it as the flipped pre-test, the closure post-test, or a revision tool before the portfolio is submitted. Best score is saved in this browser.</p>
         <div id="quiz"></div>
         <div class="btn-row">
           <button class="btn" id="checkQuiz">Check answers</button>
           <button class="btn ghost" id="resetQuiz">Retry quiz</button>
         </div>
         <div class="scorebar" id="quizScore"></div>
+      </div>
+
+      <div class="card">
+        <h3>Quiz scoreboard <span class="pill">Progress tracking</span></h3>
+        <p style="font-size:.9rem;color:var(--muted)">Every quiz in this plan, with your <strong>best score</strong> so far. Scores are stored only in your browser (localStorage) and are never transmitted. Use this to find the misconception you still need to revisit before the portfolio deadline.</p>
+        <div id="quizHub"></div>
+        <div class="btn-row">
+          <button class="btn ghost" id="resetQuizzes">Clear all quiz scores &amp; answers</button>
+        </div>
       </div>
 
       <button class="mark-complete" data-section="materials">Mark section complete</button>
@@ -1656,7 +1761,23 @@
      fb:"In <strong>social constructivism</strong> the learner is a collaborative participant negotiating meaning with others. The other three pairings invert or misstate the learner's role."},
     {q:"You ask AI for a comparison table and it presents the four theories as a strict linear progression. What should you do?",
      opts:["Accept it — tables are usually reliable","Reject or modify it: the theories are parallel perspectives, and real classrooms blend them","Delete the table and stop using AI","Copy it into the portfolio unedited"], a:1,
-     fb:"A strict linear narrative is an <strong>oversimplification</strong>. Theories are coexisting perspectives; real teaching blends them. Document the modification in your AI Decision Log — this is graded evidence for AI-ILO6."}
+     fb:"A strict linear narrative is an <strong>oversimplification</strong>. Theories are coexisting perspectives; real teaching blends them. Document the modification in your AI Decision Log — this is graded evidence for AI-ILO6."},
+    {q:"Which option is the best example of <em>constructive alignment</em>?",
+     opts:["Choosing activities you enjoy and assessing with whatever test is easiest","Aligning outcome, learning activity and assessment so the assessment actually evidences the outcome","Assessing only what is quick to mark","Using AI to write the outcomes and copying them"],
+     a:1,
+     fb:"Constructive alignment means the <strong>outcome, activity and assessment</strong> all point at the same target. If the assessment cannot evidence the outcome, the design is misaligned — no matter how engaging the activity."},
+    {q:"AI writes a simplified, step-by-step explanation for a struggling learner. What must still happen?",
+     opts:["Nothing — simplified content is safe by definition","The learner or teacher still checks it for errors, because simplified content can still be wrong","The learner should memorise it verbatim","It should replace the course textbook"],
+     a:1,
+     fb:"Simplification is an <strong>access tool, not a correctness guarantee</strong>. The critical habit and the access support are trained together — an AI-generated simplification can still contain a factual error."},
+    {q:"In this lesson, what does the instructor actually grade in the AI Decision Log?",
+     opts:["The quality of the AI's original output","The quality of the student's critique and decision-making","How long the log is","Whether or not AI was used at all"],
+     a:1,
+     fb:"What is assessed is your <strong>critical engagement</strong> — accuracy of your evaluation, and the reasoning behind each accept, modify or reject. AI use is permitted and transparent; the thinking is what earns marks."},
+    {q:"Which statement best describes the flipped component of this lesson?",
+     opts:["Watching videos during class instead of listening to a lecture","Acquiring the content before class, then applying and analysing it in class","Doing all the homework after class as usual","Replacing the teacher with recorded video"],
+     a:1,
+     fb:"In <strong>flipped learning</strong>, first exposure to content happens before class; class time is spent on the harder work of application, analysis and critique. That is why the Jigsaw groups can start from shared knowledge rather than from zero."}
   ];
   var quizEl = document.getElementById("quiz");
   var quizScoreEl = document.getElementById("quizScore");
@@ -1711,6 +1832,350 @@
   });
   document.getElementById("resetQuiz").addEventListener("click", buildQuiz);
   buildQuiz();
+
+  /* ---------------- Generic quiz engine (multi-quiz) ---------------- */
+  var QUIZZES = [];
+
+  function escHtml(s){
+    return String(s).replace(/[&<>"]/g, function(c){
+      return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];
+    });
+  }
+
+  function makeQuiz(cfg){
+    var mount = document.getElementById(cfg.mount);
+    if (!mount) return;
+    var scoreEl = document.getElementById(cfg.score);
+    var data = cfg.data;
+    var ansKey = "ans_" + cfg.key;
+
+    function savedAnswers(){
+      var raw = store.get(ansKey);
+      if (!raw) return {};
+      try { return JSON.parse(raw) || {}; } catch(e){ return {}; }
+    }
+
+    function render(){
+      var saved = savedAnswers();
+      mount.innerHTML = "";
+      if (scoreEl) scoreEl.textContent = "";
+      data.forEach(function(item, qi){
+        var box = document.createElement("div");
+        box.className = "q";
+        box.setAttribute("data-q", qi);
+        var html = '<div class="qtext"><span class="qnum">Q' + (qi + 1) + '.</span>' + item.q + '</div>';
+        item.opts.forEach(function(o, oi){
+          var checked = saved[qi] === oi ? " checked" : "";
+          html += '<label class="opt"><input type="radio" name="' + cfg.key + '_q' + qi + '" value="' + oi + '"' + checked + '><span>' + o + '</span></label>';
+        });
+        html += '<div class="explain"></div>';
+        box.innerHTML = html;
+        mount.appendChild(box);
+        box.querySelectorAll("input[type=radio]").forEach(function(r){
+          r.addEventListener("change", function(){
+            box.querySelectorAll(".opt").forEach(function(l){ l.classList.remove("correct","wrong"); });
+            box.querySelector(".explain").classList.remove("show");
+            var cur = savedAnswers(); cur[qi] = parseInt(r.value, 10);
+            store.set(ansKey, JSON.stringify(cur));
+            if (scoreEl) scoreEl.textContent = "";
+          });
+        });
+      });
+    }
+
+    function check(){
+      var correct = 0, answered = 0, picks = {};
+      data.forEach(function(item, qi){
+        var box = mount.querySelector('.q[data-q="' + qi + '"]');
+        if (!box) return;
+        var opts = box.querySelectorAll(".opt");
+        var chosen = box.querySelector("input:checked");
+        opts.forEach(function(l){ l.classList.remove("correct","wrong"); });
+        if (chosen){
+          answered++;
+          var val = parseInt(chosen.value, 10);
+          picks[qi] = val;
+          opts[item.a].classList.add("correct");
+          if (val === item.a) correct++; else opts[val].classList.add("wrong");
+        } else {
+          opts[item.a].classList.add("correct");
+        }
+        var ex = box.querySelector(".explain");
+        ex.innerHTML = "<strong>Why:</strong> " + item.fb;
+        ex.classList.add("show");
+      });
+      store.set(ansKey, JSON.stringify(picks));
+      var pct = Math.round(correct / data.length * 100);
+      if (scoreEl){
+        scoreEl.textContent = "Score: " + correct + " / " + data.length + " (" + pct + "%)" +
+          (answered < data.length ? " — " + (data.length - answered) + " unanswered" : "");
+        scoreEl.style.color = pct >= 75 ? "var(--ok)" : "var(--brand-dark)";
+      }
+      var prev = null, raw = store.get("best_" + cfg.key);
+      if (raw){ try { prev = JSON.parse(raw); } catch(e){ prev = null; } }
+      if (!prev || pct > prev.pct){
+        store.set("best_" + cfg.key, JSON.stringify({correct: correct, total: data.length, pct: pct}));
+      }
+      toast(correct + " / " + data.length + " correct");
+      renderQuizHub();
+    }
+
+    var cbtn = document.getElementById(cfg.check);
+    var rbtn = document.getElementById(cfg.reset);
+    if (cbtn) cbtn.addEventListener("click", check);
+    if (rbtn) rbtn.addEventListener("click", function(){
+      store.del(ansKey);
+      render();
+      if (scoreEl) scoreEl.textContent = "";
+      toast("Quiz reset");
+    });
+
+    render();
+    QUIZZES.push({key: cfg.key, title: cfg.title, total: data.length, anchor: cfg.anchor || ""});
+  }
+
+  function renderQuizHub(){
+    var hub = document.getElementById("quizHub");
+    if (!hub) return;
+    var attempted = 0, sum = 0, totalItems = 0;
+    var rows = QUIZZES.map(function(z){
+      var best = null;
+      if (z.legacyKey){
+        var legacy = store.get(z.legacyKey);
+        if (legacy){
+          var parts = String(legacy).split("/");
+          var c = parseInt(parts[0], 10), t = parseInt(parts[1], 10);
+          if (!isNaN(c) && !isNaN(t) && t > 0) best = {correct:c, total:t, pct:Math.round(c / t * 100)};
+        }
+      } else {
+        var raw = store.get("best_" + z.key);
+        if (raw){ try { best = JSON.parse(raw); } catch(e){ best = null; } }
+      }
+      totalItems += z.total;
+      if (best){ attempted++; sum += best.pct; }
+      var link = z.anchor ? '<a href="#' + z.anchor + '">' + escHtml(z.title) + '</a>' : escHtml(z.title);
+      var status = best
+        ? '<span class="pill" style="background:var(--ok-soft);color:var(--ok);border-color:#bfe6c9">Attempted</span>'
+        : '<span class="pill">Not yet</span>';
+      var score = best ? (best.correct + " / " + best.total + " (" + best.pct + "%)") : "—";
+      return '<tr><td>' + link + '</td><td>' + z.total + '</td><td>' + score + '</td><td>' + status + '</td></tr>';
+    }).join("");
+    var avg = attempted ? Math.round(sum / attempted) : 0;
+    hub.innerHTML =
+      '<div class="table-scroll"><table class="log-table"><thead><tr><th>Quiz</th><th>Items</th><th>Best score</th><th>Status</th></tr></thead><tbody>' +
+      rows +
+      '</tbody></table></div>' +
+      '<div class="scorebar">Quizzes attempted: ' + attempted + ' / ' + QUIZZES.length +
+      ' · Items across all quizzes: ' + totalItems +
+      ' · Average best score: ' + avg + '%</div>';
+  }
+
+  /* ---- Quiz definitions ---- */
+
+  makeQuiz({
+    key:"pre", mount:"quizPre", check:"checkPre", reset:"resetPre", score:"scorePre",
+    anchor:"preclass", title:"Pre-class diagnostic — misconceptions (Section 2)",
+    data:[
+      {q:"“Behaviourism is only about punishment.” Which correction is most accurate?",
+       opts:["Punishment plays no role in behaviourism at all","Behaviourism includes reinforcement of desired behaviour as well as punishment","Behaviourism is really about memory and schemas","It is not a misconception — the statement is correct"], a:1,
+       fb:"<strong>Misconception 1.</strong> Behaviourism covers <em>both</em> reinforcement and punishment — positive and negative. Narrowing it to punishment is the over-simplification AI summaries reproduce most often."},
+      {q:"“Constructivism means the teacher gives no guidance.” The accurate position is:",
+       opts:["Correct — constructivist teachers never intervene","Constructivism requires well-designed guidance and scaffolding","Constructivism bans all assessment","Constructivism means students only ever work alone"], a:1,
+       fb:"<strong>Misconception 2.</strong> Constructivism changes the <em>form</em> of guidance, not its existence. Well-designed scaffolding is central, and its absence is a design failure, not a feature."},
+      {q:"Which statement about cognitivism is accurate?",
+       opts:["It studies only observable behaviour","It studies mental processes such as encoding, memory and schemas","It rejects any role for prior knowledge","It is a branch of behaviourism"], a:1,
+       fb:"<strong>Cognitivism</strong> goes inside the head: encoding, storage, retrieval, schemas and prior knowledge. It bridges behaviourist stimulus–response and constructivist meaning-making."},
+      {q:"Social constructivism differs from individual constructivism mainly because it:",
+       opts:["Denies the role of experience","Locates learning in social interaction and language, within the Zone of Proximal Development","Rejects scaffolding entirely","Is simply a behaviourist variant"], a:1,
+       fb:"Both agree knowledge is constructed; the <strong>social</strong> version adds that construction happens through dialogue, cultural tools and the ZPD (Vygotsky)."},
+      {q:"“Reinforcement only means tangible rewards such as stickers.” The accurate position is:",
+       opts:["True — only stickers and prizes count","False — reinforcement can be social or verbal, and can also be negative (removing an unpleasant state)","False — reinforcement is a cognitive schema","True — reinforcement is always extrinsic"], a:1,
+       fb:"<strong>Positive reinforcement</strong> adds something (praise, a token); <strong>negative reinforcement</strong> removes something aversive. Both increase behaviour, and neither is limited to prizes."},
+      {q:"A classmate writes: “The four learning theories are ranked from worst to best.” The best correction is:",
+       opts:["Correct — behaviourism is the worst of the four","The theories are alternative perspectives answering different questions, and real teaching blends them","Only social constructivism is correct","Which theory you pick does not matter"], a:1,
+       fb:"Theories are <strong>parallel perspectives</strong>, not a league table. Real classrooms blend them, and treating them as a strict ranking is the same oversimplification AI comparison tables produce."}
+    ]
+  });
+
+  makeQuiz({
+    key:"hook", mount:"quizHook", check:"checkHook", reset:"resetHook", score:"scoreHook",
+    anchor:"intro", title:"Hook triage — is the AI claim trustworthy? (Section 3)",
+    data:[
+      {q:"AI claims the sticker-reward reading scheme is “constructivist because students construct meaning.” The strongest critique is:",
+       opts:["The AI is right — rewards help students build meaning","The AI mislabels a behaviourist reinforcement contingency as constructivism","The claim cannot be evaluated","Constructivism and behaviourism are the same theory"], a:1,
+       fb:"It is a <strong>category error</strong>: contingent rewards are behavioural by definition. The prose is fluent and confident while being wrong — exactly the failure AI-ILO5 asks you to catch."},
+      {q:"Which feature of that AI output should make you <em>most</em> suspicious?",
+       opts:["It is short","It states a theory label with high confidence but offers no supporting evidence","It uses everyday language","It gives a classroom example"], a:1,
+       fb:"<strong>Confident labelling without evidence</strong> is the warning sign. Confidence is a property of the prose, not evidence for the claim."},
+      {q:"What single change would make the AI's claim accurate?",
+       opts:["Adding more adjectives","Relabel it behaviourist and explain the reinforcement mechanism","Making the paragraph longer","Deleting the classroom example"], a:1,
+       fb:"Correcting the <strong>theory label</strong> and naming the real mechanism (reinforcement) fixes the error. Stylistic changes and length do not."},
+      {q:"The stance this lesson takes towards AI is best summarised as:",
+       opts:["Accept AI output whenever it reads fluently","AI fluency is not evidence — verify against sources and disagree on evidence","Never use AI in academic work","Let AI replace the course textbook"], a:1,
+       fb:"AI is a <strong>study partner, not an authority</strong>. The graded skill is being able to say what it got wrong, and how you know."}
+    ]
+  });
+
+  makeQuiz({
+    key:"jigsaw", mount:"quizJigsaw", check:"checkJigsaw", reset:"resetJigsaw", score:"scoreJigsaw",
+    anchor:"development", title:"Expert-group check — assumption · mechanism · implication (Segment 1)",
+    data:[
+      {q:"“Learning is a change in observable behaviour produced by stimulus–response associations and reinforcement.” This core assumption belongs to:",
+       opts:["Behaviorism","Cognitivism","Constructivism","Social Constructivism"], a:0,
+       fb:"<strong>Behaviourism.</strong> Observable behaviour and environmental contingencies are the whole unit of analysis; mental states are deliberately set aside."},
+      {q:"“Information is encoded, stored and retrieved; schemas organise it.” This learning mechanism belongs to:",
+       opts:["Behaviorism","Cognitivism","Constructivism","Social Constructivism"], a:1,
+       fb:"<strong>Cognitivism.</strong> The mind as an information processor, with schemas and prior knowledge shaping what can be learned."},
+      {q:"“Arrange contingencies, give clear cues and immediate corrective feedback.” This instructional implication belongs to:",
+       opts:["Behaviorism","Cognitivism","Constructivism","Social Constructivism"], a:0,
+       fb:"<strong>Behaviourism.</strong> Instruction is the deliberate management of antecedents and consequences, with tight feedback loops."},
+      {q:"“Design authentic tasks and let learners build knowledge from their own experience.” This implication belongs to:",
+       opts:["Behaviorism","Cognitivism","Constructivism","Social Constructivism"], a:2,
+       fb:"<strong>Constructivism.</strong> The learner actively builds knowledge; the teacher <em>designs experiences and guides</em> — guidance is reshaped, not removed."},
+      {q:"“Meaning is co-constructed through dialogue, language and cultural tools.” This mechanism belongs to:",
+       opts:["Behaviorism","Cognitivism","Constructivism","Social Constructivism"], a:3,
+       fb:"<strong>Social constructivism.</strong> Knowledge is negotiated between people, supported by scaffolding within the Zone of Proximal Development."},
+      {q:"Which pair agree that the mind actively organises knowledge, but differ on whether construction is <em>individual or social</em>?",
+       opts:["Behaviorism & Cognitivism","Cognitivism & Constructivism","Constructivism & Social Constructivism","Cognitivism & Social Constructivism"], a:2,
+       fb:"<strong>Constructivism and social constructivism</strong> share the constructivist premise but split on where construction happens: inside the individual mind, or between people in dialogue."}
+    ]
+  });
+
+  makeQuiz({
+    key:"critique", mount:"quizCritique", check:"checkCritique", reset:"resetCritique", score:"scoreCritique",
+    anchor:"development", title:"AI Critique Lab drill — accuracy · completeness · bias · fit (Segment 2)",
+    data:[
+      {q:"AI designs a 10-minute behaviourist fractions lesson with rewards, but no practice sequence, no worked examples and no check for understanding. Which rubric criterion fails most clearly?",
+       opts:["Accuracy","Completeness","Bias","Nothing fails — rewards are enough"], a:1,
+       fb:"<strong>Completeness.</strong> Nothing is factually mislabelled, but essential elements — modelling, practice, assessment — are simply absent."},
+      {q:"AI's lesson assumes every student has a laptop, fast home internet and a quiet study space. Which criterion is implicated?",
+       opts:["Accuracy","Bias","Formatting","None — this is a realistic assumption"], a:1,
+       fb:"<strong>Bias.</strong> The output silently assumes a well-resourced, Western, neurotypical, English-first classroom — one of the most common AI failures."},
+      {q:"You asked for a <em>social-constructivist</em> lesson; AI returns a teacher-led lecture with individual worksheets. This is primarily a failure of:",
+       opts:["Accuracy of theory history","Bias","Pedagogical fit","Formatting"], a:2,
+       fb:"<strong>Pedagogical fit.</strong> The content may be fine in itself, but it does not match the stated theory or the social mechanism it requires."},
+      {q:"AI calls a points-based reading competition “constructivist.” The rubric criterion at stake is:",
+       opts:["Accuracy — the theory claim is wrong","Completeness — it is too short","Bias — it assumes too little","None — labels do not affect learning"], a:0,
+       fb:"<strong>Accuracy.</strong> A points competition is a behavioural contingency, so the label is wrong — the same category error as the lesson hook."},
+      {q:"Your group keeps the AI's warm-up, rewrites its assessment and drops its reward scheme. In the AI Decision Log this is recorded as:",
+       opts:["Accepted — the group used the AI","Modified for one element and rejected for another, each with a rationale","Rejected — nothing was kept","No entry needed; the log is optional"], a:1,
+       fb:"Every AI contribution gets its <strong>own decision</strong> — accepted, modified or rejected — with a theory-grounded reason. That granular record is what AI-ILO6 grades."},
+      {q:"Which is the strongest justification for rejecting an AI suggestion?",
+       opts:["We preferred our own idea","The suggestion contradicts the theory's mechanism and would not produce the intended learning","The AI used unfamiliar vocabulary","The group voted and most of us disagreed"], a:1,
+       fb:"Rejections must be <strong>theory-grounded and consequential</strong>: name the mechanism that would break, not a preference or a vote. “We preferred ours” earns no marks."}
+    ]
+  });
+
+  makeQuiz({
+    key:"scenario", mount:"quizScenario", check:"checkScenario", reset:"resetScenario", score:"scoreScenario",
+    anchor:"development", title:"Station triage — which theory fits? (Segment 3)",
+    data:[
+      {q:"Students practise multiplication with timed drills and points until answers are automatic and accurate. Best theory fit:",
+       opts:["Behaviorism","Cognitivism","Constructivism","Social Constructivism"], a:0,
+       fb:"<strong>Behaviourism.</strong> Repeated practice with immediate feedback and reinforcement builds fluent, observable performance."},
+      {q:"A teacher uses worked examples, side-by-side comparisons and concept maps so students connect new ideas to what they already know. Best fit:",
+       opts:["Behaviorism","Cognitivism","Constructivism","Social Constructivism"], a:1,
+       fb:"<strong>Cognitivism.</strong> Worked examples and concept maps are tools for managing cognitive load and building schemas on prior knowledge."},
+      {q:"Students investigate a local water-quality problem, collect their own data and build explanations from it. Best fit:",
+       opts:["Behaviorism","Cognitivism","Constructivism","Social Constructivism"], a:2,
+       fb:"<strong>Constructivism.</strong> Authentic, experience-based problem solving in which learners construct their own explanations."},
+      {q:"Mixed groups debate and co-write a shared explanation, with the teacher scaffolding the academic vocabulary. Best fit:",
+       opts:["Behaviorism","Cognitivism","Constructivism","Social Constructivism"], a:3,
+       fb:"<strong>Social constructivism.</strong> Dialogue plus scaffolded language inside the ZPD is the signature mechanism."},
+      {q:"At a station, AI proposes: “Just add points and stickers to boost motivation” for the water-quality investigation. Your best move:",
+       opts:["Accept — motivation always helps","Modify or reject: extrinsic rewards do not follow from constructivist meaning-making and would change the mechanism","Accept and log it as constructivist","Ignore the scenario entirely"], a:1,
+       fb:"Use AI as a <strong>consultant, then critique</strong>. The suggestion shifts the design to a behavioural contingency, so it must be modified or rejected — with the reason logged."}
+    ]
+  });
+
+  makeQuiz({
+    key:"synthesis", mount:"quizSynthesis", check:"checkSynthesis", reset:"resetSynthesis", score:"scoreSynthesis",
+    anchor:"development", title:"Cross-theory dimensions — learner · teacher · assessment (Segment 5)",
+    data:[
+      {q:"Which pairing of learner role and theory is correct?",
+       opts:["Behaviorism — active, self-directed discoverer","Behaviorism — collaborative negotiator","Cognitivism — passive recipient of stimuli","Social Constructivism — collaborative participant negotiating meaning"], a:3,
+       fb:"In <strong>social constructivism</strong> the learner negotiates meaning with others. The other three invert or misstate the learner's role."},
+      {q:"The teacher's role in social constructivism is best described as:",
+       opts:["Contingency manager","Information organiser","Mediator and co-participant who scaffolds dialogue","Absent facilitator"], a:2,
+       fb:"<strong>Mediator and co-participant.</strong> Scaffolding is active and deliberate — a direct counter to the “no guidance” misconception."},
+      {q:"Assessment in constructivism most typically relies on:",
+       opts:["Correct responses to isolated items","Authentic artefacts and evidence of process","Only timed multiple-choice tests","Observation of stimulus–response pairings"], a:1,
+       fb:"<strong>Authentic artefacts and process evidence.</strong> If learning is constructed, assessment must capture the construction, not just the final product."},
+      {q:"AI produces a comparison table showing the four theories as a strict linear progression. The best correction is:",
+       opts:["Behaviourism is obsolete and simply wrong","The theories are parallel perspectives, not a ranked progression, and real teaching blends them","Cognitivism was invented last, so it supersedes the others","Only one theory can ever be correct"], a:1,
+       fb:"The linear story is an <strong>oversimplification</strong>. Theories answer different questions and coexist; blending them is the norm, not a compromise."},
+      {q:"“Negative reinforcement” means:",
+       opts:["Punishment","Removal of an unpleasant stimulus, which increases behaviour","An example of constructivism","A cognitive schema for avoiding work"], a:1,
+       fb:"Negative reinforcement <strong>increases</strong> behaviour by removing something aversive. Confusing it with punishment is the single most common terminology error in first-year work."},
+      {q:"Which theory best explains why a peer's explanation helps you understand something you could not manage alone?",
+       opts:["Behaviorism","Cognitivism","Constructivism","Social Constructivism"], a:3,
+       fb:"<strong>Social constructivism.</strong> What you can do with support today, you can do alone tomorrow — the Zone of Proximal Development."}
+    ]
+  });
+
+  makeQuiz({
+    key:"post", mount:"quizPost", check:"checkPost", reset:"resetPost", score:"scorePost",
+    anchor:"closure", title:"Post-test — growth against the pre-test (Section 5)",
+    data:[
+      {q:"Which correction of “behaviourism is only about punishment” is accurate?",
+       opts:["Punishment is the only mechanism behaviourism describes","Behaviourism includes reinforcement of desired behaviour as well as punishment","Behaviourism is really about memory and schemas","No correction is needed"], a:1,
+       fb:"<strong>Misconception 1 cleared:</strong> behaviourism spans reinforcement and punishment, in both positive and negative forms."},
+      {q:"Which correction of “constructivism means no teacher guidance” is accurate?",
+       opts:["Guidance is banned in constructivist classrooms","Constructivism requires well-designed guidance and scaffolding","Constructivism means unguided discovery only","Teachers should never intervene in group work"], a:1,
+       fb:"<strong>Misconception 2 cleared:</strong> the form of guidance changes; its presence does not disappear."},
+      {q:"Which theory treats the mind as an information processor using schemas and memory?",
+       opts:["Behaviorism","Cognitivism","Social Constructivism","None of these"], a:1,
+       fb:"<strong>Cognitivism</strong> — encoding, storage, retrieval and schema structures."},
+      {q:"Learning through social interaction in the Zone of Proximal Development, supported by scaffolding, is:",
+       opts:["Cognitivism","Behaviorism","Social Constructivism","Constructivism alone"], a:2,
+       fb:"<strong>Social constructivism</strong> — Vygotsky's contribution beyond individual constructivism."},
+      {q:"AI labels a sticker-reward scheme “constructivist because students construct meaning.” Your critique:",
+       opts:["The AI is correct — rewards build meaning","It mislabels a behaviourist reinforcement mechanism as constructivism","The claim is unfalsifiable","The two theories are identical in practice"], a:1,
+       fb:"A <strong>category error</strong> — the fluent-but-wrong output AI-ILO5 and AI-ILO6 ask you to catch, correct and log."}
+    ]
+  });
+
+  makeQuiz({
+    key:"feedback", mount:"quizFeedback", check:"checkFeedback", reset:"resetFeedback", score:"scoreFeedback",
+    anchor:"feedback", title:"Interrogate the AI's feedback (Section 7)",
+    data:[
+      {q:"AI returns: “This lesson plan is strong. Good work!” What is the biggest problem?",
+       opts:["It is too short","It offers no rubric-anchored evidence, so it cannot guide any revision","It is impolite","Nothing — positive feedback is always useful"], a:1,
+       fb:"Feedback without <strong>rubric-anchored evidence</strong> is unusable. Always ask: which criterion, which evidence, what next step?"},
+      {q:"What is the correct sequence for the human-in-the-loop feedback process?",
+       opts:["Students receive AI feedback first; the instructor reviews it later","Instructor reviews and adjusts AI feedback, releases it, then students interrogate it and may override with a documented rationale","AI feedback goes straight into grades with no review","Students rewrite the AI's feedback for the AI"], a:1,
+       fb:"The instructor <strong>validates before release</strong>; students interrogate it after. AI is a supplement, never the final arbiter."},
+      {q:"AI feedback on your portfolio never mentions the “Critical AI Engagement” rubric criterion. You should:",
+       opts:["Assume the criterion does not apply to you","Note the omission, check the rubric yourself, and record your disagreement with a rationale","Delete the portfolio and start again","Re-prompt until the AI happens to mention it"], a:1,
+       fb:"Catching what the AI <strong>omitted</strong> is the skill. Document the gap in your AI Decision Log — that is graded evidence, not a nuisance."},
+      {q:"Calibration sessions matter because they:",
+       opts:["Reduce marking time","Build a shared, defensible standard by comparing AI and human judgement on sample work","Replace the rubric","Are required by most LMS platforms"], a:1,
+       fb:"Calibration turns AI feedback into a <strong>discussable object</strong>: instructor and students apply the same standard to sample drafts, so “good” becomes shared and demonstrable."}
+    ]
+  });
+
+  QUIZZES.push({key:"main", legacyKey:"quiz_score", title:"In-page adaptive quiz — Learning Theory Scenarios (Section 13)", total:QUIZ.length, anchor:"materials"});
+
+  document.getElementById("resetQuizzes").addEventListener("click", function(){
+    if (!confirm("Clear all quiz answers and best scores from every quiz in this plan?")) return;
+    QUIZZES.forEach(function(z){
+      store.del("ans_" + z.key);
+      store.del("best_" + z.key);
+      store.del("quiz_score");
+    });
+    toast("Quiz scores cleared");
+    location.reload();
+  });
+
+  renderQuizHub();
+
+  /* keep the scoreboard in sync when the original quiz is checked or reset */
+  (function(){
+    var legacyCheck = document.getElementById("checkQuiz");
+    var legacyReset = document.getElementById("resetQuiz");
+    if (legacyCheck) legacyCheck.addEventListener("click", function(){ renderQuizHub(); });
+    if (legacyReset) legacyReset.addEventListener("click", function(){ store.del("quiz_score"); renderQuizHub(); });
+  })();
 
   /* ---------------- AI Decision Log ---------------- */
   var logBody = document.getElementById("logBody");
