@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title><!-- FILL: title in the form "NN · Section name" --></title>
+<meta name="description" content="<!-- FILL: one sentence describing this section -->">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="custom.css">
+<script>try{var t=localStorage.getItem("lesson-theme");if(t)document.documentElement.setAttribute("data-theme",t);}catch(e){}</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<main class="main" id="main">
+<div class="wrap">
+
+  <header class="page-head">
+    <span class="eyebrow">Section 03 · In class<!-- FILL or replace --></span>
+    <h1>Teaching & Learning Activities<!-- FILL or replace --></h1>
+    <p class="lede">
+      <!-- FILL: one paragraph framing what this section covers for the reader. -->
+    </p>
+    <div class="tag-row">
+      <!-- FILL: <span class="pill pill--brand">…</span> tags, or delete this row -->
+    </div>
+  </header>
+
+  <!-- ===== CONTENT:START =====
+       Replace the example blocks below with this section's content.
+       Use ONLY the classes listed in README.md, and give each block an id so
+       it can be deep-linked. Keep the final checklist + "mark complete" block,
+       adjusting the items and the data-complete id to this section.
+       ===== CONTENT:END ===== -->
+
+  <section class="card anchor-target" id="FILL-anchor">
+    <div class="card__head">
+      <span class="card__icon" aria-hidden="true">▶</span>
+      <h2 style="margin:0">FILL: block heading</h2>
+    </div>
+    <p>FILL: section content. Use the component library — cards, callouts, tables,
+      steps, tool cards, accordions, stats, schedules.</p>
+  </section>
+
+  <section class="card">
+    <div class="card__head">
+      <span class="card__icon" aria-hidden="true">✓</span>
+      <h2 style="margin:0">Preparation checklist</h2>
+      <span class="pill pill--ghost" style="margin-left:auto" data-checklist-count>0 / 1 ticked</span>
+    </div>
+    <ul class="checklist">
+      <li><label class="check"><input type="checkbox" data-track="section-3-a"><span class="check__txt">FILL: what to prepare, read or brief before teaching this section.</span></label></li>
+    </ul>
+    <div class="btn-row">
+      <button class="btn btn--primary" type="button" data-complete="section-3">✓ Mark this section complete</button>
+    </div>
+  </section>
+
+  <nav class="page-nav" aria-label="Page navigation"></nav>
+</div>
+</main>
+
+<script src="content.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

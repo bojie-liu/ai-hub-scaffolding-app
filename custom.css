@@ -1,0 +1,15 @@
+/* ==========================================================================
+   Lesson-specific additions — APPEND ONLY IF STRICTLY NECESSARY.
+
+   styles.css already defines the full component library (see README.md).
+   Prefer an existing class. Only add here if a lesson genuinely needs a new
+   component that cannot be built from the documented classes.
+
+   RULES
+   - Never edit styles.css or app.js. Append new rules to this file only.
+   - Reuse the design tokens (var(--brand-2), var(--border), var(--radius), …)
+     so light and dark themes both keep working.
+   - Keep the class names prefixed so they cannot collide with the library.
+
+   Leave this file empty if nothing new is needed. An empty file is normal.
+   ========================================================================== */

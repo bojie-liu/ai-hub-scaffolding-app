@@ -1,16 +1,136 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Basic HTML Project</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title><!-- FILL: "<lesson title> — Lesson Plan" --></title>
+<meta name="description" content="<!-- FILL: one sentence describing the lesson -->">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="custom.css">
+<script>try{var t=localStorage.getItem("lesson-theme");if(t)document.documentElement.setAttribute("data-theme",t);}catch(e){}</script>
 </head>
 <body>
-  <div class="container">
-    <h1>Hello World!</h1>
-    <p>Welcome to your new project.</p>
-  </div>
-  <script src="script.js"></script>
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<main class="main" id="main">
+<div class="wrap">
+
+  <header class="page-head">
+    <span class="eyebrow"><!-- FILL: subject · level · duration --></span>
+    <h1><!-- FILL: lesson title --></h1>
+    <p class="lede">
+      <!-- FILL: one paragraph summarising the lesson and its pedagogical approach. -->
+    </p>
+    <div class="tag-row">
+      <!-- FILL: <span class="pill pill--brand">…</span> — pedagogy, class size, language, AI scope -->
+    </div>
+
+    <div class="card" style="margin-top:1.25rem">
+      <div class="card__head">
+        <span class="card__icon" aria-hidden="true">◱</span>
+        <h3 style="margin:0">Your progress through this lesson plan</h3>
+      </div>
+      <div class="bar" data-progress-overall role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Overall lesson progress">
+        <div class="bar__fill"></div>
+      </div>
+      <p class="small muted" style="margin:0.6rem 0 0">
+        <strong data-pct-label>0%</strong> of tracked sections complete · <span data-progress-count>0 / 8</span>.
+        Mark sections complete at the foot of each page — your state is stored locally in this browser.
+      </p>
+    </div>
+  </header>
+
+  <!-- ===== CONTENT:START =====
+       Replace the example blocks below with the lesson overview.
+       Keep the Table of Contents section — it is built automatically from
+       content.js. Use ONLY the classes listed in README.md.
+       ===== CONTENT:END ===== -->
+
+  <section class="card anchor-target" id="assumptions">
+    <div class="card__head">
+      <span class="card__icon" aria-hidden="true">⚙</span>
+      <h2 style="margin:0">Design Assumptions</h2>
+    </div>
+    <p class="muted small">FILL: state any defaults you applied because the brief did not specify them.</p>
+    <div class="table-scroll">
+      <table>
+        <caption>Applied defaults for this lesson design</caption>
+        <thead><tr><th scope="col">Parameter</th><th scope="col">Value</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Duration</strong></td><td>FILL</td></tr>
+          <tr><td><strong>Course / Subject</strong></td><td>FILL</td></tr>
+          <tr><td><strong>Student Level</strong></td><td>FILL</td></tr>
+          <tr><td><strong>Class Size</strong></td><td>FILL</td></tr>
+          <tr><td><strong>Language</strong></td><td>FILL</td></tr>
+          <tr><td><strong>Preferred Pedagogy</strong></td><td>FILL</td></tr>
+          <tr><td><strong>AI Integration Request</strong></td><td>FILL</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="card anchor-target" id="glance">
+    <div class="card__head">
+      <span class="card__icon" aria-hidden="true">◷</span>
+      <h2 style="margin:0">Session at a Glance</h2>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="stat__num">FILL</div><div class="stat__lab">Minutes total</div></div>
+      <div class="stat"><div class="stat__num">FILL</div><div class="stat__lab">Intro (%)</div></div>
+      <div class="stat"><div class="stat__num">FILL</div><div class="stat__lab">Development (%)</div></div>
+      <div class="stat"><div class="stat__num">FILL</div><div class="stat__lab">Closure (%)</div></div>
+      <div class="stat"><div class="stat__num">FILL</div><div class="stat__lab">Outcomes</div></div>
+      <div class="stat"><div class="stat__num">FILL</div><div class="stat__lab">Groups</div></div>
+    </div>
+    <ol class="sched">
+      <li><span class="sched__t">0–FILL</span><span><strong>FILL: phase</strong> — what happens and why.</span></li>
+      <li><span class="sched__t">FILL</span><span><strong>FILL: phase</strong> — what happens and why.</span></li>
+    </ol>
+  </section>
+
+  <section class="card anchor-target" id="contents">
+    <div class="card__head">
+      <span class="card__icon" aria-hidden="true">☰</span>
+      <h2 style="margin:0">Table of Contents</h2>
+    </div>
+    <div class="grid grid--2" data-toc="sections"></div>
+    <div class="grid grid--3 mt-2" data-toc="tools"></div>
+  </section>
+
+  <section class="card">
+    <div class="card__head">
+      <span class="card__icon" aria-hidden="true">✦</span>
+      <h2 style="margin:0">How to Use This Lesson Plan</h2>
+    </div>
+    <div class="grid grid--3">
+      <div>
+        <h4>For facilitators</h4>
+        <ol class="small">
+          <li>FILL</li>
+          <li>FILL</li>
+        </ol>
+      </div>
+      <div>
+        <h4>For students</h4>
+        <ol class="small">
+          <li>FILL</li>
+          <li>FILL</li>
+        </ol>
+      </div>
+      <div>
+        <h4>Accessibility &amp; storage</h4>
+        <ul class="small">
+          <li>FILL</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <nav class="page-nav" aria-label="Page navigation"></nav>
+</div>
+</main>
+
+<script src="content.js"></script>
+<script src="app.js"></script>
 </body>
 </html>

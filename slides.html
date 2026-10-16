@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title><!-- FILL: "Presentation Slides — <lesson title>" --></title>
+<meta name="description" content="<!-- FILL: e.g. "A NN-slide presentation sequence with speaker notes." -->">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="custom.css">
+<script>try{var t=localStorage.getItem("lesson-theme");if(t)document.documentElement.setAttribute("data-theme",t);}catch(e){}</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<div class="slide-progress" aria-hidden="true"><div class="slide-progress__fill" data-deck-fill></div></div>
+
+<main class="main" id="main">
+<div class="wrap">
+
+  <header class="page-head">
+    <span class="eyebrow">Presentation deck<!-- FILL or replace --></span>
+    <h1><!-- FILL: lesson title --></h1>
+    <p class="lede">
+      FILL: slide count and how to drive it — <kbd>→</kbd> / <kbd>←</kbd> to advance,
+      <kbd>Home</kbd> / <kbd>End</kbd> to jump, <kbd>F</kbd> for fullscreen.
+    </p>
+  </header>
+
+  <!-- ===== CONTENT:START =====
+       Replace the example slides below with the deck. One <section class="slide">
+       per slide, each with a unique id="sN" in order. Keep the first slide's
+       class as "slide is-active" (app.js takes over from there).
+       Use ONLY the classes listed in README.md.
+       ===== CONTENT:END ===== -->
+
+  <div class="slide-stage" data-deck>
+
+    <section class="slide is-active" id="s1">
+      <p class="slide__kicker">FILL: course · session · duration</p>
+      <h2>FILL: slide title</h2>
+      <div class="slide__body">
+        <p>FILL: slide content. Use lists, <code>split</code>, <code>vignette</code>,
+          <code>quote</code>, <code>stat</code>s and small tables inside slides.</p>
+      </div>
+      <p class="slide-notes"><span class="slide-note-label">Speaker notes</span>FILL: what to say and do on this slide.</p>
+    </section>
+
+    <section class="slide" id="s2">
+      <p class="slide__kicker">FILL: phase · timing</p>
+      <h2>FILL: slide title</h2>
+      <div class="slide__body">
+        <div class="split">
+          <div class="vignette vignette--a">
+            <h4>FILL: option A</h4>
+            <p class="small mb-0">FILL</p>
+          </div>
+          <div class="vignette vignette--b">
+            <h4>FILL: option B</h4>
+            <p class="small mb-0">FILL</p>
+          </div>
+        </div>
+      </div>
+      <p class="slide-notes"><span class="slide-note-label">Speaker notes</span>FILL</p>
+    </section>
+
+  </div>
+
+  <nav class="page-nav" aria-label="Page navigation"></nav>
+</div>
+</main>
+
+<div class="timer" data-timer="5">
+  <button class="timer__fab" type="button" data-timer-fab aria-label="Show countdown timer">⏱</button>
+  <div class="timer__panel">
+    <div class="timer__display" data-timer-display>05:00</div>
+    <div class="btn-row" style="margin:0;justify-content:center">
+      <button class="btn btn--sm btn--primary" type="button" data-timer-toggle>Start</button>
+      <button class="btn btn--sm" type="button" data-timer-reset>Reset</button>
+    </div>
+    <div class="timer__presets">
+      <button class="btn btn--sm btn--ghost" type="button" data-preset="2">2 min</button>
+      <button class="btn btn--sm btn--ghost" type="button" data-preset="5">5 min</button>
+      <button class="btn btn--sm btn--ghost" type="button" data-preset="10">10 min</button>
+    </div>
+  </div>
+</div>
+
+<div class="deck-bar">
+  <button class="btn btn--sm" type="button" data-deck-first>⤒ First</button>
+  <button class="btn btn--sm" type="button" data-deck-prev>← Previous</button>
+  <span class="deck-count" data-deck-count>Slide 1</span>
+  <span class="deck-bar__spacer"></span>
+  <button class="btn btn--sm" type="button" data-deck-full>⛶ Fullscreen</button>
+  <button class="btn btn--sm btn--primary" type="button" data-deck-next>Next →</button>
+</div>
+
+<script src="content.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

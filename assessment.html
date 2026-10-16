@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title><!-- FILL: "Practice Studio — Quizzes, Flashcards &amp; Polls" --></title>
+<meta name="description" content="<!-- FILL: one sentence describing the interactive studio -->">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="custom.css">
+<script>try{var t=localStorage.getItem("lesson-theme");if(t)document.documentElement.setAttribute("data-theme",t);}catch(e){}</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<main class="main" id="main">
+<div class="wrap">
+
+  <header class="page-head">
+    <span class="eyebrow">Practice Studio · A<!-- FILL or replace --></span>
+    <h1>Practice Studio<!-- FILL or replace --></h1>
+    <p class="lede">
+      <!-- FILL: one paragraph describing the interactive tools on this page. -->
+    </p>
+    <div class="tag-row">
+      <!-- FILL: <span class="pill pill--brand">…</span> tags -->
+    </div>
+    <nav class="btn-row" aria-label="Jump links">
+      <!-- FILL: one button per block below, e.g. -->
+      <a class="btn btn--sm" href="#pretest">Pre-test</a>
+      <a class="btn btn--sm" href="#flashcards">Flashcards</a>
+      <a class="btn btn--sm" href="#axis">Two-axis poll</a>
+      <a class="btn btn--sm" href="#logs">Decision log</a>
+    </nav>
+  </header>
+
+  <!-- ===== CONTENT:START =====
+       Replace the example blocks below with this lesson's interactive tools.
+       Duplicate, reorder or delete blocks as needed. Keep the data-* attributes
+       exactly as shown — app.js binds to them. Answer keys live on each .q as
+       data-correct (the option's value) and data-explain (feedback HTML).
+       Use ONLY the classes listed in README.md.
+       ===== CONTENT:END ===== -->
+
+  <!-- ---- Quiz, check-all mode --------------------------------------------- -->
+  <section class="anchor-target" id="pretest">
+    <div class="quiz" data-quiz="pretest" data-mode="single">
+      <div class="quiz__head">
+        <span class="card__icon" aria-hidden="true">◉</span>
+        <div>
+          <h3>Diagnostic Pre-Test</h3>
+          <p class="small muted" style="margin:0">FILL: item count · when to take it · what the feedback does</p>
+        </div>
+        <span class="pill pill--brand">Pre-class</span>
+      </div>
+      <div class="quiz__body">
+
+        <div class="q" data-correct="b" data-explain="FILL: the reasoning behind the correct answer.">
+          <p class="q__stem"><span class="q__num">1</span>FILL: question stem?</p>
+          <ul class="opts">
+            <li><label class="opt"><input type="radio" name="pre1" value="a"><span class="opt__key">A</span><span>FILL: option</span></label></li>
+            <li><label class="opt"><input type="radio" name="pre1" value="b"><span class="opt__key">B</span><span>FILL: option</span></label></li>
+            <li><label class="opt"><input type="radio" name="pre1" value="c"><span class="opt__key">C</span><span>FILL: option</span></label></li>
+            <li><label class="opt"><input type="radio" name="pre1" value="d"><span class="opt__key">D</span><span>FILL: option</span></label></li>
+          </ul>
+          <div class="fb"></div>
+        </div>
+
+      </div>
+      <div class="quiz__score">
+        <button class="btn btn--primary btn--sm" type="button" data-quiz-check>Check all answers</button>
+        <button class="btn btn--sm" type="button" data-quiz-reset>Clear</button>
+        <span data-quiz-result class="small"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---- Quiz, immediate-reveal mode (scenario vote) ---------------------- -->
+  <section class="anchor-target" id="poll-quiz">
+    <div class="quiz" data-quiz="scenarios" data-mode="immediate">
+      <div class="quiz__head">
+        <span class="card__icon" aria-hidden="true">◆</span>
+        <div>
+          <h3>FILL: scenario quiz title</h3>
+          <p class="small muted" style="margin:0">Feedback appears immediately after each vote.</p>
+        </div>
+        <span class="pill pill--teal">FILL: timing</span>
+      </div>
+      <div class="quiz__body">
+        <div class="q" data-correct="a" data-explain="FILL: why this option is right.">
+          <p class="q__stem"><span class="q__num">1</span>FILL: scenario?</p>
+          <ul class="opts">
+            <li><label class="opt"><input type="radio" name="sc1" value="a"><span class="opt__key">A</span><span>FILL: option</span></label></li>
+            <li><label class="opt"><input type="radio" name="sc1" value="b"><span class="opt__key">B</span><span>FILL: option</span></label></li>
+            <li><label class="opt"><input type="radio" name="sc1" value="c"><span class="opt__key">C</span><span>FILL: option</span></label></li>
+          </ul>
+          <div class="fb"></div>
+        </div>
+      </div>
+      <div class="quiz__score">
+        <button class="btn btn--sm" type="button" data-quiz-reset>Reset</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---- Drag-and-drop matching / flashcards ----------------------------- -->
+  <section class="anchor-target" id="flashcards">
+    <div class="card card--flush">
+      <div class="card__head" style="padding:1.5rem 1.5rem 0">
+        <span class="card__icon" aria-hidden="true">▤</span>
+        <div>
+          <h2 style="margin:0">FILL: flashcard set title</h2>
+          <p class="small muted" style="margin:0.2rem 0 0">Drag a card from the pool into a slot — or tap a card, then tap the slot.</p>
+        </div>
+      </div>
+      <div style="padding:1.25rem 1.5rem 1.5rem">
+        <div class="match" data-match="models">
+          <div class="chips" data-pool>
+            <button class="chip" type="button" draggable="true" data-id="FILL-c1">FILL: card text</button>
+            <button class="chip" type="button" draggable="true" data-id="FILL-c2">FILL: card text</button>
+          </div>
+          <div class="model-grid">
+            <div class="model-card" data-model="FILL-m1">
+              <h4>FILL: model name</h4>
+              <p class="model-card__sub">FILL: sub-label</p>
+              <div class="drop" data-slot="concept" data-answer="FILL-c1"><span class="drop__label">Key concept</span></div>
+              <div class="drop" data-slot="indicator" data-answer="FILL-c2"><span class="drop__label">Classroom indicator</span></div>
+            </div>
+          </div>
+          <p class="small mt-1" data-match-result></p>
+          <div class="btn-row">
+            <button class="btn btn--sm" type="button" data-match-reset>Reset the set</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---- Single-select poll ---------------------------------------------- -->
+  <section class="anchor-target" id="tally">
+    <div class="card">
+      <div class="card__head">
+        <span class="card__icon" aria-hidden="true">📊</span>
+        <div>
+          <h2 style="margin:0">FILL: poll question</h2>
+          <p class="small muted" style="margin:0.2rem 0 0">Cast one vote, then discuss the shape of the distribution.</p>
+        </div>
+      </div>
+      <div class="poll" data-poll="FILL-poll">
+        <button class="poll-opt" type="button" data-id="o1"><span class="fill" data-fill="o1"></span><span class="lblrow"><span>FILL: option</span><span class="pct" data-pct="o1"></span></span></button>
+        <button class="poll-opt" type="button" data-id="o2"><span class="fill" data-fill="o2"></span><span class="lblrow"><span>FILL: option</span><span class="pct" data-pct="o2"></span></span></button>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn--sm" type="button" data-poll-reset>Clear my vote</button>
+        <span class="small muted" data-poll-note></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---- Two-axis poll --------------------------------------------------- -->
+  <section class="anchor-target" id="axis">
+    <div class="card">
+      <div class="card__head">
+        <span class="card__icon" aria-hidden="true">◫</span>
+        <div>
+          <h2 style="margin:0">FILL: two-axis poll title</h2>
+          <p class="small muted" style="margin:0.2rem 0 0">Click anywhere on the grid to place your response, then defend it in pairs.</p>
+        </div>
+        <span class="pill pill--brand" style="margin-left:auto">Live</span>
+      </div>
+      <div class="axis-wrap">
+        <div>
+          <div class="axis" data-axis="me" role="img" aria-label="Two-axis grid. Click to place your response.">
+            <span class="axis__lab axis__lab--t">FILL: top label</span>
+            <span class="axis__lab axis__lab--b">FILL: bottom label</span>
+            <span class="axis__lab axis__lab--l">FILL: left label</span>
+            <span class="axis__lab axis__lab--r">FILL: right label</span>
+          </div>
+          <p class="small muted mt-1" data-axis-readout>Click the grid to place your response.</p>
+        </div>
+        <div>
+          <div class="legend">
+            <div class="legend__row"><span class="legend__sw" style="background:var(--brand-2)"></span><span>Class placements — <strong><span data-axis-count>0</span></strong> recorded in this browser</span></div>
+            <div class="legend__row"><span class="legend__sw" style="background:var(--rose)"></span><span>Your placement</span></div>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn--sm" type="button" data-axis-clear>Clear the grid</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---- AI decision log (table + CSV export) ---------------------------- -->
+  <section class="anchor-target" id="logs">
+    <div class="card card--teal" data-log="main">
+      <div class="card__head">
+        <span class="card__icon" aria-hidden="true">⬡</span>
+        <div>
+          <h2 style="margin:0">FILL: decision log title</h2>
+          <p class="small muted" style="margin:0.2rem 0 0">Entries save automatically in this browser. Export to CSV when you are done.</p>
+        </div>
+        <span class="pill pill--ai" style="margin-left:auto">AI literacy</span>
+      </div>
+      <div class="table-scroll">
+        <table>
+          <caption>ACCEPT / MODIFY / REJECT log — at least three entries</caption>
+          <thead>
+            <tr>
+              <th scope="col">AI claim</th>
+              <th scope="col">Verdict</th>
+              <th scope="col">Action</th>
+              <th scope="col">Justification — what evidence decided it?</th>
+              <th scope="col">Where human judgement took precedence</th>
+              <th scope="col"><span class="sr-only">Delete</span></th>
+            </tr>
+          </thead>
+          <tbody data-log-body></tbody>
+        </table>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn--sm" type="button" data-log-add>+ Add row</button>
+        <button class="btn btn--sm" type="button" data-log-export>Export CSV</button>
+        <button class="btn btn--sm btn--ghost" type="button" data-log-clear>Clear log</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---- Guided notes (autosaved) ---------------------------------------- -->
+  <section class="anchor-target" id="notes">
+    <div class="card">
+      <div class="card__head">
+        <span class="card__icon" aria-hidden="true">✎</span>
+        <div>
+          <h2 style="margin:0">Guided Notes</h2>
+          <p class="small muted" style="margin:0.2rem 0 0">Your notes save automatically in this browser.</p>
+        </div>
+      </div>
+      <div class="field-row">
+        <label class="field-label" for="note-1">FILL: prompt for this note</label>
+        <textarea class="field" id="note-1" data-note="notes-1" rows="4" placeholder="FILL: prompt or sentence starter"></textarea>
+        <p class="small muted word-count" data-count>0 words</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---- Exit ticket ----------------------------------------------------- -->
+  <section class="anchor-target" id="exit">
+    <div class="card" data-exit-ticket>
+      <div class="card__head">
+        <span class="card__icon" aria-hidden="true">✉</span>
+        <div>
+          <h2 style="margin:0">Exit Ticket</h2>
+          <p class="small muted" style="margin:0.2rem 0 0">FILL: instructions, e.g. "3 things learned, 2 contexts compared, 1 question".</p>
+        </div>
+      </div>
+      <div class="field-row">
+        <label class="field-label" for="exit-learn">3 things you learned</label>
+        <textarea class="field" id="exit-learn" data-exit="learned" rows="3"></textarea>
+      </div>
+      <div class="field-row">
+        <label class="field-label" for="exit-question">1 question you are taking away</label>
+        <textarea class="field" id="exit-question" data-exit="question" rows="2"></textarea>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn--sm" type="button" data-exit-download>Download ticket</button>
+        <button class="btn btn--sm btn--ghost" type="button" data-exit-clear>Clear</button>
+      </div>
+    </div>
+  </section>
+
+  <nav class="page-nav" aria-label="Page navigation"></nav>
+</div>
+</main>
+
+<script src="content.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
