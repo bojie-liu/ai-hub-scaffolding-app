@@ -1,0 +1,407 @@
+<!-- CONTENT:START
+     ============================================================================
+     Replace EVERYTHING between CONTENT:START and CONTENT:END with the real
+     lesson content. Delete these comments. Leave no FILL marker behind.
+
+     Rules:
+     * Emit <section class="block"> blocks only — you are inside <main><div class="wrap">.
+     * The first section must have id="overview" and contain the hero + stat row.
+     * Keep the DOM hooks below (ids / data-* attributes) exactly as written —
+       the frozen JS binds to them. You may move them into other sections, but
+       each id must appear exactly once.
+     * Use only classes already defined in shell.html. No inline <style>, no new ids.
+     * Section ids must match the `nav` list in content/data.json.
+     ============================================================================ -->
+
+<!-- ================= HERO / OVERVIEW ================= -->
+<section id="overview" class="block">
+  <div class="hero">
+    <p class="eyebrow" style="color:rgba(255,255,255,.85)">FILL: programme · course</p>
+    <h1>FILL: lesson title</h1>
+    <p>FILL: two-to-three sentence framing of the lesson and the role AI plays in it.</p>
+    <div class="chips">
+      <span class="pill">⏱ FILL duration</span>
+      <span class="pill">👥 FILL class size</span>
+      <span class="pill">🎓 FILL level</span>
+      <span class="pill">🌐 FILL language</span>
+    </div>
+    <div class="meta-grid">
+      <div class="meta-item"><div class="k">Primary Pedagogy</div><div class="v">FILL</div></div>
+      <div class="meta-item"><div class="k">Framing</div><div class="v">FILL</div></div>
+      <div class="meta-item"><div class="k">AI Role</div><div class="v">FILL</div></div>
+      <div class="meta-item"><div class="k">Assessment</div><div class="v">FILL</div></div>
+    </div>
+  </div>
+
+  <!-- live counters — the JS fills these; keep the ids -->
+  <div class="grid g4" style="margin-top:20px">
+    <div class="stat"><div class="n" id="statTasks">0 / 0</div><div class="l">Tasks complete</div></div>
+    <div class="stat"><div class="n" id="statPre">—</div><div class="l">Pre-test score</div></div>
+    <div class="stat"><div class="n" id="statPost">—</div><div class="l">Post-test score</div></div>
+    <div class="stat"><div class="n" id="statCrit">0 / 0</div><div class="l">AI critiques logged</div></div>
+  </div>
+
+  <div class="card" style="margin-top:20px">
+    <div class="card-title"><span class="ic">📍</span> Lesson roadmap</div>
+    <div class="tl">
+      <div class="tl-item"><div class="tt">FILL phase · FILL min</div><div class="td">FILL what happens in this phase.</div></div>
+      <div class="tl-item"><div class="tt">FILL phase · FILL min</div><div class="td">FILL what happens in this phase.</div></div>
+      <div class="tl-item"><div class="tt">FILL phase · FILL min</div><div class="td">FILL what happens in this phase.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SECTION 1 — OUTCOMES ================= -->
+<section id="ilos" class="block">
+  <div class="sec-head">
+    <div class="sec-num">1</div>
+    <div class="t">
+      <p class="eyebrow">Section 1</p>
+      <h2>Intended Learning Outcomes</h2>
+      <p>FILL: one line on how AI integration is engineered into each outcome.</p>
+    </div>
+  </div>
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th style="width:110px">ILO</th><th>Description</th><th style="width:38%">🤖 AI Integration</th></tr></thead>
+      <tbody>
+        <tr><td>ILO1</td><td>FILL outcome</td><td>FILL how AI supports it</td></tr>
+        <tr><td>ILO2</td><td>FILL outcome</td><td>FILL how AI supports it</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout ai">
+    <div class="ct">🤖 Design principle</div>
+    <p class="mb0">FILL: state the stance the lesson takes on AI output (e.g. evidence to examine, not an authority to copy).</p>
+  </div>
+</section>
+
+<!-- ================= SECTION 2 — PRE-CLASS ================= -->
+<section id="preclass" class="block">
+  <div class="sec-head">
+    <div class="sec-num">2</div>
+    <div class="t">
+      <p class="eyebrow">Section 2</p>
+      <h2>Pre-Class Preparation</h2>
+      <p>FILL: what students do before the session.</p>
+    </div>
+  </div>
+
+  <div class="grid g2">
+    <div class="card">
+      <div class="card-title"><span class="ic">📚</span> Required preparation</div>
+      <ul class="mb0 small">
+        <li>FILL reading / video / task.</li>
+      </ul>
+      <div class="inline-actions">
+        <button class="btn btn-primary" id="startPre" type="button">▶ Start the diagnostic pre-test</button>
+      </div>
+      <div id="preQuiz" style="margin-top:16px;display:none"></div>
+    </div>
+    <div class="card tight">
+      <div class="card-title"><span class="ic">✅</span> Pre-class checklist</div>
+      <div class="tasklist" id="preTasks"></div>
+    </div>
+  </div>
+
+  <details class="acc">
+    <summary><span class="badge pill teal">Tool</span> FILL: run the pre-test in your LMS (Blackboard / Moodle / Canvas)</summary>
+    <div class="acc-body">
+      <ol class="steps">
+        <li>FILL numbered step for the external tool.</li>
+        <li>FILL numbered step.</li>
+      </ol>
+    </div>
+  </details>
+</section>
+
+<!-- ================= SECTION 3 — ACTIVITIES ================= -->
+<section id="activities" class="block">
+  <div class="sec-head">
+    <div class="sec-num">3</div>
+    <div class="t">
+      <p class="eyebrow">Section 3</p>
+      <h2>Teaching &amp; Learning Activities</h2>
+      <p>FILL: the run sheet, with timings and AI touchpoints.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="ic">1</span> Round 1 — FILL activity</div>
+    <p class="small">FILL instructions, grouping and timing.</p>
+    <div class="grid g2">
+      <div class="card tight">
+        <div class="card-title"><span class="ic">👥</span> Peer-work checklist</div>
+        <div class="tasklist" id="peerTasks"></div>
+      </div>
+      <div class="card tight">
+        <div class="card-title"><span class="ic">📝</span> Observation journal (instructor)</div>
+        <label class="field"><span>FILL prompt</span><textarea data-journal="worked"></textarea></label>
+        <label class="field"><span>FILL prompt</span><textarea data-journal="struggle"></textarea></label>
+      </div>
+    </div>
+    <div class="inline-actions"><button class="btn btn-sm" data-task="dev-r1" type="button">✓ Mark Round 1 complete</button></div>
+  </div>
+
+  <!-- AI critique lab — the JS renders one critique per entry in LESSON_DATA.critiques -->
+  <div class="card" style="border-color:var(--violet)">
+    <div class="card-title"><span class="ic" style="background:var(--violet-soft);color:var(--violet)">🤖</span> AI Critique Lab</div>
+    <div class="callout note">
+      <div class="ct">🔍 Your job is to find what the AI got wrong</div>
+      <p class="mb0 small">Check each claim against your textbook and your own reasoning. A confident tone is not evidence of correctness.</p>
+    </div>
+    <div id="critiqueLab"></div>
+    <div class="score-bar" style="margin-bottom:0">
+      <div><div class="score-big" id="critCount">0/0</div><div class="small muted">Fully critiqued</div></div>
+      <div style="flex:1;min-width:200px">
+        <div class="cat-row" style="grid-template-columns:1fr"><span class="small muted">Verdicts cast: <strong id="critVerdicts">0</strong> / <span id="critTotal">0</span></span><span class="cat-track"><span class="cat-fill" id="critFill" style="width:0%;background:linear-gradient(90deg,var(--violet),var(--brand))"></span></span></div>
+      </div>
+      <button class="btn btn-sm" id="critReset" type="button">Clear lab</button>
+    </div>
+  </div>
+
+  <!-- simulated AI chat -->
+  <div class="card" style="border-color:var(--violet)">
+    <div class="card-title"><span class="ic" style="background:var(--violet-soft);color:var(--violet)">💬</span> Practice the synthesis prompt</div>
+    <p class="small">Pick a prompt to see a simulated AI response, then write your critique.</p>
+    <div class="chat" id="chatWindow" aria-live="polite">
+      <div class="msg ai"><div class="who">AI</div>FILL: opening line of the simulated assistant.</div>
+    </div>
+    <div class="chips" id="chatPrompts"></div>
+    <label class="field"><span>Your critique of the AI response above (saved to your portfolio)</span>
+      <textarea id="chatCritique" placeholder="FILL: what the AI got wrong and why."></textarea>
+    </label>
+    <div class="inline-actions"><button class="btn btn-sm btn-primary" id="chatSave" type="button">💾 Save critique</button></div>
+  </div>
+
+  <div class="callout ai">
+    <div class="ct">🎓 Instructor guidance on critical AI use</div>
+    <ul class="mb0"><li>FILL guidance point.</li></ul>
+  </div>
+</section>
+
+<!-- ================= SECTION 4 — ASSESSMENT ================= -->
+<section id="assessment" class="block">
+  <div class="sec-head">
+    <div class="sec-num">4</div>
+    <div class="t">
+      <p class="eyebrow">Section 4</p>
+      <h2>Assessment Methods</h2>
+      <p>FILL: formative and summative assessment.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="ic">🎯</span> Post-test <span class="pill brand">FILL items</span></div>
+    <p class="small">FILL how the post-test mirrors the pre-test misconception categories.</p>
+    <div class="inline-actions">
+      <button class="btn btn-primary" id="startPost" type="button">▶ Start the post-test</button>
+    </div>
+    <div id="postQuiz" style="margin-top:16px;display:none"></div>
+    <div id="compareBox" style="margin-top:16px"></div>
+  </div>
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Method</th><th>Weight</th><th>What it assesses</th></tr></thead>
+      <tbody><tr><td>FILL</td><td>FILL</td><td>FILL</td></tr></tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ================= SECTION 5 — ALIGNMENT ================= -->
+<section id="alignment" class="block">
+  <div class="sec-head">
+    <div class="sec-num">5</div>
+    <div class="t">
+      <p class="eyebrow">Section 5</p>
+      <h2>Constructive Alignment Matrix</h2>
+      <p>FILL: how outcomes, activities and assessment line up.</p>
+    </div>
+  </div>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>ILO</th><th>Learning activity</th><th>Assessment</th><th>Cognitive level</th></tr></thead>
+      <tbody><tr><td>FILL</td><td>FILL</td><td>FILL</td><td>FILL</td></tr></tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ================= SECTION 6 — RESOURCES ================= -->
+<section id="resources" class="block">
+  <div class="sec-head">
+    <div class="sec-num">6</div>
+    <div class="t">
+      <p class="eyebrow">Section 6</p>
+      <h2>Required Resources &amp; Technology</h2>
+      <p>FILL: platforms, AI tools and materials.</p>
+    </div>
+  </div>
+
+  <h3>Reference cards</h3>
+  <div class="grid g3" id="theoryCards"></div>
+
+  <h3 style="margin-top:30px">🃏 Flashcard deck — drag-and-drop matching</h3>
+  <div class="card">
+    <p class="small">Drag an item chip (or tap it, then tap a slot) onto the matching description. Correct matches lock in green.</p>
+    <div class="fc-arena">
+      <div>
+        <p class="small muted" style="margin:0 0 8px"><strong>Item chips</strong></p>
+        <div class="chip-pool" id="chipPool"></div>
+      </div>
+      <div>
+        <p class="small muted" style="margin:0 0 8px"><strong>Descriptions</strong></p>
+        <div class="slots" id="slotPool"></div>
+      </div>
+    </div>
+    <div class="inline-actions">
+      <button class="btn btn-sm" id="fcReset" type="button">↺ Reset deck</button>
+      <span class="pill" id="fcScore">0 / 0 matched</span>
+      <button class="btn btn-sm" data-task="flashcards" type="button">✓ Mark deck complete</button>
+    </div>
+  </div>
+
+  <h3 style="margin-top:30px">🎮 Gamified scenario quiz</h3>
+  <div class="card">
+    <p class="small">FILL: identify which concept best explains each scenario, then answer the peer-review prompt.</p>
+    <div id="scenarioQuiz"></div>
+    <div class="inline-actions">
+      <button class="btn btn-sm btn-primary" id="scenarioCheck" type="button">Check answers</button>
+      <button class="btn btn-sm" id="scenarioReset" type="button">↺ Try again</button>
+      <span class="pill" id="scenarioScore">—</span>
+    </div>
+  </div>
+
+  <h3 style="margin-top:30px">🧠 Concept-map builder <span class="pill brand">Summative artefact</span></h3>
+  <div class="card">
+    <p class="small">Choose a scenario, add at least three nodes, and record how each applies.</p>
+    <div class="grid g2">
+      <div>
+        <label class="field"><span>Your real-world scenario</span>
+          <select id="cmScenario">
+            <option value="">— Select a scenario —</option>
+            <option>FILL option</option>
+            <option>Other (write your own below)</option>
+          </select>
+        </label>
+        <label class="field"><span>Or write your own scenario</span>
+          <input type="text" id="cmCustom" placeholder="FILL example">
+        </label>
+        <label class="field"><span>Add a node</span>
+          <select id="cmTheory"></select>
+        </label>
+        <label class="field"><span>How does this apply to the scenario? (connection label)</span>
+          <textarea id="cmNote" placeholder="FILL example"></textarea>
+        </label>
+        <div class="inline-actions">
+          <button class="btn btn-sm btn-primary" id="cmAdd" type="button">＋ Add node</button>
+          <button class="btn btn-sm" id="cmClear" type="button">Clear map</button>
+        </div>
+        <label class="checkline"><input type="checkbox" id="cmAI"><span>This map includes AI-generated content — I have marked it and documented my critique.</span></label>
+      </div>
+      <div>
+        <div class="map-canvas" id="mapCanvas">
+          <div class="map-empty" id="mapEmpty">Your concept map will appear here.<br><span class="small">Add at least three nodes.</span></div>
+          <div id="mapCore" style="display:none">
+            <div class="map-core" id="mapScenarioLabel">Scenario</div>
+            <div class="map-ring" id="mapRing"></div>
+          </div>
+        </div>
+        <div class="inline-actions">
+          <button class="btn btn-sm" id="cmExport" type="button">⬇ Export map (.txt)</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SECTION 7 — DIFFERENTIATION ================= -->
+<section id="differentiation" class="block">
+  <div class="sec-head">
+    <div class="sec-num">7</div>
+    <div class="t">
+      <p class="eyebrow">Section 7</p>
+      <h2>Differentiation &amp; Inclusivity</h2>
+      <p>FILL: entry points, scaffolds and extensions.</p>
+    </div>
+  </div>
+  <div class="grid g2">
+    <div class="card"><div class="card-title"><span class="ic">♿</span> Support</div><ul class="mb0 small"><li>FILL</li></ul></div>
+    <div class="card"><div class="card-title"><span class="ic">🚀</span> Extension</div><ul class="mb0 small"><li>FILL</li></ul></div>
+  </div>
+</section>
+
+<!-- ================= SECTION 8 — REFLECTION ================= -->
+<section id="reflection" class="block">
+  <div class="sec-head">
+    <div class="sec-num">8</div>
+    <div class="t">
+      <p class="eyebrow">Section 8</p>
+      <h2>Reflection &amp; Improvement</h2>
+      <p>FILL: success indicators and follow-up.</p>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title"><span class="ic">👥</span> Peer-work self-audit</div>
+    <div class="tasklist" id="allTasks"></div>
+  </div>
+</section>
+
+<!-- ================= PORTFOLIO ================= -->
+<section id="portfolio" class="block">
+  <div class="sec-head">
+    <div class="sec-num">★</div>
+    <div class="t">
+      <p class="eyebrow">Portfolio</p>
+      <h2>Critical Reflection Portfolio</h2>
+      <p>Everything you record here is stored locally on your device. Review it, then export it as evidence for your summative submission.</p>
+    </div>
+  </div>
+
+  <div class="split">
+    <div>
+      <div class="card">
+        <div class="card-title"><span class="ic">✍️</span> AI decision log</div>
+        <label class="field"><span>AI suggestion I accepted (and why)</span><textarea data-log="accept"></textarea></label>
+        <label class="field"><span>AI suggestion I modified (and how)</span><textarea data-log="modify"></textarea></label>
+        <label class="field"><span>AI suggestion I rejected (and why)</span><textarea data-log="reject"></textarea></label>
+        <label class="field"><span>Where human judgment took precedence over AI</span><textarea data-log="human"></textarea></label>
+      </div>
+      <div class="card">
+        <div class="card-title"><span class="ic">💭</span> Final reflection prompts</div>
+        <label class="field"><span>How did AI support or hinder your learning today?</span><textarea data-journal="final1"></textarea></label>
+        <label class="field"><span>When did you need to override AI suggestions?</span><textarea data-journal="final2"></textarea></label>
+        <label class="field"><span>What human judgment mattered most in your group’s work?</span><textarea data-journal="final3"></textarea></label>
+        <label class="field"><span>What did you learn about the limitations and biases of AI?</span><textarea data-journal="final4"></textarea></label>
+      </div>
+    </div>
+
+    <div>
+      <div class="card" style="position:sticky;top:120px">
+        <div class="card-title"><span class="ic">📊</span> Portfolio summary</div>
+        <div style="display:flex;gap:16px;align-items:center;margin-bottom:14px">
+          <div class="ring" id="portRing"><div class="inner" id="portRingText">0%</div></div>
+          <div>
+            <div class="small muted">Lesson progress</div>
+            <div style="font-weight:740" id="portTasks">0 of 0 tasks</div>
+          </div>
+        </div>
+        <div class="cat-grid">
+          <div class="cat-row"><span>Pre-test</span><strong id="portPre">Not taken</strong><span class="cat-track"><span class="cat-fill" id="portPreBar" style="background:var(--brand);width:0%"></span></span></div>
+          <div class="cat-row"><span>Post-test</span><strong id="portPost">Not taken</strong><span class="cat-track"><span class="cat-fill" id="portPostBar" style="background:var(--teal);width:0%"></span></span></div>
+          <div class="cat-row"><span>AI critiques</span><strong id="portCrit">0 / 0</strong><span class="cat-track"><span class="cat-fill" id="portCritBar" style="background:var(--violet);width:0%"></span></span></div>
+          <div class="cat-row"><span>Flashcards</span><strong id="portFc">0 / 0</strong><span class="cat-track"><span class="cat-fill" id="portFcBar" style="background:var(--amber);width:0%"></span></span></div>
+          <div class="cat-row"><span>Concept map nodes</span><strong id="portCm">0</strong><span class="cat-track"><span class="cat-fill" id="portCmBar" style="background:var(--green);width:0%"></span></span></div>
+        </div>
+        <div class="inline-actions">
+          <button class="btn btn-sm btn-primary" id="exportAll" type="button">⬇ Export portfolio (.json)</button>
+          <button class="btn btn-sm" id="exportText" type="button">⬇ Export readable (.txt)</button>
+        </div>
+        <p class="small muted" style="margin:12px 0 0">Nothing is uploaded anywhere — all data stays in your browser’s local storage.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- CONTENT:END -->

@@ -1,0 +1,80 @@
+{
+  "_comment": "LESSON_DATA — the content manifest (see LESSONPLAN.md). Replace this whole object with the real lesson. It is parsed as JSON and injected verbatim into shell.html as window.LESSON_DATA, then read by the framework. Delete the FILL comments and leave no FILL marker behind.",
+
+  "meta": {
+    "title": "FILL: lesson title",
+    "description": "FILL: one-sentence summary for search engines and link previews",
+    "slug": "fill-lesson-slug",
+    "storeKey": "fill_lesson_v1"
+  },
+
+  "brand": "FILL: course · short label",
+  "footer": "<strong>FILL: lesson title</strong> — FILL: programme. FILL: pedagogy.",
+
+  "nav": [
+    { "id": "overview", "label": "Overview" },
+    { "id": "ilos", "label": "1 · Outcomes" },
+    { "id": "preclass", "label": "2 · Pre-Class" },
+    { "id": "activities", "label": "3 · Activities" },
+    { "id": "assessment", "label": "4 · Assessment" },
+    { "id": "alignment", "label": "5 · Alignment" },
+    { "id": "resources", "label": "6 · Resources" },
+    { "id": "differentiation", "label": "7 · Inclusion" },
+    { "id": "reflection", "label": "8 · Reflection" },
+    { "id": "portfolio", "label": "Portfolio" }
+  ],
+
+  "quizTasks": { "pre": "pre-quiz", "post": "synthesis", "flashcards": "flashcards" },
+  "preClassCount": 2,
+
+  "tasks": [
+    { "id": "pre-quiz", "label": "FILL: complete the diagnostic pre-test" },
+    { "id": "pre-ai", "label": "FILL: complete the AI engagement task" },
+    { "id": "dev-r1", "label": "FILL: complete Round 1" },
+    { "id": "flashcards", "label": "FILL: complete the flashcard deck" },
+    { "id": "synthesis", "label": "FILL: complete the post-test and synthesis" },
+    { "id": "conceptmap", "label": "FILL: build the concept map" }
+  ],
+
+  "peerTasks": [
+    { "id": "peer-1", "label": "FILL: peer-work criterion" },
+    { "id": "peer-2", "label": "FILL: peer-work criterion" }
+  ],
+
+  "cats": { "core": "Core concept", "application": "Application" },
+
+  "preTest": [
+    { "id": "p1", "cat": "core", "q": "FILL: question", "opts": ["FILL A", "FILL B", "FILL C"], "a": 0, "ok": "FILL: why A is right", "no": "FILL: why the picked option is wrong" },
+    { "id": "p2", "cat": "application", "q": "FILL: scenario question", "opts": ["FILL A", "FILL B"], "a": 1, "ok": "FILL", "no": "FILL" }
+  ],
+  "postTest": [
+    { "id": "q1", "cat": "core", "q": "FILL: question", "opts": ["FILL A", "FILL B", "FILL C"], "a": 0, "ok": "FILL", "no": "FILL" },
+    { "id": "q2", "cat": "application", "q": "FILL: scenario question", "opts": ["FILL A", "FILL B"], "a": 1, "ok": "FILL", "no": "FILL" }
+  ],
+
+  "theories": [
+    { "id": "core-a", "name": "FILL: concept A", "color": "#4338ca", "who": "FILL: key sources", "desc": "FILL: what it claims.", "limit": "FILL: its common limitation." },
+    { "id": "core-b", "name": "FILL: concept B", "color": "#0d9488", "who": "FILL: key sources", "desc": "FILL: what it claims.", "limit": "FILL: its common limitation." }
+  ],
+
+  "flashcards": [
+    { "id": "core-a", "label": "FILL: concept A", "desc": "FILL: the assumption this concept explains." },
+    { "id": "core-b", "label": "FILL: concept B", "desc": "FILL: the assumption this concept explains." }
+  ],
+
+  "scenarios": [
+    { "id": "s1", "text": "FILL: classroom scenario", "a": "core-a", "peer": "FILL: peer-review prompt." },
+    { "id": "s2", "text": "FILL: classroom scenario", "a": "core-b", "peer": "FILL: peer-review prompt." }
+  ],
+
+  "critiques": [
+    { "id": "core-a", "theory": "FILL: concept A", "sentences": [
+      { "t": "FILL: an AI claim that is accurate.", "h": "Accurate — FILL why." },
+      { "t": "FILL: an AI claim that is wrong.", "h": "FILL: what is wrong and why." }
+    ] }
+  ],
+
+  "chats": [
+    { "p": "FILL: prompt", "r": "FILL: a confident but flawed AI answer." }
+  ]
+}
