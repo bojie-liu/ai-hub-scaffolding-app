@@ -3,216 +3,127 @@
     "title": "FILL: lesson title",
     "description": "FILL: one-sentence summary for search engines and link previews",
     "slug": "fill-lesson-slug",
-    "storeKey": "fill_lesson_v1"
+    "storeKey": "fill_lesson_v1",
+    "intro": "FILL: two-to-three sentence framing of the lesson and the role AI plays in it.",
+    "duration": "FILL: duration",
+    "classSize": "FILL: class size",
+    "level": "FILL: level",
+    "language": "FILL: language",
+    "pedagogy": "FILL: primary pedagogy",
+    "framing": "FILL: framing",
+    "aiRole": "FILL: AI role",
+    "assessment": "FILL: assessment approach",
+    "ilosIntro": "FILL: one line on how AI integration is engineered into each outcome.",
+    "aiDesignPrinciple": "FILL: state the stance the lesson takes on AI output.",
+    "preclassIntro": "FILL: what students do before the session.",
+    "preclassToolLabel": "FILL: run the pre-test in your LMS (Blackboard / Moodle / Canvas)",
+    "activitiesIntro": "FILL: the run sheet, with timings and AI touchpoints.",
+    "assessmentIntro": "FILL: formative and summative assessment.",
+    "postTestItems": "FILL: N items",
+    "postTestDesc": "FILL: how the post-test mirrors the pre-test misconception categories.",
+    "alignmentIntro": "FILL: how outcomes, activities and assessment line up.",
+    "resourcesIntro": "FILL: platforms, AI tools and materials.",
+    "scenarioIntro": "FILL: identify which concept best explains each scenario, then answer the peer-review prompt.",
+    "cmCustomPlaceholder": "FILL: example scenario",
+    "cmNotePlaceholder": "FILL: how this concept applies",
+    "differentiationIntro": "FILL: entry points, scaffolds and extensions.",
+    "reflectionIntro": "FILL: success indicators and follow-up.",
+    "chatOpening": "FILL: opening line of the simulated assistant.",
+    "chatCritiquePlaceholder": "FILL: what the AI got wrong and why."
   },
   "brand": "FILL: course · short label",
   "footer": "<strong>FILL: lesson title</strong> — FILL: programme. FILL: pedagogy.",
   "nav": [
-    {
-      "id": "overview",
-      "label": "Overview"
-    },
-    {
-      "id": "ilos",
-      "label": "1 · Outcomes"
-    },
-    {
-      "id": "preclass",
-      "label": "2 · Pre-Class"
-    },
-    {
-      "id": "activities",
-      "label": "3 · Activities"
-    },
-    {
-      "id": "assessment",
-      "label": "4 · Assessment"
-    },
-    {
-      "id": "alignment",
-      "label": "5 · Alignment"
-    },
-    {
-      "id": "resources",
-      "label": "6 · Resources"
-    },
-    {
-      "id": "differentiation",
-      "label": "7 · Inclusion"
-    },
-    {
-      "id": "reflection",
-      "label": "8 · Reflection"
-    },
-    {
-      "id": "portfolio",
-      "label": "Portfolio"
-    }
+    { "id": "overview", "label": "Overview" },
+    { "id": "ilos", "label": "1 · Outcomes" },
+    { "id": "preclass", "label": "2 · Pre-Class" },
+    { "id": "activities", "label": "3 · Activities" },
+    { "id": "assessment", "label": "4 · Assessment" },
+    { "id": "alignment", "label": "5 · Alignment" },
+    { "id": "resources", "label": "6 · Resources" },
+    { "id": "differentiation", "label": "7 · Inclusion" },
+    { "id": "reflection", "label": "8 · Reflection" },
+    { "id": "portfolio", "label": "Portfolio" }
   ],
-  "quizTasks": {
-    "pre": "pre-quiz",
-    "post": "synthesis",
-    "flashcards": "flashcards"
+  "roadmap": [
+    { "phase": "FILL: phase", "mins": "FILL: min", "desc": "FILL: what happens in this phase." },
+    { "phase": "FILL: phase", "mins": "FILL: min", "desc": "FILL: what happens in this phase." },
+    { "phase": "FILL: phase", "mins": "FILL: min", "desc": "FILL: what happens in this phase." }
+  ],
+  "ilos": [
+    { "id": "ILO1", "desc": "FILL: outcome", "ai": "FILL: how AI supports it" },
+    { "id": "ILO2", "desc": "FILL: outcome", "ai": "FILL: how AI supports it" }
+  ],
+  "prepItems": [
+    { "text": "FILL: reading / video / task." }
+  ],
+  "preclassToolSteps": [
+    { "text": "FILL: numbered step for the external tool." },
+    { "text": "FILL: numbered step." }
+  ],
+  "round1": {
+    "title": "FILL: activity",
+    "desc": "FILL: instructions, grouping and timing.",
+    "journalPrompt1": "FILL: observation prompt (what worked)",
+    "journalPrompt2": "FILL: observation prompt (what students struggled with)"
   },
+  "instructorGuidance": [
+    { "text": "FILL: guidance point." }
+  ],
+  "assessmentMethods": [
+    { "method": "FILL: method", "weight": "FILL: weight", "what": "FILL: what it assesses" }
+  ],
+  "alignmentRows": [
+    { "ilo": "FILL: ILO", "activity": "FILL: activity", "assessment": "FILL: assessment", "level": "FILL: cognitive level" }
+  ],
+  "support": [
+    { "text": "FILL: support strategy." }
+  ],
+  "extension": [
+    { "text": "FILL: extension task." }
+  ],
+  "quizTasks": { "pre": "pre-quiz", "post": "synthesis", "flashcards": "flashcards" },
   "preClassCount": 2,
   "tasks": [
-    {
-      "id": "pre-quiz",
-      "label": "FILL: complete the diagnostic pre-test"
-    },
-    {
-      "id": "pre-ai",
-      "label": "FILL: complete the AI engagement task"
-    },
-    {
-      "id": "dev-r1",
-      "label": "FILL: complete Round 1"
-    },
-    {
-      "id": "flashcards",
-      "label": "FILL: complete the flashcard deck"
-    },
-    {
-      "id": "synthesis",
-      "label": "FILL: complete the post-test and synthesis"
-    },
-    {
-      "id": "conceptmap",
-      "label": "FILL: build the concept map"
-    }
+    { "id": "pre-quiz", "label": "FILL: complete the diagnostic pre-test" },
+    { "id": "pre-ai", "label": "FILL: complete the AI engagement task" },
+    { "id": "dev-r1", "label": "FILL: complete Round 1" },
+    { "id": "flashcards", "label": "FILL: complete the flashcard deck" },
+    { "id": "synthesis", "label": "FILL: complete the post-test and synthesis" },
+    { "id": "conceptmap", "label": "FILL: build the concept map" }
   ],
   "peerTasks": [
-    {
-      "id": "peer-1",
-      "label": "FILL: peer-work criterion"
-    },
-    {
-      "id": "peer-2",
-      "label": "FILL: peer-work criterion"
-    }
+    { "id": "peer-1", "label": "FILL: peer-work criterion" },
+    { "id": "peer-2", "label": "FILL: peer-work criterion" }
   ],
-  "cats": {
-    "core": "Core concept",
-    "application": "Application"
-  },
+  "cats": { "core": "Core concept", "application": "Application" },
   "preTest": [
-    {
-      "id": "p1",
-      "cat": "core",
-      "q": "FILL: question",
-      "opts": [
-        "FILL: option A",
-        "FILL: option B",
-        "FILL: option C"
-      ],
-      "a": 0,
-      "ok": "FILL: why A is right",
-      "no": "FILL: why the picked option is wrong"
-    },
-    {
-      "id": "p2",
-      "cat": "application",
-      "q": "FILL: scenario question",
-      "opts": [
-        "FILL: option A",
-        "FILL: option B"
-      ],
-      "a": 1,
-      "ok": "FILL: feedback",
-      "no": "FILL: feedback"
-    }
+    { "id": "p1", "cat": "core", "q": "FILL: question", "opts": ["FILL: option A", "FILL: option B", "FILL: option C"], "a": 0, "ok": "FILL: why A is right", "no": "FILL: why the picked option is wrong" },
+    { "id": "p2", "cat": "application", "q": "FILL: scenario question", "opts": ["FILL: option A", "FILL: option B"], "a": 1, "ok": "FILL: feedback", "no": "FILL: feedback" }
   ],
   "postTest": [
-    {
-      "id": "q1",
-      "cat": "core",
-      "q": "FILL: question",
-      "opts": [
-        "FILL: option A",
-        "FILL: option B",
-        "FILL: option C"
-      ],
-      "a": 0,
-      "ok": "FILL: feedback",
-      "no": "FILL: feedback"
-    },
-    {
-      "id": "q2",
-      "cat": "application",
-      "q": "FILL: scenario question",
-      "opts": [
-        "FILL: option A",
-        "FILL: option B"
-      ],
-      "a": 1,
-      "ok": "FILL: feedback",
-      "no": "FILL: feedback"
-    }
+    { "id": "q1", "cat": "core", "q": "FILL: question", "opts": ["FILL: option A", "FILL: option B", "FILL: option C"], "a": 0, "ok": "FILL: feedback", "no": "FILL: feedback" },
+    { "id": "q2", "cat": "application", "q": "FILL: scenario question", "opts": ["FILL: option A", "FILL: option B"], "a": 1, "ok": "FILL: feedback", "no": "FILL: feedback" }
   ],
   "theories": [
-    {
-      "id": "core-a",
-      "name": "FILL: concept A",
-      "color": "#4338ca",
-      "who": "FILL: key sources",
-      "desc": "FILL: what it claims.",
-      "limit": "FILL: its common limitation."
-    },
-    {
-      "id": "core-b",
-      "name": "FILL: concept B",
-      "color": "#0d9488",
-      "who": "FILL: key sources",
-      "desc": "FILL: what it claims.",
-      "limit": "FILL: its common limitation."
-    }
+    { "id": "core-a", "name": "FILL: concept A", "color": "#4338ca", "who": "FILL: key sources", "desc": "FILL: what it claims.", "limit": "FILL: its common limitation." },
+    { "id": "core-b", "name": "FILL: concept B", "color": "#0d9488", "who": "FILL: key sources", "desc": "FILL: what it claims.", "limit": "FILL: its common limitation." }
   ],
   "flashcards": [
-    {
-      "id": "core-a",
-      "label": "FILL: concept A",
-      "desc": "FILL: the assumption this concept explains."
-    },
-    {
-      "id": "core-b",
-      "label": "FILL: concept B",
-      "desc": "FILL: the assumption this concept explains."
-    }
+    { "id": "core-a", "label": "FILL: concept A", "desc": "FILL: the assumption this concept explains." },
+    { "id": "core-b", "label": "FILL: concept B", "desc": "FILL: the assumption this concept explains." }
   ],
   "scenarios": [
-    {
-      "id": "s1",
-      "text": "FILL: classroom scenario",
-      "a": "core-a",
-      "peer": "FILL: peer-review prompt."
-    },
-    {
-      "id": "s2",
-      "text": "FILL: classroom scenario",
-      "a": "core-b",
-      "peer": "FILL: peer-review prompt."
-    }
+    { "id": "s1", "text": "FILL: classroom scenario", "a": "core-a", "peer": "FILL: peer-review prompt." },
+    { "id": "s2", "text": "FILL: classroom scenario", "a": "core-b", "peer": "FILL: peer-review prompt." }
   ],
   "critiques": [
-    {
-      "id": "core-a",
-      "theory": "FILL: concept A",
-      "sentences": [
-        {
-          "t": "FILL: an AI claim that is accurate.",
-          "h": "Accurate — FILL: why."
-        },
-        {
-          "t": "FILL: an AI claim that is wrong.",
-          "h": "FILL: what is wrong and why."
-        }
-      ]
-    }
+    { "id": "core-a", "theory": "FILL: concept A", "sentences": [
+      { "t": "FILL: an AI claim that is accurate.", "h": "Accurate — FILL: why." },
+      { "t": "FILL: an AI claim that is wrong.", "h": "FILL: what is wrong and why." }
+    ] }
   ],
   "chats": [
-    {
-      "p": "FILL: prompt",
-      "r": "FILL: a confident but flawed AI answer."
-    }
+    { "p": "FILL: prompt", "r": "FILL: a confident but flawed AI answer." }
   ]
 }
