@@ -1,16 +1,2413 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Basic HTML Project</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Teacher Professionalism in Local and International Contexts</title>
+<meta name="description" content="A 150-minute critical inquiry seminar in which first-year pre-service teachers analyse competing discourses of teacher professionalism, compare local and international framings, and critique AI-generated accounts against authoritative human sources.">
+<style>
+/* ============================================================
+   DESIGN TOKENS
+   ============================================================ */
+:root{
+  --bg:#f6f7fb;
+  --bg-elev:#ffffff;
+  --bg-soft:#eef1f8;
+  --bg-sunken:#e7ebf5;
+  --text:#161a2b;
+  --text-soft:#4a5168;
+  --text-mute:#6d7590;
+  --border:#dfe3ef;
+  --border-strong:#c6cde0;
+
+  --brand:#4338ca;
+  --brand-2:#6366f1;
+  --brand-soft:#eceafe;
+  --brand-ink:#2c2494;
+
+  --teal:#0d9488;
+  --teal-soft:#dcfaf6;
+  --amber:#b45309;
+  --amber-soft:#fef3c7;
+  --amber-border:#fcd34d;
+  --rose:#be123c;
+  --rose-soft:#ffe4e9;
+  --green:#15803d;
+  --green-soft:#dcfce7;
+  --violet:#7c3aed;
+  --violet-soft:#f1e9ff;
+
+  --radius:16px;
+  --radius-sm:10px;
+  --radius-xs:8px;
+  --shadow-sm:0 1px 2px rgba(20,25,50,.06),0 1px 3px rgba(20,25,50,.05);
+  --shadow:0 4px 16px rgba(20,25,50,.08),0 1px 3px rgba(20,25,50,.05);
+  --shadow-lg:0 18px 40px -12px rgba(30,25,90,.28);
+  --ring:0 0 0 3px rgba(99,102,241,.35);
+  --maxw:1180px;
+  --ff:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --ff-mono:"SFMono-Regular",ui-monospace,"JetBrains Mono",Menlo,Consolas,monospace;
+}
+html[data-theme="dark"]{
+  --bg:#0c0f1c;
+  --bg-elev:#151a2e;
+  --bg-soft:#1c2238;
+  --bg-sunken:#101527;
+  --text:#eef1fb;
+  --text-soft:#b9c0d8;
+  --text-mute:#8a92ad;
+  --border:#272e47;
+  --border-strong:#39415f;
+
+  --brand:#8b8cf9;
+  --brand-2:#a5a6ff;
+  --brand-soft:#1e2145;
+  --brand-ink:#c9caff;
+
+  --teal:#2dd4bf;
+  --teal-soft:#0d2e2b;
+  --amber:#fbbf24;
+  --amber-soft:#332405;
+  --amber-border:#7c5a10;
+  --rose:#fb7185;
+  --rose-soft:#3a1220;
+  --green:#4ade80;
+  --green-soft:#0f2e1a;
+  --violet:#c4b5fd;
+  --violet-soft:#241a3d;
+
+  --shadow-sm:0 1px 2px rgba(0,0,0,.4);
+  --shadow:0 6px 20px rgba(0,0,0,.45);
+  --shadow-lg:0 20px 44px -14px rgba(0,0,0,.7);
+  --ring:0 0 0 3px rgba(139,140,249,.45);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:132px;-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--bg);color:var(--text);font-family:var(--ff);
+  line-height:1.62;font-size:16px;letter-spacing:.005em;
+  -webkit-font-smoothing:antialiased;
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{animation-duration:.001ms!important;transition-duration:.001ms!important}
+}
+img{max-width:100%}
+a{color:var(--brand);text-decoration-thickness:1.5px;text-underline-offset:3px}
+a:hover{color:var(--brand-ink)}
+:focus-visible{outline:3px solid var(--brand-2);outline-offset:2px;border-radius:6px}
+.skip{position:absolute;left:-9999px;top:0;background:var(--brand);color:#fff;padding:12px 18px;z-index:200;border-radius:0 0 10px 0}
+.skip:focus{left:0}
+h1,h2,h3,h4{line-height:1.25;margin:0 0 .5em;font-weight:750;letter-spacing:-.015em}
+h1{font-size:clamp(1.7rem,3.4vw,2.5rem)}
+h2{font-size:clamp(1.35rem,2.3vw,1.85rem)}
+h3{font-size:clamp(1.08rem,1.6vw,1.28rem)}
+h4{font-size:1rem}
+p{margin:0 0 .9em}
+ul,ol{margin:0 0 .9em;padding-left:1.35em}
+li{margin:.3em 0}
+strong{font-weight:700}
+code,kbd{font-family:var(--ff-mono);font-size:.88em;background:var(--bg-soft);padding:.12em .42em;border-radius:6px;border:1px solid var(--border)}
+hr{border:0;border-top:1px solid var(--border);margin:1.6rem 0}
+
+/* ============================================================
+   LAYOUT
+   ============================================================ */
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
+main{padding-bottom:80px}
+
+/* Top bar */
+.topbar{
+  position:sticky;top:0;z-index:60;background:color-mix(in srgb,var(--bg-elev) 88%,transparent);
+  backdrop-filter:saturate(180%) blur(14px);border-bottom:1px solid var(--border);
+}
+.topbar-inner{max-width:var(--maxw);margin:0 auto;padding:10px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.brandmark{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.02em;font-size:.98rem}
+.brandmark .dot{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--brand),var(--violet));display:grid;place-items:center;color:#fff;font-size:15px;box-shadow:var(--shadow-sm);flex:0 0 auto}
+.topbar-spacer{flex:1 1 auto}
+.topbar-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+
+/* Progress pill in topbar */
+.progress-pill{display:flex;align-items:center;gap:10px;background:var(--bg-soft);border:1px solid var(--border);border-radius:999px;padding:5px 6px 5px 14px;font-size:.82rem;font-weight:650;color:var(--text-soft);white-space:nowrap}
+.progress-track{width:120px;height:8px;border-radius:999px;background:var(--bg-sunken);overflow:hidden;border:1px solid var(--border)}
+.progress-fill{height:100%;width:0%;border-radius:999px;background:linear-gradient(90deg,var(--brand),var(--teal));transition:width .45s cubic-bezier(.2,.8,.2,1)}
+
+/* Buttons */
+.btn{
+  font:inherit;font-weight:650;font-size:.86rem;border-radius:10px;border:1px solid var(--border-strong);
+  background:var(--bg-elev);color:var(--text);padding:8px 13px;cursor:pointer;display:inline-flex;
+  align-items:center;gap:7px;transition:transform .12s ease,box-shadow .15s ease,background .15s ease,border-color .15s;
+  box-shadow:var(--shadow-sm);text-decoration:none;line-height:1.2
+}
+.btn:hover{transform:translateY(-1px);box-shadow:var(--shadow);border-color:var(--brand-2)}
+.btn:active{transform:translateY(0)}
+.btn-primary{background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#fff;border-color:transparent}
+.btn-primary:hover{color:#fff;filter:brightness(1.07)}
+.btn-ghost{background:transparent;box-shadow:none;border-color:var(--border)}
+.btn-sm{padding:5px 10px;font-size:.79rem;border-radius:8px}
+.btn-icon{padding:8px;width:38px;justify-content:center}
+.btn[aria-pressed="true"]{background:var(--brand-soft);border-color:var(--brand-2);color:var(--brand-ink)}
+
+/* Nav */
+.tocnav{position:sticky;top:57px;z-index:55;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+.tocnav-inner{max-width:var(--maxw);margin:0 auto;padding:0 20px;display:flex;gap:4px;overflow-x:auto;scrollbar-width:thin}
+.tocnav a{
+  flex:0 0 auto;padding:11px 12px;font-size:.82rem;font-weight:640;color:var(--text-mute);text-decoration:none;
+  border-bottom:3px solid transparent;white-space:nowrap;transition:color .15s,border-color .15s
+}
+.tocnav a:hover{color:var(--text)}
+.tocnav a.active{color:var(--brand);border-bottom-color:var(--brand)}
+
+/* Sections */
+section.block{padding:44px 0 8px;scroll-margin-top:130px}
+.sec-head{display:flex;align-items:flex-start;gap:14px;margin-bottom:20px;flex-wrap:wrap}
+.sec-num{
+  flex:0 0 auto;width:42px;height:42px;border-radius:13px;display:grid;place-items:center;font-weight:800;
+  background:var(--brand-soft);color:var(--brand-ink);border:1px solid var(--border);font-size:1.02rem
+}
+.sec-head .t{flex:1 1 260px;min-width:0}
+.sec-head .t p{margin:.15em 0 0;color:var(--text-soft);font-size:.94rem;max-width:72ch}
+.eyebrow{text-transform:uppercase;letter-spacing:.12em;font-size:.7rem;font-weight:800;color:var(--brand);margin:0 0 .3em}
+
+/* Cards */
+.card{background:var(--bg-elev);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-sm);padding:20px;margin-bottom:18px}
+.card.tight{padding:16px}
+.card-title{display:flex;align-items:center;gap:9px;margin:0 0 12px;font-size:1.04rem;font-weight:740}
+.card-title .ic{width:26px;height:26px;border-radius:8px;display:grid;place-items:center;font-size:14px;flex:0 0 auto;background:var(--brand-soft);color:var(--brand-ink)}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}
+.split{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:18px;align-items:start}
+@media(max-width:860px){.split{grid-template-columns:1fr}}
+
+/* Pills & chips */
+.pill{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:999px;font-size:.74rem;font-weight:700;border:1px solid var(--border);background:var(--bg-soft);color:var(--text-soft)}
+.pill.brand{background:var(--brand-soft);color:var(--brand-ink);border-color:transparent}
+.pill.teal{background:var(--teal-soft);color:var(--teal);border-color:transparent}
+.pill.amber{background:var(--amber-soft);color:var(--amber);border-color:transparent}
+.pill.rose{background:var(--rose-soft);color:var(--rose);border-color:transparent}
+.pill.green{background:var(--green-soft);color:var(--green);border-color:transparent}
+.pill.violet{background:var(--violet-soft);color:var(--violet);border-color:transparent}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+
+/* Tables */
+.tablewrap{overflow-x:auto;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-elev);-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:.88rem}
+th,td{padding:11px 13px;text-align:left;border-bottom:1px solid var(--border);vertical-align:top}
+th{background:var(--bg-soft);font-weight:720;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;color:var(--text-soft);position:sticky;top:0}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:color-mix(in srgb,var(--brand-soft) 40%,transparent)}
+
+/* Callouts */
+.callout{border-radius:var(--radius-sm);padding:14px 16px;border:1px solid var(--border);border-left-width:5px;background:var(--bg-soft);margin:14px 0;font-size:.93rem}
+.callout .ct{font-weight:740;display:flex;align-items:center;gap:8px;margin-bottom:5px}
+.callout p:last-child,.callout ul:last-child{margin-bottom:0}
+.callout.ai{border-left-color:var(--violet);background:var(--violet-soft)}
+.callout.tip{border-left-color:var(--teal);background:var(--teal-soft)}
+.callout.warn{border-left-color:var(--amber);background:var(--amber-soft)}
+.callout.key{border-left-color:var(--brand);background:var(--brand-soft)}
+.callout.note{border-left-color:var(--border-strong);background:var(--bg-soft)}
+
+/* Details / collapsibles */
+details.acc{border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-elev);margin-bottom:12px;overflow:hidden;box-shadow:var(--shadow-sm)}
+details.acc>summary{
+  cursor:pointer;padding:14px 16px;font-weight:700;display:flex;align-items:center;gap:10px;list-style:none;
+  font-size:.95rem;transition:background .15s
+}
+details.acc>summary::-webkit-details-marker{display:none}
+details.acc>summary:hover{background:var(--bg-soft)}
+details.acc>summary::after{content:"▾";margin-left:auto;color:var(--text-mute);transition:transform .2s;font-size:.9rem}
+details.acc[open]>summary::after{transform:rotate(180deg)}
+details.acc>summary .badge{margin-left:0}
+details.acc .acc-body{padding:4px 16px 18px;border-top:1px solid var(--border)}
+details.acc .acc-body>*:first-child{margin-top:12px}
+
+/* Tool card specifics */
+.tool-card{background:var(--bg-elev);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-sm);margin-bottom:14px;overflow:hidden}
+.tool-head{padding:16px 18px;display:flex;gap:13px;align-items:flex-start}
+.tool-logo{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;font-weight:800;font-size:1.05rem;flex:0 0 auto;color:#fff}
+.tool-head .meta{flex:1;min-width:0}
+.tool-head h4{margin:0 0 3px;font-size:1.02rem}
+.tool-head .sub{font-size:.83rem;color:var(--text-mute)}
+.steps{counter-reset:s;list-style:none;padding:0;margin:0}
+.steps li{counter-increment:s;position:relative;padding:9px 0 9px 42px;border-bottom:1px dashed var(--border);font-size:.92rem}
+.steps li:last-child{border-bottom:0}
+.steps li::before{
+  content:counter(s);position:absolute;left:0;top:9px;width:26px;height:26px;border-radius:8px;display:grid;
+  place-items:center;background:var(--brand-soft);color:var(--brand-ink);font-weight:800;font-size:.79rem
+}
+.prompt-box{background:var(--bg-sunken);border:1px dashed var(--border-strong);border-radius:var(--radius-xs);padding:12px 14px;font-family:var(--ff-mono);font-size:.83rem;white-space:pre-wrap;margin:10px 0;color:var(--text-soft)}
+
+/* Theory reference cards */
+.theory-card{border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-elev);padding:15px;box-shadow:var(--shadow-sm);border-top:4px solid var(--tc,var(--brand))}
+.theory-card h4{margin:0 0 4px;font-size:.98rem}
+.theory-card .who{font-size:.78rem;color:var(--text-mute);margin-bottom:8px}
+.theory-card p{font-size:.87rem;margin:0 0 .5em}
+.theory-card .kv{font-size:.82rem;color:var(--text-soft)}
+.theory-card .kv b{color:var(--text)}
+.theory-card .limit{background:var(--rose-soft);border-radius:8px;padding:7px 10px;font-size:.8rem;color:var(--text-soft);margin-top:8px}
+
+/* Quiz */
+.quiz-q{border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;background:var(--bg-elev);margin-bottom:12px}
+.quiz-q .qtop{display:flex;gap:10px;align-items:flex-start;margin-bottom:10px}
+.qnum{flex:0 0 auto;width:26px;height:26px;border-radius:8px;background:var(--brand);color:#fff;display:grid;place-items:center;font-size:.79rem;font-weight:800}
+.opts{display:grid;gap:8px}
+.opt{
+  display:flex;gap:10px;align-items:flex-start;padding:11px 13px;border:1.5px solid var(--border);border-radius:10px;
+  cursor:pointer;background:var(--bg);transition:border-color .15s,background .15s,transform .1s;font-size:.9rem
+}
+.opt:hover{border-color:var(--brand-2);background:var(--bg-soft)}
+.opt input{position:absolute;opacity:0;pointer-events:none}
+.opt .marker{width:20px;height:20px;border-radius:50%;border:2px solid var(--border-strong);flex:0 0 auto;display:grid;place-items:center;margin-top:1px;font-size:.7rem;color:transparent;transition:all .15s}
+.opt.sel{border-color:var(--brand-2);background:var(--brand-soft)}
+.opt.sel .marker{border-color:var(--brand);background:var(--brand);color:#fff}
+.opt.correct{border-color:var(--green);background:var(--green-soft)}
+.opt.correct .marker{border-color:var(--green);background:var(--green);color:#fff}
+.opt.wrong{border-color:var(--rose);background:var(--rose-soft)}
+.opt.wrong .marker{border-color:var(--rose);background:var(--rose);color:#fff}
+.opt.locked{pointer-events:none;opacity:.96}
+.explain{margin-top:10px;padding:11px 13px;border-radius:10px;font-size:.86rem;display:none;border:1px solid var(--border)}
+.explain.show{display:block;animation:fade .25s ease}
+.explain.ok{background:var(--green-soft);border-color:color-mix(in srgb,var(--green) 40%,transparent)}
+.explain.no{background:var(--rose-soft);border-color:color-mix(in srgb,var(--rose) 40%,transparent)}
+@keyframes fade{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.score-bar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:14px 16px;border-radius:var(--radius-sm);background:var(--bg-soft);border:1px solid var(--border);margin-bottom:14px}
+.score-big{font-size:1.9rem;font-weight:820;line-height:1;letter-spacing:-.02em}
+.cat-grid{display:grid;gap:9px;margin-top:10px}
+.cat-row{display:grid;grid-template-columns:minmax(120px,1fr) auto;gap:10px;align-items:center;font-size:.85rem}
+.cat-track{grid-column:1/-1;height:9px;border-radius:999px;background:var(--bg-sunken);overflow:hidden}
+.cat-fill{height:100%;border-radius:999px;transition:width .5s ease}
+
+/* Flashcard drag & drop */
+.fc-arena{display:grid;gap:18px;grid-template-columns:minmax(0,300px) minmax(0,1fr)}
+@media(max-width:820px){.fc-arena{grid-template-columns:1fr}}
+.chip-pool{display:flex;flex-direction:column;gap:9px}
+.chip{
+  padding:12px 14px;border-radius:11px;border:1.5px solid var(--border-strong);background:var(--bg-elev);
+  cursor:grab;font-weight:680;font-size:.9rem;box-shadow:var(--shadow-sm);transition:transform .12s,box-shadow .15s,border-color .15s;
+  display:flex;align-items:center;gap:9px
+}
+.chip:hover{border-color:var(--brand-2);transform:translateY(-1px)}
+.chip:active{cursor:grabbing}
+.chip.picked{border-color:var(--brand);box-shadow:var(--ring);background:var(--brand-soft)}
+.chip.placed{opacity:.45;cursor:default;border-style:dashed}
+.chip .swatch{width:12px;height:12px;border-radius:4px;flex:0 0 auto;background:var(--tc,var(--brand))}
+.slots{display:grid;gap:12px}
+.slot{border:1.5px dashed var(--border-strong);border-radius:12px;padding:13px;background:var(--bg-soft);transition:border-color .15s,background .15s}
+.slot .slot-label{font-size:.73rem;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:var(--text-mute);margin-bottom:4px}
+.slot .slot-desc{font-size:.88rem;color:var(--text-soft)}
+.slot .dropzone{margin-top:9px;min-height:42px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:.84rem;color:var(--text-mute);border:1px dashed var(--border);background:var(--bg-elev)}
+.slot.over{border-color:var(--brand);background:var(--brand-soft)}
+.slot.filled{border-style:solid;border-color:var(--green);background:var(--green-soft)}
+.slot.filled .dropzone{border:0;background:transparent;color:var(--green);font-weight:700;justify-content:flex-start;padding:0 4px}
+.slot.bad{animation:shake .4s}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}40%{transform:translateX(7px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
+
+/* AI Critique Lab */
+.critique{border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-elev);margin-bottom:14px;overflow:hidden}
+.critique-head{padding:13px 16px;background:var(--bg-soft);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.critique-head h4{margin:0;font-size:.97rem}
+.ai-bubble{display:flex;gap:11px;padding:14px 16px;background:var(--violet-soft);border-bottom:1px solid var(--border)}
+.ai-avatar{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--violet),var(--brand));color:#fff;display:grid;place-items:center;font-size:15px;flex:0 0 auto}
+.ai-text{flex:1;min-width:0;font-size:.92rem}
+.sent{display:block;padding:9px 11px;border-radius:9px;margin:0 0 8px;background:var(--bg-elev);border:1px solid var(--border);position:relative}
+.sent:last-child{margin-bottom:0}
+.sent .sent-text{display:block;margin-bottom:8px}
+.verdicts{display:flex;gap:6px;flex-wrap:wrap}
+.vbtn{font:inherit;font-size:.74rem;font-weight:750;padding:4px 10px;border-radius:999px;border:1.5px solid var(--border-strong);background:var(--bg);cursor:pointer;transition:all .14s;color:var(--text-soft)}
+.vbtn:hover{border-color:var(--brand-2)}
+.vbtn.on[data-v="accept"]{background:var(--green);border-color:var(--green);color:#fff}
+.vbtn.on[data-v="modify"]{background:var(--amber);border-color:var(--amber);color:#fff}
+.vbtn.on[data-v="reject"]{background:var(--rose);border-color:var(--rose);color:#fff}
+.critique-body{padding:14px 16px}
+.field{display:block;margin-bottom:12px}
+.field>span{display:block;font-size:.79rem;font-weight:740;color:var(--text-soft);margin-bottom:5px;letter-spacing:.01em}
+input[type=text],textarea,select{
+  width:100%;font:inherit;font-size:.9rem;padding:10px 12px;border-radius:10px;border:1.5px solid var(--border);
+  background:var(--bg);color:var(--text);transition:border-color .15s,box-shadow .15s;resize:vertical
+}
+input[type=text]:focus,textarea:focus,select:focus{border-color:var(--brand-2);box-shadow:var(--ring);outline:none}
+textarea{min-height:74px;line-height:1.55}
+.checkline{display:flex;align-items:flex-start;gap:9px;font-size:.86rem;margin:8px 0;cursor:pointer}
+.checkline input{width:18px;height:18px;margin-top:2px;accent-color:var(--brand);flex:0 0 auto}
+
+/* Chat sim */
+.chat{background:var(--bg-sunken);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px;max-height:420px;overflow-y:auto;display:flex;flex-direction:column;gap:11px}
+.msg{max-width:86%;padding:10px 13px;border-radius:14px;font-size:.88rem;box-shadow:var(--shadow-sm);white-space:pre-wrap}
+.msg.user{align-self:flex-end;background:var(--brand);color:#fff;border-bottom-right-radius:4px}
+.msg.ai{align-self:flex-start;background:var(--bg-elev);border:1px solid var(--border);border-bottom-left-radius:4px}
+.msg .who{font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;opacity:.7;margin-bottom:4px}
+
+/* Concept map */
+.map-canvas{position:relative;background:var(--bg-soft);border:1px solid var(--border);border-radius:var(--radius-sm);min-height:300px;display:grid;place-items:center;padding:24px;overflow:hidden}
+.map-core{background:linear-gradient(135deg,var(--brand),var(--violet));color:#fff;padding:14px 18px;border-radius:14px;font-weight:750;font-size:.9rem;box-shadow:var(--shadow);text-align:center;max-width:280px;z-index:2}
+.map-ring{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:22px;z-index:2}
+.map-node{padding:9px 14px;border-radius:11px;background:var(--bg-elev);border:2px solid var(--tc,var(--brand));font-weight:700;font-size:.84rem;box-shadow:var(--shadow-sm);display:flex;align-items:center;gap:7px}
+.map-node .swatch{width:10px;height:10px;border-radius:3px;background:var(--tc,var(--brand))}
+.map-node .x{cursor:pointer;color:var(--text-mute);font-weight:800;font-size:.9rem;line-height:1}
+.map-node .x:hover{color:var(--rose)}
+.map-empty{color:var(--text-mute);font-size:.88rem;text-align:center}
+
+/* Progress checklist */
+.tasklist{display:grid;gap:8px}
+.task{display:flex;align-items:center;gap:11px;padding:11px 13px;border:1px solid var(--border);border-radius:10px;background:var(--bg-elev);cursor:pointer;font-size:.9rem;transition:all .15s}
+.task:hover{border-color:var(--brand-2);background:var(--bg-soft)}
+.task .box{width:22px;height:22px;border-radius:7px;border:2px solid var(--border-strong);display:grid;place-items:center;flex:0 0 auto;color:transparent;font-size:.75rem;transition:all .15s}
+.task.done{border-color:var(--green);background:var(--green-soft)}
+.task.done .box{background:var(--green);border-color:var(--green);color:#fff}
+.task.done .label{text-decoration:line-through;text-decoration-color:var(--text-mute);color:var(--text-soft)}
+.task .label{flex:1;font-weight:640}
+
+/* Ring stat */
+.ring{--p:0;width:78px;height:78px;border-radius:50%;display:grid;place-items:center;flex:0 0 auto;
+  background:conic-gradient(var(--brand) calc(var(--p)*1%),var(--bg-sunken) 0)}
+.ring .inner{width:60px;height:60px;border-radius:50%;background:var(--bg-elev);display:grid;place-items:center;font-weight:820;font-size:1rem;border:1px solid var(--border)}
+
+/* Stat tiles */
+.stat{background:var(--bg-elev);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px;box-shadow:var(--shadow-sm)}
+.stat .n{font-size:1.5rem;font-weight:820;letter-spacing:-.02em;line-height:1.1}
+.stat .l{font-size:.78rem;color:var(--text-mute);font-weight:640;text-transform:uppercase;letter-spacing:.06em}
+
+/* Misc */
+.toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,140%);background:var(--text);color:var(--bg);padding:11px 20px;border-radius:999px;font-size:.87rem;font-weight:650;z-index:120;box-shadow:var(--shadow-lg);transition:transform .35s cubic-bezier(.2,.9,.25,1);max-width:90vw;text-align:center}
+.toast.show{transform:translate(-50%,0)}
+.hero{background:linear-gradient(140deg,var(--brand) 0%,var(--violet) 55%,var(--teal) 130%);color:#fff;border-radius:var(--radius);padding:34px 30px;box-shadow:var(--shadow-lg);position:relative;overflow:hidden;margin-top:22px}
+.hero::after{content:"";position:absolute;inset:0;background:radial-gradient(600px 200px at 90% 0%,rgba(255,255,255,.22),transparent 70%);pointer-events:none}
+.hero h1{color:#fff;margin-bottom:.35em;position:relative;z-index:1}
+.hero p{color:rgba(255,255,255,.94);max-width:70ch;position:relative;z-index:1;margin-bottom:1em}
+.hero .chips .pill{background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.3);color:#fff;backdrop-filter:blur(4px)}
+.meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-top:18px;position:relative;z-index:1}
+.meta-item{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.26);border-radius:12px;padding:11px 13px;backdrop-filter:blur(5px)}
+.meta-item .k{font-size:.68rem;text-transform:uppercase;letter-spacing:.09em;font-weight:800;opacity:.85}
+.meta-item .v{font-weight:740;font-size:.94rem;margin-top:2px}
+.muted{color:var(--text-mute)}
+.small{font-size:.83rem}
+.center{text-align:center}
+.mt0{margin-top:0}.mb0{margin-bottom:0}
+.inline-actions{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin-top:14px}
+.two-col-list{columns:2;column-gap:26px}
+@media(max-width:640px){.two-col-list{columns:1}}
+footer{border-top:1px solid var(--border);padding:26px 0 40px;color:var(--text-mute);font-size:.85rem;background:var(--bg-elev)}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.tl{position:relative;padding-left:26px;margin:6px 0 0}
+.tl::before{content:"";position:absolute;left:8px;top:4px;bottom:4px;width:2px;background:var(--border-strong)}
+.tl-item{position:relative;padding:0 0 16px}
+.tl-item::before{content:"";position:absolute;left:-24px;top:5px;width:12px;height:12px;border-radius:50%;background:var(--brand);border:2px solid var(--bg-elev);box-shadow:0 0 0 2px var(--border)}
+.tl-item:last-child{padding-bottom:0}
+.tl-item .tt{font-weight:730;font-size:.93rem}
+.tl-item .td{font-size:.85rem;color:var(--text-soft)}
+@media(max-width:560px){
+  .brandmark span:last-child{display:none}
+  .hide-xs{display:none}
+  .progress-track{width:70px}
+  .topbar-inner{gap:8px}
+}
+@media print{
+  .topbar,.tocnav,.btn,.no-print{display:none!important}
+  body{background:#fff}
+  .card,.tool-card,details.acc{break-inside:avoid;box-shadow:none}
+  details.acc{display:block}
+  details.acc .acc-body{display:block!important}
+  section.block{padding:14px 0}
+}
+</style>
 </head>
 <body>
-  <div class="container">
-    <h1>Hello World!</h1>
-    <p>Welcome to your new project.</p>
+<a class="skip" href="#main">Skip to lesson content</a>
+
+<!-- ================= TOP BAR ================= -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brandmark">
+      <span class="dot" aria-hidden="true">◎</span>
+      <span>Foundations of Teaching · Teacher Professionalism</span>
+    </div>
+    <div class="topbar-spacer"></div>
+    <div class="progress-pill" title="Your saved progress on this device">
+      <span id="progressText">0% complete</span>
+      <span class="progress-track"><span class="progress-fill" id="progressFill"></span></span>
+    </div>
+    <div class="topbar-actions">
+      <button class="btn btn-sm" id="themeBtn" type="button" aria-label="Toggle colour theme">🌙 <span class="hide-xs">Theme</span></button>
+      <button class="btn btn-sm" id="printBtn" type="button">🖨️ Print</button>
+      <button class="btn btn-sm" id="resetBtn" type="button">↺ Reset</button>
+    </div>
   </div>
-  <script src="script.js"></script>
+</header>
+
+<nav class="tocnav" aria-label="Lesson sections">
+  <div class="tocnav-inner"></div>
+</nav>
+
+<main id="main">
+<div class="wrap">
+
+<!-- ================= HERO / OVERVIEW ================= -->
+<section id="overview" class="block">
+  <div class="hero">
+    <p class="eyebrow" style="color:rgba(255,255,255,.85)">Pre-service teacher education · Foundations of Teaching and Teacher Education</p>
+    <h1>Teacher Professionalism in Local and International Contexts</h1>
+    <p>This 150-minute critical inquiry seminar positions teacher professionalism as a <strong>contested, context-dependent construct</strong> rather than a fixed checklist of traits. You will interrogate four competing discourses — trait-based, managerial, democratic and activist — compare how professionalism is framed in your own jurisdiction and in a contrasting international context, and test whether "global best practice" can travel. AI is integrated throughout as an <strong>object of critique, not an oracle</strong>: you will use it to generate comparative accounts, then systematically test those accounts against authoritative sources, identify bias and hallucination, and document where human judgement overrode the machine.</p>
+    <div class="chips">
+      <span class="pill">⏱ 150 minutes</span>
+      <span class="pill">👥 90 students · 15 groups of 6</span>
+      <span class="pill">🎓 First-year undergraduates</span>
+      <span class="pill">🌐 English</span>
+      <span class="pill">🤖 AI integrated in all sections</span>
+    </div>
+    <div class="meta-grid">
+      <div class="meta-item"><div class="k">Primary Pedagogy</div><div class="v">Critical Inquiry Seminar</div></div>
+      <div class="meta-item"><div class="k">Cross-Pedagogy</div><div class="v">Social Constructivism · Scaffolded Instruction</div></div>
+      <div class="meta-item"><div class="k">AI Role</div><div class="v">Object of critique</div></div>
+      <div class="meta-item"><div class="k">Assessment</div><div class="v">Formative + portfolio</div></div>
+    </div>
+  </div>
+
+  <!-- live counters — the JS fills these; keep the ids -->
+  <div class="grid g4" style="margin-top:20px">
+    <div class="stat"><div class="n" id="statTasks">0 / 0</div><div class="l">Tasks complete</div></div>
+    <div class="stat"><div class="n" id="statPre">—</div><div class="l">Pre-test score</div></div>
+    <div class="stat"><div class="n" id="statPost">—</div><div class="l">Post-test score</div></div>
+    <div class="stat"><div class="n" id="statCrit">0 / 0</div><div class="l">AI critiques logged</div></div>
+  </div>
+
+  <div class="card" style="margin-top:20px">
+    <div class="card-title"><span class="ic">📍</span> Lesson roadmap</div>
+    <div class="tl">
+      <div class="tl-item"><div class="tt">Introduction · 20 min (13%)</div><div class="td">Hook — "The Professional or the Bureaucrat?"; pre-test review with misconception analysis; instructor models the critical questioning ladder on a flawed AI paragraph; real-world framing and session roadmap.</div></div>
+      <div class="tl-item"><div class="tt">Segment A — Mapping the contested terrain · 25 min</div><div class="td">Interactive mini-lecture on the four discourses, assumption archaeology, group card-sort of 12 statement cards, gamified Mentimeter poll on your local context.</div></div>
+      <div class="tl-item"><div class="tt">Segment B — AI-enabled comparative inquiry · 35 min</div><div class="td">Structured AI interaction (local / international / comparative prompts), Critical AI Engagement Log with accept–modify–reject verdicts, instructor briefing on AI failure modes, cross-check against the Source Pack.</div></div>
+      <div class="tl-item"><div class="tt">Segment C — The Professionalism Tribunal · 30 min</div><div class="td">Structured seminar debate on the motion, six stakeholder roles including "The AI", cross-examination, and a position-shift vote that makes revision of your view an explicit outcome.</div></div>
+      <div class="tl-item"><div class="tt">Segment D — Position statement drafting · 15 min</div><div class="td">Gradual release: the instructor models a 150-word position statement, then you draft your own with evidence, counter-argument and an AI transparency note.</div></div>
+      <div class="tl-item"><div class="tt">Synthesis &amp; closure · 25 min (17%)</div><div class="td">Post-test with two transfer items, claim-and-warrant Padlet wall, facilitated AI reflection discussion, exit ticket, and preview of the next session.</div></div>
+    </div>
+  </div>
+
+  <div class="grid g2">
+    <div class="card tight">
+      <div class="card-title"><span class="ic">🧭</span> The stance this lesson takes</div>
+      <p class="small mb0">Professionalism is treated as something people <em>argue about</em>, not something a document settles. Every claim you meet — from a ministry, a union, a code of conduct or an AI assistant — is read as a positioned account with interests behind it. Your job is to surface those interests, weigh the evidence, and be willing to move.</p>
+    </div>
+    <div class="card tight">
+      <div class="card-title"><span class="ic">🗺️</span> How to use this page</div>
+      <p class="small mb0">Work top to bottom. Tick tasks as you complete them; your progress, quiz answers, critique verdicts and reflections are saved in this browser only. Use <em>Export portfolio</em> at the end to keep a copy for your summative submission.</p>
+    </div>
+  </div>
+
+  <div class="callout note">
+    <div class="ct">⚙️ Assumed parameters</div>
+    <p class="mb0 small">Duration 150 minutes · first-year undergraduates · 90 students in 15 groups of six · English · Critical Inquiry Seminar with Social Constructivist and Scaffolded Instruction elements · AI integration in ILOs, activities, assessment and feedback. If your course prefers no AI integration, the AI-annotated elements can be removed without altering the core design.</p>
+  </div>
+</section>
+
+<!-- ================= SECTION 1 — OUTCOMES ================= -->
+<section id="ilos" class="block">
+  <div class="sec-head">
+    <div class="sec-num">1</div>
+    <div class="t">
+      <p class="eyebrow">Section 1</p>
+      <h2>Intended Learning Outcomes</h2>
+      <p>Seven outcomes, each paired with the AI integration engineered into it. The first five build the disciplinary argument; outcomes 6 and 7 make critical AI literacy an assessable outcome in its own right rather than a bolt-on.</p>
+    </div>
+  </div>
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th style="width:110px">ILO</th><th>Description</th><th style="width:38%">🤖 AI Integration</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>ILO 1</td>
+          <td><strong>Analyse</strong> competing conceptualisations of teacher professionalism (trait-based, managerial, democratic, activist) and surface the assumptions and interests underpinning each. <span class="small muted">(Bloom's: Analyze · Critical Inquiry: assumption-surfacing)</span></td>
+          <td>In the introduction, students critique an AI-generated paragraph and identify which discourse the AI implicitly assumes; the AI Critique Lab makes that assumption-surfacing explicit.</td>
+        </tr>
+        <tr>
+          <td>ILO 2</td>
+          <td><strong>Compare and evaluate</strong> how teacher professionalism is framed in the local jurisdiction and in at least one contrasting international context, using policy documents, codes of conduct and professional standards as evidence. <span class="small muted">(Bloom's: Evaluate · Critical Inquiry: evidence appraisal)</span></td>
+          <td>AI generates the initial comparison in Segment B; students then verify every claim against a named, human-authored source before it can enter their argument.</td>
+        </tr>
+        <tr>
+          <td>ILO 3</td>
+          <td><strong>Critique</strong> the transferability of "international best practice" in teacher professionalism, accounting for historical, cultural, political and economic context. <span class="small muted">(Bloom's: Evaluate · Critical Inquiry: contextual reasoning)</span></td>
+          <td>Students identify the AI's Anglocentric bias, its over-generalisation and its erasure of genuine contextual conflict in the comparative task.</td>
+        </tr>
+        <tr>
+          <td>ILO 4</td>
+          <td><strong>Construct and defend</strong> a reasoned, evidence-based position on a contested issue in teacher professionalism within structured seminar dialogue, and revise that position in response to counter-arguments. <span class="small muted">(Bloom's: Create · Critical Inquiry: dialogic position defence)</span></td>
+          <td>The portfolio reflective commentary asks where and why human judgement took precedence over an AI recommendation in building that position.</td>
+        </tr>
+        <tr>
+          <td>ILO 5</td>
+          <td><strong>Collaborate</strong> in an inquiry community to interrogate evidence, challenge peers' reasoning constructively, and co-build a shared claim with warrants. <span class="small muted">(Bloom's: Analyze / Evaluate · Social Constructivist element)</span></td>
+          <td>Groups jointly interrogate AI output and must negotiate a shared verdict, so the critique is a collective product rather than a private opinion.</td>
+        </tr>
+        <tr>
+          <td>ILO 6</td>
+          <td><strong>Evaluate</strong> AI-generated accounts of teacher professionalism for accuracy, completeness, recency, cultural bias and hallucinated evidence — identifying at least two specific errors, omissions or Anglocentric framings. <span class="small muted">(AI literacy: critical evaluation of AI outputs)</span></td>
+          <td><span class="pill violet">Core AI outcome</span> Assessed directly through the Critical AI Engagement Log and Portfolio Part B; at least one hallucination, bias or omission must be documented.</td>
+        </tr>
+        <tr>
+          <td>ILO 7</td>
+          <td><strong>Exercise independent judgement</strong> in deciding when, whether and how to act on AI-generated content, documenting what was accepted, modified or rejected and articulating where human expertise and contextual knowledge took precedence. <span class="small muted">(AI literacy: independent judgement and transparency)</span></td>
+          <td><span class="pill violet">Core AI outcome</span> Assessed through the AI transparency note in Segment D, the Feedback Interrogation Sheet and the "Critical AI Engagement" rubric criterion.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout ai">
+    <div class="ct">🤖 Design principle</div>
+    <p class="mb0">AI output is treated as <strong>a hypothesis to be tested, never a source to be cited</strong>. Every AI-derived claim must be verified against a named, human-authored source before it enters your argument. The lesson deliberately engineers situations in which the AI is fluent, confident and wrong — because fluency is a stylistic property, not evidence of correctness.</p>
+  </div>
+
+  <div class="grid g3">
+    <div class="card tight"><div class="card-title"><span class="ic">🧠</span> Cognitive range</div><p class="small mb0">The session moves from <strong>analyse</strong> (ILO 1) through <strong>evaluate</strong> (ILOs 2–3, 6) to <strong>create</strong> (ILO 4) — a deliberate progression from describing discourses to defending a position.</p></div>
+    <div class="card tight"><div class="card-title"><span class="ic">🗣️</span> Inquiry spine</div><p class="small mb0">Assumption-surfacing → evidence appraisal → contextual reasoning → dialogic position defence. The same spine recurs in every segment, so the intellectual moves become habitual.</p></div>
+    <div class="card tight"><div class="card-title"><span class="ic">🤝</span> Social dimension</div><p class="small mb0">ILO 5 is assessed formatively through the observation protocol and peer checklist, not in the individual portfolio — preserving individual accountability while valuing collaboration.</p></div>
+  </div>
+</section>
+
+<!-- ================= SECTION 2 — PRE-CLASS ================= -->
+<section id="preclass" class="block">
+  <div class="sec-head">
+    <div class="sec-num">2</div>
+    <div class="t">
+      <p class="eyebrow">Section 2</p>
+      <h2>Pre-Class Preparation</h2>
+      <p>Approximately 90 minutes of inquiry priming: core readings, a collaborative annotation task, an adaptive diagnostic pre-test and an AI engagement task. This is framed as <em>priming</em> rather than a full flipped model — the seminar does the heavy lifting.</p>
+    </div>
+  </div>
+
+  <div class="grid g2">
+    <div class="card">
+      <div class="card-title"><span class="ic">📚</span> Required preparation</div>
+      <ul class="mb0 small">
+        <li><strong>Hargreaves, A. (2000).</strong> Four ages of professionalism and professional learning. <em>Teachers and Teaching, 6</em>(2), 151–182. <a href="https://doi.org/10.1080/713698714" target="_blank" rel="noopener">read the article</a></li>
+        <li><strong>Sachs, J. (2001).</strong> Teacher professional identity: Competing discourses, competing outcomes. <em>Journal of Education Policy, 16</em>(2), 149–161. <a href="https://doi.org/10.1080/02680930116819" target="_blank" rel="noopener">read the article</a></li>
+        <li><strong>UNESCO/ILO (1966).</strong> <em>Recommendation concerning the Status of Teachers.</em> <a href="https://www.unesco.org/en/legal-affairs/recommendation-concerning-status-teachers" target="_blank" rel="noopener">read the Recommendation</a></li>
+        <li><strong>Local source (select one):</strong> Hong Kong EDB <em>Guidelines on Teachers' Professional Conduct</em> <a href="https://www.edb.gov.hk/en/teacher/conduct-guidelines/index.html" target="_blank" rel="noopener">EDB guidelines</a> · UK DfE <em>Teachers' Standards</em> <a href="https://www.gov.uk/government/publications/teachers-standards" target="_blank" rel="noopener">DfE standards</a> · AITSL <em>Australian Professional Standards for Teachers</em> <a href="https://www.aitsl.edu.au/teach/standards" target="_blank" rel="noopener">AITSL standards</a></li>
+        <li><strong>International source (select one):</strong> OECD <em>TALIS</em> results <a href="https://www.oecd.org/education/talis/" target="_blank" rel="noopener">TALIS indicators</a> · Ontario College of Teachers <em>Ethical Standards</em> <a href="https://www.oct.ca/" target="_blank" rel="noopener">OCT standards</a> · Education International <a href="https://www.ei-ie.org/" target="_blank" rel="noopener">Education International</a></li>
+        <li><strong>Collaborative annotation:</strong> annotate Sachs (2001) with the four tags below and reply to one peer — see the Hypothesis instructions.</li>
+        <li><strong>Diagnostic pre-test:</strong> eight adaptive items, completed before class.</li>
+        <li><strong>AI engagement task:</strong> run the prompt below and complete the Pre-Class AI Observation Log.</li>
+      </ul>
+      <div class="inline-actions">
+        <button class="btn btn-primary" id="startPre" type="button">▶ Start the diagnostic pre-test</button>
+      </div>
+      <div id="preQuiz" style="margin-top:16px;display:none"></div>
+    </div>
+    <div class="card tight">
+      <div class="card-title"><span class="ic">✅</span> Pre-class checklist</div>
+      <div class="tasklist" id="preTasks"></div>
+      <div class="callout tip" style="margin-top:14px">
+        <div class="ct">💡 Bring these to class</div>
+        <p class="mb0 small">Your pre-test result, your two Hypothesis annotations, and your completed AI Observation Log — the seminar begins from what the pre-test reveals, not from the readings alone.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid g2">
+    <div class="card">
+      <div class="card-title"><span class="ic">🏷️</span> Collaborative annotation task <span class="pill teal">Hypothesis</span></div>
+      <p class="small">Annotate the Sachs (2001) chapter with four tags. Each student posts <strong>at least two annotations</strong> and <strong>replies to one peer's annotation</strong> before class.</p>
+      <ul class="small mb0">
+        <li><code>[ASSUMPTION]</code> — an unstated premise</li>
+        <li><code>[EVIDENCE]</code> — an empirical or documentary warrant</li>
+        <li><code>[CONTESTED]</code> — a claim you believe is arguable</li>
+        <li><code>[CONTEXT]</code> — a claim that may not travel across contexts</li>
+      </ul>
+      <p class="small" style="margin-top:10px">Open <a href="https://web.hypothes.is/" target="_blank" rel="noopener">Hypothesis collaborative annotation</a> and follow the numbered steps below.</p>
+    </div>
+    <div class="card">
+      <div class="card-title"><span class="ic">🔎</span> Guiding inquiry questions</div>
+      <ol class="small mb0">
+        <li>Who gets to define what counts as "professional" behaviour for teachers — the state, the profession, the market, or the community?</li>
+        <li>Whose interests are served by each definition?</li>
+        <li>What evidence would change your mind about whether teaching is a profession?</li>
+        <li>What is lost when a definition of professionalism travels from one context to another?</li>
+      </ol>
+      <p class="small muted" style="margin-top:10px">Keep these questions open as you read — the tribunal in Segment C will return to them.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="ic">🤖</span> Pre-Class AI Engagement Task <span class="pill violet">AI literacy</span></div>
+    <p class="small">Prompt an AI assistant (ChatGPT, Claude, Copilot or Gemini) with the following request, then complete the <strong>Pre-Class AI Observation Log</strong> and submit it to the LMS before class.</p>
+    <div class="prompt-box">Explain what makes teaching a profession, and compare how teacher professionalism is understood in [your local jurisdiction] and in Finland. Cite sources.</div>
+    <p class="small"><strong>Complete the observation log:</strong></p>
+    <ul class="small">
+      <li>Paste the AI's response.</li>
+      <li>Identify <strong>one claim you believe is accurate</strong> and explain how you would verify it.</li>
+      <li>Identify <strong>one claim that is inaccurate, oversimplified or culturally biased</strong>, and explain why.</li>
+      <li>Identify <strong>one thing the AI omitted</strong> that your readings suggest matters.</li>
+      <li>Check any citations the AI provided: do they exist? Do they say what the AI claims? <em>Hallucinated citations are common — this is a deliberate teaching moment.</em></li>
+      <li>Reflection prompt: <em>"Did the AI's answer shape what you think professionalism is? If so, how will you guard against that?"</em></li>
+    </ul>
+  </div>
+
+  <details class="acc">
+    <summary><span class="badge pill teal">Tool</span> Run the adaptive pre-test in your LMS (Blackboard / Moodle / Canvas)</summary>
+    <div class="acc-body">
+      <p class="small"><strong>Purpose:</strong> to surface the three target misconceptions before teaching, so the session can be aimed at them rather than at assumed gaps. <strong>Learning objective:</strong> activates prior knowledge for ILO 1 and generates the aggregate data used in the pre-test review.</p>
+      <ol class="steps">
+        <li>In your LMS course, open <em>Quizzes</em> (Blackboard) / <em>Quiz activity</em> (Moodle) / <em>Quizzes</em> (Canvas) and create a new quiz titled "Diagnostic: Discourses of Teacher Professionalism".</li>
+        <li>Add the eight items, tagging each with a misconception category so the report can be read by category: <em>professionalism = compliance</em>, <em>best practice is universally transferable</em>, and <em>professionalism is a fixed, ahistorical trait list</em>.</li>
+        <li>Enable <strong>branching / adaptive feedback</strong>: for a wrong answer on a discourse-recognition item, show a short remediation note pointing to the relevant section of Sachs (2001).</li>
+        <li>Set the attempt limit to one, allow a 15-minute window, and turn off the timer display for students with registered accommodations.</li>
+        <li>Publish the quiz to the cohort and confirm the item statistics are visible to instructors only.</li>
+        <li>Before class, export the <em>item analysis</em> report and note which categories scored lowest — you will display these aggregates in the pre-test review.</li>
+        <li>Do not release correct answers to students; the same categories are re-tested in the post-test.</li>
+      </ol>
+    </div>
+  </details>
+
+  <details class="acc">
+    <summary><span class="badge pill teal">Tool</span> Set up the Hypothesis collaborative annotation on Sachs (2001)</summary>
+    <div class="acc-body">
+      <p class="small"><strong>Purpose:</strong> to make assumption-surfacing a visible, social act before the seminar. <strong>Learning objective:</strong> ILO 1 (assumption-surfacing) and ILO 5 (collaborative inquiry), by requiring students to tag and respond to each other's reading of the same text.</p>
+      <ol class="steps">
+        <li>Create a free account at <a href="https://web.hypothes.is/" target="_blank" rel="noopener">Hypothesis</a> and install the browser extension, or use your LMS's built-in Hypothesis integration.</li>
+        <li>In your LMS, create a Hypothesis assignment and attach the Sachs (2001) reading as the target PDF or web page.</li>
+        <li>Set the assignment group to "course group" so all 90 annotations are visible to the cohort, and set the deadline to 24 hours before class.</li>
+        <li>Publish the four tag conventions to the class: <code>[ASSUMPTION]</code>, <code>[EVIDENCE]</code>, <code>[CONTESTED]</code>, <code>[CONTEXT]</code>.</li>
+        <li>Post a worked model annotation yourself — for example, tag a sentence from Sachs's abstract as <code>[CONTEXT]</code> and explain in two sentences why it may not travel.</li>
+        <li>Require each student to post at least two annotations and to reply to one peer; use the Hypothesis activity dashboard to check participation.</li>
+        <li>Before class, filter the annotations by tag and pull three <code>[CONTESTED]</code> examples to open the seminar with.</li>
+      </ol>
+    </div>
+  </details>
+
+  <details class="acc">
+    <summary><span class="badge pill teal">Tool</span> Run the pre-class AI task with ChatGPT, Claude, Copilot or Gemini</summary>
+    <div class="acc-body">
+      <p class="small"><strong>Purpose:</strong> to generate a concrete, checkable AI account for students to interrogate. <strong>Learning objective:</strong> ILO 6 — evaluating AI output for accuracy, bias and hallucinated evidence.</p>
+      <ol class="steps">
+        <li>Choose one assistant — <a href="https://chat.openai.com" target="_blank" rel="noopener">ChatGPT</a>, <a href="https://claude.ai" target="_blank" rel="noopener">Claude</a>, <a href="https://copilot.microsoft.com" target="_blank" rel="noopener">Copilot</a> or <a href="https://gemini.google.com" target="_blank" rel="noopener">Gemini</a>.</li>
+        <li>Paste the prompt exactly as written in the task above, replacing the bracketed jurisdiction with your own.</li>
+        <li>Copy the full response into the "paste the AI's response" field of the Pre-Class AI Observation Log.</li>
+        <li>For each citation the AI gives, search the title and author in your library catalogue or a search engine. Record whether it exists and whether it says what the AI claims.</li>
+        <li>Highlight one accurate claim, one biased or oversimplified claim, and one omission.</li>
+        <li>Answer the reflection prompt in two or three sentences.</li>
+        <li>Submit the completed log to the LMS before class; bring a copy to the seminar for Segment B.</li>
+      </ol>
+    </div>
+  </details>
+</section>
+
+<!-- ================= SECTION 3 — ACTIVITIES ================= -->
+<section id="activities" class="block">
+  <div class="sec-head">
+    <div class="sec-num">3</div>
+    <div class="t">
+      <p class="eyebrow">Section 3</p>
+      <h2>Teaching &amp; Learning Activities</h2>
+      <p>150 minutes total — Introduction 20 min (13%) · Development 105 min (70%) · Synthesis and closure 25 min (17%). AI touchpoints are marked throughout.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="ic">🎬</span> Introduction · 20 minutes</div>
+
+    <h4 style="margin-top:6px">Hook — "The Professional or the Bureaucrat?" <span class="pill amber">5 min</span></h4>
+    <p class="small">Two contrasting artefacts are displayed side by side.</p>
+    <div class="grid g2">
+      <div class="callout key" style="margin:0"><div class="ct">📜 Artefact A — UNESCO/ILO (1966)</div><p class="mb0 small">An extract affirming that teachers should enjoy academic freedom and that teaching should be recognised as a profession exercising professional judgement in the interests of students and society.</p></div>
+      <div class="callout warn" style="margin:0"><div class="ct">📋 Artefact B — performance-management policy</div><p class="mb0 small">An extract from a contemporary policy specifying lesson-plan templates, scripted curricula and test-score targets tied to appraisal.</p></div>
+    </div>
+    <p class="small" style="margin-top:12px"><strong>Ask:</strong> <em>"Both claim to be about teacher professionalism. Can both be right?"</em> Students vote via Mentimeter <strong>before any discussion</strong>. The split is recorded and revisited at closure.</p>
+
+    <h4 style="margin-top:14px">Pre-test review with misconception analysis <span class="pill amber">6 min</span></h4>
+    <p class="small">Display the aggregate pre-test results. Explicitly name the three target misconceptions and ask students to locate where in their readings each is challenged. Use a <strong>think-pair-share</strong> (60 seconds each) before a whole-class debrief.</p>
+    <ul class="small">
+      <li>(a) professionalism = compliance with standards</li>
+      <li>(b) "best practice" is universally transferable</li>
+      <li>(c) professionalism is a fixed, ahistorical trait list</li>
+    </ul>
+
+    <h4 style="margin-top:14px">AI-generated claim critique — modelled critical questioning <span class="pill violet">6 min</span></h4>
+    <p class="small">The instructor displays a pre-screened AI-generated paragraph on teacher professionalism containing <strong>two deliberate flaws</strong>: a hallucinated citation and an Anglocentric generalisation (for example, "all high-performing systems now require teachers to hold a master's degree"). The instructor then <strong>models the critical questioning ladder aloud</strong>:</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th style="width:56px">Rung</th><th>Question</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>What is the claim?</td></tr>
+          <tr><td>2</td><td>What evidence is offered — and does that evidence exist?</td></tr>
+          <tr><td>3</td><td>Whose context is being generalised from?</td></tr>
+          <tr><td>4</td><td>What is missing?</td></tr>
+          <tr><td>5</td><td>What would I need to check before using this?</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="small">Students then apply the ladder in pairs to a second AI-generated sentence. <em>This models the exact protocol used in Segment B.</em></p>
+
+    <h4 style="margin-top:14px">Real-world connection and roadmap <span class="pill amber">3 min</span></h4>
+    <p class="small mb0">Frame the stakes: teacher shortages, migration of teachers across borders, debates over professional registration, and the global circulation of "what works" in education. Preview the session arc: <strong>map the terrain → compare contexts with AI → tribunal → position statement</strong>.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="ic">A</span> Segment A — Mapping the contested terrain · 25 minutes</div>
+
+    <h4 style="margin-top:6px">Interactive mini-lecture with think-pair-share <span class="pill amber">10 min</span></h4>
+    <p class="small">Present the four discourses using an animated concept map. Pause after each discourse for a 60-second think-pair-share: <em>"Which discourse does your own schooling experience most resemble?"</em></p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Discourse</th><th>Core emphasis</th><th>Key proponents / sources</th><th>Primary risk</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Trait-based / classical</strong></td><td>Knowledge base, autonomy, ethical code, service ideal</td><td>Flexnerian tradition; UNESCO/ILO (1966)</td><td>Idealised; ignores context</td></tr>
+          <tr><td><strong>Managerial</strong></td><td>Standards, accountability, measurable outcomes</td><td>Sachs (2001); performativity literature</td><td>Deprofessionalisation</td></tr>
+          <tr><td><strong>Democratic</strong></td><td>Collegiality, professional learning communities, trust</td><td>Hargreaves (2000); Sachs (2001)</td><td>Can be co-opted by management</td></tr>
+          <tr><td><strong>Activist / transformative</strong></td><td>Social justice, equity, advocacy, community engagement</td><td>Critical pedagogy traditions</td><td>Marginalised in policy</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4 style="margin-top:14px">Group card-sort task <span class="pill amber">10 min</span></h4>
+    <p class="small">Each of the 15 groups receives a set of <strong>12 statement cards</strong> drawn verbatim from real codes, standards and policy documents (anonymised). Groups classify each card into one of the four discourses and mark any card that is <strong>contested</strong> — that is, a card that could plausibly belong to two discourses. Each group must justify one contested classification to a neighbouring group.</p>
+
+    <h4 style="margin-top:14px">Assumption archaeology <span class="pill amber">within Segment A</span></h4>
+    <p class="small">Each group receives one policy extract and answers four questions in writing, then exchanges extracts with a neighbouring group and compares assumptions.</p>
+    <div class="grid g2">
+      <div class="callout note" style="margin:0"><div class="ct">🔍 The four questions</div>
+        <ol class="small mb0">
+          <li>What does this document assume a teacher <em>is</em>?</li>
+          <li>What does it assume a teacher should be trusted to do?</li>
+          <li>Whose voice is absent from this document?</li>
+          <li>What would a teacher in a very different context find strange about it?</li>
+        </ol>
+      </div>
+      <div class="callout tip" style="margin:0"><div class="ct">📊 Gamified poll <span class="pill teal">Mentimeter · 5 min</span></div>
+        <p class="small mb0">Poll: <em>"Which discourse best describes teacher professionalism in your local context today?"</em> Live results are displayed. The instructor facilitates a brief discussion of divergence — particularly where students from different school backgrounds disagree. <strong>This divergence is itself the lesson:</strong> professionalism is experienced differently across settings.</p>
+      </div>
+    </div>
+
+    <div class="grid g2" style="margin-top:14px">
+      <div class="card tight">
+        <div class="card-title"><span class="ic">👥</span> Peer-work checklist</div>
+        <div class="tasklist" id="peerTasks"></div>
+      </div>
+      <div class="card tight">
+        <div class="card-title"><span class="ic">📝</span> Observation journal (instructor)</div>
+        <label class="field"><span>What worked well in this segment</span><textarea data-journal="worked"></textarea></label>
+        <label class="field"><span>Where students struggled with evidence use or assumption-surfacing</span><textarea data-journal="struggle"></textarea></label>
+      </div>
+    </div>
+    <div class="inline-actions"><button class="btn btn-sm" data-task="dev-a" type="button">✓ Mark Segment A complete</button></div>
+  </div>
+
+  <div class="card" style="border-color:var(--violet)">
+    <div class="card-title"><span class="ic" style="background:var(--violet-soft);color:var(--violet)">B</span> Segment B — AI-enabled comparative inquiry: local vs international · 35 minutes</div>
+
+    <h4 style="margin-top:6px">Structured AI interaction task <span class="pill violet">20 min</span></h4>
+    <p class="small">Groups of six work in three sub-pairs, each with a distinct AI prompt.</p>
+    <div class="grid g3">
+      <div class="card tight"><div class="card-title"><span class="ic">1</span> Pair 1 — Local framing</div><div class="prompt-box" style="margin:0">Summarise how teacher professionalism is defined and regulated in [local jurisdiction]. Include the relevant code of conduct or professional standards and cite your sources.</div></div>
+      <div class="card tight"><div class="card-title"><span class="ic">2</span> Pair 2 — International framing</div><div class="prompt-box" style="margin:0">Summarise how teacher professionalism is defined and regulated in Finland. Include the relevant standards and cite your sources.</div></div>
+      <div class="card tight"><div class="card-title"><span class="ic">3</span> Pair 3 — Comparative framing</div><div class="prompt-box" style="margin:0">Compare teacher professionalism in [local jurisdiction] and Finland. What are the three most important differences? Cite sources.</div></div>
+    </div>
+
+    <p class="small" style="margin-top:14px">Each sub-pair then completes the <strong>Critical AI Engagement Log</strong> using this template (available in <a href="https://docs.google.com" target="_blank" rel="noopener">Google Docs or Sheets</a>):</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Column</th><th>Prompt</th></tr></thead>
+        <tbody>
+          <tr><td><strong>AI claim</strong></td><td>Quote the specific claim</td></tr>
+          <tr><td><strong>Verification source</strong></td><td>Which reading, policy document or database did you check it against?</td></tr>
+          <tr><td><strong>Verdict</strong></td><td><span class="pill green">Accepted</span> <span class="pill amber">Modified</span> <span class="pill rose">Rejected</span></td></tr>
+          <tr><td><strong>Rationale</strong></td><td>Why? What was wrong, missing or contextually inapplicable?</td></tr>
+          <tr><td><strong>Human override</strong></td><td>What would a knowledgeable human say instead?</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout warn">
+      <div class="ct">📌 Requirement</div>
+      <p class="mb0 small">Each group must document <strong>at least three verdicts</strong>, including <strong>at least one rejection</strong> and <strong>at least one hallucinated or unverifiable citation</strong>.</p>
+    </div>
+
+    <h4 style="margin-top:14px">AI verdict negotiation <span class="pill violet">within Segment B</span></h4>
+    <p class="small">The full group compares the three AI outputs and discovers that the AI produces <strong>inconsistent claims depending on how the question is framed</strong> — a powerful demonstration that AI output is prompt-dependent and not authoritative. Groups document the inconsistencies in their log and discuss: <em>"If the AI says different things depending on how we ask, what does that tell us about using it as a source?"</em></p>
+    <label class="field"><span>Evidence of negotiated meaning — where your group disagreed about a verdict and how you resolved it</span><textarea data-journal="negotiation"></textarea></label>
+
+    <h4 style="margin-top:14px">Instructor mini-briefing on AI limitations <span class="pill amber">5 min</span></h4>
+    <ul class="small">
+      <li><strong>Hallucination:</strong> AI generates plausible but non-existent citations and statistics. Always verify.</li>
+      <li><strong>Anglocentric and WEIRD bias:</strong> training data over-represents English-language, high-income, Western sources. "International" often means "US, UK, Australia".</li>
+      <li><strong>Averaging:</strong> AI tends to produce a smooth consensus that erases genuine contextual conflict.</li>
+      <li><strong>Recency:</strong> policy changes fast; AI knowledge has a cutoff.</li>
+      <li><strong>Authority laundering:</strong> fluent AI prose can feel authoritative even when unsupported.</li>
+    </ul>
+    <div class="callout ai">
+      <div class="ct">🤖 Explicit rule for the session</div>
+      <p class="mb0"><em>AI output is a hypothesis to be tested, never a source to be cited.</em> Every AI-derived claim must be verified against a named, human-authored source before it enters your argument.</p>
+    </div>
+
+    <h4 style="margin-top:14px">Cross-check against the Source Pack <span class="pill amber">10 min</span></h4>
+    <p class="small">Groups verify their AI claims against the provided <strong>Source Pack</strong> (printed and digital): the UNESCO/ILO (1966) Recommendation, OECD TALIS indicators, the local code of conduct, and one contrasting national standards document. Groups annotate the pack in the margin: <em>"AI said X; source says Y."</em></p>
+    <div class="inline-actions"><button class="btn btn-sm" data-task="dev-b" type="button">✓ Mark Segment B complete</button></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="ic">C</span> Segment C — Critical Inquiry Seminar: The Professionalism Tribunal · 30 minutes</div>
+    <div class="callout key">
+      <div class="ct">⚖️ Motion</div>
+      <p class="mb0"><em>"This house believes that teacher professionalism is best secured through external accountability standards rather than professional self-regulation."</em></p>
+    </div>
+
+    <h4 style="margin-top:6px">Stakeholder role allocation</h4>
+    <p class="small">One role per group, with two groups sharing the largest roles.</p>
+    <div class="grid g3">
+      <div class="card tight"><div class="card-title"><span class="ic">🏛️</span> 1 · Ministry of Education</div><p class="small mb0">State regulator: defends external standards and public accountability.</p></div>
+      <div class="card tight"><div class="card-title"><span class="ic">✊</span> 2 · Teachers' union / professional body</div><p class="small mb0">Defends self-regulation, professional judgement and collective standards.</p></div>
+      <div class="card tight"><div class="card-title"><span class="ic">🏫</span> 3 · School leaders / principals</div><p class="small mb0">Caught between compliance and the conditions for good teaching.</p></div>
+      <div class="card tight"><div class="card-title"><span class="ic">👪</span> 4 · Parents and community</div><p class="small mb0">Asks what transparency and trust mean for families and students.</p></div>
+      <div class="card tight"><div class="card-title"><span class="ic">🎓</span> 5 · Teacher educators and researchers</div><p class="small mb0">Brings evidence on standards, learning and policy transfer.</p></div>
+      <div class="card tight" style="border-color:var(--violet)"><div class="card-title"><span class="ic" style="background:var(--violet-soft);color:var(--violet)">🤖</span> 6 · "The AI"</div><p class="small mb0">Must defend an AI-generated position on the motion, then <strong>publicly concede where the AI's reasoning fails</strong> under cross-examination — a deliberately designed critical AI literacy role.</p></div>
+    </div>
+
+    <h4 style="margin-top:14px">Format</h4>
+    <div class="tl">
+      <div class="tl-item"><div class="tt">Opening statements · 18 min</div><div class="td">3 minutes per role, grounded in the Source Pack.</div></div>
+      <div class="tl-item"><div class="tt">Structured cross-examination · 7 min</div><div class="td">Each role poses one question to another role.</div></div>
+      <div class="tl-item"><div class="tt">Free debate · 5 min</div><div class="td">Instructor-facilitated, using the critical questioning ladder.</div></div>
+    </div>
+
+    <h4 style="margin-top:14px">Instructor facilitation moves</h4>
+    <ul class="small">
+      <li>"What is your evidence, and how do you know it?"</li>
+      <li>"Whose interests does that definition serve?"</li>
+      <li>"What would have to be true for the opposing view to be correct?"</li>
+      <li>"Is that claim context-specific or general?"</li>
+    </ul>
+    <p class="small">Students may, as an accessibility accommodation, submit a <strong>written tribunal statement</strong> in place of an oral opening statement.</p>
+
+    <h4 style="margin-top:14px">Position-shift vote</h4>
+    <p class="small mb0">Students re-vote on the motion. The instructor highlights shifts and asks students to name the argument that moved them — making <strong>position revision an explicit, valued outcome</strong> rather than a failure of consistency.</p>
+    <div class="inline-actions"><button class="btn btn-sm" data-task="dev-c" type="button">✓ Mark Segment C complete</button></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="ic">D</span> Segment D — Position statement drafting · 15 minutes <span class="pill brand">Gradual release</span></div>
+    <p class="small">Individually, draft a <strong>150-word position statement</strong> on the tribunal motion. The instructor first models one aloud, thinking through the choice of evidence and the AI transparency note; you then draft your own using the structured template.</p>
+    <div class="grid g2">
+      <div>
+        <p class="small"><strong>Requirements</strong></p>
+        <ul class="small">
+          <li>At least <strong>one piece of evidence from a local source</strong> and <strong>one from an international source</strong>.</li>
+          <li>At least <strong>one counter-argument</strong> acknowledged and rebutted.</li>
+          <li>An explicit <strong>AI transparency note</strong>: <em>"One AI-generated claim I [accepted / modified / rejected] was ___, because ___."</em></li>
+        </ul>
+        <p class="small muted mb0">This draft feeds directly into the summative portfolio (Part C).</p>
+      </div>
+      <div>
+        <p class="small"><strong>Sentence starters</strong></p>
+        <div class="callout tip" style="margin:0">
+          <p class="small mb0">"My claim is ___ because the evidence from ___ suggests ___" · "The strongest objection is ___, but this fails to account for ___" · "One AI-generated claim I rejected was ___, because the source said ___" · "I want to challenge that because ___"</p>
+        </div>
+      </div>
+    </div>
+    <p class="small" style="margin-top:12px">Peers exchange drafts for a two-minute <strong>"evidence check"</strong> before submission.</p>
+    <div class="inline-actions"><button class="btn btn-sm" data-task="dev-d" type="button">✓ Mark Segment D complete</button></div>
+  </div>
+
+  <!-- AI critique lab — the JS renders one critique per entry in LESSON_DATA.critiques -->
+  <div class="card" style="border-color:var(--violet)">
+    <div class="card-title"><span class="ic" style="background:var(--violet-soft);color:var(--violet)">🤖</span> AI Critique Lab</div>
+    <div class="callout note">
+      <div class="ct">🔍 Your job is to find what the AI got wrong</div>
+      <p class="mb0 small">Check each claim against your readings, the Source Pack and your own reasoning. A confident tone is not evidence of correctness. Use Accept for claims that survive checking, Modify where a claim is partly right but over-generalised, and Reject where it is false, hallucinated or contextually inapplicable.</p>
+    </div>
+    <div id="critiqueLab"></div>
+    <div class="score-bar" style="margin-bottom:0">
+      <div><div class="score-big" id="critCount">0/0</div><div class="small muted">Fully critiqued</div></div>
+      <div style="flex:1;min-width:200px">
+        <div class="cat-row" style="grid-template-columns:1fr"><span class="small muted">Verdicts cast: <strong id="critVerdicts">0</strong> / <span id="critTotal">0</span></span><span class="cat-track"><span class="cat-fill" id="critFill" style="width:0%;background:linear-gradient(90deg,var(--violet),var(--brand))"></span></span></div>
+      </div>
+      <button class="btn btn-sm" id="critReset" type="button">Clear lab</button>
+    </div>
+  </div>
+
+  <!-- simulated AI chat -->
+  <div class="card" style="border-color:var(--violet)">
+    <div class="card-title"><span class="ic" style="background:var(--violet-soft);color:var(--violet)">💬</span> Practice the synthesis prompt</div>
+    <p class="small">Pick a prompt to see a simulated AI response — each one is fluent, confident and flawed in a specific way. Then write your critique using the five-rung ladder.</p>
+    <div class="chat" id="chatWindow" aria-live="polite">
+      <div class="msg ai"><div class="who">AI</div>Hello. Ask me to compare teacher professionalism across contexts, or to settle whether teaching is a profession. I will answer confidently and cite sources.</div>
+    </div>
+    <div class="chips" id="chatPrompts"></div>
+    <label class="field"><span>Your critique of the AI response above (saved to your portfolio)</span>
+      <textarea id="chatCritique" placeholder="Name the claim, the flaw (hallucinated citation, Anglocentric generalisation, false consensus, recency error, authority laundering), and the human correction you would make."></textarea>
+    </label>
+    <div class="inline-actions"><button class="btn btn-sm btn-primary" id="chatSave" type="button">💾 Save critique</button></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="ic">🌇</span> Synthesis &amp; closure · 25 minutes</div>
+
+    <h4 style="margin-top:6px">Post-test <span class="pill amber">5 min</span></h4>
+    <p class="small">Re-administer the eight pre-test items plus two transfer items (9 — <em>apply</em>; 10 — <em>evaluate</em>). Complete it in <a href="#assessment">Section 4</a>.</p>
+
+    <h4 style="margin-top:14px">Peer-teaching summaries — claim-and-warrant wall <span class="pill amber">8 min</span></h4>
+    <p class="small">Each group posts a single <strong>"claim + warrant"</strong> sentence to a Padlet wall: <em>"We claim that ___, because ___."</em> The class then reads the wall and identifies (a) the best-warranted claim and (b) the most contested claim. The instructor synthesises the pattern, highlighting where warrants were strong and where claims rested on assertion.</p>
+    <div class="callout tip">
+      <div class="ct">📌 Purpose</div>
+      <p class="mb0 small">This makes the evidentiary standard of the summative portfolio visible before it is assessed. <strong>Learning objective:</strong> ILO 5 — co-constructing a warranted claim in an inquiry community.</p>
+    </div>
+
+    <h4 style="margin-top:14px">AI reflection discussion <span class="pill violet">7 min</span></h4>
+    <ul class="small">
+      <li>"How did AI support or hinder your inquiry today?"</li>
+      <li>"What did the AI get wrong that you caught? How did you catch it?"</li>
+      <li>"When did you need to override an AI suggestion, and what told you to?"</li>
+      <li>"Did anyone find themselves agreeing with the AI before checking? What does that tell us?"</li>
+    </ul>
+    <p class="small">The instructor records recurring AI failure modes on the board — these become revision targets for the next iteration of the lesson.</p>
+
+    <h4 style="margin-top:14px">Preview of next session <span class="pill amber">5 min</span></h4>
+    <p class="small mb0">Next session: <em>Teacher Identity, Professional Learning Communities, and Career-Long Professional Development.</em> Bring one example of a professional learning community from your local context and one from an international context, and note one AI claim about professional learning communities that you intend to verify.</p>
+
+    <label class="field" style="margin-top:14px"><span>Changes to make before the next iteration (instructor)</span><textarea data-journal="changes"></textarea></label>
+    <div class="inline-actions"><button class="btn btn-sm" data-task="synthesis" type="button">✓ Mark synthesis complete</button></div>
+  </div>
+
+  <div class="callout ai">
+    <div class="ct">🎓 Instructor guidance on critical AI use</div>
+    <ul class="mb0">
+      <li><strong>Frame AI as evidence to examine, not an authority to copy.</strong> State the session rule aloud: AI output is a hypothesis to be tested, never a source to be cited.</li>
+      <li><strong>Model the questioning ladder before you ask students to use it.</strong> Students imitate the intellectual moves they see, not the ones they are told about.</li>
+      <li><strong>Require at least one rejection.</strong> A log in which every AI claim is "Accepted" is treated as evidence of unreflective reliance, not of a good AI.</li>
+      <li><strong>Name the failure modes explicitly</strong> — hallucination, Anglocentric bias, averaging, recency, authority laundering — so students have vocabulary for what they notice.</li>
+      <li><strong>Reward position revision.</strong> Publicly value students who change their mind with reasons; otherwise the tribunal rewards performance rather than inquiry.</li>
+      <li><strong>Keep human judgement sovereign.</strong> Every AI-derived claim must be traced to a named, human-authored source before it enters an argument.</li>
+    </ul>
+  </div>
+
+  <details class="acc">
+    <summary><span class="badge pill teal">Tool</span> Run the opening, discourse and position-shift polls in Mentimeter</summary>
+    <div class="acc-body">
+      <p class="small"><strong>Purpose:</strong> to make the distribution of opinion visible before, during and after argument, so that movement becomes measurable. <strong>Learning objective:</strong> ILO 1 and ILO 4 — surfacing assumptions and evidencing position revision.</p>
+      <ol class="steps">
+        <li>Sign in at <a href="https://www.mentimeter.com" target="_blank" rel="noopener">Mentimeter</a> and create a new presentation called "Teacher Professionalism — Tribunal".</li>
+        <li>Add slide 1 as a <strong>Multiple choice</strong> poll: "Teacher professionalism is best secured by external accountability standards rather than professional self-regulation" with <em>Agree / Disagree / Unsure</em>.</li>
+        <li>Add slide 2 as a <strong>Multiple choice</strong> poll for the Segment A discourse question: "Which discourse best describes teacher professionalism in your local context today?" with the four discourses as options.</li>
+        <li>Duplicate slide 1 and rename it "Position-shift vote" so the closing vote can be compared directly with the opening vote.</li>
+        <li>Set voting to <em>audience pace</em> and enable "show results live" so the split appears on screen as students vote.</li>
+        <li>Display the QR code and six-digit code; students vote on their phones without creating an account.</li>
+        <li>Run the three polls at the points marked in the run sheet, and screenshot the opening and closing results so the shift can be shown and discussed.</li>
+        <li>Ask students who changed position to name the argument that moved them — record these on the board.</li>
+      </ol>
+    </div>
+  </details>
+
+  <details class="acc">
+    <summary><span class="badge pill teal">Tool</span> Build the claim-and-warrant wall in Padlet</summary>
+    <div class="acc-body">
+      <p class="small"><strong>Purpose:</strong> to turn each group's inquiry into one public, checkable claim so the whole cohort can compare warrant quality. <strong>Learning objective:</strong> ILO 5 and ILO 4 — co-building a claim with warrants and identifying the most contested claim.</p>
+      <ol class="steps">
+        <li>Sign in at <a href="https://padlet.com" target="_blank" rel="noopener">Padlet</a> and create a new <em>Wall</em> board titled "We claim that… because…".</li>
+        <li>Set the posting permission to "Anyone with the link can write" so all 15 groups can post without accounts, or use the Padlet backchannel in your LMS.</li>
+        <li>Enable <strong>comments</strong> and <strong>likes/reactions</strong> so the class can signal the best-warranted and most contested claims.</li>
+        <li>Post an example card yourself: "We claim that managerial professionalism is expanding, because appraisal policies in our Source Pack tie progression to test-score targets."</li>
+        <li>Share the QR code with the class and ask each group to post exactly one sentence of the form "We claim that ___, because ___."</li>
+        <li>Allow five minutes of silent reading, then ask students to react to the strongest warrant and to the claim they most dispute.</li>
+        <li>Project the wall and synthesise the pattern: where warrants cited sources, and where claims rested on assertion.</li>
+      </ol>
+    </div>
+  </details>
+
+  <details class="acc">
+    <summary><span class="badge pill teal">Tool</span> Capture the 3-2-1 exit ticket with Google Forms</summary>
+    <div class="acc-body">
+      <p class="small"><strong>Purpose:</strong> to collect an immediate, private read on what students can now defend, what tensions remain, and what they want to pursue. <strong>Learning objective:</strong> consolidates ILOs 1–4 and generates the evidence base for the reflection section.</p>
+      <ol class="steps">
+        <li>Open <a href="https://forms.google.com" target="_blank" rel="noopener">Google Forms</a> and create a form titled "Exit ticket — Teacher Professionalism".</li>
+        <li>Add three <em>Paragraph</em> questions: "3 claims you can now defend with evidence"; "2 tensions you still see"; "1 question you want to pursue".</li>
+        <li>Add a fourth question as <em>Multiple choice</em>: "Which AI task today was most valuable?" with the Segment B comparison, the critique lab, and the simulated chat as options.</li>
+        <li>Turn on <em>Collect email addresses</em> only if you need to follow up with individuals; otherwise leave it off to encourage candour.</li>
+        <li>Under <em>Settings → Responses</em>, enable "Show summary charts and text responses" so students can compare their answers with the cohort.</li>
+        <li>Link the form in your LMS and keep it open for the final five minutes of the session.</li>
+        <li>After class, read the "2 tensions" column first — it tells you what to revisit next session.</li>
+      </ol>
+    </div>
+  </details>
+</section>
+
+<!-- ================= SECTION 4 — ASSESSMENT ================= -->
+<section id="assessment" class="block">
+  <div class="sec-head">
+    <div class="sec-num">4</div>
+    <div class="t">
+      <p class="eyebrow">Section 4</p>
+      <h2>Assessment Methods</h2>
+      <p>Formative assessment runs throughout the seminar; summative assessment is a single comparative inquiry portfolio with an explicit critical AI engagement criterion.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="ic">🎯</span> Post-test <span class="pill brand">10 items</span></div>
+    <p class="small">The post-test mirrors the pre-test misconception categories — discourses of professionalism, comparative and contextual reasoning, and critical AI literacy — and adds two transfer items: item 9 (<em>apply</em>) asks you to analyse a scripted-lesson-plan policy through the four discourses, and item 10 (<em>evaluate</em>) asks why Finnish approaches might not transfer to your local context.</p>
+    <div class="inline-actions">
+      <button class="btn btn-primary" id="startPost" type="button">▶ Start the post-test</button>
+    </div>
+    <div id="postQuiz" style="margin-top:16px;display:none"></div>
+    <div id="compareBox" style="margin-top:16px"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="ic">👀</span> Formative assessment during class</div>
+
+    <h4 style="margin-top:6px">Critical Inquiry Observation Protocol</h4>
+    <p class="small">The instructor and two teaching assistants circulate with a structured observation sheet capturing:</p>
+    <ul class="small">
+      <li>Quality of evidence use — does the student cite sources or assert opinions?</li>
+      <li>Quality of questioning — does the student probe assumptions?</li>
+      <li>Willingness to revise a position in light of counter-evidence.</li>
+      <li>Distribution of participation across group members.</li>
+    </ul>
+
+    <h4 style="margin-top:14px">Real-time polling and exit ticket</h4>
+    <ul class="small">
+      <li>Mentimeter polls at three points: opening vote, discourse poll, position-shift vote.</li>
+      <li>Exit ticket (3-2-1): <strong>3</strong> claims you can now defend with evidence · <strong>2</strong> tensions you still see · <strong>1</strong> question you want to pursue.</li>
+    </ul>
+
+    <h4 style="margin-top:14px">Peer-assessment checklist with calibration</h4>
+    <p class="small">Before the tribunal, the class calibrates on a 30-second anonymised video clip of a seminar exchange, scoring it against a four-item checklist — <strong>evidence, reasoning, responsiveness, clarity</strong>. This calibration ensures inter-rater consistency before peer scoring begins.</p>
+
+    <h4 style="margin-top:14px">AI-supported formative checks</h4>
+    <ul class="small mb0">
+      <li>Students submit their <strong>AI-generated comparison</strong> alongside their <strong>annotated critique</strong> and <strong>Critical AI Engagement Log</strong>.</li>
+      <li>The instructor reviews the logs specifically for evidence of <strong>critical engagement versus unreflective reliance</strong> — a log where every AI claim is "Accepted" with no verification triggers a targeted check-in.</li>
+      <li>Spot-check: the instructor selects three AI claims from across the cohort and asks the class to verify them live in the following session.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="ic">📦</span> Summative assessment — Comparative Inquiry Portfolio</div>
+    <p class="small">Individual, 1,500 words plus appendices, due Week 6.</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th style="width:150px">Part</th><th style="width:110px">Length</th><th>What it requires</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Part A</strong> — Comparative analysis</td><td>500 words</td><td>Analyse how teacher professionalism is framed in the local jurisdiction and one contrasting international context, drawing on at least four sources including at least one policy document and one peer-reviewed source.</td></tr>
+          <tr><td><strong>Part B</strong> — Critical evaluation of AI-generated content</td><td>400 words + appendix</td><td>Present the Critical AI Engagement Log with at least three documented instances of accepting, modifying or rejecting AI-generated content, each with verification source and rationale. Include at least one identified hallucination, bias or omission.</td></tr>
+          <tr><td><strong>Part C</strong> — Position statement</td><td>400 words</td><td>Defend a position on a contested issue in teacher professionalism, with counter-argument and rebuttal.</td></tr>
+          <tr><td><strong>Part D</strong> — Reflective commentary</td><td>200 words</td><td>Articulate where and why human judgement took precedence over AI recommendations in your work.</td></tr>
+          <tr><td><strong>Part E</strong> — Appendix</td><td>—</td><td>Full AI interaction transcripts, prompts used, and the Pre-Class AI Observation Log.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="ic">📊</span> Summative rubric</div>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th style="width:20%">Criterion (weight)</th><th>Exemplary (A)</th><th>Proficient (B)</th><th>Developing (C)</th><th>Inadequate (D/F)</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>Conceptual understanding of teacher professionalism (25%)</strong></td>
+            <td>Accurately distinguishes and critically deploys all four discourses; identifies tensions between them.</td>
+            <td>Distinguishes discourses accurately with minor imprecision.</td>
+            <td>Describes discourses but conflates some; limited critical framing.</td>
+            <td>Treats professionalism as a fixed trait list; major conceptual errors.</td>
+          </tr>
+          <tr>
+            <td><strong>Comparative and contextual analysis (20%)</strong></td>
+            <td>Comparison is genuinely contextual — historical, political and cultural factors are analysed, not listed.</td>
+            <td>Solid comparison with some contextual reasoning.</td>
+            <td>Comparison is largely descriptive; context treated superficially.</td>
+            <td>Comparison is a list of surface features; no contextual reasoning.</td>
+          </tr>
+          <tr>
+            <td><strong>Evidence and source quality (15%)</strong></td>
+            <td>All claims warranted by named, verified, high-quality sources; source selection is judicious.</td>
+            <td>Most claims well-warranted; sources appropriate.</td>
+            <td>Some claims unsupported; sources of uneven quality.</td>
+            <td>Claims unsupported or sourced only from AI output.</td>
+          </tr>
+          <tr>
+            <td><strong>Critical AI engagement (20%)</strong></td>
+            <td>Evaluates AI outputs rigorously; identifies specific inaccuracies, biases and omissions; documents accept/modify/reject decisions with clear, defensible rationale; articulates where human judgement took precedence.</td>
+            <td>Evaluates AI outputs with specific examples; documents decisions with adequate rationale.</td>
+            <td>Evaluation is general ("the AI was a bit wrong"); rationale is thin or post hoc.</td>
+            <td>Accepts AI output uncritically, or rejects it without reasoned evaluation; no documentation.</td>
+          </tr>
+          <tr>
+            <td><strong>Argumentation and position defence (10%)</strong></td>
+            <td>Position is clear, nuanced, and defended against the strongest counter-argument.</td>
+            <td>Position is clear and defended against a counter-argument.</td>
+            <td>Position stated but weakly defended; counter-argument tokenistic.</td>
+            <td>No clear position; no engagement with counter-arguments.</td>
+          </tr>
+          <tr>
+            <td><strong>Transparency and academic integrity (10%)</strong></td>
+            <td>Full, precise disclosure of AI use with prompts and transcripts; all AI-derived claims verified and attributed to human sources.</td>
+            <td>Clear disclosure; verification evident.</td>
+            <td>Disclosure incomplete or vague.</td>
+            <td>Undisclosed AI use, or AI output presented as a source.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="small muted" style="margin-top:10px">Collaboration quality (ILO 5) is assessed formatively through the observation protocol and peer checklist, not in the individual portfolio, to preserve individual accountability.</p>
+  </div>
+
+  <div class="card" style="border-color:var(--violet)">
+    <div class="card-title"><span class="ic" style="background:var(--violet-soft);color:var(--violet)">🤖</span> AI-supported feedback and learning support</div>
+    <div class="tl">
+      <div class="tl-item"><div class="tt">Stage 1 — AI-generated formative feedback</div><div class="td">Students submit their Part C draft to a configured AI feedback tool — a rubric-loaded custom GPT, or an LMS-integrated assistant such as <a href="https://www.gradescope.com" target="_blank" rel="noopener">Gradescope</a> or <a href="https://www.turnitin.com" target="_blank" rel="noopener">Turnitin Revision Assistant</a>. The tool returns criterion-referenced comments on argument structure, evidence use and clarity.</div></div>
+      <div class="tl-item"><div class="tt">Stage 2 — Instructor review and override (48-hour window)</div><div class="td">Before any AI feedback is released to students, the instructor reviews it, flags inaccurate or generic comments and adds human annotations. <strong>AI feedback is never released unreviewed.</strong></div></div>
+      <div class="tl-item"><div class="tt">Stage 3 — Student interrogation of AI feedback</div><div class="td">Students complete a Feedback Interrogation Sheet: which comments do you agree with, and why; which do you disagree with, and what evidence supports your disagreement; what did the AI miss that a human reader would notice; which comments will you act on, and which will you override — with rationale.</div></div>
+      <div class="tl-item"><div class="tt">Stage 4 — Calibration session (Week 5, 20 min)</div><div class="td">Instructor and students jointly evaluate three anonymised samples: one with AI feedback only, one with instructor feedback only, one with both. The class discusses where AI feedback was accurate, where it was generic or wrong, and what that reveals about the limits of automated assessment.</div></div>
+      <div class="tl-item"><div class="tt">Stage 5 — Human judgement prevails</div><div class="td">All summative grades are determined by human assessors. AI feedback supplements — never replaces — instructor pedagogical judgement. Students who override AI feedback with documented rationale are explicitly rewarded under the "Critical AI Engagement" rubric criterion.</div></div>
+    </div>
+  </div>
+
+  <details class="acc">
+    <summary><span class="badge pill teal">Tool</span> Configure a rubric-loaded AI feedback assistant (Stage 1)</summary>
+    <div class="acc-body">
+      <p class="small"><strong>Purpose:</strong> to provide fast criterion-referenced formative feedback that students then interrogate, rather than to grade. <strong>Learning objective:</strong> ILO 7 — exercising independent judgement about when and how to act on AI output.</p>
+      <ol class="steps">
+        <li>Create a custom GPT (or an LMS-integrated assistant) and paste the six summative rubric criteria from the table above into its instructions.</li>
+        <li>Add an instruction that the assistant must give feedback <em>only</em> against the criteria, must quote the student's own words, and must never invent sources.</li>
+        <li>Add a second instruction requiring the assistant to state, for each comment, whether it is about <em>argument structure</em>, <em>evidence use</em> or <em>clarity</em>.</li>
+        <li>Test the assistant on three sample drafts and note where it produces generic or inaccurate comments — these become the examples you use in the Week 5 calibration session.</li>
+        <li>Set up an instructor review queue so that no AI comment reaches a student before you have annotated or removed it (Stage 2).</li>
+        <li>Distribute the Feedback Interrogation Sheet alongside the released feedback and require students to complete it before acting on any comment.</li>
+        <li>Record every student override, with rationale, and reward defensible overrides under the "Critical AI Engagement" criterion.</li>
+      </ol>
+    </div>
+  </details>
+
+  <details class="acc">
+    <summary><span class="badge pill teal">Tool</span> Use Kahoot as a low-stakes misconceptions check</summary>
+    <div class="acc-body">
+      <p class="small"><strong>Purpose:</strong> to re-test the three target misconceptions competitively and quickly, and to show the class its own error pattern in real time. <strong>Learning objective:</strong> consolidates ILO 1 by making the misconceptions visible a second time, after teaching.</p>
+      <ol class="steps">
+        <li>Sign in at <a href="https://kahoot.com" target="_blank" rel="noopener">Kahoot</a> and create a new quiz titled "Professionalism: misconception check".</li>
+        <li>Add six <em>True/False</em> or <em>Multiple choice</em> questions built directly from the pre-test misconception targets.</li>
+        <li>Include one deliberately tricky item about policy transfer to prompt debate, for example "If a policy works in Finland it will work here."</li>
+        <li>Set the timer to 20 seconds per question and enable the "show the class answer distribution" option.</li>
+        <li>Host in <em>Classic</em> mode or assign <em>Challenge</em> mode if you want it completed asynchronously.</li>
+        <li>After each question, pause and ask one student to justify the correct answer with a source — the discussion, not the score, is the point.</li>
+        <li>Share the report with the class and compare the error pattern with the pre-test aggregate.</li>
+      </ol>
+    </div>
+  </details>
+</section>
+
+<!-- ================= SECTION 5 — ALIGNMENT ================= -->
+<section id="alignment" class="block">
+  <div class="sec-head">
+    <div class="sec-num">5</div>
+    <div class="t">
+      <p class="eyebrow">Section 5</p>
+      <h2>Constructive Alignment Matrix</h2>
+      <p>Every outcome is matched to the activity that develops it, the assessment that evidences it, the pedagogy that structures it and the AI integration that supports or complicates it.</p>
+    </div>
+  </div>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th style="width:7%">ILO</th><th style="width:22%">Learning activity</th><th style="width:22%">Assessment</th><th style="width:24%">Pedagogy link</th><th>AI integration link</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>1</strong></td>
+          <td>Segment A: mini-lecture, think-pair-share, card sort, assumption archaeology, Mentimeter poll</td>
+          <td>Pre/post-test items 1–4 and 9; exit ticket; observation protocol</td>
+          <td>Critical Inquiry: surfacing assumptions behind each discourse; Constructivist card-sort knowledge-building</td>
+          <td>Introduction AI-generated paragraph critique — students identify which discourse the AI implicitly assumes</td>
+        </tr>
+        <tr>
+          <td><strong>2</strong></td>
+          <td>Segment B: AI comparative inquiry and Source Pack cross-check</td>
+          <td>Portfolio Part A; Critical AI Engagement Log</td>
+          <td>Critical Inquiry: evidence appraisal across contexts</td>
+          <td>AI generates the initial comparison; students verify every claim against named human-authored sources</td>
+        </tr>
+        <tr>
+          <td><strong>3</strong></td>
+          <td>Segments B and C: Source Pack analysis, tribunal debate</td>
+          <td>Portfolio Parts A and C; post-test item 10</td>
+          <td>Critical Inquiry: contextual reasoning; challenging policy borrowing</td>
+          <td>Students identify the AI's Anglocentric bias, over-generalisation and erasure of contextual conflict</td>
+        </tr>
+        <tr>
+          <td><strong>4</strong></td>
+          <td>Segment C tribunal; Segment D position statement drafting</td>
+          <td>Portfolio Part C; position-shift vote; peer-assessment checklist</td>
+          <td>Critical Inquiry Seminar: structured dialogic position defence and revision</td>
+          <td>Portfolio Part D: articulating where human judgement overrode AI recommendations</td>
+        </tr>
+        <tr>
+          <td><strong>5</strong></td>
+          <td>All group segments; Padlet claim-and-warrant synthesis</td>
+          <td>Observation protocol; peer-assessment checklist; Padlet wall</td>
+          <td>Social Constructivism: co-construction of warranted claims</td>
+          <td>Collaborative AI critique — groups jointly interrogate AI output and negotiate verdicts</td>
+        </tr>
+        <tr>
+          <td><strong>6</strong></td>
+          <td>Pre-class AI task; Segment B structured AI interaction; instructor mini-briefing</td>
+          <td>Portfolio Part B; Critical AI Engagement Log; Pre-Class AI Observation Log</td>
+          <td>Critical Inquiry: treating AI output as a hypothesis requiring verification</td>
+          <td>Core AI literacy outcome — at least one hallucination, bias or omission must be documented</td>
+        </tr>
+        <tr>
+          <td><strong>7</strong></td>
+          <td>Segment D AI transparency note; Feedback Interrogation Sheet</td>
+          <td>Portfolio Part D; Feedback Interrogation Sheet; rubric criterion "Critical AI Engagement"</td>
+          <td>Critical Inquiry: independent reasoning and epistemic responsibility</td>
+          <td>Core AI literacy outcome — documented accept/modify/reject decisions with rationale</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ================= SECTION 6 — RESOURCES ================= -->
+<section id="resources" class="block">
+  <div class="sec-head">
+    <div class="sec-num">6</div>
+    <div class="t">
+      <p class="eyebrow">Section 6</p>
+      <h2>Required Resources &amp; Technology</h2>
+      <p>Reference cards for the twelve key terms, an interactive flashcard deck, a gamified scenario quiz, a concept-map builder, and the platforms and materials the session needs.</p>
+    </div>
+  </div>
+
+  <h3>Reference cards — the twelve key terms</h3>
+  <p class="small muted">Each card gives the term, its key sources, what it claims and its most common limitation. These are the concepts the flashcard deck and scenario quiz draw on.</p>
+  <div class="grid g3" id="theoryCards"></div>
+
+  <h3 style="margin-top:30px">🃏 Flashcard deck — drag-and-drop matching</h3>
+  <div class="card">
+    <p class="small">Drag an item chip (or tap it, then tap a slot) onto the matching description. Correct matches lock in green. The deck covers all twelve glossary terms — the same terms you will meet in the tribunal and the portfolio.</p>
+    <div class="fc-arena">
+      <div>
+        <p class="small muted" style="margin:0 0 8px"><strong>Item chips</strong></p>
+        <div class="chip-pool" id="chipPool"></div>
+      </div>
+      <div>
+        <p class="small muted" style="margin:0 0 8px"><strong>Descriptions</strong></p>
+        <div class="slots" id="slotPool"></div>
+      </div>
+    </div>
+    <div class="inline-actions">
+      <button class="btn btn-sm" id="fcReset" type="button">↺ Reset deck</button>
+      <span class="pill" id="fcScore">0 / 0 matched</span>
+      <button class="btn btn-sm" data-task="flashcards" type="button">✓ Mark deck complete</button>
+    </div>
+  </div>
+
+  <h3 style="margin-top:30px">🎮 Gamified scenario quiz</h3>
+  <div class="card">
+    <p class="small">Identify which concept best explains each scenario, then answer the peer-review prompt that appears after you choose. These scenarios are drawn from real policy and classroom situations.</p>
+    <div id="scenarioQuiz"></div>
+    <div class="inline-actions">
+      <button class="btn btn-sm btn-primary" id="scenarioCheck" type="button">Check answers</button>
+      <button class="btn btn-sm" id="scenarioReset" type="button">↺ Try again</button>
+      <span class="pill" id="scenarioScore">—</span>
+    </div>
+  </div>
+
+  <h3 style="margin-top:30px">🧠 Concept-map builder <span class="pill brand">Summative artefact</span></h3>
+  <div class="card">
+    <p class="small">Choose a scenario, add at least three nodes, and record how each concept applies. If any node came from AI-generated content, tick the disclosure box — the map feeds the portfolio's critical AI engagement evidence.</p>
+    <div class="grid g2">
+      <div>
+        <label class="field"><span>Your real-world scenario</span>
+          <select id="cmScenario">
+            <option value="">— Select a scenario —</option>
+            <option>A ministry ties teacher appraisal to students' test-score gains</option>
+            <option>A school imports another country's teaching standards wholesale</option>
+            <option>A teachers' union campaigns for professional self-regulation</option>
+            <option>Experienced teachers stop trusting their own judgement after years of inspection</option>
+            <option>A group of teachers redesigns a unit around newly arrived students' languages and histories</option>
+            <option>Other (write your own below)</option>
+          </select>
+        </label>
+        <label class="field"><span>Or write your own scenario</span>
+          <input type="text" id="cmCustom" placeholder="e.g. A district replaces lesson observations with peer-led inquiry cycles">
+        </label>
+        <label class="field"><span>Add a node</span>
+          <select id="cmTheory"></select>
+        </label>
+        <label class="field"><span>How does this apply to the scenario? (connection label)</span>
+          <textarea id="cmNote" placeholder="e.g. Managerial professionalism — appraisal links progression to measurable test-score targets, shifting authority from judgement to the indicator."></textarea>
+        </label>
+        <div class="inline-actions">
+          <button class="btn btn-sm btn-primary" id="cmAdd" type="button">＋ Add node</button>
+          <button class="btn btn-sm" id="cmClear" type="button">Clear map</button>
+        </div>
+        <label class="checkline"><input type="checkbox" id="cmAI"><span>This map includes AI-generated content — I have marked it and documented my critique.</span></label>
+      </div>
+      <div>
+        <div class="map-canvas" id="mapCanvas">
+          <div class="map-empty" id="mapEmpty">Your concept map will appear here.<br><span class="small">Add at least three nodes.</span></div>
+          <div id="mapCore" style="display:none">
+            <div class="map-core" id="mapScenarioLabel">Scenario</div>
+            <div class="map-ring" id="mapRing"></div>
+          </div>
+        </div>
+        <div class="inline-actions">
+          <button class="btn btn-sm" id="cmExport" type="button">⬇ Export map (.txt)</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="margin-top:30px">🔧 Platforms and technology</h3>
+  <div class="grid g2">
+    <div class="tool-card">
+      <div class="tool-head">
+        <div class="tool-logo" style="background:linear-gradient(135deg,#4338ca,#7c3aed)">LMS</div>
+        <div class="meta"><h4>Learning Management System</h4><div class="sub">Moodle · Blackboard · Canvas</div></div>
+      </div>
+      <div class="tool-head" style="padding-top:0"><p class="small mb0">Hosts the readings, the adaptive pre-test, submission of the Critical AI Engagement Log and the final portfolio. See the LMS instructions in <a href="#preclass">Section 2</a>.</p></div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-head">
+        <div class="tool-logo" style="background:linear-gradient(135deg,#0d9488,#0891b2)">Hy</div>
+        <div class="meta"><h4>Hypothesis</h4><div class="sub">Collaborative social annotation</div></div>
+      </div>
+      <div class="tool-head" style="padding-top:0"><p class="small mb0">Used for the four-tag annotation of Sachs (2001) before class. Full steps are in <a href="#preclass">Section 2</a>.</p></div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-head">
+        <div class="tool-logo" style="background:linear-gradient(135deg,#be123c,#db2777)">Me</div>
+        <div class="meta"><h4>Mentimeter</h4><div class="sub">Live polling and position-shift voting</div></div>
+      </div>
+      <div class="tool-head" style="padding-top:0"><p class="small mb0">Runs the opening vote, the discourse poll and the closing position-shift vote. Full steps are in <a href="#activities">Section 3</a>.</p></div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-head">
+        <div class="tool-logo" style="background:linear-gradient(135deg,#b45309,#c2410c)">Pa</div>
+        <div class="meta"><h4>Padlet</h4><div class="sub">Claim-and-warrant synthesis wall</div></div>
+      </div>
+      <div class="tool-head" style="padding-top:0"><p class="small mb0">Collects one warranted claim per group at closure. Full steps are in <a href="#activities">Section 3</a>.</p></div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-head">
+        <div class="tool-logo" style="background:linear-gradient(135deg,#15803d,#0d9488)">GD</div>
+        <div class="meta"><h4>Google Docs / Slides / Forms</h4><div class="sub">Shared group logs, concept maps, exit ticket</div></div>
+      </div>
+      <div class="tool-head" style="padding-top:0"><p class="small mb0">Shared Critical AI Engagement Logs and the 3-2-1 exit ticket. Exit-ticket steps are in <a href="#activities">Section 3</a>.</p></div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-head">
+        <div class="tool-logo" style="background:linear-gradient(135deg,#7c3aed,#6366f1)">🤖</div>
+        <div class="meta"><h4>ChatGPT · Claude · Copilot · Gemini</h4><div class="sub">Structured AI interaction tasks</div></div>
+      </div>
+      <div class="tool-head" style="padding-top:0"><p class="small mb0">Used for the pre-class task and the three Segment B prompts. Prompt steps are in <a href="#preclass">Section 2</a>.</p></div>
+    </div>
+  </div>
+
+  <div class="grid g2" style="margin-top:6px">
+    <div class="card tight">
+      <div class="card-title"><span class="ic">📚</span> AI literacy resources</div>
+      <ul class="small mb0">
+        <li>UNESCO <em>AI Competency Framework for Teachers</em> — <a href="https://www.unesco.org/en/articles/ai-competency-framework-teachers" target="_blank" rel="noopener">read the framework</a></li>
+        <li>AI Incident Database — real-world examples of AI failure — <a href="https://incidentdatabase.ai/" target="_blank" rel="noopener">browse the incident database</a></li>
+        <li>Instructor-prepared one-pager: "AI Failure Modes in Education Policy"</li>
+        <li>Education International — <a href="https://www.ei-ie.org/" target="_blank" rel="noopener">teacher-union perspectives on professionalism</a></li>
+      </ul>
+    </div>
+    <div class="card tight">
+      <div class="card-title"><span class="ic">🗂️</span> Physical and digital materials</div>
+      <ul class="small mb0">
+        <li><strong>Source Pack</strong> (printed, 15 copies): UNESCO/ILO (1966) Recommendation extract; OECD TALIS indicator summary; local code of conduct; one contrasting national standards document.</li>
+        <li><strong>Card-sort sets</strong> (15 sets of 12 laminated statement cards, colour-coded for accessibility).</li>
+        <li><strong>Critical AI Engagement Log</strong> template (printed and digital).</li>
+        <li><strong>Feedback Interrogation Sheet</strong> template.</li>
+        <li><strong>Role cards</strong> for the tribunal (six stakeholder roles).</li>
+        <li><strong>Bilingual glossary</strong>: professionalism, professionality, performativity, deprofessionalisation, autonomy, accountability, collegiality, professional learning community, policy borrowing.</li>
+        <li>Timer, flipchart paper, markers.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="ic">🔗</span> Existing materials and readings</div>
+    <ul class="small mb0">
+      <li>Hargreaves, A. (2000). Four ages of professionalism and professional learning. <em>Teachers and Teaching, 6</em>(2), 151–182. <a href="https://doi.org/10.1080/713698714" target="_blank" rel="noopener">https://doi.org/10.1080/713698714</a></li>
+      <li>Sachs, J. (2001). Teacher professional identity: Competing discourses, competing outcomes. <em>Journal of Education Policy, 16</em>(2), 149–161. <a href="https://doi.org/10.1080/02680930116819" target="_blank" rel="noopener">https://doi.org/10.1080/02680930116819</a></li>
+      <li>UNESCO/ILO (1966). <em>Recommendation concerning the Status of Teachers.</em> <a href="https://www.unesco.org/en/legal-affairs/recommendation-concerning-status-teachers" target="_blank" rel="noopener">unesco.org</a></li>
+      <li>OECD. <em>TALIS — Teaching and Learning International Survey.</em> <a href="https://www.oecd.org/education/talis/" target="_blank" rel="noopener">oecd.org/education/talis</a></li>
+      <li>AITSL. <em>Australian Professional Standards for Teachers.</em> <a href="https://www.aitsl.edu.au/teach/standards" target="_blank" rel="noopener">aitsl.edu.au</a></li>
+      <li>UK Department for Education. <em>Teachers' Standards.</em> <a href="https://www.gov.uk/government/publications/teachers-standards" target="_blank" rel="noopener">gov.uk</a></li>
+      <li>Hong Kong Education Bureau. <em>Guidelines on Teachers' Professional Conduct.</em> <a href="https://www.edb.gov.hk/en/teacher/conduct-guidelines/index.html" target="_blank" rel="noopener">edb.gov.hk</a></li>
+      <li>Ontario College of Teachers. <em>Ethical Standards for the Teaching Profession.</em> <a href="https://www.oct.ca/" target="_blank" rel="noopener">oct.ca</a></li>
+      <li>Hypothesis — collaborative annotation platform. <a href="https://web.hypothes.is/" target="_blank" rel="noopener">web.hypothes.is</a></li>
+    </ul>
+    <p class="small muted" style="margin-top:10px">Verify all links before distribution; institutional access may be required for journal articles.</p>
+  </div>
+</section>
+
+<!-- ================= SECTION 7 — DIFFERENTIATION ================= -->
+<section id="differentiation" class="block">
+  <div class="sec-head">
+    <div class="sec-num">7</div>
+    <div class="t">
+      <p class="eyebrow">Section 7</p>
+      <h2>Differentiation &amp; Inclusivity</h2>
+      <p>Multiple entry points, tiered inquiry tasks, sentence starters and an AI Use Ladder so that a cohort of 90 with very different confidence levels can all meet the same critical standard.</p>
+    </div>
+  </div>
+  <div class="grid g2">
+    <div class="card">
+      <div class="card-title"><span class="ic">♿</span> Support</div>
+      <ul class="small mb0">
+        <li><strong>Multiple entry points:</strong> text-based (readings), visual (concept maps, card sorts), oral (tribunal), written (position statement) — students may demonstrate inquiry competence through any combination.</li>
+        <li><strong>Structured sentence starters</strong> for seminar dialogue: <em>"My claim is ___ because the evidence from ___ suggests ___"</em>; <em>"I want to challenge that because ___"</em>.</li>
+        <li><strong>Quiet preparation space</strong> available for students who need to draft before speaking.</li>
+        <li><strong>Alternative to public speaking:</strong> students may submit a written tribunal statement in place of an oral opening statement.</li>
+        <li><strong>All PDFs screen-reader accessible and tagged</strong>; large-print and high-contrast versions of card-sort materials; captioned video materials.</li>
+        <li><strong>Extended time</strong> on the pre-test and post-test for students with registered accommodations.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title"><span class="ic">🚀</span> Extension</div>
+      <ul class="small mb0">
+        <li>Lead a group's AI critique and present the group's verdicts to the class.</li>
+        <li>Investigate teacher migration and the international recognition of qualifications as a professionalism issue.</li>
+        <li>Explore decolonising critiques of "global" professionalism frameworks.</li>
+        <li>Design a comparative rubric for evaluating national professional standards.</li>
+        <li><strong>Tier 3 inquiry task:</strong> critique the epistemological assumptions of the comparative method itself; examine teacher professionalism in a low-income or post-colonial context.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="ic">🪜</span> Tiered inquiry tasks</div>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th style="width:150px">Tier</th><th>Task</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Tier 1 — foundational</strong></td><td>Identify and describe the four discourses; locate one example of each in the Source Pack.</td></tr>
+          <tr><td><strong>Tier 2 — core</strong></td><td>Compare two contexts and evaluate one AI claim against a source.</td></tr>
+          <tr><td><strong>Tier 3 — extension</strong></td><td>Critique the epistemological assumptions of the comparative method itself; examine teacher professionalism in a low-income or post-colonial context.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card" style="border-color:var(--violet)">
+    <div class="card-title"><span class="ic" style="background:var(--violet-soft);color:var(--violet)">🤖</span> AI Use Ladder and AI-supported differentiation</div>
+    <p class="small">Students self-select a level; the minimum requirement for the portfolio is <strong>Level 2</strong>. This ensures students with low AI confidence are not disadvantaged while maintaining the critical engagement standard.</p>
+    <div class="grid g3">
+      <div class="card tight"><div class="card-title"><span class="ic">1</span> Level 1 — no AI</div><p class="small mb0">Use the Source Pack only. The critical reading task is identical; only the object of critique changes.</p></div>
+      <div class="card tight"><div class="card-title"><span class="ic">2</span> Level 2 — AI for brainstorming</div><p class="small mb0">Use AI to generate ideas, but verify everything against named sources. Full log required for AI-derived claims.</p></div>
+      <div class="card tight"><div class="card-title"><span class="ic">3</span> Level 3 — AI for comparative drafting</div><p class="small mb0">Use AI to draft the comparison, with a full critical log documenting every accept, modify and reject decision.</p></div>
+    </div>
+    <ul class="small" style="margin-top:12px">
+      <li><strong>Scaffolding for struggling learners:</strong> AI generates simplified explanations of Sachs's four discourses; students must check the simplification against the original text and note what was lost.</li>
+      <li><strong>Extension for advanced learners:</strong> AI generates comparative accounts of teacher professionalism in under-represented contexts (for example Rwanda, Vietnam, Chile), which students then verify and critique.</li>
+      <li><strong>Accessibility accommodations via AI:</strong> AI-generated captions for video materials; text-to-speech for readings; translation support for multilingual students; AI-assisted summarisation of dense policy documents (with verification required).</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================= SECTION 8 — REFLECTION ================= -->
+<section id="reflection" class="block">
+  <div class="sec-head">
+    <div class="sec-num">8</div>
+    <div class="t">
+      <p class="eyebrow">Section 8</p>
+      <h2>Reflection &amp; Improvement</h2>
+      <p>Success indicators tied to the Critical Inquiry Seminar, student feedback instruments, AI-specific reflection data, and the modification strategies that follow from each pattern of evidence.</p>
+    </div>
+  </div>
+
+  <div class="grid g2">
+    <div class="card">
+      <div class="card-title"><span class="ic">📈</span> Success indicators</div>
+      <ul class="small mb0">
+        <li>Proportion of students who revise their position between the opening and closing votes (<strong>target: ≥40%</strong>).</li>
+        <li>Quality of questioning in the tribunal — the frequency of assumption-probing questions versus opinion assertions.</li>
+        <li>Distribution of participation across all 15 groups: no group silent, no individual dominating.</li>
+        <li>Quality of the Padlet claim-and-warrant statements — are warrants evident and sourced?</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title"><span class="ic">📝</span> Student feedback</div>
+      <ul class="small mb0">
+        <li><strong>Critical Inquiry Self-Evaluation Form</strong> (post-session, 5 min): <em>"How well did I use evidence today? How well did I question assumptions — my own and others'? Did I change my mind, and why?"</em></li>
+        <li>Mid-semester focus group with 8–10 volunteers on the seminar format.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card" style="border-color:var(--violet)">
+    <div class="card-title"><span class="ic" style="background:var(--violet-soft);color:var(--violet)">🤖</span> AI-specific reflection</div>
+    <h4 style="margin-top:6px">Student feedback on AI integration</h4>
+    <p class="small"><em>"Did AI tools enhance or distract from your learning? Were you able to maintain your own thinking? Which AI task was most valuable, and which felt like a distraction?"</em></p>
+    <h4 style="margin-top:14px">Instructor reflection on AI effectiveness</h4>
+    <p class="small"><em>"Did the AI integration achieve its intended goals? Where did students struggle with AI criticality? Did any students over-rely on AI despite the log requirement? Did the 'AI' tribunal role work as intended?"</em></p>
+    <h4 style="margin-top:14px">Data on student critical engagement</h4>
+    <ul class="small mb0">
+      <li>Percentage of AI claims correctly identified as inaccurate, biased or hallucinated.</li>
+      <li>Distribution of accept / modify / reject verdicts across the cohort.</li>
+      <li>Number of hallucinated citations caught versus missed.</li>
+      <li>Correlation between Critical AI Engagement Log quality and overall portfolio performance.</li>
+      <li>Instances where students overrode AI feedback, and the quality of their rationale.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="ic">🔁</span> Modification strategies based on pedagogical theory</div>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th style="width:40%">If you observe…</th><th>Then…</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Position revision rates are low</strong></td><td>Strengthen the cross-examination structure and introduce a mid-tribunal "evidence challenge" pause, drawing on Critical Inquiry principles of structured disputation.</td></tr>
+          <tr><td><strong>AI critique is superficial</strong></td><td>Replace the generic AI comparison prompt with a deliberately flawed, instructor-authored AI response containing known errors, so students practise detection before generating their own.</td></tr>
+          <tr><td><strong>Group participation is uneven</strong></td><td>Introduce assigned dialogic roles (questioner, evidence-checker, synthesiser, devil's advocate) rotating each segment, consistent with Social Constructivist role structuring.</td></tr>
+          <tr><td><strong>The Source Pack is too dense for first-year students</strong></td><td>Tier the Source Pack into "essential" and "extension" extracts, consistent with Scaffolded Instruction.</td></tr>
+          <tr><td><strong>AI access is inequitable</strong></td><td>Provide a curated set of pre-generated AI transcripts for students without reliable access, preserving the critical evaluation task while removing the access barrier.</td></tr>
+          <tr><td><strong>The tribunal runs over time</strong></td><td>Move Segment D drafting to a post-class asynchronous task with a same-day submission deadline, preserving the reflective momentum.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="ic">👥</span> Peer-work self-audit</div>
+    <p class="small">Tick each task as you complete it. Your progress is saved in this browser and feeds the portfolio summary below.</p>
+    <div class="tasklist" id="allTasks"></div>
+  </div>
+</section>
+
+<!-- ================= PORTFOLIO ================= -->
+<section id="portfolio" class="block">
+  <div class="sec-head">
+    <div class="sec-num">★</div>
+    <div class="t">
+      <p class="eyebrow">Portfolio</p>
+      <h2>Critical Reflection Portfolio</h2>
+      <p>Everything you record here is stored locally on your device. Review it, then export it as evidence for your summative submission.</p>
+    </div>
+  </div>
+
+  <div class="split">
+    <div>
+      <div class="card">
+        <div class="card-title"><span class="ic">✍️</span> AI decision log</div>
+        <p class="small">Record the specific decisions you made about AI output today. These entries become Portfolio Part D and the raw material for the "Critical AI Engagement" rubric criterion.</p>
+        <label class="field"><span>AI suggestion I accepted (and why)</span><textarea data-log="accept"></textarea></label>
+        <label class="field"><span>AI suggestion I modified (and how)</span><textarea data-log="modify"></textarea></label>
+        <label class="field"><span>AI suggestion I rejected (and why)</span><textarea data-log="reject"></textarea></label>
+        <label class="field"><span>Where human judgement took precedence over AI</span><textarea data-log="human"></textarea></label>
+      </div>
+      <div class="card">
+        <div class="card-title"><span class="ic">💭</span> Final reflection prompts</div>
+        <label class="field"><span>How did AI support or hinder your learning today?</span><textarea data-journal="final1"></textarea></label>
+        <label class="field"><span>When did you need to override AI suggestions?</span><textarea data-journal="final2"></textarea></label>
+        <label class="field"><span>What human judgement mattered most in your group's work?</span><textarea data-journal="final3"></textarea></label>
+        <label class="field"><span>What did you learn about the limitations and biases of AI?</span><textarea data-journal="final4"></textarea></label>
+      </div>
+    </div>
+
+    <div>
+      <div class="card" style="position:sticky;top:120px">
+        <div class="card-title"><span class="ic">📊</span> Portfolio summary</div>
+        <div style="display:flex;gap:16px;align-items:center;margin-bottom:14px">
+          <div class="ring" id="portRing"><div class="inner" id="portRingText">0%</div></div>
+          <div>
+            <div class="small muted">Lesson progress</div>
+            <div style="font-weight:740" id="portTasks">0 of 0 tasks</div>
+          </div>
+        </div>
+        <div class="cat-grid">
+          <div class="cat-row"><span>Pre-test</span><strong id="portPre">Not taken</strong><span class="cat-track"><span class="cat-fill" id="portPreBar" style="background:var(--brand);width:0%"></span></span></div>
+          <div class="cat-row"><span>Post-test</span><strong id="portPost">Not taken</strong><span class="cat-track"><span class="cat-fill" id="portPostBar" style="background:var(--teal);width:0%"></span></span></div>
+          <div class="cat-row"><span>AI critiques</span><strong id="portCrit">0 / 0</strong><span class="cat-track"><span class="cat-fill" id="portCritBar" style="background:var(--violet);width:0%"></span></span></div>
+          <div class="cat-row"><span>Flashcards</span><strong id="portFc">0 / 0</strong><span class="cat-track"><span class="cat-fill" id="portFcBar" style="background:var(--amber);width:0%"></span></span></div>
+          <div class="cat-row"><span>Concept map nodes</span><strong id="portCm">0</strong><span class="cat-track"><span class="cat-fill" id="portCmBar" style="background:var(--green);width:0%"></span></span></div>
+        </div>
+        <div class="inline-actions">
+          <button class="btn btn-sm btn-primary" id="exportAll" type="button">⬇ Export portfolio (.json)</button>
+          <button class="btn btn-sm" id="exportText" type="button">⬇ Export readable (.txt)</button>
+        </div>
+        <p class="small muted" style="margin:12px 0 0">Nothing is uploaded anywhere — all data stays in your browser's local storage.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+</div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="mb0"><strong>Teacher Professionalism in Local and International Contexts</strong> — Foundations of Teaching and Teacher Education (pre-service teacher education). Critical Inquiry Seminar with Social Constructivist and Scaffolded Instruction elements; AI integrated across ILOs, activities, assessment and feedback as an object of critique.</p>
+    <p class="small mb0" style="margin-top:6px">Progress and reflections are stored locally in your browser. Use <em>Export portfolio</em> to keep a copy.</p>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+window.LESSON_DATA = {"meta":{"title":"Teacher Professionalism in Local and International Contexts","description":"A 150-minute critical inquiry seminar in which first-year pre-service teachers analyse competing discourses of teacher professionalism, compare local and international framings, and critique AI-generated accounts against authoritative human sources.","slug":"teacher-professionalism-local-international","storeKey":"teacher_professionalism_v1"},"brand":"Foundations of Teaching · Teacher Professionalism","footer":"<strong>Teacher Professionalism in Local and International Contexts<\/strong> — Foundations of Teaching and Teacher Education (pre-service teacher education). Critical Inquiry Seminar with Social Constructivist and Scaffolded Instruction elements; AI integrated across ILOs, activities, assessment and feedback as an object of critique.","nav":[{"id":"overview","label":"Overview"},{"id":"ilos","label":"1 · Outcomes"},{"id":"preclass","label":"2 · Pre-Class"},{"id":"activities","label":"3 · Activities"},{"id":"assessment","label":"4 · Assessment"},{"id":"alignment","label":"5 · Alignment"},{"id":"resources","label":"6 · Resources"},{"id":"differentiation","label":"7 · Inclusion"},{"id":"reflection","label":"8 · Reflection"},{"id":"portfolio","label":"Portfolio"}],"quizTasks":{"pre":"pre-quiz","post":"synthesis","flashcards":"flashcards"},"preClassCount":3,"tasks":[{"id":"pre-quiz","label":"Complete the 8-item adaptive diagnostic pre-test"},{"id":"pre-ai","label":"Complete the pre-class AI Observation Log and submit it to the LMS"},{"id":"pre-annotate","label":"Post two Hypothesis annotations on Sachs (2001) and reply to one peer"},{"id":"dev-a","label":"Segment A — classify the 12 statement cards and justify one contested case"},{"id":"dev-b","label":"Segment B — document three AI verdicts, including one rejection and one hallucinated citation"},{"id":"dev-c","label":"Segment C — deliver your tribunal role's opening statement and cross-examination question"},{"id":"dev-d","label":"Segment D — draft your 150-word position statement with an AI transparency note"},{"id":"flashcards","label":"Complete the 12-card key-terms flashcard deck"},{"id":"conceptmap","label":"Build the concept map with at least three nodes"},{"id":"synthesis","label":"Complete the post-test, the claim-and-warrant wall and the exit ticket"}],"peerTasks":[{"id":"peer-1","label":"Every sub-pair verifies each AI claim against a named, human-authored source"},{"id":"peer-2","label":"Each group documents at least one rejection and one unverifiable or hallucinated AI citation"},{"id":"peer-3","label":"Each group posts exactly one claim-and-warrant sentence to the Padlet wall"}],"cats":{"discourses":"Discourses of professionalism","context":"Comparative & contextual reasoning","ai":"Critical AI literacy","application":"Application & judgement"},"preTest":[{"id":"p1","cat":"discourses","q":"Which of the following is NOT typically listed as a defining trait of a profession?","opts":["A specialised knowledge base","Professional autonomy","Standardised test scores","A self-governing ethical code"],"a":2,"ok":"Standardised test scores are an outcome measure, not a trait of a profession. The classical trait list is a knowledge base, autonomy, a service ideal and an ethical code.","no":"That is one of the classical traits of a profession. The odd one out is standardised test scores, which are an accountability measure rather than a defining trait."},{"id":"p2","cat":"discourses","q":"Deprofessionalisation most directly refers to…","opts":["Loss of autonomy and discretionary judgement","A fall in teachers' salaries only","The closure of teacher-training institutions","A shortage of textbooks"],"a":0,"ok":"Deprofessionalisation is the erosion of autonomy, discretionary judgement and public trust as managerial control, scripted curricula and audit cultures expand.","no":"Not quite. Deprofessionalisation is about the loss of autonomy and discretionary judgement — pay, institutions and resources are separate issues."},{"id":"p3","cat":"discourses","q":"Which discourse defines professionalism through standards, accountability and measurable outcomes?","opts":["Trait-based / classical","Managerial","Democratic","Activist / transformative"],"a":1,"ok":"Managerial professionalism defines the teacher as an implementer of policy who is accountable upward through standards, indicators and audits.","no":"Check the discourse definitions in the reference cards. Standards, indicators and audits belong to the managerial discourse."},{"id":"p4","cat":"context","q":"The UNESCO/ILO (1966) Recommendation concerning the Status of Teachers treats teaching as a profession with rights to academic freedom.","opts":["True","False"],"a":0,"ok":"True. The 1966 Recommendation affirms that teachers should enjoy academic freedom and that teaching is a profession exercising professional judgement in the interests of students and society.","no":"This is true. The 1966 Recommendation is one of the clearest statements that teaching is a profession with rights to academic freedom."},{"id":"p5","cat":"context","q":"Which context is most commonly characterised by high public trust and research-based teacher education?","opts":["Finland","A market-driven system with performance pay","A system with scripted national curricula","A system where teachers are recruited without training"],"a":0,"ok":"Finland is the standard example: high trust, university-based teacher education and low-stakes accountability — though remember that its outcomes also depend on equity policy and teacher selection.","no":"The standard example is Finland, where teacher education is university-based and trust is high — but its conditions do not travel automatically."},{"id":"p6","cat":"application","q":"A policy requires weekly scripted lesson plans and links appraisal to test-score targets. Which tension does this most sharply expose?","opts":["Professional autonomy versus public accountability","Reading versus mathematics","Urban versus rural schooling","Primary versus secondary schooling"],"a":0,"ok":"This is the core tension of the session: discretionary professional judgement set against externally measured accountability.","no":"The sharpest tension here is professional autonomy versus public accountability — the question of who decides what counts as good teaching."},{"id":"p7","cat":"ai","q":"An AI assistant cites 'OECD (2019), Global Teacher Professionalism Index' for a claim about Finland. What is the best first step?","opts":["Verify that the source exists and says what is claimed","Accept it, because the answer is fluent and specific","Reject all AI output on principle","Cite it in your essay with the AI as the source"],"a":0,"ok":"Verify first. No such index exists — the OECD publishes TALIS, not a 'Global Teacher Professionalism Index'. Specific-looking citations are exactly where hallucination hides.","no":"Fluency and specificity are not evidence of correctness. The right first step is to check whether the cited source exists and says what is claimed."},{"id":"p8","cat":"ai","q":"Which statement about AI-generated comparative accounts of teacher professionalism is most accurate?","opts":["They tend to over-represent English-language, high-income, Western sources","They are unbiased because they are trained on the whole internet","They always reflect the most recent policy changes","They can be cited as authoritative secondary sources"],"a":0,"ok":"Correct. Training data skews Anglocentric and WEIRD, so 'international' often means US, UK and Australia. AI output is a hypothesis to test, not a source to cite.","no":"AI training data over-represents English-language, high-income, Western sources, and its knowledge has a cutoff. It is a hypothesis to test, not a citable source."}],"postTest":[{"id":"q1","cat":"discourses","q":"Which pairing of discourse and core emphasis is correct?","opts":["Managerial — collegiality and trust","Activist — social justice and advocacy","Democratic — standards and measurable outcomes","Trait-based — performativity and audit"],"a":1,"ok":"Activist or transformative professionalism is defined by social justice, equity and advocacy for the communities teachers serve.","no":"Check the pairing again. Activist professionalism is the one defined by social justice, equity and advocacy."},{"id":"q2","cat":"discourses","q":"Which of these is the clearest example of deprofessionalisation?","opts":["Experienced teachers stop trusting their own judgement after years of inspection and targets","A teacher wins a national teaching award","A school raises its entry requirements for teachers","A union negotiates a pay rise"],"a":0,"ok":"Correct. Deprofessionalisation is the erosion of autonomy and discretionary judgement — here, teachers lose confidence in their own professional judgement.","no":"Deprofessionalisation is the erosion of autonomy and discretion. The clearest example is teachers losing trust in their own judgement."},{"id":"q3","cat":"discourses","q":"The trait-based discourse is most vulnerable to which criticism?","opts":["It is idealised and ignores context","It is too empirical","It focuses too much on policy documents","It over-emphasises social justice"],"a":0,"ok":"Correct. The trait list describes an aspiration rather than how teachers actually work, and it silently assumes a Western, university-educated professional model.","no":"The trait-based discourse is criticised as idealised and ahistorical — it ignores the contexts in which teachers actually work."},{"id":"q4","cat":"context","q":"The UNESCO/ILO (1966) Recommendation affirms that teachers should have academic freedom and a voice in educational policy.","opts":["True","False"],"a":0,"ok":"True — and this is precisely what a purely managerial framing tends to narrow.","no":"This is true. The Recommendation affirms academic freedom and a professional voice in policy."},{"id":"q5","cat":"context","q":"Which factor best explains why Finnish approaches may not transfer directly to another context?","opts":["They depend on wider conditions such as equity policy, teacher selection and low child poverty","Finland does not publish its standards","Finnish teachers are not trained in universities","Finnish policy is kept secret"],"a":0,"ok":"Correct. Transfer depends on conditions — trust, equity policy, selection, low child poverty — that may not exist elsewhere. This is the core of contextual reasoning.","no":"The key point is context dependence: Finnish outcomes rest on wider conditions that may not exist in another jurisdiction."},{"id":"q6","cat":"application","q":"A new policy requires all teachers to submit weekly scripted lesson plans. Using the four discourses, how does this policy position teachers?","opts":["As managerial professionals accountable upward for compliance","As activist professionals advocating for equity","As democratic professionals in a learning community","As autonomous professionals exercising discretion"],"a":0,"ok":"Correct. Scripted plans position teachers as implementers accountable upward — the managerial discourse, with deprofessionalisation as its risk.","no":"Scripted plans and compliance position teachers as managerial professionals accountable upward, not as autonomous or activist professionals."},{"id":"q7","cat":"ai","q":"You ask an AI to compare two national systems and it returns three fluent, confident paragraphs. What does fluency tell you about accuracy?","opts":["Nothing — fluency is a stylistic property, not evidence of correctness","Everything — fluent answers are usually correct","It proves the sources are real","It proves the answer is up to date"],"a":0,"ok":"Correct. Fluency is a stylistic property. Confident, well-formed prose is exactly how hallucination and authority laundering pass unnoticed.","no":"Fluency tells you nothing about accuracy — it is a stylistic property. Verify claims against named sources."},{"id":"q8","cat":"ai","q":"Which is the correct rule for AI output in this course?","opts":["AI output is a hypothesis to be tested, never a source to be cited","AI output may be cited if it sounds right","AI output is a reliable secondary source","AI output should never be used at all"],"a":0,"ok":"Correct — the session rule. Every AI-derived claim must be verified against a named, human-authored source before it enters your argument.","no":"The session rule is that AI output is a hypothesis to be tested, never a source to be cited."},{"id":"q9","cat":"application","q":"A ministry argues that importing another country's professional standards will raise quality. Which response best reflects contextual reasoning?","opts":["Ask what historical, cultural and economic conditions made those standards work where they originated","Accept the claim because the other country performs well in PISA","Reject the claim because borrowing is always wrong","Compare only the wording of the two standards documents"],"a":0,"ok":"Correct. Contextual reasoning asks what conditions made the standards work, rather than assuming they will work anywhere.","no":"Contextual reasoning asks what conditions made the borrowed standards work in their origin context — not simply whether the source country performs well."},{"id":"q10","cat":"context","q":"Give one reason why Finnish approaches to teacher professionalism might not transfer directly to your local context.","opts":["Their effect depends on conditions — trust, equity policy, teacher selection — that may not exist locally","Finland has no professional standards","Finnish teachers are not professionals","Finland's system has never been evaluated"],"a":0,"ok":"Correct. Policy borrowing carries the assumptions of its origin; without the supporting conditions, the effect may not reproduce.","no":"The reason is context dependence: Finnish approaches rely on conditions — trust, equity policy, teacher selection — that may not hold locally."}],"theories":[{"id":"professionalism","name":"Professionalism (trait-based / classical)","color":"#4338ca","who":"Flexnerian tradition; UNESCO/ILO (1966); Hargreaves (2000)","desc":"Teaching qualifies as a profession because it possesses a specialised knowledge base, autonomy over its own work, a service ideal and a self-governing ethical code. Professionalism is treated as an attribute the individual teacher either has or lacks.","limit":"Idealised and ahistorical: it describes an aspiration, not how teachers actually work, and it silently assumes a Western, university-educated professional model."},{"id":"professionality","name":"Professionality","color":"#6366f1","who":"Hoyle (1974); Evans (2008)","desc":"The knowledge, skills, procedures and dispositions a teacher actually uses in the classroom — the <em>what teachers do and think<\/em> that sits behind the wider label of professionalism. It distinguishes individual practice from the collective status of an occupation.","limit":"Easily reduced to a personal-quality checklist; it can individualise problems that are structural — staffing, funding, class size."},{"id":"performativity","name":"Performativity","color":"#be123c","who":"Ball (2003); Sachs (2001)","desc":"A regime in which teachers' worth is judged by measurable outputs — test scores, inspection grades, targets — and professional identity is reshaped to satisfy those indicators. <em>Being<\/em> a professional gives way to <em>performing<\/em> the audited version of one.","limit":"Often used loosely as a synonym for accountability, which hides the difference between being answerable for one's work and being governed by numbers."},{"id":"deprofessionalisation","name":"Deprofessionalisation","color":"#b45309","who":"Sachs (2001); Hargreaves (2000)","desc":"The erosion of autonomy, discretionary judgement and public trust as managerial control, scripted curricula and audit cultures expand. Teachers retain the title of professional while losing the conditions that made the title meaningful.","limit":"Presents decline as inevitable and universal, understating contexts where teachers have gained status, pay and influence."},{"id":"autonomy","name":"Professional autonomy","color":"#0d9488","who":"UNESCO/ILO (1966); Ingersoll (2003)","desc":"The professional right to exercise discretionary judgement over curriculum, pedagogy and assessment, grounded in specialised expertise rather than rank. Autonomy is claimed as a defining trait of a profession and as a precondition for responsive teaching.","limit":"Can be defended as a guild privilege that protects poor practice; autonomy without accountability is vulnerable to the charge of self-interest."},{"id":"accountability","name":"Accountability","color":"#7c3aed","who":"OECD TALIS; Sahlberg (2011)","desc":"The obligation to be answerable for one's work to students, parents, employers and the public. It may be <strong>professional<\/strong> (peer and ethical), <strong>public<\/strong> (democratic and transparent) or <strong>market / managerial<\/strong> (target-driven and competitive).","limit":"When reduced to test-score compliance it crowds out the professional and democratic forms, and it measures the measurable rather than the important."},{"id":"collegiality","name":"Collegiality","color":"#15803d","who":"Hargreaves (2000); Little (1990)","desc":"Collaborative norms in which teachers jointly plan, observe, critique and improve practice. Strong collegiality builds shared standards and collective responsibility; it is the social infrastructure of a learning profession.","limit":"Contrived or administratively mandated collegiality can be co-opted by management as a compliance mechanism, consuming time without building real trust."},{"id":"plc","name":"Professional learning community","color":"#0891b2","who":"Hargreaves (2000); Stoll et al. (2006)","desc":"A sustained group of teachers who inquire together into the link between their practice and student learning, using evidence, shared norms and collective responsibility. Learning is treated as continuous and situated in the school, not delivered off-site.","limit":"Frequently relabelled as meeting time; without genuine inquiry, evidence use and time, the label is aspirational and the practice stays superficial."},{"id":"policy-borrowing","name":"Policy borrowing / transfer","color":"#c2410c","who":"Phillips &amp; Ochs (2004); Sahlberg (2011)","desc":"The movement of policy ideas, standards or <em>best practice<\/em> from one jurisdiction to another. Borrowing ranges from superficial copying to genuine adaptation, and it always carries the assumptions of its origin context with it.","limit":"Ignores history, culture, politics and economics: what works in Finland may depend on conditions that do not travel, producing policy borrowing on the cheap."},{"id":"managerial","name":"Managerial professionalism","color":"#db2777","who":"Sachs (2001); Ball (2003)","desc":"Professionalism defined by compliance with externally set standards, performance indicators and audits. The teacher is positioned as an implementer of policy who is accountable upward to managers and regulators.","limit":"Deprofessionalising: it shifts authority from professional judgement to the indicator, and can reduce teaching to the production of measurable outputs."},{"id":"democratic","name":"Democratic professionalism","color":"#2563eb","who":"Hargreaves (2000); Sachs (2001)","desc":"Professionalism built on collegiality, trust, public service and professional learning communities. Authority is earned through collaborative expertise and a visible commitment to the public good rather than through inspection.","limit":"Vulnerable to co-option: the vocabulary of trust and community can be adopted by managers while real decision-making power stays centralised."},{"id":"activist","name":"Activist / transformative professionalism","color":"#9333ea","who":"Sachs (2003); critical pedagogy traditions","desc":"Professionalism as principled advocacy for social justice, equity and the communities teachers serve. Teachers act as transformative intellectuals who challenge unjust structures rather than reproducing them.","limit":"Frequently marginalised in policy and can be dismissed as political; it also risks under-specifying the everyday craft knowledge of teaching."}],"flashcards":[{"id":"professionalism","label":"Trait-based professionalism","desc":"Teaching is a profession because it holds a specialised knowledge base, autonomy, a service ideal and a self-governing ethical code."},{"id":"professionality","label":"Professionality","desc":"The knowledge, skills and dispositions a teacher actually uses in the classroom, as distinct from the collective status of the occupation."},{"id":"performativity","label":"Performativity","desc":"Teachers' worth is judged by measurable outputs, and professional identity is reshaped to satisfy the indicators."},{"id":"deprofessionalisation","label":"Deprofessionalisation","desc":"Autonomy, discretion and trust erode as managerial control, scripted curricula and audit cultures expand."},{"id":"autonomy","label":"Professional autonomy","desc":"The right to exercise discretionary professional judgement over curriculum, pedagogy and assessment, grounded in expertise."},{"id":"accountability","label":"Accountability","desc":"The obligation to be answerable for one's work — professionally, publicly, or through market-style targets."},{"id":"collegiality","label":"Collegiality","desc":"Collaborative norms in which teachers jointly plan, observe, critique and improve practice."},{"id":"plc","label":"Professional learning community","desc":"A sustained group of teachers who inquire together into the link between their practice and student learning."},{"id":"policy-borrowing","label":"Policy borrowing","desc":"The movement of standards or best practice from one jurisdiction to another, carrying its origin assumptions with it."},{"id":"managerial","label":"Managerial professionalism","desc":"Professionalism defined by compliance with externally set standards, performance indicators and audits."},{"id":"democratic","label":"Democratic professionalism","desc":"Professionalism built on collegiality, trust, public service and professional learning communities."},{"id":"activist","label":"Activist professionalism","desc":"Professionalism as principled advocacy for social justice, equity and the communities teachers serve."}],"scenarios":[{"id":"s1","text":"A ministry issues a weekly lesson-plan template that specifies the exact sequence and timing of every lesson, and links teachers' appraisal to their students' test-score gains.","a":"managerial","peer":"Which discourse is being enacted here, and whose interests does it serve? Name one piece of evidence you would need before judging the policy."},{"id":"s2","text":"A school's teachers meet every Wednesday not to hear announcements but to examine samples of student work together and change their next unit in response.","a":"plc","peer":"What distinguishes this from ordinary meeting time? What would you look for to tell whether the community is genuinely inquiring?"},{"id":"s3","text":"A teachers' union argues that the profession, not the inspectorate, should set and enforce its own entry and conduct standards.","a":"professionalism","peer":"This is the classical claim to self-regulation. What is the strongest counter-argument, and what evidence would you bring to the tribunal?"},{"id":"s4","text":"A district imports Finland's master's-degree requirement and high-trust inspection model wholesale, without changing class sizes, teacher pay or selection.","a":"policy-borrowing","peer":"What conditions made the original policy work, and what happens when they are absent? How would an AI most likely get this wrong?"},{"id":"s5","text":"Teachers redesign a literacy unit around the languages and histories of newly arrived refugee students, and campaign publicly against a funding formula that penalises their schools.","a":"activist","peer":"Why is this discourse often marginalised in policy? What would it cost a school leader to support it?"},{"id":"s6","text":"After a decade of inspection, targets and scripted lessons, experienced teachers report that they no longer trust their own judgement about what their students need.","a":"deprofessionalisation","peer":"Trace the mechanism: which policies produced which effects? Is the loss of trust a personal or a structural outcome?"},{"id":"s7","text":"A teacher describes spending more time producing evidence for appraisal than planning lessons, and says she now teaches to the data rather than to the class.","a":"performativity","peer":"Distinguish performativity from accountability in one sentence. Where exactly does the identity shift happen?"},{"id":"s8","text":"A teacher refuses to follow a scripted reading programme because she judges that it does not meet her students' needs, and her school backs her professional judgement.","a":"autonomy","peer":"What has to be true about the school's culture for this to be safe? How would a purely managerial system have responded?"}],"critiques":[{"id":"c-global","theory":"Global consensus on teacher professionalism","sentences":[{"t":"Across all high-performing education systems, teaching is now recognised as a profession requiring a master's degree and a licence to practise.","h":"Reject — a false generalisation. Several high-performing systems do not require a master's degree for all teachers, and licensing arrangements vary widely. The claim treats one Anglophone model as universal."},{"t":"Teacher professionalism is commonly analysed through four competing discourses: trait-based, managerial, democratic and activist.","h":"Accept — this matches Sachs (2001) and Hargreaves (2000) and is a standard framing in the literature."},{"t":"According to the OECD (2019) Global Teacher Professionalism Index, Finland ranks first in the world for professional autonomy.","h":"Reject — no such index exists. This is a hallucinated source: the OECD publishes TALIS, not a Global Teacher Professionalism Index. Verify every citation before use."},{"t":"Because professionalism means the same thing everywhere, standards can be transferred between countries without adaptation.","h":"Reject — this erases context. Policy borrowing research (Phillips and Ochs, 2004; Sahlberg, 2011) shows that standards carry the assumptions of their origin and rarely transfer unchanged."}]},{"id":"c-compare","theory":"Local vs international comparison","sentences":[{"t":"In most jurisdictions, teacher professionalism is defined by a published code of conduct or set of professional standards enforced by a regulator.","h":"Modify — broadly true for many systems, but most overstates it. Enforcement ranges from statutory regulation to advisory guidance, and some systems rely on professional bodies rather than state regulators."},{"t":"Finland's high trust in teachers is the single reason for its performance in international assessments.","h":"Reject — a single-cause explanation. Finland's outcomes are also linked to equity policy, low child poverty, teacher selection and a broad comprehensive-school curriculum. Attributing them to trust alone is a causal oversimplification."},{"t":"Codes of conduct typically include commitments to students, to parents, to the profession and to the wider community.","h":"Accept — a fair summary of common code structures, including the UNESCO/ILO (1966) Recommendation and the Ontario College of Teachers' Ethical Standards."}]},{"id":"c-tribunal","theory":"External accountability vs self-regulation","sentences":[{"t":"External accountability standards are the most reliable way to guarantee teacher quality, because measured performance is objective.","h":"Reject — objective is doing unearned work here. Measures are selected by someone, for some purpose; what is measured (test scores) is not the same as what matters (learning, judgement, equity)."},{"t":"Professional self-regulation is always preferable to external regulation because professions know best.","h":"Reject — the mirror-image overclaim. Self-regulation can entrench poor practice and exclude outsiders; the tribunal question is comparative, not absolute."},{"t":"The strongest version of the accountability case is that public money and children's futures justify transparent, contestable standards.","h":"Accept — this is the argument students must engage with rather than dismiss; a defensible position has to answer it."}]}],"chats":[{"p":"Compare teacher professionalism in my country and Finland. Cite sources.","r":"Certainly. Teacher professionalism is understood almost identically in both systems. According to the OECD (2019) Global Teacher Professionalism Index, Finland ranks first worldwide for professional autonomy, while your country ranks 14th. Both systems now require a master's degree and a licence to practise, and both rely on the same four professional standards developed by the International Teaching Council. The main difference is cultural: Finland trusts teachers more. In summary, the two systems are converging on a single global model of the professional teacher."},{"p":"Is teaching a profession? Give me a definitive answer.","r":"Yes — definitively. Teaching meets every established criterion of a profession: a specialised body of knowledge, a code of ethics, autonomy, and a service orientation. All education researchers agree on this point. There is no serious debate about whether teaching is a profession; the only remaining question is how to raise its status through standards and accountability. You can cite Flexner (1910) as proof that the question was settled over a century ago."},{"p":"Which is better: external accountability standards or professional self-regulation?","r":"External accountability standards are clearly better. Research consistently shows that self-regulating professions protect their own members and resist change, whereas measurable standards raise quality. Every high-performing system in the world has moved to external inspection and test-based appraisal, and the evidence that this improves teaching is overwhelming. There is no credible argument on the other side. If you want a balanced essay, you can note that teachers sometimes complain about workload, but this is a minor point."}]};
+</script>
+<script>
+(function(){
+"use strict";
+
+/* ---- injected lesson data (see LESSONPLAN.md) ---- */
+var D = window.LESSON_DATA || {};
+
+/* ============================================================
+   STORE
+   ============================================================ */
+var KEY = (D.meta && D.meta.storeKey) || "lesson_v1";
+var store = {
+  progress:{}, pretest:null, posttest:null, critique:{}, chat:{},
+  flashcards:{}, scenarios:{}, conceptmap:{scenario:"",custom:"",ai:false,nodes:[]},
+  journal:{}, log:{}, theme:"light"
+};
+try{
+  var raw = localStorage.getItem(KEY);
+  if(raw){ var p = JSON.parse(raw); for(var k in p){ if(p.hasOwnProperty(k)) store[k]=p[k]; } }
+}catch(e){}
+function save(){
+  try{ localStorage.setItem(KEY, JSON.stringify(store)); }catch(e){}
+}
+
+/* ============================================================
+   UTILITIES
+   ============================================================ */
+function $(s,c){ return (c||document).querySelector(s); }
+function $$(s,c){ return Array.prototype.slice.call((c||document).querySelectorAll(s)); }
+function esc(s){ return String(s).replace(/[&<>"']/g,function(m){
+  return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]; }); }
+var toastEl = $("#toast"), toastT;
+function toast(msg){
+  toastEl.textContent = msg; toastEl.classList.add("show");
+  clearTimeout(toastT); toastT = setTimeout(function(){ toastEl.classList.remove("show"); }, 2200);
+}
+
+/* ============================================================
+   THEORY DATA
+   ============================================================ */
+var THEORIES = D.theories || [];
+function theoryById(id){ for(var i=0;i<THEORIES.length;i++){ if(THEORIES[i].id===id) return THEORIES[i]; } return null; }
+
+/* ============================================================
+   TASKS & PROGRESS
+   ============================================================ */
+var TASKS = D.tasks || [];
+var PEER_TASKS = D.peerTasks || [];
+var ALL_TASKS = TASKS.concat(PEER_TASKS);
+
+function taskHTML(t){
+  return '<div class="task" data-task="'+t.id+'" role="checkbox" tabindex="0" aria-checked="false">'+
+         '<span class="box" aria-hidden="true">✓</span><span class="label">'+esc(t.label)+'</span></div>';
+}
+function renderTasks(container, list){
+  if(!container) return;
+  container.innerHTML = list.map(taskHTML).join("");
+}
+function setTask(id, on){
+  store.progress[id] = !!on; save(); syncTask(id);
+  updateProgress();
+}
+function syncTask(id){
+  var done = !!store.progress[id];
+  $$('[data-task="'+id+'"]').forEach(function(el){
+    if(el.classList.contains("task")){
+      el.classList.toggle("done", done);
+      el.setAttribute("aria-checked", done ? "true" : "false");
+    }else{
+      el.setAttribute("aria-pressed", done ? "true" : "false");
+      if(!el.dataset.orig) el.dataset.orig = el.textContent;
+      el.textContent = done ? "✓ Completed" : el.dataset.orig;
+    }
+  });
+}
+function syncAllTasks(){ ALL_TASKS.forEach(function(t){ syncTask(t.id); }); }
+function doneCount(){
+  var n=0; TASKS.forEach(function(t){ if(store.progress[t.id]) n++; }); return n;
+}
+function updateProgress(){
+  var n = doneCount(), total = TASKS.length;
+  var pct = total ? Math.round(n/total*100) : 0;
+  var fill = $("#progressFill"); if(fill) fill.style.width = pct+"%";
+  var txt = $("#progressText"); if(txt) txt.textContent = pct+"% complete";
+  var st = $("#statTasks"); if(st) st.textContent = n+" / "+total;
+  var ring = $("#portRing"); if(ring) ring.style.setProperty("--p", pct);
+  var rt = $("#portRingText"); if(rt) rt.textContent = pct+"%";
+  var pt = $("#portTasks"); if(pt) pt.textContent = n+" of "+total+" tasks";
+}
+
+/* Delegated task clicks */
+document.addEventListener("click", function(e){
+  var el = e.target.closest("[data-task]");
+  if(!el) return;
+  var id = el.dataset.task;
+  setTask(id, !store.progress[id]);
+});
+document.addEventListener("keydown", function(e){
+  if(e.key!==" " && e.key!=="Enter") return;
+  var el = e.target.closest(".task[data-task]");
+  if(!el) return;
+  e.preventDefault();
+  setTask(el.dataset.task, !store.progress[el.dataset.task]);
+});
+
+/* ============================================================
+   QUIZZES
+   ============================================================ */
+var CATS = D.cats || {};
+var PRE_TEST = D.preTest || [];
+var POST_TEST = D.postTest || [];
+
+function quizState(key){
+  if(!store[key]) store[key] = {answers:{}, done:false};
+  return store[key];
+}
+function renderQuiz(container, questions, key){
+  var st = quizState(key);
+  var html = "";
+  questions.forEach(function(q,i){
+    var picked = st.answers[q.id];
+    html += '<div class="quiz-q" data-qid="'+q.id+'">';
+    html += '<div class="qtop"><span class="qnum">'+(i+1)+'</span><div><div style="font-weight:650">'+esc(q.q)+'</div>'+
+            '<span class="pill" style="margin-top:6px">'+CATS[q.cat]+'</span></div></div>';
+    html += '<div class="opts">';
+    q.opts.forEach(function(o,oi){
+      var cls = "opt";
+      if(picked!==undefined){
+        if(oi===q.a) cls += " correct";
+        else if(oi===picked) cls += " wrong";
+        cls += " locked";
+      }
+      html += '<label class="'+cls+'" data-oi="'+oi+'"><input type="radio" name="'+key+'_'+q.id+'" value="'+oi+'">'+
+              '<span class="marker">✓</span><span>'+esc(o)+'</span></label>';
+    });
+    html += "</div>";
+    var shown = picked!==undefined;
+    var ok = picked===q.a;
+    html += '<div class="explain '+(shown?"show ":"")+(ok?"ok":"no")+'">'+
+            '<strong>'+(ok?"✓ Correct. ":"✗ Not quite. ")+'</strong>'+esc(ok?q.ok:q.no)+'</div>';
+    html += "</div>";
+  });
+  html += '<div class="score-bar" data-summary></div>';
+  container.innerHTML = html;
+  container.querySelectorAll(".opt").forEach(function(lbl){
+    lbl.addEventListener("click", function(){
+      var qid = lbl.closest(".quiz-q").dataset.qid;
+      if(quizState(key).answers[qid]!==undefined) return;
+      quizState(key).answers[qid] = parseInt(lbl.dataset.oi,10);
+      save();
+      var done = Object.keys(quizState(key).answers).length === questions.length;
+      quizState(key).done = done;
+      save();
+      renderQuiz(container, questions, key);
+      if(done) finishQuiz(key, questions);
+      updatePortfolio();
+    });
+  });
+  renderSummary(container, questions, key);
+}
+function renderSummary(container, questions, key){
+  var st = quizState(key), sum = container.querySelector("[data-summary]");
+  if(!sum) return;
+  var answered = Object.keys(st.answers).length;
+  var score = 0;
+  var byCat = {};
+  questions.forEach(function(q){
+    var a = st.answers[q.id];
+    byCat[q.cat] = byCat[q.cat] || {right:0,total:0};
+    byCat[q.cat].total++;
+    if(a!==undefined){ if(a===q.a){ score++; byCat[q.cat].right++; } }
+  });
+  var pct = Math.round(score/questions.length*100);
+  var html = '<div style="width:100%">';
+  html += '<div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap">'+
+          '<span class="score-big">'+score+'/'+questions.length+'</span>'+
+          '<span class="pill '+(pct>=75?"green":pct>=50?"amber":"rose")+'">'+pct+'%</span>'+
+          '<span class="small muted">'+answered+' of '+questions.length+' answered</span></div>';
+  html += '<div class="cat-grid" style="margin-top:12px">';
+  Object.keys(byCat).forEach(function(c){
+    var d = byCat[c], p = d.total? Math.round(d.right/d.total*100):0;
+    var col = p>=75?"var(--green)":p>=50?"var(--amber)":"var(--rose)";
+    html += '<div class="cat-row"><span>'+CATS[c]+'</span><strong>'+d.right+'/'+d.total+'</strong>'+
+            '<span class="cat-track"><span class="cat-fill" style="width:'+p+'%;background:'+col+'"></span></span></div>';
+  });
+  html += "</div>";
+  if(answered>0 && answered<questions.length){
+    html += '<p class="small muted" style="margin:10px 0 0">Answer every question to see your full breakdown.</p>';
+  }
+  if(answered===questions.length){
+    var weak = Object.keys(byCat).filter(function(c){ return byCat[c].right < byCat[c].total; });
+    if(weak.length){
+      html += '<div class="callout warn" style="margin-bottom:0"><div class="ct">📌 Adaptive feedback — review these</div><p class="mb0 small">You missed items in: <strong>'+
+        weak.map(function(c){ return CATS[c]; }).join(", ")+
+        '</strong>. Revisit the <a href="#resources">reference cards</a> and the relevant critique in the activities section.</p></div>';
+    }else{
+      html += '<div class="callout tip" style="margin-bottom:0"><div class="ct">🎉 Full marks</div><p class="mb0 small">Now push further: can you identify where an AI would <em>misrepresent</em> these theories? Try the <a href="#activities">critique activity</a>.</p></div>';
+    }
+  }
+  html += "</div>";
+  sum.innerHTML = html;
+}
+function finishQuiz(key, questions){
+  var st = quizState(key);
+  var score = 0;
+  questions.forEach(function(q){ if(st.answers[q.id]===q.a) score++; });
+  if(key==="pretest"){
+    setTask((D.quizTasks || {}).pre || "pre-quiz", true);
+    toast("Pre-test saved: "+score+"/"+questions.length);
+  }else{
+    setTask((D.quizTasks || {}).post || "synthesis", true);
+    toast("Post-test saved: "+score+"/"+questions.length);
+    renderCompare();
+  }
+  updatePortfolio();
+}
+function scoreOf(key, questions){
+  var st = store[key]; if(!st) return null;
+  var answered = Object.keys(st.answers).length;
+  if(answered < questions.length) return null;
+  var s=0; questions.forEach(function(q){ if(st.answers[q.id]===q.a) s++; });
+  return {score:s, total:questions.length};
+}
+function renderCompare(){
+  var box = $("#compareBox"); if(!box) return;
+  var pre = scoreOf("pretest", PRE_TEST), post = scoreOf("posttest", POST_TEST);
+  if(!pre || !post){
+    box.innerHTML = '<p class="small muted">Complete both the pre-test and the post-test to see your growth comparison.</p>';
+    return;
+  }
+  var delta = post.score - pre.score;
+  var arrow = delta>0 ? "▲ +"+delta : delta<0 ? "▼ "+delta : "▬ 0";
+  var col = delta>0 ? "var(--green)" : delta<0 ? "var(--rose)" : "var(--text-mute)";
+  box.innerHTML = '<div class="card tight" style="margin:0"><div class="card-title"><span class="ic">📈</span> Pre-test vs post-test</div>'+
+    '<div class="grid g3">'+
+    '<div class="stat"><div class="n">'+pre.score+'/'+pre.total+'</div><div class="l">Pre-test</div></div>'+
+    '<div class="stat"><div class="n">'+post.score+'/'+post.total+'</div><div class="l">Post-test</div></div>'+
+    '<div class="stat"><div class="n" style="color:'+col+'">'+arrow+'</div><div class="l">Change</div></div>'+
+    '</div>'+
+    '<p class="small muted" style="margin:10px 0 0">'+(delta>0?"Growth against the same misconception categories.":delta===0?"No change — revisit the misconception categories above.":"Score decreased — check whether the post-test items were read carefully, or revisit the reference cards.")+'</p></div>';
+}
+
+/* Wire quiz buttons */
+var preBtn = $("#startPre");
+if(preBtn) preBtn.addEventListener("click", function(){
+  var c = $("#preQuiz"); c.style.display="block";
+  renderQuiz(c, PRE_TEST, "pretest");
+  preBtn.style.display="none";
+  c.scrollIntoView({behavior:"smooth", block:"start"});
+});
+var postBtn = $("#startPost");
+if(postBtn) postBtn.addEventListener("click", function(){
+  var c = $("#postQuiz"); c.style.display="block";
+  renderQuiz(c, POST_TEST, "posttest");
+  renderCompare();
+  c.scrollIntoView({behavior:"smooth", block:"start"});
+});
+
+/* ============================================================
+   THEORY CARDS
+   ============================================================ */
+var tc = $("#theoryCards");
+if(tc){
+  tc.innerHTML = THEORIES.map(function(t){
+    return '<div class="theory-card" style="--tc:'+t.color+'" id="theory-'+t.id+'">'+
+      '<h4>'+esc(t.name)+'</h4><div class="who">'+t.who+'</div>'+
+      '<p>'+t.desc+'</p>'+
+      '<div class="limit"><strong>Common limitation:</strong> '+esc(t.limit)+'</div></div>';
+  }).join("");
+}
+
+/* ============================================================
+   FLASHCARDS (drag & drop + tap fallback)
+   ============================================================ */
+var FC_PAIRS = D.flashcards || [];
+var fcSelected = null;
+function fcRender(){
+  var pool = $("#chipPool"), slots = $("#slotPool");
+  if(!pool || !slots) return;
+  if(!store.flashcards) store.flashcards = {};
+  var placed = store.flashcards;
+  fcSelected = null;
+  var order = FC_PAIRS.map(function(_,i){ return i; });
+  pool.innerHTML = FC_PAIRS.map(function(p,i){
+    var t = theoryById(p.id);
+    var done = placed[p.id];
+    return '<div class="chip '+(done?"placed":"")+'" draggable="'+(done?"false":"true")+'" data-id="'+p.id+'" style="--tc:'+t.color+'" tabindex="0" role="button" aria-label="Item chip: '+esc(p.label)+'">'+
+      '<span class="swatch"></span>'+esc(p.label)+'</div>';
+  }).join("");
+  slots.innerHTML = order.map(function(idx){
+    var p = FC_PAIRS[idx];
+    var filler = null;
+    for(var k in placed){ if(placed[k]===p.id) filler = k; }
+    var filled = !!filler;
+    return '<div class="slot '+(filled?"filled":"")+'" data-answer="'+p.id+'">'+
+      '<div class="slot-label">'+(filled?"Matched":"Assumption "+(order.indexOf(idx)+1))+'</div>'+
+      '<div class="slot-desc">'+esc(p.desc)+'</div>'+
+      '<div class="dropzone">'+(filled? "✓ "+esc(theoryById(filler).name) : "Drop the matching item here")+'</div></div>';
+  }).join("");
+  fcWire(); fcUpdateScore();
+}
+function fcWire(){
+  var pool = $("#chipPool"), slots = $("#slotPool");
+  $$(".chip", pool).forEach(function(chip){
+    if(chip.classList.contains("placed")) return;
+    chip.addEventListener("dragstart", function(e){
+      e.dataTransfer.setData("text/plain", chip.dataset.id);
+      e.dataTransfer.effectAllowed = "move";
+    });
+    chip.addEventListener("click", function(){
+      if(fcSelected === chip){ fcSelected = null; }
+      else { fcSelected = chip; }
+      $$(".chip", pool).forEach(function(c){ c.classList.toggle("picked", c===fcSelected); });
+    });
+    chip.addEventListener("keydown", function(e){
+      if(e.key===" "||e.key==="Enter"){ e.preventDefault(); chip.click(); }
+    });
+  });
+  $$(".slot", slots).forEach(function(slot){
+    if(slot.classList.contains("filled")) return;
+    slot.addEventListener("dragover", function(e){ e.preventDefault(); slot.classList.add("over"); });
+    slot.addEventListener("dragleave", function(){ slot.classList.remove("over"); });
+    slot.addEventListener("drop", function(e){
+      e.preventDefault(); slot.classList.remove("over");
+      fcAttempt(e.dataTransfer.getData("text/plain"), slot);
+    });
+    slot.addEventListener("click", function(){
+      if(fcSelected) fcAttempt(fcSelected.dataset.id, slot);
+    });
+  });
+}
+function fcAttempt(id, slot){
+  if(!id) return;
+  if(slot.dataset.answer === id){
+    if(!store.flashcards) store.flashcards = {};
+    store.flashcards[id] = slot.dataset.answer;
+    save(); fcRender();
+    var n = Object.keys(store.flashcards).length;
+    if(n===FC_PAIRS.length){ toast("Deck complete — every card matched!"); setTask((D.quizTasks || {}).flashcards || "flashcards", true); }
+    updatePortfolio();
+  }else{
+    slot.classList.add("bad");
+    setTimeout(function(){ slot.classList.remove("bad"); }, 420);
+    toast("Not quite — that item doesn’t match this prompt.");
+  }
+}
+function fcUpdateScore(){
+  var n = store.flashcards ? Object.keys(store.flashcards).length : 0;
+  var el = $("#fcScore"); if(el) el.textContent = n+" / "+FC_PAIRS.length+" matched";
+}
+var fcReset = $("#fcReset");
+if(fcReset) fcReset.addEventListener("click", function(){
+  store.flashcards = {}; save(); fcRender(); updatePortfolio();
+});
+
+/* ============================================================
+   SCENARIO QUIZ
+   ============================================================ */
+var SCENARIOS = D.scenarios || [];
+function scRender(){
+  var box = $("#scenarioQuiz"); if(!box) return;
+  if(!store.scenarios) store.scenarios = {};
+  var sel = store.scenarios;
+  box.innerHTML = SCENARIOS.map(function(s,i){
+    var picked = sel[s.id];
+    var checked = picked!==undefined;
+    var opts = THEORIES.map(function(t){
+      var cls = "opt";
+      if(checked){ if(t.id===s.a) cls+=" correct"; else if(t.id===picked) cls+=" wrong"; cls+=" locked"; }
+      return '<label class="'+cls+'" data-oid="'+t.id+'"><input type="radio" name="sc_'+s.id+'"><span class="marker">✓</span><span>'+esc(t.name)+'</span></label>';
+    }).join("");
+    return '<div class="quiz-q" data-sid="'+s.id+'"><div class="qtop"><span class="qnum">'+(i+1)+'</span>'+
+      '<div style="font-weight:650">'+esc(s.text)+'</div></div><div class="opts">'+opts+'</div>'+
+      '<div class="explain '+(checked?"show ":"")+(picked===s.a?"ok":"no")+'"><strong>'+(picked===s.a?"✓ Correct. ":"✗ Not quite. ")+'</strong>'+
+      'Best answer: <strong>'+esc(theoryById(s.a).name)+'</strong>.<br><span class="small">🗣 <em>Peer review:</em> '+esc(s.peer)+'</span></div></div>';
+  }).join("");
+  box.querySelectorAll(".opt").forEach(function(lbl){
+    lbl.addEventListener("click", function(){
+      var q = lbl.closest(".quiz-q"), sid = q.dataset.sid;
+      if(store.scenarios[sid]!==undefined) return;
+      store.scenarios[sid] = lbl.dataset.oid; save(); scRender(); scScore(); updatePortfolio();
+    });
+  });
+}
+function scScore(){
+  var n=0, answered=0;
+  SCENARIOS.forEach(function(s){ if(store.scenarios[s.id]!==undefined){ answered++; if(store.scenarios[s.id]===s.a) n++; } });
+  var el = $("#scenarioScore"); if(el) el.textContent = answered? n+" / "+SCENARIOS.length+" correct" : "—";
+}
+var scCheck = $("#scenarioCheck");
+if(scCheck) scCheck.addEventListener("click", function(){
+  scScore(); toast("Checked — see the peer-review prompt under each scenario.");
+});
+var scReset = $("#scenarioReset");
+if(scReset) scReset.addEventListener("click", function(){
+  store.scenarios = {}; save(); scRender(); scScore(); updatePortfolio();
+});
+
+/* ============================================================
+   AI CRITIQUE LAB
+   ============================================================ */
+var CRITIQUES = D.critiques || [];
+var CRIT_TOTAL = CRITIQUES.reduce(function(n,c){ return n + c.sentences.length; }, 0);
+function critRender(){
+  var box = $("#critiqueLab"); if(!box) return;
+  if(!store.critique) store.critique = {};
+  box.innerHTML = CRITIQUES.map(function(c){
+    var st = store.critique[c.id] || {verdicts:{}, rationale:"", verified:false};
+    var sents = c.sentences.map(function(s,si){
+      var v = st.verdicts[si];
+      return '<span class="sent"><span class="sent-text">'+esc(s.t)+'</span>'+
+        '<span class="verdicts">'+
+        '<button type="button" class="vbtn '+(v==="accept"?"on":"")+'" data-v="accept" data-c="'+c.id+'" data-s="'+si+'">✓ Accept</button>'+
+        '<button type="button" class="vbtn '+(v==="modify"?"on":"")+'" data-v="modify" data-c="'+c.id+'" data-s="'+si+'">✎ Modify</button>'+
+        '<button type="button" class="vbtn '+(v==="reject"?"on":"")+'" data-v="reject" data-c="'+c.id+'" data-s="'+si+'">✗ Reject</button>'+
+        '</span>'+
+        (v? '<span class="small muted" style="display:block;margin-top:6px">Model note: '+esc(s.h)+'</span>' : '')+
+        '</span>';
+    }).join("");
+    return '<div class="critique" data-c="'+c.id+'"><div class="critique-head">'+
+      '<span class="pill violet">AI output</span><h4>'+esc(c.theory)+' — AI summary</h4>'+
+      '<span class="pill" style="margin-left:auto">'+(st.rationale && Object.keys(st.verdicts).length===c.sentences.length ? "✓ Critiqued" : "In progress")+'</span></div>'+
+      '<div class="ai-bubble"><div class="ai-avatar" aria-hidden="true">🤖</div><div class="ai-text">'+sents+'</div></div>'+
+      '<div class="critique-body">'+
+      '<label class="field"><span>Justify your verdicts for '+esc(c.theory)+'</span>'+
+      '<textarea data-cr="'+c.id+'">'+esc(st.rationale||"")+'</textarea></label>'+
+      '<label class="checkline"><input type="checkbox" data-cv="'+c.id+'" '+(st.verified?"checked":"")+'><span>I checked these claims against my textbook or another authoritative source.</span></label>'+
+      '</div></div>';
+  }).join("");
+  critWire();
+}
+function critWire(){
+  $$("#critiqueLab .vbtn").forEach(function(b){
+    b.addEventListener("click", function(){
+      var c = b.dataset.c, s = parseInt(b.dataset.s,10);
+      if(!store.critique[c]) store.critique[c] = {verdicts:{}, rationale:"", verified:false};
+      store.critique[c].verdicts[s] = b.dataset.v; save(); critRender(); critStats(); updatePortfolio();
+    });
+  });
+  $$("#critiqueLab textarea[data-cr]").forEach(function(t){
+    t.addEventListener("input", function(){
+      var c = t.dataset.cr;
+      if(!store.critique[c]) store.critique[c] = {verdicts:{}, rationale:"", verified:false};
+      store.critique[c].rationale = t.value; save(); critStats();
+    });
+  });
+  $$("#critiqueLab input[data-cv]").forEach(function(i){
+    i.addEventListener("change", function(){
+      var c = i.dataset.cv;
+      if(!store.critique[c]) store.critique[c] = {verdicts:{}, rationale:"", verified:false};
+      store.critique[c].verified = i.checked; save(); critStats();
+    });
+  });
+}
+function critStats(){
+  var verdicts=0, complete=0;
+  CRITIQUES.forEach(function(c){
+    var st = store.critique[c.id]; if(!st) return;
+    var vc = Object.keys(st.verdicts||{}).length;
+    verdicts += vc;
+    if(vc === c.sentences.length && (st.rationale||"").trim().length>0) complete++;
+  });
+  var a = $("#critVerdicts"); if(a) a.textContent = verdicts;
+  var t = $("#critTotal"); if(t) t.textContent = CRIT_TOTAL;
+  var b = $("#critCount"); if(b) b.textContent = complete+"/"+CRITIQUES.length;
+  var f = $("#critFill"); if(f) f.style.width = Math.round(verdicts/CRIT_TOTAL*100)+"%";
+}
+var critReset = $("#critReset");
+if(critReset) critReset.addEventListener("click", function(){
+  store.critique = {}; save(); critRender(); critStats(); updatePortfolio();
+});
+
+/* ============================================================
+   CHAT SIMULATION
+   ============================================================ */
+var CHATS = D.chats || [];
+var chatWindow = $("#chatWindow");
+function chatPush(who, text){
+  if(!chatWindow) return;
+  var d = document.createElement("div");
+  d.className = "msg " + (who==="user"?"user":"ai");
+  d.innerHTML = '<div class="who">'+(who==="user"?"You":"AI")+'</div>'+esc(text);
+  chatWindow.appendChild(d);
+  chatWindow.scrollTop = chatWindow.scrollHeight;
+}
+var chatPrompts = $("#chatPrompts");
+if(chatPrompts){
+  chatPrompts.innerHTML = CHATS.map(function(c,i){
+    return '<button type="button" class="btn btn-sm" data-chat="'+i+'">'+esc(c.p)+'</button>';
+  }).join("");
+  chatPrompts.addEventListener("click", function(e){
+    var b = e.target.closest("[data-chat]"); if(!b) return;
+    var c = CHATS[parseInt(b.dataset.chat,10)];
+    chatPush("user", c.p);
+    setTimeout(function(){ chatPush("ai", c.r); }, 420);
+  });
+}
+var chatCrit = $("#chatCritique");
+if(chatCrit){
+  chatCrit.value = (store.chat && store.chat.critique) || "";
+  chatCrit.addEventListener("input", function(){
+    store.chat = store.chat || {};
+    store.chat.critique = chatCrit.value; save();
+  });
+}
+var chatSave = $("#chatSave");
+if(chatSave) chatSave.addEventListener("click", function(){
+  store.chat = store.chat || {}; store.chat.critique = chatCrit.value; save();
+  toast("Critique saved to your portfolio.");
+});
+
+/* ============================================================
+   CONCEPT MAP BUILDER
+   ============================================================ */
+function cmFillSelect(){
+  var sel = $("#cmTheory"); if(!sel) return;
+  sel.innerHTML = '<option value="">— Choose an item —</option>' +
+    THEORIES.map(function(t){ return '<option value="'+t.id+'">'+esc(t.name)+'</option>'; }).join("");
+}
+function cmRender(){
+  var empty = $("#mapEmpty"), core = $("#mapCore"), ring = $("#mapRing"), lbl = $("#mapScenarioLabel");
+  if(!empty||!core||!ring||!lbl) return;
+  var cm = store.conceptmap || {nodes:[]};
+  var scenario = (cm.custom && cm.custom.trim()) || cm.scenario || "";
+  var nodes = cm.nodes || [];
+  if(nodes.length===0){
+    empty.style.display=""; core.style.display="none"; return;
+  }
+  empty.style.display="none";
+  core.style.display="flex"; core.style.flexDirection="column";
+  core.style.alignItems="center"; core.style.gap="18px"; core.style.width="100%";
+  lbl.textContent = scenario || "Your scenario";
+  ring.innerHTML = nodes.map(function(n,i){
+    var t = theoryById(n.theory);
+    return '<div class="map-node" style="--tc:'+t.color+'"><span class="swatch"></span>'+
+      '<span title="'+esc(n.note||"")+'">'+esc(t.name)+'</span>'+
+      '<span class="x" role="button" tabindex="0" data-rm="'+i+'" aria-label="Remove '+esc(t.name)+'">×</span></div>';
+  }).join("");
+  $$("#mapRing .x").forEach(function(x){
+    x.addEventListener("click", function(){
+      store.conceptmap.nodes.splice(parseInt(x.dataset.rm,10),1); save(); cmRender(); updatePortfolio();
+    });
+  });
+  var sc = $("#cmScenario"), cu = $("#cmCustom"), ai = $("#cmAI");
+  if(sc) sc.value = cm.scenario||""; if(cu) cu.value = cm.custom||""; if(ai) ai.checked = !!cm.ai;
+}
+function cmWire(){
+  var add = $("#cmAdd");
+  if(add) add.addEventListener("click", function(){
+    var theory = $("#cmTheory").value, note = $("#cmNote").value.trim();
+    if(!theory){ toast("Choose an item first."); return; }
+    if(!note){ toast("Add a connection note explaining how it applies."); return; }
+    store.conceptmap = store.conceptmap || {nodes:[]};
+    store.conceptmap.nodes.push({theory:theory, note:note});
+    $("#cmNote").value=""; save(); cmRender(); updatePortfolio();
+    toast(theoryById(theory).name+" added to the map.");
+  });
+  var clr = $("#cmClear");
+  if(clr) clr.addEventListener("click", function(){
+    store.conceptmap = {scenario:"",custom:"",ai:false,nodes:[]}; save(); cmRender(); updatePortfolio();
+  });
+  ["#cmScenario","#cmCustom"].forEach(function(s){
+    var el = $(s); if(!el) return;
+    el.addEventListener("input", function(){
+      store.conceptmap = store.conceptmap || {nodes:[]};
+      if(s==="#cmScenario") store.conceptmap.scenario = el.value;
+      else store.conceptmap.custom = el.value;
+      save(); cmRender();
+    });
+  });
+  var ai = $("#cmAI");
+  if(ai) ai.addEventListener("change", function(){
+    store.conceptmap = store.conceptmap || {nodes:[]};
+    store.conceptmap.ai = ai.checked; save();
+  });
+}
+function cmExport(){
+  var cm = store.conceptmap || {nodes:[]};
+  var scenario = (cm.custom && cm.custom.trim()) || cm.scenario || "(no scenario set)";
+  var lines = ["CONCEPT MAP — "+(D.meta&&D.meta.title||"Lesson"),"=".repeat(52),"Scenario: "+scenario,
+    "AI-assisted: "+(cm.ai?"Yes (critique documented)":"No"),"","Theory nodes ("+(cm.nodes||[]).length+"):"];
+  (cm.nodes||[]).forEach(function(n,i){
+    lines.push(""); lines.push((i+1)+". "+theoryById(n.theory).name); lines.push("   Connection: "+n.note);
+  });
+  lines.push(""); lines.push("Generated locally from the interactive lesson plan.");
+  download(slug()+"-concept-map.txt", lines.join("\n"), "text/plain");
+}
+var cmExpBtn = $("#cmExport");
+if(cmExpBtn) cmExpBtn.addEventListener("click", cmExport);
+
+/* ============================================================
+   JOURNALS & LOGS
+   ============================================================ */
+$$("textarea[data-journal]").forEach(function(t){
+  t.value = (store.journal && store.journal[t.dataset.journal]) || "";
+  t.addEventListener("input", function(){
+    store.journal = store.journal || {}; store.journal[t.dataset.journal] = t.value; save();
+  });
+});
+$$("textarea[data-log]").forEach(function(t){
+  t.value = (store.log && store.log[t.dataset.log]) || "";
+  t.addEventListener("input", function(){
+    store.log = store.log || {}; store.log[t.dataset.log] = t.value; save();
+  });
+});
+
+/* ============================================================
+   PORTFOLIO SUMMARY & EXPORT
+   ============================================================ */
+function updatePortfolio(){
+  var pre = scoreOf("pretest", PRE_TEST), post = scoreOf("posttest", POST_TEST);
+  var pp = $("#portPre"), ppb = $("#portPreBar");
+  if(pp){ pp.textContent = pre? pre.score+"/"+pre.total : "Not taken"; }
+  if(ppb){ ppb.style.width = pre? Math.round(pre.score/pre.total*100)+"%" : "0%"; }
+  var po = $("#portPost"), pob = $("#portPostBar");
+  if(po){ po.textContent = post? post.score+"/"+post.total : "Not taken"; }
+  if(pob){ pob.style.width = post? Math.round(post.score/post.total*100)+"%" : "0%"; }
+  var complete=0;
+  CRITIQUES.forEach(function(c){
+    var st = store.critique && store.critique[c.id]; if(!st) return;
+    if(Object.keys(st.verdicts||{}).length===c.sentences.length && (st.rationale||"").trim()) complete++;
+  });
+  var pc = $("#portCrit"), pcb = $("#portCritBar");
+  if(pc) pc.textContent = complete+" / "+CRITIQUES.length;
+  if(pcb) pcb.style.width = CRITIQUES.length? Math.round(complete/CRITIQUES.length*100)+"%":"0%";
+  var fcn = store.flashcards? Object.keys(store.flashcards).length : 0;
+  var pf = $("#portFc"), pfb = $("#portFcBar");
+  if(pf) pf.textContent = fcn+" / "+FC_PAIRS.length;
+  if(pfb) pfb.style.width = FC_PAIRS.length? Math.round(fcn/FC_PAIRS.length*100)+"%":"0%";
+  var cmn = (store.conceptmap && store.conceptmap.nodes)? store.conceptmap.nodes.length : 0;
+  var pcm = $("#portCm"), pcmb = $("#portCmBar");
+  if(pcm) pcm.textContent = cmn;
+  if(pcmb) pcmb.style.width = Math.min(100, Math.round(cmn/3*100))+"%";
+  var statPre = $("#statPre"); if(statPre) statPre.textContent = pre? pre.score+"/"+pre.total : "—";
+  var statPost = $("#statPost"); if(statPost) statPost.textContent = post? post.score+"/"+post.total : "—";
+  var statCrit = $("#statCrit"); if(statCrit) statCrit.textContent = complete+" / "+CRITIQUES.length;
+}
+function slug(){ return ((D.meta && D.meta.slug) || "lesson").replace(/[^a-z0-9-]+/gi,"-").toLowerCase(); }
+function download(name, text, type){
+  try{
+    var blob = new Blob([text], {type:type||"text/plain"});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = url; a.download = name; document.body.appendChild(a); a.click();
+    document.body.removeChild(a); setTimeout(function(){ URL.revokeObjectURL(url); }, 1500);
+    toast("Exported "+name);
+  }catch(e){ toast("Export not supported in this browser."); }
+}
+var exAll = $("#exportAll");
+if(exAll) exAll.addEventListener("click", function(){
+  download(slug()+"-portfolio.json", JSON.stringify(store, null, 2), "application/json");
+});
+var exTxt = $("#exportText");
+if(exTxt) exTxt.addEventListener("click", function(){
+  var L = [];
+  L.push("CRITICAL REFLECTION PORTFOLIO");
+  L.push(D.meta&&D.meta.title||"Lesson");
+  L.push("=".repeat(56)); L.push("");
+  var pre = scoreOf("pretest", PRE_TEST), post = scoreOf("posttest", POST_TEST);
+  L.push("RESULTS");
+  L.push("Pre-test:  "+(pre? pre.score+"/"+pre.total : "not completed"));
+  L.push("Post-test: "+(post? post.score+"/"+post.total : "not completed"));
+  L.push("Tasks: "+doneCount()+" of "+TASKS.length+" complete");
+  L.push("");
+  L.push("AI CRITIQUE LAB — my verdicts");
+  CRITIQUES.forEach(function(c){
+    var st = store.critique && store.critique[c.id]; if(!st) return;
+    L.push(""); L.push("• "+c.theory);
+    c.sentences.forEach(function(s,si){
+      var v = st.verdicts[si] || "(no verdict)";
+      L.push("   ["+v.toUpperCase()+"] "+s.t);
+    });
+    if(st.rationale) L.push("   Rationale: "+st.rationale);
+    L.push("   Verified against a source: "+(st.verified?"yes":"no"));
+  });
+  L.push(""); L.push("AI DECISION LOG");
+  ["accept","modify","reject","human"].forEach(function(k){
+    if(store.log && store.log[k]) L.push("• "+k+": "+store.log[k]);
+  });
+  L.push(""); L.push("CONCEPT MAP");
+  var cm = store.conceptmap||{nodes:[]};
+  L.push("Scenario: "+((cm.custom&&cm.custom.trim())||cm.scenario||"(none)"));
+  (cm.nodes||[]).forEach(function(n,i){ L.push("   "+(i+1)+". "+theoryById(n.theory).name+" — "+n.note); });
+  L.push(""); L.push("REFLECTIONS");
+  var jlabels = {worked:"What worked well", struggle:"Where students struggled with AI criticality",
+    negotiation:"Evidence of negotiated meaning", changes:"Changes to make", final1:"How AI supported or hindered learning",
+    final2:"When I overrode AI", final3:"Human judgment that mattered most", final4:"What I learned about AI limits and bias"};
+  Object.keys(jlabels).forEach(function(k){
+    if(store.journal && store.journal[k]) L.push("• "+jlabels[k]+": "+store.journal[k]);
+  });
+  if(store.chat && store.chat.critique){ L.push(""); L.push("AI CHAT SYNTHESIS CRITIQUE"); L.push(store.chat.critique); }
+  download(slug()+"-portfolio.txt", L.join("\n"), "text/plain");
+});
+
+/* ============================================================
+   THEME / PRINT / RESET
+   ============================================================ */
+var themeBtn = $("#themeBtn");
+function applyTheme(t){
+  document.documentElement.setAttribute("data-theme", t);
+  if(themeBtn) themeBtn.textContent = (t==="dark"?"☀️":"🌙") + " Theme";
+  store.theme = t; save();
+}
+if(themeBtn) themeBtn.addEventListener("click", function(){
+  applyTheme(document.documentElement.getAttribute("data-theme")==="dark" ? "light" : "dark");
+});
+var printBtn = $("#printBtn");
+if(printBtn) printBtn.addEventListener("click", function(){ window.print(); });
+var resetBtn = $("#resetBtn");
+if(resetBtn) resetBtn.addEventListener("click", function(){
+  if(confirm("Reset all saved progress, quiz answers, critiques and reflections on this device?")){
+    try{ localStorage.removeItem(KEY); }catch(e){}
+    location.reload();
+  }
+});
+
+/* ============================================================
+   TABLE OF CONTENTS (from data) + SCROLL SPY
+   ============================================================ */
+(function(){
+  var box = $(".tocnav-inner");
+  if(box && D.nav && D.nav.length){
+    box.innerHTML = D.nav.map(function(n){
+      return '<a href="#'+esc(n.id)+'">'+esc(n.label)+'</a>';
+    }).join("");
+  }
+})();
+var navLinks = $$(".tocnav a");
+var sections = navLinks.map(function(a){ return $(a.getAttribute("href")); }).filter(Boolean);
+if("IntersectionObserver" in window && sections.length){
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(en.isIntersecting){
+        navLinks.forEach(function(a){ a.classList.toggle("active", a.getAttribute("href")==="#"+en.target.id); });
+      }
+    });
+  }, {rootMargin:"-130px 0px -70% 0px", threshold:0});
+  sections.forEach(function(s){ obs.observe(s); });
+}
+
+/* ============================================================
+   INIT
+   ============================================================ */
+applyTheme(store.theme || "light");
+renderTasks($("#preTasks"), TASKS.slice(0, (D.preClassCount||4)));
+renderTasks($("#peerTasks"), PEER_TASKS);
+renderTasks($("#allTasks"), TASKS);
+syncAllTasks();
+fcRender();
+scRender();
+critRender();
+critStats();
+cmFillSelect();
+cmRender();
+cmWire();
+updateProgress();
+updatePortfolio();
+renderCompare();
+})();
+</script>
 </body>
 </html>
