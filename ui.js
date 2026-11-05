@@ -12,20 +12,29 @@ function setConnBadge(state) {
 }
 
 function showIdentity(identity, tbsInfo) {
-  document.getElementById('id-username').textContent = identity.username || '—';
-  document.getElementById('id-userid').textContent = identity.userId || '(guest)';
-  document.getElementById('id-email').textContent = identity.email || '—';
-  document.getElementById('id-role').textContent = identity.role || '—';
-  document.getElementById('id-course').textContent = identity.course?.name || '—';
-  document.getElementById('id-courseid').textContent = tbsInfo.courseId ?? '—';
-  document.getElementById('id-toolid').textContent = tbsInfo.toolId ?? '—';
-  document.getElementById('identity-card').style.display = 'flex';
+  // Every element is optional: a page may omit the identity card or role badge,
+  // and a missing one must not stop the caller's startup.
+  const setText = (id, value) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = value;
+  };
+  setText('id-username', identity.username || '—');
+  setText('id-userid', identity.userId || '(guest)');
+  setText('id-email', identity.email || '—');
+  setText('id-role', identity.role || '—');
+  setText('id-course', identity.course?.name || '—');
+  setText('id-courseid', tbsInfo.courseId ?? '—');
+  setText('id-toolid', tbsInfo.toolId ?? '—');
+  const card = document.getElementById('identity-card');
+  if (card) card.style.display = 'flex';
 
-  const badge = document.getElementById('role-badge');
   const role = (tbsInfo.role || '').toLowerCase();
-  badge.textContent = role;
-  badge.className = role === 'teacher' ? 'teacher' : role === 'student' ? 'student' : 'guest';
-  badge.style.display = 'block';
+  const badge = document.getElementById('role-badge');
+  if (badge) {
+    badge.textContent = role;
+    badge.className = role === 'teacher' ? 'teacher' : role === 'student' ? 'student' : 'guest';
+    badge.style.display = 'block';
+  }
 
   const stateSyncOpt = document.getElementById('opt-state-sync');
   if (stateSyncOpt) {
