@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TBS Chatbot Test</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="error-screen" class="error-screen">
+    <div class="error-box">
+      <div class="error-icon">✕</div>
+      <h2 id="err-title">Connection error</h2>
+      <p id="err-desc"></p>
+      <pre id="err-detail"></pre>
+      <button type="button" class="btn primary" onclick="location.reload()">Reload</button>
+    </div>
+  </div>
+
+  <main id="main" class="container">
+    <header class="app-header">
+      <div>
+        <h1>Chatbot test</h1>
+        <p class="hub-url">Hub: <code id="hub-url">—</code></p>
+      </div>
+      <div class="header-right">
+        <span id="role-badge" class="role-badge"></span>
+        <span id="conn-badge" class="conn-badge">disconnected</span>
+      </div>
+    </header>
+
+    <section class="panel">
+      <h2>Connection parameters</h2>
+      <form id="connect-form" class="params">
+        <label>Hub URL
+          <input id="in-hub-url" autocomplete="off" placeholder="http://localhost:3000">
+        </label>
+        <label>TBS URL
+          <input id="in-tbs-url" autocomplete="off" placeholder="http://localhost:3001">
+        </label>
+        <label>Iframe token (optional)
+          <input id="in-token" autocomplete="off" placeholder="token">
+        </label>
+        <label>TBS token
+          <input id="in-tbs-token" autocomplete="off" placeholder="tbs_token">
+        </label>
+        <label>TBS session (optional)
+          <input id="in-tbs-session" autocomplete="off" placeholder="tbs_session">
+        </label>
+        <div class="form-actions">
+          <button type="submit" class="btn primary" id="btn-connect">Connect</button>
+          <button type="button" class="btn" id="btn-disconnect">Disconnect</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="panel identity-card" id="identity-card">
+      <dl>
+        <div><dt>Name</dt><dd id="id-username">—</dd></div>
+        <div><dt>User ID</dt><dd id="id-userid">—</dd></div>
+        <div><dt>Email</dt><dd id="id-email">—</dd></div>
+        <div><dt>Role</dt><dd id="id-role">—</dd></div>
+        <div><dt>Course</dt><dd id="id-course">—</dd></div>
+        <div><dt>Course ID</dt><dd id="id-courseid">—</dd></div>
+        <div><dt>Tool ID</dt><dd id="id-toolid">—</dd></div>
+      </dl>
+    </section>
+
+    <section class="panel chat-panel">
+      <div class="panel-head">
+        <h2>Chat</h2>
+        <div class="chat-head-right">
+          <span id="chat-status" class="chat-status">not connected</span>
+          <button type="button" class="btn small" id="btn-clear">Clear history</button>
+        </div>
+      </div>
+
+      <div id="chat-log" class="chat-wrap">
+        <p class="chat-empty" id="chat-empty">Connect, then type a message to talk to the AI assistant.</p>
+      </div>
+
+      <label id="system-wrap" class="system-wrap">System prompt (only used when the tool has no AI persona)
+        <input id="in-system" autocomplete="off" placeholder="You are a helpful teaching assistant.">
+      </label>
+
+      <form id="chat-form" class="chat-composer">
+        <textarea id="in-message" rows="2" placeholder="Type a message…" disabled></textarea>
+        <button type="submit" class="btn primary" id="btn-send" disabled>Send</button>
+      </form>
+      <p class="chat-hint">Enter sends · Shift+Enter adds a new line</p>
+    </section>
+  </main>
+
+  <script src="tbs-client.js"></script>
+  <script src="ui.js"></script>
+  <script src="chat.js"></script>
+</body>
+</html>

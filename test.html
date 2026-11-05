@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TBS Network Test</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="error-screen" class="error-screen">
+    <div class="error-box">
+      <div class="error-icon">✕</div>
+      <h2 id="err-title">Connection error</h2>
+      <p id="err-desc"></p>
+      <pre id="err-detail"></pre>
+      <button type="button" class="btn primary" onclick="location.reload()">Reload</button>
+    </div>
+  </div>
+
+  <main id="main" class="container">
+    <header class="app-header">
+      <div>
+        <h1>Connection test</h1>
+        <p class="hub-url">Hub: <code id="hub-url">—</code></p>
+      </div>
+      <div class="header-right">
+        <span id="role-badge" class="role-badge"></span>
+        <span id="conn-badge" class="conn-badge">disconnected</span>
+      </div>
+    </header>
+
+    <section class="panel">
+      <h2>Connection parameters</h2>
+      <form id="connect-form" class="params">
+        <label>Hub URL
+          <input id="in-hub-url" autocomplete="off" placeholder="http://localhost:3000">
+        </label>
+        <label>TBS URL
+          <input id="in-tbs-url" autocomplete="off" placeholder="http://localhost:3001">
+        </label>
+        <label>Iframe token (optional)
+          <input id="in-token" autocomplete="off" placeholder="token">
+        </label>
+        <label>TBS token
+          <input id="in-tbs-token" autocomplete="off" placeholder="tbs_token">
+        </label>
+        <label>TBS session
+          <input id="in-tbs-session" autocomplete="off" placeholder="tbs_session">
+        </label>
+        <div class="form-actions">
+          <button type="submit" class="btn primary" id="btn-connect">Connect</button>
+          <button type="button" class="btn" id="btn-disconnect">Disconnect</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="panel">
+      <h2>Network test</h2>
+      <div class="steps">
+        <div class="step" id="step-exchange"><span class="dot"></span>Exchange token</div>
+        <div class="step" id="step-verify"><span class="dot"></span>Verify TBS token</div>
+        <div class="step" id="step-ticket"><span class="dot"></span>Get WS ticket</div>
+        <div class="step" id="step-ws"><span class="dot"></span>Open WebSocket</div>
+      </div>
+      <div class="ping-row">
+        <button type="button" class="btn" id="btn-ping">Ping</button>
+        <span id="ping-result" class="ping-result">—</span>
+      </div>
+    </section>
+
+    <section class="panel identity-card" id="identity-card">
+      <dl>
+        <div><dt>Name</dt><dd id="id-username">—</dd></div>
+        <div><dt>User ID</dt><dd id="id-userid">—</dd></div>
+        <div><dt>Email</dt><dd id="id-email">—</dd></div>
+        <div><dt>Role</dt><dd id="id-role">—</dd></div>
+        <div><dt>Course</dt><dd id="id-course">—</dd></div>
+        <div><dt>Course ID</dt><dd id="id-courseid">—</dd></div>
+        <div><dt>Tool ID</dt><dd id="id-toolid">—</dd></div>
+      </dl>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <h2>Message log</h2>
+        <button type="button" class="btn small" id="btn-clear-log">Clear</button>
+      </div>
+      <div id="log-wrap" class="log-wrap"></div>
+    </section>
+
+    <section class="panel">
+      <h2>Send message</h2>
+      <div class="composer">
+        <div class="composer-row">
+          <label>Message type
+            <select id="send-kind">
+              <option value="broadcast">broadcast</option>
+              <option value="direct">direct</option>
+              <option value="state_sync" id="opt-state-sync" style="display: none;">state_sync (teacher)</option>
+              <option value="ping">ping</option>
+              <option value="raw">raw</option>
+            </select>
+          </label>
+          <label id="to-wrap" style="display: none;">To (user ID)
+            <input id="in-to" autocomplete="off" placeholder="user123">
+          </label>
+        </div>
+        <label class="payload-label">Payload (JSON)
+          <textarea id="in-payload" rows="4" spellcheck="false" placeholder='{"message": "Hello"}'></textarea>
+        </label>
+        <div class="form-actions">
+          <button type="button" class="btn primary" id="btn-send">Send</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="tbs-client.js"></script>
+  <script src="ui.js"></script>
+  <script src="test-utils.js"></script>
+  <script src="test.js"></script>
+</body>
+</html>

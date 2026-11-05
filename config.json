@@ -1,0 +1,11 @@
+{
+  "objectives": [
+    { "id": "obj1", "title": "Objective 1", "description": "Describe the first learning objective." },
+    { "id": "obj2", "title": "Objective 2", "description": "Describe the second learning objective." },
+    { "id": "obj3", "title": "Objective 3", "description": "Describe the third learning objective." }
+  ],
+  "guardrails": [],
+  "scaffolding": [],
+  "extraPrompt": "",
+  "openingMessage": null
+}

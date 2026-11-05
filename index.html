@@ -3,14 +3,86 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Basic HTML Project</title>
+  <title>Learning Session</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <h1>Hello World!</h1>
-    <p>Welcome to your new project.</p>
+  <div id="error-screen" class="error-screen">
+    <div class="error-box">
+      <div class="error-icon">✕</div>
+      <h2 id="err-title">Connection error</h2>
+      <p id="err-desc"></p>
+      <pre id="err-detail"></pre>
+      <button type="button" class="btn primary" onclick="location.reload()">Reload</button>
+    </div>
   </div>
-  <script src="script.js"></script>
+
+  <main id="main" class="container">
+    <header class="app-header">
+      <div>
+        <h1 id="app-title">Learning Session</h1>
+        <p id="app-intro" class="hub-url">Talk with your tutor to work through the objectives.</p>
+      </div>
+      <div class="header-right">
+        <span id="role-badge" class="role-badge"></span>
+        <span id="conn-badge" class="conn-badge">disconnected</span>
+      </div>
+    </header>
+
+    <div class="tutor-layout">
+      <section class="panel tutor-chat">
+        <div class="panel-head">
+          <h2>Chat with your tutor</h2>
+          <div class="chat-head-right">
+            <span id="chat-status" class="chat-status">connecting…</span>
+          </div>
+        </div>
+
+        <div id="chat-log" class="chat-wrap">
+          <p class="chat-empty" id="chat-empty">Your tutor will start the conversation.</p>
+        </div>
+
+        <form id="chat-form" class="chat-composer">
+          <textarea id="in-message" rows="2" placeholder="Type your answer…" disabled></textarea>
+          <button type="submit" class="btn primary" id="btn-send" disabled>Send</button>
+        </form>
+        <p class="chat-hint">Enter sends · Shift+Enter adds a new line</p>
+      </section>
+
+      <aside class="panel tutor-objectives">
+        <div class="panel-head">
+          <h2>Learning objectives</h2>
+          <span id="objective-count" class="chat-status">0 / 3</span>
+        </div>
+        <ul id="objective-list" class="objective-list">
+          <li class="chat-empty">Loading objectives…</li>
+        </ul>
+      </aside>
+    </div>
+
+    <section id="teacher-dashboard" class="panel" style="display:none">
+      <div class="panel-head">
+        <h2>Student progress</h2>
+        <div class="chat-head-right">
+          <span id="dashboard-status" class="chat-status"></span>
+          <button type="button" class="btn small" id="btn-refresh">Refresh</button>
+        </div>
+      </div>
+      <div id="student-list" class="student-list">
+        <p class="chat-empty">Students appear here once they start chatting.</p>
+      </div>
+      <div id="transcript-panel" class="transcript-panel" style="display:none">
+        <div class="panel-head">
+          <h2 id="transcript-title">Conversation</h2>
+          <button type="button" class="btn small" id="btn-close-transcript">Close</button>
+        </div>
+        <div id="transcript-log" class="chat-wrap"></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="tbs-client.js"></script>
+  <script src="ui.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
