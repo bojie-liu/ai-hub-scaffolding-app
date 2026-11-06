@@ -2,9 +2,10 @@
  * Tutor app: objectives panel, streaming chat with progress detection, and a
  * teacher-only dashboard with per-student progress and transcripts.
  *
- * All display text is rendered with textContent; the tutor's completion markers
- * are stripped on the accumulated reply before anything is shown.
- * Requires tbs-client.js (global `tbs`) and ui.js (setConnBadge, showIdentity, fatal).
+ * User text and errors are rendered with textContent; tutor replies go through
+ * renderMarkdown (marked + DOMPurify, see ui.js). The tutor's completion markers
+ * are stripped on the accumulated reply before it is rendered.
+ * Requires tbs-client.js (global `tbs`) and ui.js (setConnBadge, showIdentity, fatal, renderMarkdown).
  */
 
 (function () {
@@ -119,7 +120,8 @@
 
     const body = document.createElement('div');
     body.className = 'msg-body';
-    body.textContent = text;
+    if (role === 'assistant') renderMarkdown(body, text);
+    else body.textContent = text;
 
     row.appendChild(speaker);
     row.appendChild(body);
@@ -157,11 +159,11 @@
       const reply = await tbs.chat(text, {
         onDelta: (delta, full) => {
           // Strip on the accumulated text: a marker can split across chunks.
-          bubble.textContent = tbs.stripMarkers(full);
+          renderMarkdown(bubble, tbs.stripMarkers(full));
           scrollChat();
         },
       });
-      bubble.textContent = tbs.stripMarkers(reply);
+      renderMarkdown(bubble, tbs.stripMarkers(reply));
       await refreshProgress();
     } catch (err) {
       bubble.parentElement.classList.remove('streaming');

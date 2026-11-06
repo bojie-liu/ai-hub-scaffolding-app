@@ -44,6 +44,20 @@ function showIdentity(identity, tbsInfo) {
   return role;
 }
 
+function renderMarkdown(el, text) {
+  el.classList.add('md');
+  if (typeof marked === 'undefined' || typeof DOMPurify === 'undefined') {
+    el.style.whiteSpace = 'pre-wrap';
+    el.textContent = text;
+    return;
+  }
+  el.innerHTML = DOMPurify.sanitize(marked.parse(text || '', { gfm: true, breaks: true }));
+  el.querySelectorAll('a').forEach((a) => {
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+  });
+}
+
 function fatal(title, desc, detail) {
   document.getElementById('main').style.display = 'none';
   const es = document.getElementById('error-screen');

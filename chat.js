@@ -126,7 +126,7 @@
 
     const options = {
       onDelta: (delta, full) => {
-        bubble.textContent = full;
+        renderMarkdown(bubble, full);
         scrollChat();
       },
     };
@@ -137,7 +137,7 @@
 
     try {
       const reply = await tbs.chat(text, options);
-      bubble.textContent = reply;
+      renderMarkdown(bubble, reply);
     } catch (err) {
       bubble.classList.remove('streaming');
       bubble.classList.add('error');
