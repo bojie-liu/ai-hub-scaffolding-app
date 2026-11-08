@@ -3,14 +3,115 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Basic HTML Project</title>
+  <title>Reading a 19th-Century Hong Kong Source</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <h1>Hello World!</h1>
-    <p>Welcome to your new project.</p>
+  <div id="error-screen" class="error-screen">
+    <div class="error-box">
+      <div class="error-icon">✕</div>
+      <h2 id="err-title">Connection error</h2>
+      <p id="err-desc"></p>
+      <pre id="err-detail"></pre>
+      <button type="button" class="btn primary" onclick="location.reload()">Reload</button>
+    </div>
   </div>
-  <script src="script.js"></script>
+
+  <main id="main" class="container">
+    <header class="app-header">
+      <div>
+        <h1 id="app-title">Life in 19th-Century Hong Kong</h1>
+        <p id="app-intro" class="app-tagline">Read a short primary source with your tutor — one guiding question at a time.</p>
+      </div>
+      <div class="header-right">
+        <span id="role-badge" class="role-badge"></span>
+        <span id="conn-badge" class="conn-badge">disconnected</span>
+      </div>
+    </header>
+
+    <section class="panel intro-card">
+      <h2>About this session</h2>
+      <p class="intro-lead">
+        In this session you will closely read a short primary source — a document written in
+        or near 19th-century Hong Kong — and think through it together with your tutor. There is
+        no rush and no trick: every question is meant to help you notice something in the source
+        yourself.
+      </p>
+      <div class="intro-grid">
+        <div class="intro-col">
+          <h3>How this session works</h3>
+          <ul class="tip-list">
+            <li>Your tutor asks <strong>one guiding question at a time</strong> and waits for your answer.</li>
+            <li>If you are stuck, ask for a <strong>hint</strong> — you will always get a nudge before any answer.</li>
+            <li>The three learning objectives and your progress appear in the panel beside the chat.</li>
+          </ul>
+        </div>
+        <div class="intro-col">
+          <h3>How to read a primary source</h3>
+          <ul class="tip-list">
+            <li>Read the whole source once before you answer.</li>
+            <li>Quote the exact words that support your idea.</li>
+            <li>Re-read any detail that seems unusual or vivid.</li>
+            <li>Be ready to revise your first answer as you notice more.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <div class="tutor-layout">
+      <section class="panel tutor-chat">
+        <div class="panel-head">
+          <h2>Chat with your tutor</h2>
+          <div class="chat-head-right">
+            <span id="chat-status" class="chat-status">connecting…</span>
+          </div>
+        </div>
+
+        <div id="chat-log" class="chat-wrap">
+          <p class="chat-empty" id="chat-empty">Your tutor will start the conversation.</p>
+        </div>
+
+        <form id="chat-form" class="chat-composer">
+          <textarea id="in-message" rows="2" placeholder="Type your answer…" disabled></textarea>
+          <button type="submit" class="btn primary" id="btn-send" disabled>Send</button>
+        </form>
+        <p class="chat-hint">Enter sends · Shift+Enter adds a new line</p>
+      </section>
+
+      <aside class="panel tutor-objectives">
+        <div class="panel-head">
+          <h2>Learning objectives</h2>
+          <span id="objective-count" class="chat-status">0 / 3</span>
+        </div>
+        <ul id="objective-list" class="objective-list">
+          <li class="chat-empty">Loading objectives…</li>
+        </ul>
+      </aside>
+    </div>
+
+    <section id="teacher-dashboard" class="panel" style="display:none">
+      <div class="panel-head">
+        <h2>Student progress</h2>
+        <div class="chat-head-right">
+          <span id="dashboard-status" class="chat-status"></span>
+          <button type="button" class="btn small" id="btn-refresh">Refresh</button>
+        </div>
+      </div>
+      <div id="student-list" class="student-list">
+        <p class="chat-empty">Students appear here once they start chatting.</p>
+      </div>
+      <div id="transcript-panel" class="transcript-panel" style="display:none">
+        <div class="panel-head">
+          <h2 id="transcript-title">Conversation</h2>
+          <button type="button" class="btn small" id="btn-close-transcript">Close</button>
+        </div>
+        <div id="transcript-log" class="chat-wrap"></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="tbs-client.js"></script>
+  <script src="ui.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
