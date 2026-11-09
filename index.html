@@ -1,16 +1,1612 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Basic HTML Project</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Teacher Professionalism in Local and International Contexts</title>
+<meta name="description" content="A 150-minute Critical Inquiry Seminar for first-year undergraduates that interrogates competing conceptions of teacher professionalism and compares local and international frameworks, policies and cases.">
+<style>
+/* ============================================================
+   DESIGN TOKENS
+   ============================================================ */
+:root{
+  --bg:#f6f7fb;
+  --bg-elev:#ffffff;
+  --bg-soft:#eef1f8;
+  --bg-sunken:#e7ebf5;
+  --text:#161a2b;
+  --text-soft:#4a5168;
+  --text-mute:#6d7590;
+  --border:#dfe3ef;
+  --border-strong:#c6cde0;
+
+  --brand:#4338ca;
+  --brand-2:#6366f1;
+  --brand-soft:#eceafe;
+  --brand-ink:#2c2494;
+
+  --teal:#0d9488;
+  --teal-soft:#dcfaf6;
+  --amber:#b45309;
+  --amber-soft:#fef3c7;
+  --amber-border:#fcd34d;
+  --rose:#be123c;
+  --rose-soft:#ffe4e9;
+  --green:#15803d;
+  --green-soft:#dcfce7;
+  --violet:#7c3aed;
+  --violet-soft:#f1e9ff;
+
+  --radius:16px;
+  --radius-sm:10px;
+  --radius-xs:8px;
+  --shadow-sm:0 1px 2px rgba(20,25,50,.06),0 1px 3px rgba(20,25,50,.05);
+  --shadow:0 4px 16px rgba(20,25,50,.08),0 1px 3px rgba(20,25,50,.05);
+  --shadow-lg:0 18px 40px -12px rgba(30,25,90,.28);
+  --ring:0 0 0 3px rgba(99,102,241,.35);
+  --maxw:1180px;
+  --ff:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --ff-mono:"SFMono-Regular",ui-monospace,"JetBrains Mono",Menlo,Consolas,monospace;
+}
+html[data-theme="dark"]{
+  --bg:#0c0f1c;
+  --bg-elev:#151a2e;
+  --bg-soft:#1c2238;
+  --bg-sunken:#101527;
+  --text:#eef1fb;
+  --text-soft:#b9c0d8;
+  --text-mute:#8a92ad;
+  --border:#272e47;
+  --border-strong:#39415f;
+
+  --brand:#8b8cf9;
+  --brand-2:#a5a6ff;
+  --brand-soft:#1e2145;
+  --brand-ink:#c9caff;
+
+  --teal:#2dd4bf;
+  --teal-soft:#0d2e2b;
+  --amber:#fbbf24;
+  --amber-soft:#332405;
+  --amber-border:#7c5a10;
+  --rose:#fb7185;
+  --rose-soft:#3a1220;
+  --green:#4ade80;
+  --green-soft:#0f2e1a;
+  --violet:#c4b5fd;
+  --violet-soft:#241a3d;
+
+  --shadow-sm:0 1px 2px rgba(0,0,0,.4);
+  --shadow:0 6px 20px rgba(0,0,0,.45);
+  --shadow-lg:0 20px 44px -14px rgba(0,0,0,.7);
+  --ring:0 0 0 3px rgba(139,140,249,.45);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:132px;-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--bg);color:var(--text);font-family:var(--ff);
+  line-height:1.62;font-size:16px;letter-spacing:.005em;
+  -webkit-font-smoothing:antialiased;
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{animation-duration:.001ms!important;transition-duration:.001ms!important}
+}
+img{max-width:100%}
+a{color:var(--brand);text-decoration-thickness:1.5px;text-underline-offset:3px}
+a:hover{color:var(--brand-ink)}
+:focus-visible{outline:3px solid var(--brand-2);outline-offset:2px;border-radius:6px}
+.skip{position:absolute;left:-9999px;top:0;background:var(--brand);color:#fff;padding:12px 18px;z-index:200;border-radius:0 0 10px 0}
+.skip:focus{left:0}
+h1,h2,h3,h4{line-height:1.25;margin:0 0 .5em;font-weight:750;letter-spacing:-.015em}
+h1{font-size:clamp(1.7rem,3.4vw,2.5rem)}
+h2{font-size:clamp(1.35rem,2.3vw,1.85rem)}
+h3{font-size:clamp(1.08rem,1.6vw,1.28rem)}
+h4{font-size:1rem}
+p{margin:0 0 .9em}
+ul,ol{margin:0 0 .9em;padding-left:1.35em}
+li{margin:.3em 0}
+strong{font-weight:700}
+code,kbd{font-family:var(--ff-mono);font-size:.88em;background:var(--bg-soft);padding:.12em .42em;border-radius:6px;border:1px solid var(--border)}
+hr{border:0;border-top:1px solid var(--border);margin:1.6rem 0}
+
+/* ============================================================
+   LAYOUT
+   ============================================================ */
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
+main{padding-bottom:80px}
+
+/* Top bar */
+.topbar{
+  position:sticky;top:0;z-index:60;background:color-mix(in srgb,var(--bg-elev) 88%,transparent);
+  backdrop-filter:saturate(180%) blur(14px);border-bottom:1px solid var(--border);
+}
+.topbar-inner{max-width:var(--maxw);margin:0 auto;padding:10px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.brandmark{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.02em;font-size:.98rem}
+.brandmark .dot{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--brand),var(--violet));display:grid;place-items:center;color:#fff;font-size:15px;box-shadow:var(--shadow-sm);flex:0 0 auto}
+.topbar-spacer{flex:1 1 auto}
+.topbar-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+
+/* Progress pill in topbar */
+.progress-pill{display:flex;align-items:center;gap:10px;background:var(--bg-soft);border:1px solid var(--border);border-radius:999px;padding:5px 6px 5px 14px;font-size:.82rem;font-weight:650;color:var(--text-soft);white-space:nowrap}
+.progress-track{width:120px;height:8px;border-radius:999px;background:var(--bg-sunken);overflow:hidden;border:1px solid var(--border)}
+.progress-fill{height:100%;width:0%;border-radius:999px;background:linear-gradient(90deg,var(--brand),var(--teal));transition:width .45s cubic-bezier(.2,.8,.2,1)}
+
+/* Buttons */
+.btn{
+  font:inherit;font-weight:650;font-size:.86rem;border-radius:10px;border:1px solid var(--border-strong);
+  background:var(--bg-elev);color:var(--text);padding:8px 13px;cursor:pointer;display:inline-flex;
+  align-items:center;gap:7px;transition:transform .12s ease,box-shadow .15s ease,background .15s ease,border-color .15s;
+  box-shadow:var(--shadow-sm);text-decoration:none;line-height:1.2
+}
+.btn:hover{transform:translateY(-1px);box-shadow:var(--shadow);border-color:var(--brand-2)}
+.btn:active{transform:translateY(0)}
+.btn-primary{background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#fff;border-color:transparent}
+.btn-primary:hover{color:#fff;filter:brightness(1.07)}
+.btn-ghost{background:transparent;box-shadow:none;border-color:var(--border)}
+.btn-sm{padding:5px 10px;font-size:.79rem;border-radius:8px}
+.btn-icon{padding:8px;width:38px;justify-content:center}
+.btn[aria-pressed="true"]{background:var(--brand-soft);border-color:var(--brand-2);color:var(--brand-ink)}
+
+/* Nav */
+.tocnav{position:sticky;top:57px;z-index:55;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+.tocnav-inner{max-width:var(--maxw);margin:0 auto;padding:0 20px;display:flex;gap:4px;overflow-x:auto;scrollbar-width:thin}
+.tocnav a{
+  flex:0 0 auto;padding:11px 12px;font-size:.82rem;font-weight:640;color:var(--text-mute);text-decoration:none;
+  border-bottom:3px solid transparent;white-space:nowrap;transition:color .15s,border-color .15s
+}
+.tocnav a:hover{color:var(--text)}
+.tocnav a.active{color:var(--brand);border-bottom-color:var(--brand)}
+
+/* Sections */
+section.block{padding:44px 0 8px;scroll-margin-top:130px}
+.sec-head{display:flex;align-items:flex-start;gap:14px;margin-bottom:20px;flex-wrap:wrap}
+.sec-num{
+  flex:0 0 auto;width:42px;height:42px;border-radius:13px;display:grid;place-items:center;font-weight:800;
+  background:var(--brand-soft);color:var(--brand-ink);border:1px solid var(--border);font-size:1.02rem
+}
+.sec-head .t{flex:1 1 260px;min-width:0}
+.sec-head .t p{margin:.15em 0 0;color:var(--text-soft);font-size:.94rem;max-width:72ch}
+.eyebrow{text-transform:uppercase;letter-spacing:.12em;font-size:.7rem;font-weight:800;color:var(--brand);margin:0 0 .3em}
+
+/* Cards */
+.card{background:var(--bg-elev);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-sm);padding:20px;margin-bottom:18px}
+.card.tight{padding:16px}
+.card-title{display:flex;align-items:center;gap:9px;margin:0 0 12px;font-size:1.04rem;font-weight:740}
+.card-title .ic{width:26px;height:26px;border-radius:8px;display:grid;place-items:center;font-size:14px;flex:0 0 auto;background:var(--brand-soft);color:var(--brand-ink)}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}
+.split{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:18px;align-items:start}
+@media(max-width:860px){.split{grid-template-columns:1fr}}
+
+/* Pills & chips */
+.pill{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:999px;font-size:.74rem;font-weight:700;border:1px solid var(--border);background:var(--bg-soft);color:var(--text-soft)}
+.pill.brand{background:var(--brand-soft);color:var(--brand-ink);border-color:transparent}
+.pill.teal{background:var(--teal-soft);color:var(--teal);border-color:transparent}
+.pill.amber{background:var(--amber-soft);color:var(--amber);border-color:transparent}
+.pill.rose{background:var(--rose-soft);color:var(--rose);border-color:transparent}
+.pill.green{background:var(--green-soft);color:var(--green);border-color:transparent}
+.pill.violet{background:var(--violet-soft);color:var(--violet);border-color:transparent}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+
+/* Tables */
+.tablewrap{overflow-x:auto;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-elev);-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:.88rem}
+th,td{padding:11px 13px;text-align:left;border-bottom:1px solid var(--border);vertical-align:top}
+th{background:var(--bg-soft);font-weight:720;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;color:var(--text-soft);position:sticky;top:0}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:color-mix(in srgb,var(--brand-soft) 40%,transparent)}
+
+/* Callouts */
+.callout{border-radius:var(--radius-sm);padding:14px 16px;border:1px solid var(--border);border-left-width:5px;background:var(--bg-soft);margin:14px 0;font-size:.93rem}
+.callout .ct{font-weight:740;display:flex;align-items:center;gap:8px;margin-bottom:5px}
+.callout p:last-child,.callout ul:last-child{margin-bottom:0}
+.callout.ai{border-left-color:var(--violet);background:var(--violet-soft)}
+.callout.tip{border-left-color:var(--teal);background:var(--teal-soft)}
+.callout.warn{border-left-color:var(--amber);background:var(--amber-soft)}
+.callout.key{border-left-color:var(--brand);background:var(--brand-soft)}
+.callout.note{border-left-color:var(--border-strong);background:var(--bg-soft)}
+
+/* Details / collapsibles */
+details.acc{border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-elev);margin-bottom:12px;overflow:hidden;box-shadow:var(--shadow-sm)}
+details.acc>summary{
+  cursor:pointer;padding:14px 16px;font-weight:700;display:flex;align-items:center;gap:10px;list-style:none;
+  font-size:.95rem;transition:background .15s
+}
+details.acc>summary::-webkit-details-marker{display:none}
+details.acc>summary:hover{background:var(--bg-soft)}
+details.acc>summary::after{content:"▾";margin-left:auto;color:var(--text-mute);transition:transform .2s;font-size:.9rem}
+details.acc[open]>summary::after{transform:rotate(180deg)}
+details.acc>summary .badge{margin-left:0}
+details.acc .acc-body{padding:4px 16px 18px;border-top:1px solid var(--border)}
+details.acc .acc-body>*:first-child{margin-top:12px}
+
+/* Tool card specifics */
+.tool-card{background:var(--bg-elev);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-sm);margin-bottom:14px;overflow:hidden}
+.tool-head{padding:16px 18px;display:flex;gap:13px;align-items:flex-start}
+.tool-logo{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;font-weight:800;font-size:1.05rem;flex:0 0 auto;color:#fff}
+.tool-head .meta{flex:1;min-width:0}
+.tool-head h4{margin:0 0 3px;font-size:1.02rem}
+.tool-head .sub{font-size:.83rem;color:var(--text-mute)}
+.steps{counter-reset:s;list-style:none;padding:0;margin:0}
+.steps li{counter-increment:s;position:relative;padding:9px 0 9px 42px;border-bottom:1px dashed var(--border);font-size:.92rem}
+.steps li:last-child{border-bottom:0}
+.steps li::before{
+  content:counter(s);position:absolute;left:0;top:9px;width:26px;height:26px;border-radius:8px;display:grid;
+  place-items:center;background:var(--brand-soft);color:var(--brand-ink);font-weight:800;font-size:.79rem
+}
+.prompt-box{background:var(--bg-sunken);border:1px dashed var(--border-strong);border-radius:var(--radius-xs);padding:12px 14px;font-family:var(--ff-mono);font-size:.83rem;white-space:pre-wrap;margin:10px 0;color:var(--text-soft)}
+
+/* Theory reference cards */
+.theory-card{border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-elev);padding:15px;box-shadow:var(--shadow-sm);border-top:4px solid var(--tc,var(--brand))}
+.theory-card h4{margin:0 0 4px;font-size:.98rem}
+.theory-card .who{font-size:.78rem;color:var(--text-mute);margin-bottom:8px}
+.theory-card p{font-size:.87rem;margin:0 0 .5em}
+.theory-card .kv{font-size:.82rem;color:var(--text-soft)}
+.theory-card .kv b{color:var(--text)}
+.theory-card .limit{background:var(--rose-soft);border-radius:8px;padding:7px 10px;font-size:.8rem;color:var(--text-soft);margin-top:8px}
+
+/* Quiz */
+.quiz-q{border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;background:var(--bg-elev);margin-bottom:12px}
+.quiz-q .qtop{display:flex;gap:10px;align-items:flex-start;margin-bottom:10px}
+.qnum{flex:0 0 auto;width:26px;height:26px;border-radius:8px;background:var(--brand);color:#fff;display:grid;place-items:center;font-size:.79rem;font-weight:800}
+.opts{display:grid;gap:8px}
+.opt{
+  display:flex;gap:10px;align-items:flex-start;padding:11px 13px;border:1.5px solid var(--border);border-radius:10px;
+  cursor:pointer;background:var(--bg);transition:border-color .15s,background .15s,transform .1s;font-size:.9rem
+}
+.opt:hover{border-color:var(--brand-2);background:var(--bg-soft)}
+.opt input{position:absolute;opacity:0;pointer-events:none}
+.opt .marker{width:20px;height:20px;border-radius:50%;border:2px solid var(--border-strong);flex:0 0 auto;display:grid;place-items:center;margin-top:1px;font-size:.7rem;color:transparent;transition:all .15s}
+.opt.sel{border-color:var(--brand-2);background:var(--brand-soft)}
+.opt.sel .marker{border-color:var(--brand);background:var(--brand);color:#fff}
+.opt.correct{border-color:var(--green);background:var(--green-soft)}
+.opt.correct .marker{border-color:var(--green);background:var(--green);color:#fff}
+.opt.wrong{border-color:var(--rose);background:var(--rose-soft)}
+.opt.wrong .marker{border-color:var(--rose);background:var(--rose);color:#fff}
+.opt.locked{pointer-events:none;opacity:.96}
+.explain{margin-top:10px;padding:11px 13px;border-radius:10px;font-size:.86rem;display:none;border:1px solid var(--border)}
+.explain.show{display:block;animation:fade .25s ease}
+.explain.ok{background:var(--green-soft);border-color:color-mix(in srgb,var(--green) 40%,transparent)}
+.explain.no{background:var(--rose-soft);border-color:color-mix(in srgb,var(--rose) 40%,transparent)}
+@keyframes fade{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.score-bar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:14px 16px;border-radius:var(--radius-sm);background:var(--bg-soft);border:1px solid var(--border);margin-bottom:14px}
+.score-big{font-size:1.9rem;font-weight:820;line-height:1;letter-spacing:-.02em}
+.cat-grid{display:grid;gap:9px;margin-top:10px}
+.cat-row{display:grid;grid-template-columns:minmax(120px,1fr) auto;gap:10px;align-items:center;font-size:.85rem}
+.cat-track{grid-column:1/-1;height:9px;border-radius:999px;background:var(--bg-sunken);overflow:hidden}
+.cat-fill{height:100%;border-radius:999px;transition:width .5s ease}
+
+/* Flashcard drag & drop */
+.fc-arena{display:grid;gap:18px;grid-template-columns:minmax(0,300px) minmax(0,1fr)}
+@media(max-width:820px){.fc-arena{grid-template-columns:1fr}}
+.chip-pool{display:flex;flex-direction:column;gap:9px}
+.chip{
+  padding:12px 14px;border-radius:11px;border:1.5px solid var(--border-strong);background:var(--bg-elev);
+  cursor:grab;font-weight:680;font-size:.9rem;box-shadow:var(--shadow-sm);transition:transform .12s,box-shadow .15s,border-color .15s;
+  display:flex;align-items:center;gap:9px
+}
+.chip:hover{border-color:var(--brand-2);transform:translateY(-1px)}
+.chip:active{cursor:grabbing}
+.chip.picked{border-color:var(--brand);box-shadow:var(--ring);background:var(--brand-soft)}
+.chip.placed{opacity:.45;cursor:default;border-style:dashed}
+.chip .swatch{width:12px;height:12px;border-radius:4px;flex:0 0 auto;background:var(--tc,var(--brand))}
+.slots{display:grid;gap:12px}
+.slot{border:1.5px dashed var(--border-strong);border-radius:12px;padding:13px;background:var(--bg-soft);transition:border-color .15s,background .15s}
+.slot .slot-label{font-size:.73rem;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:var(--text-mute);margin-bottom:4px}
+.slot .slot-desc{font-size:.88rem;color:var(--text-soft)}
+.slot .dropzone{margin-top:9px;min-height:42px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:.84rem;color:var(--text-mute);border:1px dashed var(--border);background:var(--bg-elev)}
+.slot.over{border-color:var(--brand);background:var(--brand-soft)}
+.slot.filled{border-style:solid;border-color:var(--green);background:var(--green-soft)}
+.slot.filled .dropzone{border:0;background:transparent;color:var(--green);font-weight:700;justify-content:flex-start;padding:0 4px}
+.slot.bad{animation:shake .4s}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}40%{transform:translateX(7px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
+
+/* AI Critique Lab */
+.critique{border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-elev);margin-bottom:14px;overflow:hidden}
+.critique-head{padding:13px 16px;background:var(--bg-soft);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.critique-head h4{margin:0;font-size:.97rem}
+.ai-bubble{display:flex;gap:11px;padding:14px 16px;background:var(--violet-soft);border-bottom:1px solid var(--border)}
+.ai-avatar{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--violet),var(--brand));color:#fff;display:grid;place-items:center;font-size:15px;flex:0 0 auto}
+.ai-text{flex:1;min-width:0;font-size:.92rem}
+.sent{display:block;padding:9px 11px;border-radius:9px;margin:0 0 8px;background:var(--bg-elev);border:1px solid var(--border);position:relative}
+.sent:last-child{margin-bottom:0}
+.sent .sent-text{display:block;margin-bottom:8px}
+.verdicts{display:flex;gap:6px;flex-wrap:wrap}
+.vbtn{font:inherit;font-size:.74rem;font-weight:750;padding:4px 10px;border-radius:999px;border:1.5px solid var(--border-strong);background:var(--bg);cursor:pointer;transition:all .14s;color:var(--text-soft)}
+.vbtn:hover{border-color:var(--brand-2)}
+.vbtn.on[data-v="accept"]{background:var(--green);border-color:var(--green);color:#fff}
+.vbtn.on[data-v="modify"]{background:var(--amber);border-color:var(--amber);color:#fff}
+.vbtn.on[data-v="reject"]{background:var(--rose);border-color:var(--rose);color:#fff}
+.critique-body{padding:14px 16px}
+.field{display:block;margin-bottom:12px}
+.field>span{display:block;font-size:.79rem;font-weight:740;color:var(--text-soft);margin-bottom:5px;letter-spacing:.01em}
+input[type=text],textarea,select{
+  width:100%;font:inherit;font-size:.9rem;padding:10px 12px;border-radius:10px;border:1.5px solid var(--border);
+  background:var(--bg);color:var(--text);transition:border-color .15s,box-shadow .15s;resize:vertical
+}
+input[type=text]:focus,textarea:focus,select:focus{border-color:var(--brand-2);box-shadow:var(--ring);outline:none}
+textarea{min-height:74px;line-height:1.55}
+.checkline{display:flex;align-items:flex-start;gap:9px;font-size:.86rem;margin:8px 0;cursor:pointer}
+.checkline input{width:18px;height:18px;margin-top:2px;accent-color:var(--brand);flex:0 0 auto}
+
+/* Chat sim */
+.chat{background:var(--bg-sunken);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px;max-height:420px;overflow-y:auto;display:flex;flex-direction:column;gap:11px}
+.msg{max-width:86%;padding:10px 13px;border-radius:14px;font-size:.88rem;box-shadow:var(--shadow-sm);white-space:pre-wrap}
+.msg.user{align-self:flex-end;background:var(--brand);color:#fff;border-bottom-right-radius:4px}
+.msg.ai{align-self:flex-start;background:var(--bg-elev);border:1px solid var(--border);border-bottom-left-radius:4px}
+.msg .who{font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;opacity:.7;margin-bottom:4px}
+
+/* Concept map */
+.map-canvas{position:relative;background:var(--bg-soft);border:1px solid var(--border);border-radius:var(--radius-sm);min-height:300px;display:grid;place-items:center;padding:24px;overflow:hidden}
+.map-core{background:linear-gradient(135deg,var(--brand),var(--violet));color:#fff;padding:14px 18px;border-radius:14px;font-weight:750;font-size:.9rem;box-shadow:var(--shadow);text-align:center;max-width:280px;z-index:2}
+.map-ring{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:22px;z-index:2}
+.map-node{padding:9px 14px;border-radius:11px;background:var(--bg-elev);border:2px solid var(--tc,var(--brand));font-weight:700;font-size:.84rem;box-shadow:var(--shadow-sm);display:flex;align-items:center;gap:7px}
+.map-node .swatch{width:10px;height:10px;border-radius:3px;background:var(--tc,var(--brand))}
+.map-node .x{cursor:pointer;color:var(--text-mute);font-weight:800;font-size:.9rem;line-height:1}
+.map-node .x:hover{color:var(--rose)}
+.map-empty{color:var(--text-mute);font-size:.88rem;text-align:center}
+
+/* Progress checklist */
+.tasklist{display:grid;gap:8px}
+.task{display:flex;align-items:center;gap:11px;padding:11px 13px;border:1px solid var(--border);border-radius:10px;background:var(--bg-elev);cursor:pointer;font-size:.9rem;transition:all .15s}
+.task:hover{border-color:var(--brand-2);background:var(--bg-soft)}
+.task .box{width:22px;height:22px;border-radius:7px;border:2px solid var(--border-strong);display:grid;place-items:center;flex:0 0 auto;color:transparent;font-size:.75rem;transition:all .15s}
+.task.done{border-color:var(--green);background:var(--green-soft)}
+.task.done .box{background:var(--green);border-color:var(--green);color:#fff}
+.task.done .label{text-decoration:line-through;text-decoration-color:var(--text-mute);color:var(--text-soft)}
+.task .label{flex:1;font-weight:640}
+
+/* Ring stat */
+.ring{--p:0;width:78px;height:78px;border-radius:50%;display:grid;place-items:center;flex:0 0 auto;
+  background:conic-gradient(var(--brand) calc(var(--p)*1%),var(--bg-sunken) 0)}
+.ring .inner{width:60px;height:60px;border-radius:50%;background:var(--bg-elev);display:grid;place-items:center;font-weight:820;font-size:1rem;border:1px solid var(--border)}
+
+/* Stat tiles */
+.stat{background:var(--bg-elev);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px;box-shadow:var(--shadow-sm)}
+.stat .n{font-size:1.5rem;font-weight:820;letter-spacing:-.02em;line-height:1.1}
+.stat .l{font-size:.78rem;color:var(--text-mute);font-weight:640;text-transform:uppercase;letter-spacing:.06em}
+
+/* Misc */
+.toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,140%);background:var(--text);color:var(--bg);padding:11px 20px;border-radius:999px;font-size:.87rem;font-weight:650;z-index:120;box-shadow:var(--shadow-lg);transition:transform .35s cubic-bezier(.2,.9,.25,1);max-width:90vw;text-align:center}
+.toast.show{transform:translate(-50%,0)}
+.hero{background:linear-gradient(140deg,var(--brand) 0%,var(--violet) 55%,var(--teal) 130%);color:#fff;border-radius:var(--radius);padding:34px 30px;box-shadow:var(--shadow-lg);position:relative;overflow:hidden;margin-top:22px}
+.hero::after{content:"";position:absolute;inset:0;background:radial-gradient(600px 200px at 90% 0%,rgba(255,255,255,.22),transparent 70%);pointer-events:none}
+.hero h1{color:#fff;margin-bottom:.35em;position:relative;z-index:1}
+.hero p{color:rgba(255,255,255,.94);max-width:70ch;position:relative;z-index:1;margin-bottom:1em}
+.hero .chips .pill{background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.3);color:#fff;backdrop-filter:blur(4px)}
+.meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-top:18px;position:relative;z-index:1}
+.meta-item{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.26);border-radius:12px;padding:11px 13px;backdrop-filter:blur(5px)}
+.meta-item .k{font-size:.68rem;text-transform:uppercase;letter-spacing:.09em;font-weight:800;opacity:.85}
+.meta-item .v{font-weight:740;font-size:.94rem;margin-top:2px}
+.muted{color:var(--text-mute)}
+.small{font-size:.83rem}
+.center{text-align:center}
+.mt0{margin-top:0}.mb0{margin-bottom:0}
+.inline-actions{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin-top:14px}
+.two-col-list{columns:2;column-gap:26px}
+@media(max-width:640px){.two-col-list{columns:1}}
+footer{border-top:1px solid var(--border);padding:26px 0 40px;color:var(--text-mute);font-size:.85rem;background:var(--bg-elev)}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.tl{position:relative;padding-left:26px;margin:6px 0 0}
+.tl::before{content:"";position:absolute;left:8px;top:4px;bottom:4px;width:2px;background:var(--border-strong)}
+.tl-item{position:relative;padding:0 0 16px}
+.tl-item::before{content:"";position:absolute;left:-24px;top:5px;width:12px;height:12px;border-radius:50%;background:var(--brand);border:2px solid var(--bg-elev);box-shadow:0 0 0 2px var(--border)}
+.tl-item:last-child{padding-bottom:0}
+.tl-item .tt{font-weight:730;font-size:.93rem}
+.tl-item .td{font-size:.85rem;color:var(--text-soft)}
+@media(max-width:560px){
+  .brandmark span:last-child{display:none}
+  .hide-xs{display:none}
+  .progress-track{width:70px}
+  .topbar-inner{gap:8px}
+}
+@media print{
+  .topbar,.tocnav,.btn,.no-print{display:none!important}
+  body{background:#fff}
+  .card,.tool-card,details.acc{break-inside:avoid;box-shadow:none}
+  details.acc{display:block}
+  details.acc .acc-body{display:block!important}
+  section.block{padding:14px 0}
+}
+</style>
 </head>
 <body>
-  <div class="container">
-    <h1>Hello World!</h1>
-    <p>Welcome to your new project.</p>
+<a class="skip" href="#main">Skip to lesson content</a>
+
+<!-- ================= TOP BAR ================= -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brandmark">
+      <span class="dot" aria-hidden="true">◎</span>
+      <span>Teacher Education · Critical Inquiry Seminar</span>
+    </div>
+    <div class="topbar-spacer"></div>
+    <div class="progress-pill" title="Your saved progress on this device">
+      <span id="progressText">0% complete</span>
+      <span class="progress-track"><span class="progress-fill" id="progressFill"></span></span>
+    </div>
+    <div class="topbar-actions">
+      <button class="btn btn-sm" id="themeBtn" type="button" aria-label="Toggle colour theme">🌙 <span class="hide-xs">Theme</span></button>
+      <button class="btn btn-sm" id="printBtn" type="button">🖨️ Print</button>
+      <button class="btn btn-sm" id="resetBtn" type="button">↺ Reset</button>
+    </div>
   </div>
-  <script src="script.js"></script>
+</header>
+
+<nav class="tocnav" aria-label="Lesson sections">
+  <div class="tocnav-inner"></div>
+</nav>
+
+<main id="main">
+<div class="wrap">
+
+<!-- SERVER TEMPLATE — do not edit this file. The assembly step fills it from data.json. -->
+
+<!-- ================= HERO / OVERVIEW ================= -->
+<section id="overview" class="block">
+  <div class="hero">
+    <p class="eyebrow" style="color:rgba(255,255,255,.85)">Teacher Education · Critical Inquiry Seminar</p>
+    <h1>Teacher Professionalism in Local and International Contexts</h1>
+    <p>This Critical Inquiry Seminar treats teacher professionalism as a contested idea rather than a fixed checklist. Across 150 minutes, 90 first-year students interrogate competing conceptions, compare local and international frameworks, and build an evidence-based position on how professionalism should be understood and enacted across contexts. AI integration was not requested for this lesson, so the core design is deliberately human-led; the AI panels below are an optional critical-evaluation extension only.</p>
+    <div class="chips">
+      <span class="pill">⏱ 150 minutes</span>
+      <span class="pill">👥 90 students</span>
+      <span class="pill">🎓 First-year undergraduates</span>
+      <span class="pill">🌐 English</span>
+    </div>
+    <div class="meta-grid">
+      <div class="meta-item"><div class="k">Primary Pedagogy</div><div class="v">Critical Inquiry Seminar</div></div>
+      <div class="meta-item"><div class="k">Framing</div><div class="v">Contested concept · comparative policy analysis</div></div>
+      <div class="meta-item"><div class="k">AI Role</div><div class="v">Not used in the core design — optional critical-evaluation extension only</div></div>
+      <div class="meta-item"><div class="k">Assessment</div><div class="v">Formative inquiry + summative Critical Inquiry Portfolio</div></div>
+    </div>
+  </div>
+
+  <!-- live counters — the JS fills these; keep the ids -->
+  <div class="grid g4" style="margin-top:20px">
+    <div class="stat"><div class="n" id="statTasks">0 / 0</div><div class="l">Tasks complete</div></div>
+    <div class="stat"><div class="n" id="statPre">—</div><div class="l">Pre-test score</div></div>
+    <div class="stat"><div class="n" id="statPost">—</div><div class="l">Post-test score</div></div>
+    <div class="stat"><div class="n" id="statCrit">0 / 0</div><div class="l">AI critiques logged</div></div>
+  </div>
+
+  <div class="card" style="margin-top:20px">
+    <div class="card-title"><span class="ic">📍</span> Lesson roadmap</div>
+    <div class="tl">
+      <div class="tl-item"><div class="tt">Introduction — the contested case · 20 min</div><div class="td">Provocative scenario and Mentimeter vote (7), diagnostic review and misconception analysis (8), framing of the inquiry question and real-world connection (5).</div></div><div class="tl-item"><div class="tt">Development — inquiry and critique · 105 min</div><div class="td">Concept-map mini-lecture and think-pair-share (15), CEACE case analysis in 15 groups (30), jigsaw exchange and Padlet evidence wall (20), structured debate with position switching (25), Compass position-building (15).</div></div><div class="tl-item"><div class="tt">Synthesis &amp; closure · 25 min</div><div class="td">Post-test (8), peer-teaching summaries (7), critical inquiry reflection discussion (7), preview of the next session and exit ticket (3).</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SECTION 1 — OUTCOMES ================= -->
+<section id="ilos" class="block">
+  <div class="sec-head">
+    <div class="sec-num">1</div>
+    <div class="t">
+      <p class="eyebrow">Section 1</p>
+      <h2>Intended Learning Outcomes</h2>
+      <p>Each outcome is engineered for human-led critical inquiry. Because AI integration was not requested, the AI column records that deliberate design choice and flags where an optional extension could sit.</p>
+    </div>
+  </div>
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th style="width:110px">ILO</th><th>Description</th><th style="width:38%">🤖 AI Integration</th></tr></thead>
+      <tbody>
+        <tr><td>ILO1</td><td>Analyze competing conceptions of teacher professionalism — professional knowledge, autonomy, ethics, accountability, collaboration and professional identity.</td><td>Not used: analysis is human-led. AI integration was not requested for this lesson.</td></tr><tr><td>ILO2</td><td>Evaluate how local and international cultural, political, economic and institutional contexts shape teacher professionalism and teachers&#39; professional roles.</td><td>Not used in the core task. An optional extension asks students to evaluate the contextual blind spots in an AI summary.</td></tr><tr><td>ILO3</td><td>Critically compare local and international frameworks or cases, identifying assumptions, power relations and implications for equity and social justice.</td><td>Optional extension only: critique AI-generated comparisons for oversimplification and missing voices. Not assessed.</td></tr><tr><td>ILO4</td><td>Construct a reasoned, evidence-based position on how teachers and teacher educators can navigate tensions in teacher professionalism across contexts.</td><td>Not used: the position must be the student&#39;s own reasoned judgement, defended with evidence.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout ai">
+    <div class="ct">🤖 Design principle</div>
+    <p class="mb0">This seminar was designed without AI integration. Where the optional AI Critique Lab, chat simulation or decision log are used, the stance is: AI output is a claim to be interrogated, never evidence. Students check every claim against the set readings, mark what they accept, modify or reject, and record their reasoning and source.</p>
+  </div>
+</section>
+
+<!-- ================= SECTION 2 — PRE-CLASS ================= -->
+<section id="preclass" class="block">
+  <div class="sec-head">
+    <div class="sec-num">2</div>
+    <div class="t">
+      <p class="eyebrow">Section 2</p>
+      <h2>Pre-Class Preparation</h2>
+      <p>Before class, students read five international sources and one local policy excerpt, then complete a six-item LMS diagnostic quiz. The quiz surfaces the misconceptions that the seminar explicitly revisits.</p>
+    </div>
+  </div>
+
+  <div class="grid g2">
+    <div class="card">
+      <div class="card-title"><span class="ic">📚</span> Required preparation</div>
+      <ul class="mb0 small">
+        <li>Read the OECD TALIS programme overview, focusing on what it measures about teacher autonomy, collaboration and self-efficacy.</li><li>Read the UNESCO Teachers page, noting how teacher professionalism is framed in global policy.</li><li>Browse Education International&#39;s policy and campaign material on the status, rights and professionalism of teachers.</li><li>Read the AITSL Australian Professional Standards for Teachers (all seven standards at a glance).</li><li>Read the Teaching Council of Ireland Code of Professional Conduct.</li><li>Read the instructor-selected local teacher standards or ministry policy excerpt for your jurisdiction and annotate one assumption it makes about teachers.</li><li>Complete the six-item diagnostic pre-test in your LMS before class (allow 10 minutes).</li>
+      </ul>
+      <div class="inline-actions">
+        <button class="btn btn-primary" id="startPre" type="button">▶ Start the diagnostic pre-test</button>
+      </div>
+      <div id="preQuiz" style="margin-top:16px;display:none"></div>
+    </div>
+    <div class="card tight">
+      <div class="card-title"><span class="ic">✅</span> Pre-class checklist</div>
+      <div class="tasklist" id="preTasks"></div>
+    </div>
+  </div>
+
+  <details class="acc">
+    <summary><span class="badge pill teal">Tool</span> Run the diagnostic pre-test in your LMS and set up Mentimeter, Padlet and Google Forms (Blackboard / Moodle / Canvas)</summary>
+    <div class="acc-body">
+      <ol class="steps">
+        <li>In your LMS (Moodle, Canvas or Blackboard), create a quiz titled &#39;Teacher Professionalism: Diagnostic Pre-Test&#39; and enter the six multiple-choice items from this plan. Purpose: surface prior conceptions before inquiry. Objective: ILO 1.</li><li>Set one attempt, no time limit, immediate per-item feedback, and hide the score until submission so that students read the explanations. This turns the quiz into a learning task rather than a ranking.</li><li>Open the quiz 48 hours before class and close it at the start of the session; export the item-level report as a CSV for the misconception review.</li><li>Group the six items by the three misconception categories (core concepts, application, contextual critique), identify the two most-missed items, and use those to script the 8-minute review.</li><li>In Mentimeter, create a poll titled &#39;Professionalism Tensions&#39; with the options Autonomy, Accountability, Ethics and Collaboration, plus a second open-ended slide &#39;It depends — explain&#39;. Purpose: make the contested framing visible in one minute. Objective: ILO 1.</li><li>Set the Mentimeter poll to one vote per device, hide results until all votes are cast, then reveal them and ask two students to defend a choice they did not make. This rehearses perspective-taking before group work.</li><li>Add a Mentimeter word-cloud or ranking slide asking &#39;Which dimension is most neglected in your local context?&#39; Purpose: connect the concept map to students&#39; own settings. Objective: ILO 2.</li><li>In Padlet, create a wall titled &#39;Evidence Wall — Teacher Professionalism&#39; with five columns: Claim, Evidence, Assumption, Context, Equity. Purpose: capture group CEACE analysis in public view. Objective: ILOs 2 and 3.</li><li>Set the Padlet to &#39;can write&#39; with comments enabled and a profanity filter, share the link and QR code on the projector, and assign one column per group role (evidence tracker, equity analyst, note-taker).</li><li>Create a Google Form exit ticket with three required questions: one concept you now understand better, one local-international tension still unresolved, and one question you would ask a policymaker. Purpose: capture learning and remaining tension. Objective: ILO 4.</li><li>In a shared Google Drive folder, create one Google Doc per group from a CEACE template with five headings and a Compass section with four quadrants; share the folder with view-comment rights. Purpose: scaffold group synthesis. Objective: ILOs 3 and 4.</li><li>Test every link, QR code and projector view 24 hours before class, and print a low-tech backup packet (readings, CEACE template, exit ticket) for students without devices.</li>
+      </ol>
+    </div>
+  </details>
+</section>
+
+<!-- ================= SECTION 3 — ACTIVITIES ================= -->
+<section id="activities" class="block">
+  <div class="sec-head">
+    <div class="sec-num">3</div>
+    <div class="t">
+      <p class="eyebrow">Section 3</p>
+      <h2>Teaching &amp; Learning Activities</h2>
+      <p>The run sheet moves from a provocative hook (20 min) — &#39;A local teacher is praised for high test scores but criticized for not adapting to diverse learners; an international report ranks the system highly. Is this teacher professional?&#39; — through a modelled concept map, revisited to show how the dimensions shift across local and international policy contexts, and a think-pair-share on the most valued and most neglected dimensions (15 min), CEACE case analysis in 15 groups (30 min), a jigsaw exchange and Padlet evidence wall (20 min), a structured debate on the motion &#39;Teacher professionalism is best strengthened by external accountability standards rather than professional autonomy&#39; with a mid-debate position switch and a contextual-nuance requirement (25 min), and Compass position-building across autonomy, accountability, ethics and equity, and collaboration and context (15 min), to synthesis and closure (25 min). Guiding questions run throughout: Whose definition of professionalism is promoted, and whose voice is missing? What assumptions about teachers and accountability underlie this framework? How do local histories and policy borrowing shape expectations? What are the equity implications for teachers and learners? When does accountability support professionalism, and when does it undermine it?</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="ic">1</span> Round 1 — CEACE case analysis and jigsaw exchange</div>
+    <p class="small">Groups of five to six (15 groups) receive a case packet with four short excerpts: a local standards or ministry policy excerpt, an OECD TALIS indicator on autonomy or collaboration, a UNESCO teacher-policy excerpt, and a news article on accountability, identity or equity. The instructor models the CEACE protocol — Claim, Evidence, Assumption, Context, Equity — on the first excerpt (5 min); groups complete a CEACE chart for their assigned excerpt (20 min); the class then regroups into jigsaw groups, where each expert explains their excerpt and its CEACE analysis to peers from other groups and the group records one claim, one assumption and one equity implication on the Padlet Evidence Wall (20 min).</p>
+    <div class="grid g2">
+      <div class="card tight">
+        <div class="card-title"><span class="ic">👥</span> Peer-work checklist</div>
+        <div class="tasklist" id="peerTasks"></div>
+      </div>
+      <div class="card tight">
+        <div class="card-title"><span class="ic">📝</span> Observation journal (instructor)</div>
+        <label class="field"><span>What worked: which question or scaffold produced the sharpest evidence-based discussion?</span><textarea data-journal="worked"></textarea></label>
+        <label class="field"><span>Where did students struggle: which groups accepted a claim without interrogating its assumptions or equity implications?</span><textarea data-journal="struggle"></textarea></label>
+      </div>
+    </div>
+    <div class="inline-actions"><button class="btn btn-sm" data-task="dev-r1" type="button">✓ Mark Round 1 complete</button></div>
+  </div>
+
+  <!-- AI critique lab — the JS renders one critique per entry in LESSON_DATA.critiques -->
+  <div class="card" style="border-color:var(--violet)">
+    <div class="card-title"><span class="ic" style="background:var(--violet-soft);color:var(--violet)">🤖</span> AI Critique Lab</div>
+    <div class="callout note">
+      <div class="ct">🔍 Your job is to find what the AI got wrong</div>
+      <p class="mb0 small">Check each claim against your textbook and your own reasoning. A confident tone is not evidence of correctness.</p>
+    </div>
+    <div id="critiqueLab"></div>
+    <div class="score-bar" style="margin-bottom:0">
+      <div><div class="score-big" id="critCount">0/0</div><div class="small muted">Fully critiqued</div></div>
+      <div style="flex:1;min-width:200px">
+        <div class="cat-row" style="grid-template-columns:1fr"><span class="small muted">Verdicts cast: <strong id="critVerdicts">0</strong> / <span id="critTotal">0</span></span><span class="cat-track"><span class="cat-fill" id="critFill" style="width:0%;background:linear-gradient(90deg,var(--violet),var(--brand))"></span></span></div>
+      </div>
+      <button class="btn btn-sm" id="critReset" type="button">Clear lab</button>
+    </div>
+  </div>
+
+  <!-- simulated AI chat -->
+  <div class="card" style="border-color:var(--violet)">
+    <div class="card-title"><span class="ic" style="background:var(--violet-soft);color:var(--violet)">💬</span> Practice the synthesis prompt</div>
+    <p class="small">Pick a prompt to see a simulated AI response, then write your critique.</p>
+    <div class="chat" id="chatWindow" aria-live="polite">
+      <div class="msg ai"><div class="who">AI</div>Optional extension: I can produce a confident summary of teacher professionalism. Your job is to test it against the readings — choose a prompt, then critique my answer below.</div>
+    </div>
+    <div class="chips" id="chatPrompts"></div>
+    <label class="field"><span>Your critique of the AI response above (saved to your portfolio)</span>
+      <textarea id="chatCritique" placeholder="Which claim is overstated, which evidence is missing, and what context does this answer ignore?"></textarea>
+    </label>
+    <div class="inline-actions"><button class="btn btn-sm btn-primary" id="chatSave" type="button">💾 Save critique</button></div>
+  </div>
+
+  <div class="callout ai">
+    <div class="ct">🎓 Instructor guidance on critical AI use</div>
+    <ul class="mb0"><li>Model the CEACE protocol aloud with the local excerpt before groups begin, and make your own assumptions visible while modelling.</li><li>Protect the local-international balance: do not let either framing become the unmarked &#39;normal&#39; against which the other is judged.</li><li>Circulate with two prompts only — &#39;What is the evidence for that?&#39; and &#39;Who is missing from this claim?&#39; — to keep inquiry open rather than steering answers.</li><li>Name misconceptions when you hear them (compliance equals professionalism, standards are neutral, autonomy and accountability are opposites) and ask the group to test them against the case packet.</li><li>Record the language students use about teachers, accountability and equity; it is data for the next session and for your own reflection.</li><li>If you use the optional AI panels, require students to log every accept/modify/reject decision with a reason and an authoritative source, and treat unverified AI claims as inadmissible evidence.</li></ul>
+  </div>
+</section>
+
+<!-- ================= SECTION 4 — ASSESSMENT ================= -->
+<section id="assessment" class="block">
+  <div class="sec-head">
+    <div class="sec-num">4</div>
+    <div class="t">
+      <p class="eyebrow">Section 4</p>
+      <h2>Assessment Methods</h2>
+      <p>Formative assessment is embedded in inquiry and observation; summative assessment is a Critical Inquiry Portfolio of comparative analysis, a position paper and a reflective memo, marked against a six-criterion rubric: critical analysis of professionalism concepts, contextual comparison, evidence and source evaluation, argumentation and position, reflexivity and implications, and collaboration and inquiry process.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="ic">🎯</span> Post-test <span class="pill brand">6 items</span></div>
+    <p class="small">Six items mirror the pre-test&#39;s three misconception categories — core concepts, application to cases and contextual critique — so growth can be compared item by item.</p>
+    <div class="inline-actions">
+      <button class="btn btn-primary" id="startPost" type="button">▶ Start the post-test</button>
+    </div>
+    <div id="postQuiz" style="margin-top:16px;display:none"></div>
+    <div id="compareBox" style="margin-top:16px"></div>
+  </div>
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Method</th><th>Weight</th><th>What it assesses</th></tr></thead>
+      <tbody><tr><td>LMS diagnostic pre-test and post-test</td><td>Formative — ungraded</td><td>Initial conceptions, misconception categories and conceptual growth across the session.</td></tr><tr><td>CEACE case-analysis charts</td><td>Formative — ungraded</td><td>Depth of claim, evidence, assumption, context and equity analysis.</td></tr><tr><td>Peer-assessment checklist</td><td>Formative — ungraded</td><td>Evidence quality, questioning of assumptions, respect for multiple perspectives and collaboration.</td></tr><tr><td>Exit tickets and reflection discussion</td><td>Formative — ungraded</td><td>Metacognition, remaining tensions and questions for policymakers.</td></tr><tr><td>Critical Inquiry Portfolio — comparative case analysis</td><td>35%</td><td>Critical comparison of one local and one international framework or case, including assumptions and equity implications.</td></tr><tr><td>Critical Inquiry Portfolio — position paper</td><td>40%</td><td>A reasoned, evidence-based response to the inquiry question.</td></tr><tr><td>Critical Inquiry Portfolio — reflective memo</td><td>25%</td><td>How the student&#39;s understanding of teacher professionalism changed through critical inquiry.</td></tr></tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ================= SECTION 5 — ALIGNMENT ================= -->
+<section id="alignment" class="block">
+  <div class="sec-head">
+    <div class="sec-num">5</div>
+    <div class="t">
+      <p class="eyebrow">Section 5</p>
+      <h2>Constructive Alignment Matrix</h2>
+      <p>Every activity is designed to produce evidence for the outcome it serves; the matrix below shows the constructive alignment and the cognitive demand of each row.</p>
+    </div>
+  </div>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>ILO</th><th>Learning activity</th><th>Assessment</th><th>Cognitive level</th></tr></thead>
+      <tbody><tr><td>ILO 1 — Analyze competing conceptions</td><td>Mini-lecture with concept map, think-pair-share and flashcard matching — inquiry into contested definitions and assumptions</td><td>Diagnostic and post-test, exit ticket, portfolio concept analysis</td><td>Analyze</td></tr><tr><td>ILO 2 — Evaluate contextual influences</td><td>CEACE case analysis using local and international excerpts — inquiry into context, power and policy borrowing</td><td>CEACE chart review, comparative case analysis</td><td>Evaluate</td></tr><tr><td>ILO 3 — Critically compare frameworks</td><td>Jigsaw exchange, Padlet evidence wall and structured debate — critical dialogue and evidence evaluation</td><td>Peer-assessment checklist, position paper</td><td>Evaluate / analyze</td></tr><tr><td>ILO 4 — Construct a reasoned position</td><td>Context-Sensitive Professionalism Compass and synthesis discussion — seminar-style synthesis and reasoned judgement</td><td>Critical Inquiry Portfolio and reflective memo</td><td>Create</td></tr></tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ================= SECTION 6 — RESOURCES ================= -->
+<section id="resources" class="block">
+  <div class="sec-head">
+    <div class="sec-num">6</div>
+    <div class="t">
+      <p class="eyebrow">Section 6</p>
+      <h2>Required Resources &amp; Technology</h2>
+      <p>The core sources are open-access international and professional-body pages, paired with an instructor-selected local excerpt. Technology: the LMS quiz engine, Mentimeter for polling, Padlet for the evidence wall, Google Forms for exit tickets, Google Docs or shared slides for group synthesis, a projector and presentation slides, and printed case packets with CEACE templates.</p>
+    </div>
+  </div>
+
+  <h3>Reference cards</h3>
+  <div class="grid g3" id="theoryCards"></div>
+
+  <h3 style="margin-top:30px">🃏 Flashcard deck — drag-and-drop matching</h3>
+  <div class="card">
+    <p class="small">Drag an item chip (or tap it, then tap a slot) onto the matching description. Correct matches lock in green.</p>
+    <div class="fc-arena">
+      <div>
+        <p class="small muted" style="margin:0 0 8px"><strong>Item chips</strong></p>
+        <div class="chip-pool" id="chipPool"></div>
+      </div>
+      <div>
+        <p class="small muted" style="margin:0 0 8px"><strong>Descriptions</strong></p>
+        <div class="slots" id="slotPool"></div>
+      </div>
+    </div>
+    <div class="inline-actions">
+      <button class="btn btn-sm" id="fcReset" type="button">↺ Reset deck</button>
+      <span class="pill" id="fcScore">0 / 0 matched</span>
+      <button class="btn btn-sm" data-task="flashcards" type="button">✓ Mark deck complete</button>
+    </div>
+  </div>
+
+  <h3 style="margin-top:30px">🎮 Gamified scenario quiz</h3>
+  <div class="card">
+    <p class="small">Read each scenario, identify which dimension of teacher professionalism best explains it, then use the peer-review prompt to interrogate the judgement.</p>
+    <div id="scenarioQuiz"></div>
+    <div class="inline-actions">
+      <button class="btn btn-sm btn-primary" id="scenarioCheck" type="button">Check answers</button>
+      <button class="btn btn-sm" id="scenarioReset" type="button">↺ Try again</button>
+      <span class="pill" id="scenarioScore">—</span>
+    </div>
+  </div>
+
+  <h3 style="margin-top:30px">🧠 Concept-map builder <span class="pill brand">Summative artefact</span></h3>
+  <div class="card">
+    <p class="small">Choose a scenario, add at least three nodes, and record how each applies.</p>
+    <div class="grid g2">
+      <div>
+        <label class="field"><span>Your real-world scenario</span>
+          <select id="cmScenario">
+            <option value="">— Select a scenario —</option>
+            <option>A ministry introduces national teacher standards and requires evidence portfolios for registration. Teachers say the standards clarify expectations but take time away from planning.</option><option>In one school, teachers design their own interdisciplinary curriculum and defend it to parents and the board. Results vary between classes.</option><option>A teacher stays late to support a student facing housing insecurity, even though this work appears in no policy document or workload allocation.</option><option>A system ranks schools by test scores and publishes league tables. Teachers report teaching to the test and discouraging struggling students from sitting exams.</option><option>Teachers meet weekly in inquiry groups to examine student work and co-plan, and new teachers are mentored by the group rather than left alone.</option><option>A teacher trained abroad returns home and finds that &#39;good teaching&#39; means strict discipline and deference, not the questioning pedagogy she learned.</option>
+            <option>Other (write your own below)</option>
+          </select>
+        </label>
+        <label class="field"><span>Or write your own scenario</span>
+          <input type="text" id="cmCustom" placeholder="e.g. A teacher is praised for test gains while multilingual learners are quietly moved out of her class.">
+        </label>
+        <label class="field"><span>Add a node</span>
+          <select id="cmTheory"></select>
+        </label>
+        <label class="field"><span>How does this apply to the scenario? (connection label)</span>
+          <textarea id="cmNote" placeholder="e.g. This shows accountability narrowing professionalism: success is defined by scores while equity and care become invisible."></textarea>
+        </label>
+        <div class="inline-actions">
+          <button class="btn btn-sm btn-primary" id="cmAdd" type="button">＋ Add node</button>
+          <button class="btn btn-sm" id="cmClear" type="button">Clear map</button>
+        </div>
+        <label class="checkline"><input type="checkbox" id="cmAI"><span>This map includes AI-generated content — I have marked it and documented my critique.</span></label>
+      </div>
+      <div>
+        <div class="map-canvas" id="mapCanvas">
+          <div class="map-empty" id="mapEmpty">Your concept map will appear here.<br><span class="small">Add at least three nodes.</span></div>
+          <div id="mapCore" style="display:none">
+            <div class="map-core" id="mapScenarioLabel">Scenario</div>
+            <div class="map-ring" id="mapRing"></div>
+          </div>
+        </div>
+        <div class="inline-actions">
+          <button class="btn btn-sm" id="cmExport" type="button">⬇ Export map (.txt)</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SECTION 7 — DIFFERENTIATION ================= -->
+<section id="differentiation" class="block">
+  <div class="sec-head">
+    <div class="sec-num">7</div>
+    <div class="t">
+      <p class="eyebrow">Section 7</p>
+      <h2>Differentiation &amp; Inclusivity</h2>
+      <p>The seminar offers multiple entry points — visual, textual, oral and written — with structured roles, sentence frames and accessible materials so that all 90 students can participate in critical inquiry.</p>
+    </div>
+  </div>
+  <div class="grid g2">
+    <div class="card"><div class="card-title"><span class="ic">♿</span> Support</div><ul class="mb0 small"><li>Multiple entry points: visual concept map, policy text, oral debate or written reflection.</li><li>Group roles — facilitator, evidence tracker, equity analyst, note-taker and presenter — rotated during the jigsaw to structure participation.</li><li>Sentence frames for dialogue and writing: &#39;The evidence suggests… However, this assumption may overlook… A more context-sensitive view would…&#39;</li><li>Pre-teach key terms — autonomy, accountability, professional identity and policy borrowing — with local examples and a glossary.</li><li>Accessibility: captioned videos, large-print case packets, translated key terms, a quiet reflection option and flexible grouping.</li><li>Provide the CEACE template as a printed grid and as a shared Google Doc for students who prefer typing or need extra time.</li><li>Publish the case packet and Padlet link 48 hours in advance so students with caring or work commitments can prepare.</li></ul></div>
+    <div class="card"><div class="card-title"><span class="ic">🚀</span> Extension</div><ul class="mb0 small"><li>Write a 1,000-word comparative policy brief comparing the local standards with one international framework.</li><li>Lead a Socratic seminar on the debate motion in a later session, using the case packet as evidence.</li><li>Analyze an additional framework (for example the GTCS Standards for Registration in Scotland or a Canadian provincial standard) and present a critique.</li><li>Audit the case packet for missing voices and propose a fifth excerpt that centres equity and student perspective.</li></ul></div>
+  </div>
+</section>
+
+<!-- ================= SECTION 8 — REFLECTION ================= -->
+<section id="reflection" class="block">
+  <div class="sec-head">
+    <div class="sec-num">8</div>
+    <div class="t">
+      <p class="eyebrow">Section 8</p>
+      <h2>Reflection &amp; Improvement</h2>
+      <p>Success is judged by the quality of student questioning, evidence use, perspective-taking and equity analysis — not by how quickly groups agree. The closing reflection asks: Which assumption about teacher professionalism was most challenged today? How did comparing local and international contexts change your view? What evidence would you need before making a policy recommendation? The session ends by previewing the next topic — teacher evaluation, professional development or teacher identity. Instructors also gather a short student survey (&#39;Did the Critical Inquiry Seminar help you analyze local and international contexts? What would improve the inquiry process?&#39;) and review which misconceptions persisted. Modification strategies for the next iteration: update local policy examples each semester, adjust group size and timing for large classes, add evidence-analysis scaffolding, and revise the debate motion to reflect current local and international policy debates.</p>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title"><span class="ic">👥</span> Peer-work self-audit</div>
+    <div class="tasklist" id="allTasks"></div>
+  </div>
+</section>
+
+<!-- ================= PORTFOLIO ================= -->
+<section id="portfolio" class="block">
+  <div class="sec-head">
+    <div class="sec-num">★</div>
+    <div class="t">
+      <p class="eyebrow">Portfolio</p>
+      <h2>Critical Reflection Portfolio</h2>
+      <p>Everything you record here is stored locally on your device. Review it, then export it as evidence for your summative submission.</p>
+    </div>
+  </div>
+
+  <div class="split">
+    <div>
+      <div class="card">
+        <div class="card-title"><span class="ic">✍️</span> AI decision log</div>
+        <label class="field"><span>AI suggestion I accepted (and why)</span><textarea data-log="accept"></textarea></label>
+        <label class="field"><span>AI suggestion I modified (and how)</span><textarea data-log="modify"></textarea></label>
+        <label class="field"><span>AI suggestion I rejected (and why)</span><textarea data-log="reject"></textarea></label>
+        <label class="field"><span>Where human judgment took precedence over AI</span><textarea data-log="human"></textarea></label>
+      </div>
+      <div class="card">
+        <div class="card-title"><span class="ic">💭</span> Final reflection prompts</div>
+        <label class="field"><span>How did AI support or hinder your learning today?</span><textarea data-journal="final1"></textarea></label>
+        <label class="field"><span>When did you need to override AI suggestions?</span><textarea data-journal="final2"></textarea></label>
+        <label class="field"><span>What human judgment mattered most in your group's work?</span><textarea data-journal="final3"></textarea></label>
+        <label class="field"><span>What did you learn about the limitations and biases of AI?</span><textarea data-journal="final4"></textarea></label>
+      </div>
+    </div>
+
+    <div>
+      <div class="card" style="position:sticky;top:120px">
+        <div class="card-title"><span class="ic">📊</span> Portfolio summary</div>
+        <div style="display:flex;gap:16px;align-items:center;margin-bottom:14px">
+          <div class="ring" id="portRing"><div class="inner" id="portRingText">0%</div></div>
+          <div>
+            <div class="small muted">Lesson progress</div>
+            <div style="font-weight:740" id="portTasks">0 of 0 tasks</div>
+          </div>
+        </div>
+        <div class="cat-grid">
+          <div class="cat-row"><span>Pre-test</span><strong id="portPre">Not taken</strong><span class="cat-track"><span class="cat-fill" id="portPreBar" style="background:var(--brand);width:0%"></span></span></div>
+          <div class="cat-row"><span>Post-test</span><strong id="portPost">Not taken</strong><span class="cat-track"><span class="cat-fill" id="portPostBar" style="background:var(--teal);width:0%"></span></span></div>
+          <div class="cat-row"><span>AI critiques</span><strong id="portCrit">0 / 0</strong><span class="cat-track"><span class="cat-fill" id="portCritBar" style="background:var(--violet);width:0%"></span></span></div>
+          <div class="cat-row"><span>Flashcards</span><strong id="portFc">0 / 0</strong><span class="cat-track"><span class="cat-fill" id="portFcBar" style="background:var(--amber);width:0%"></span></span></div>
+          <div class="cat-row"><span>Concept map nodes</span><strong id="portCm">0</strong><span class="cat-track"><span class="cat-fill" id="portCmBar" style="background:var(--green);width:0%"></span></span></div>
+        </div>
+        <div class="inline-actions">
+          <button class="btn btn-sm btn-primary" id="exportAll" type="button">⬇ Export portfolio (.json)</button>
+          <button class="btn btn-sm" id="exportText" type="button">⬇ Export readable (.txt)</button>
+        </div>
+        <p class="small muted" style="margin:12px 0 0">Nothing is uploaded anywhere — all data stays in your browser's local storage.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="mb0"><strong>Teacher Professionalism in Local and International Contexts</strong> — First-year undergraduate teacher education · Critical Inquiry Seminar. Session tools: <a href="https://www.mentimeter.com" target="_blank" rel="noopener">create a Mentimeter poll</a> · <a href="https://padlet.com" target="_blank" rel="noopener">build a Padlet evidence wall</a> · <a href="https://docs.google.com/forms" target="_blank" rel="noopener">collect exit tickets with Google Forms</a>.</p>
+    <p class="small mb0" style="margin-top:6px">Progress and reflections are stored locally in your browser. Use <em>Export portfolio</em> to keep a copy.</p>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+window.LESSON_DATA = {"meta":{"title":"Teacher Professionalism in Local and International Contexts","description":"A 150-minute Critical Inquiry Seminar for first-year undergraduates that interrogates competing conceptions of teacher professionalism and compares local and international frameworks, policies and cases.","slug":"teacher-professionalism-local-international","storeKey":"teacher_professionalism_v1","intro":"This Critical Inquiry Seminar treats teacher professionalism as a contested idea rather than a fixed checklist. Across 150 minutes, 90 first-year students interrogate competing conceptions, compare local and international frameworks, and build an evidence-based position on how professionalism should be understood and enacted across contexts. AI integration was not requested for this lesson, so the core design is deliberately human-led; the AI panels below are an optional critical-evaluation extension only.","duration":"150 minutes","classSize":"90 students","level":"First-year undergraduates","language":"English","pedagogy":"Critical Inquiry Seminar","framing":"Contested concept · comparative policy analysis","aiRole":"Not used in the core design — optional critical-evaluation extension only","assessment":"Formative inquiry + summative Critical Inquiry Portfolio","ilosIntro":"Each outcome is engineered for human-led critical inquiry. Because AI integration was not requested, the AI column records that deliberate design choice and flags where an optional extension could sit.","aiDesignPrinciple":"This seminar was designed without AI integration. Where the optional AI Critique Lab, chat simulation or decision log are used, the stance is: AI output is a claim to be interrogated, never evidence. Students check every claim against the set readings, mark what they accept, modify or reject, and record their reasoning and source.","preclassIntro":"Before class, students read five international sources and one local policy excerpt, then complete a six-item LMS diagnostic quiz. The quiz surfaces the misconceptions that the seminar explicitly revisits.","preclassToolLabel":"Run the diagnostic pre-test in your LMS and set up Mentimeter, Padlet and Google Forms (Blackboard / Moodle / Canvas)","activitiesIntro":"The run sheet moves from a provocative hook (20 min) — 'A local teacher is praised for high test scores but criticized for not adapting to diverse learners; an international report ranks the system highly. Is this teacher professional?' — through a modelled concept map, revisited to show how the dimensions shift across local and international policy contexts, and a think-pair-share on the most valued and most neglected dimensions (15 min), CEACE case analysis in 15 groups (30 min), a jigsaw exchange and Padlet evidence wall (20 min), a structured debate on the motion 'Teacher professionalism is best strengthened by external accountability standards rather than professional autonomy' with a mid-debate position switch and a contextual-nuance requirement (25 min), and Compass position-building across autonomy, accountability, ethics and equity, and collaboration and context (15 min), to synthesis and closure (25 min). Guiding questions run throughout: Whose definition of professionalism is promoted, and whose voice is missing? What assumptions about teachers and accountability underlie this framework? How do local histories and policy borrowing shape expectations? What are the equity implications for teachers and learners? When does accountability support professionalism, and when does it undermine it?","assessmentIntro":"Formative assessment is embedded in inquiry and observation; summative assessment is a Critical Inquiry Portfolio of comparative analysis, a position paper and a reflective memo, marked against a six-criterion rubric: critical analysis of professionalism concepts, contextual comparison, evidence and source evaluation, argumentation and position, reflexivity and implications, and collaboration and inquiry process.","postTestItems":"6 items","postTestDesc":"Six items mirror the pre-test's three misconception categories — core concepts, application to cases and contextual critique — so growth can be compared item by item.","alignmentIntro":"Every activity is designed to produce evidence for the outcome it serves; the matrix below shows the constructive alignment and the cognitive demand of each row.","resourcesIntro":"The core sources are open-access international and professional-body pages, paired with an instructor-selected local excerpt. Technology: the LMS quiz engine, Mentimeter for polling, Padlet for the evidence wall, Google Forms for exit tickets, Google Docs or shared slides for group synthesis, a projector and presentation slides, and printed case packets with CEACE templates.","scenarioIntro":"Read each scenario, identify which dimension of teacher professionalism best explains it, then use the peer-review prompt to interrogate the judgement.","cmCustomPlaceholder":"e.g. A teacher is praised for test gains while multilingual learners are quietly moved out of her class.","cmNotePlaceholder":"e.g. This shows accountability narrowing professionalism: success is defined by scores while equity and care become invisible.","differentiationIntro":"The seminar offers multiple entry points — visual, textual, oral and written — with structured roles, sentence frames and accessible materials so that all 90 students can participate in critical inquiry.","reflectionIntro":"Success is judged by the quality of student questioning, evidence use, perspective-taking and equity analysis — not by how quickly groups agree. The closing reflection asks: Which assumption about teacher professionalism was most challenged today? How did comparing local and international contexts change your view? What evidence would you need before making a policy recommendation? The session ends by previewing the next topic — teacher evaluation, professional development or teacher identity. Instructors also gather a short student survey ('Did the Critical Inquiry Seminar help you analyze local and international contexts? What would improve the inquiry process?') and review which misconceptions persisted. Modification strategies for the next iteration: update local policy examples each semester, adjust group size and timing for large classes, add evidence-analysis scaffolding, and revise the debate motion to reflect current local and international policy debates.","chatOpening":"Optional extension: I can produce a confident summary of teacher professionalism. Your job is to test it against the readings — choose a prompt, then critique my answer below.","chatCritiquePlaceholder":"Which claim is overstated, which evidence is missing, and what context does this answer ignore?"},"brand":"Teacher Education · Critical Inquiry Seminar","footer":"<strong>Teacher Professionalism in Local and International Contexts<\/strong> — First-year undergraduate teacher education · Critical Inquiry Seminar. Session tools: <a href=\"https://www.mentimeter.com\" target=\"_blank\" rel=\"noopener\">create a Mentimeter poll<\/a> · <a href=\"https://padlet.com\" target=\"_blank\" rel=\"noopener\">build a Padlet evidence wall<\/a> · <a href=\"https://docs.google.com/forms\" target=\"_blank\" rel=\"noopener\">collect exit tickets with Google Forms<\/a>.","nav":[{"id":"overview","label":"Overview"},{"id":"ilos","label":"1 · Outcomes"},{"id":"preclass","label":"2 · Pre-Class"},{"id":"activities","label":"3 · Activities"},{"id":"assessment","label":"4 · Assessment"},{"id":"alignment","label":"5 · Alignment"},{"id":"resources","label":"6 · Resources"},{"id":"differentiation","label":"7 · Inclusion"},{"id":"reflection","label":"8 · Reflection"},{"id":"portfolio","label":"Portfolio"}],"roadmap":[{"phase":"Introduction — the contested case","mins":"20 min","desc":"Provocative scenario and Mentimeter vote (7), diagnostic review and misconception analysis (8), framing of the inquiry question and real-world connection (5)."},{"phase":"Development — inquiry and critique","mins":"105 min","desc":"Concept-map mini-lecture and think-pair-share (15), CEACE case analysis in 15 groups (30), jigsaw exchange and Padlet evidence wall (20), structured debate with position switching (25), Compass position-building (15)."},{"phase":"Synthesis & closure","mins":"25 min","desc":"Post-test (8), peer-teaching summaries (7), critical inquiry reflection discussion (7), preview of the next session and exit ticket (3)."}],"ilos":[{"id":"ILO1","desc":"Analyze competing conceptions of teacher professionalism — professional knowledge, autonomy, ethics, accountability, collaboration and professional identity.","ai":"Not used: analysis is human-led. AI integration was not requested for this lesson."},{"id":"ILO2","desc":"Evaluate how local and international cultural, political, economic and institutional contexts shape teacher professionalism and teachers' professional roles.","ai":"Not used in the core task. An optional extension asks students to evaluate the contextual blind spots in an AI summary."},{"id":"ILO3","desc":"Critically compare local and international frameworks or cases, identifying assumptions, power relations and implications for equity and social justice.","ai":"Optional extension only: critique AI-generated comparisons for oversimplification and missing voices. Not assessed."},{"id":"ILO4","desc":"Construct a reasoned, evidence-based position on how teachers and teacher educators can navigate tensions in teacher professionalism across contexts.","ai":"Not used: the position must be the student's own reasoned judgement, defended with evidence."}],"prepItems":[{"text":"Read the OECD TALIS programme overview, focusing on what it measures about teacher autonomy, collaboration and self-efficacy."},{"text":"Read the UNESCO Teachers page, noting how teacher professionalism is framed in global policy."},{"text":"Browse Education International's policy and campaign material on the status, rights and professionalism of teachers."},{"text":"Read the AITSL Australian Professional Standards for Teachers (all seven standards at a glance)."},{"text":"Read the Teaching Council of Ireland Code of Professional Conduct."},{"text":"Read the instructor-selected local teacher standards or ministry policy excerpt for your jurisdiction and annotate one assumption it makes about teachers."},{"text":"Complete the six-item diagnostic pre-test in your LMS before class (allow 10 minutes)."}],"preclassToolSteps":[{"text":"In your LMS (Moodle, Canvas or Blackboard), create a quiz titled 'Teacher Professionalism: Diagnostic Pre-Test' and enter the six multiple-choice items from this plan. Purpose: surface prior conceptions before inquiry. Objective: ILO 1."},{"text":"Set one attempt, no time limit, immediate per-item feedback, and hide the score until submission so that students read the explanations. This turns the quiz into a learning task rather than a ranking."},{"text":"Open the quiz 48 hours before class and close it at the start of the session; export the item-level report as a CSV for the misconception review."},{"text":"Group the six items by the three misconception categories (core concepts, application, contextual critique), identify the two most-missed items, and use those to script the 8-minute review."},{"text":"In Mentimeter, create a poll titled 'Professionalism Tensions' with the options Autonomy, Accountability, Ethics and Collaboration, plus a second open-ended slide 'It depends — explain'. Purpose: make the contested framing visible in one minute. Objective: ILO 1."},{"text":"Set the Mentimeter poll to one vote per device, hide results until all votes are cast, then reveal them and ask two students to defend a choice they did not make. This rehearses perspective-taking before group work."},{"text":"Add a Mentimeter word-cloud or ranking slide asking 'Which dimension is most neglected in your local context?' Purpose: connect the concept map to students' own settings. Objective: ILO 2."},{"text":"In Padlet, create a wall titled 'Evidence Wall — Teacher Professionalism' with five columns: Claim, Evidence, Assumption, Context, Equity. Purpose: capture group CEACE analysis in public view. Objective: ILOs 2 and 3."},{"text":"Set the Padlet to 'can write' with comments enabled and a profanity filter, share the link and QR code on the projector, and assign one column per group role (evidence tracker, equity analyst, note-taker)."},{"text":"Create a Google Form exit ticket with three required questions: one concept you now understand better, one local-international tension still unresolved, and one question you would ask a policymaker. Purpose: capture learning and remaining tension. Objective: ILO 4."},{"text":"In a shared Google Drive folder, create one Google Doc per group from a CEACE template with five headings and a Compass section with four quadrants; share the folder with view-comment rights. Purpose: scaffold group synthesis. Objective: ILOs 3 and 4."},{"text":"Test every link, QR code and projector view 24 hours before class, and print a low-tech backup packet (readings, CEACE template, exit ticket) for students without devices."}],"round1":{"title":"CEACE case analysis and jigsaw exchange","desc":"Groups of five to six (15 groups) receive a case packet with four short excerpts: a local standards or ministry policy excerpt, an OECD TALIS indicator on autonomy or collaboration, a UNESCO teacher-policy excerpt, and a news article on accountability, identity or equity. The instructor models the CEACE protocol — Claim, Evidence, Assumption, Context, Equity — on the first excerpt (5 min); groups complete a CEACE chart for their assigned excerpt (20 min); the class then regroups into jigsaw groups, where each expert explains their excerpt and its CEACE analysis to peers from other groups and the group records one claim, one assumption and one equity implication on the Padlet Evidence Wall (20 min).","journalPrompt1":"What worked: which question or scaffold produced the sharpest evidence-based discussion?","journalPrompt2":"Where did students struggle: which groups accepted a claim without interrogating its assumptions or equity implications?"},"instructorGuidance":[{"text":"Model the CEACE protocol aloud with the local excerpt before groups begin, and make your own assumptions visible while modelling."},{"text":"Protect the local-international balance: do not let either framing become the unmarked 'normal' against which the other is judged."},{"text":"Circulate with two prompts only — 'What is the evidence for that?' and 'Who is missing from this claim?' — to keep inquiry open rather than steering answers."},{"text":"Name misconceptions when you hear them (compliance equals professionalism, standards are neutral, autonomy and accountability are opposites) and ask the group to test them against the case packet."},{"text":"Record the language students use about teachers, accountability and equity; it is data for the next session and for your own reflection."},{"text":"If you use the optional AI panels, require students to log every accept/modify/reject decision with a reason and an authoritative source, and treat unverified AI claims as inadmissible evidence."}],"assessmentMethods":[{"method":"LMS diagnostic pre-test and post-test","weight":"Formative — ungraded","what":"Initial conceptions, misconception categories and conceptual growth across the session."},{"method":"CEACE case-analysis charts","weight":"Formative — ungraded","what":"Depth of claim, evidence, assumption, context and equity analysis."},{"method":"Peer-assessment checklist","weight":"Formative — ungraded","what":"Evidence quality, questioning of assumptions, respect for multiple perspectives and collaboration."},{"method":"Exit tickets and reflection discussion","weight":"Formative — ungraded","what":"Metacognition, remaining tensions and questions for policymakers."},{"method":"Critical Inquiry Portfolio — comparative case analysis","weight":"35%","what":"Critical comparison of one local and one international framework or case, including assumptions and equity implications."},{"method":"Critical Inquiry Portfolio — position paper","weight":"40%","what":"A reasoned, evidence-based response to the inquiry question."},{"method":"Critical Inquiry Portfolio — reflective memo","weight":"25%","what":"How the student's understanding of teacher professionalism changed through critical inquiry."}],"alignmentRows":[{"ilo":"ILO 1 — Analyze competing conceptions","activity":"Mini-lecture with concept map, think-pair-share and flashcard matching — inquiry into contested definitions and assumptions","assessment":"Diagnostic and post-test, exit ticket, portfolio concept analysis","level":"Analyze"},{"ilo":"ILO 2 — Evaluate contextual influences","activity":"CEACE case analysis using local and international excerpts — inquiry into context, power and policy borrowing","assessment":"CEACE chart review, comparative case analysis","level":"Evaluate"},{"ilo":"ILO 3 — Critically compare frameworks","activity":"Jigsaw exchange, Padlet evidence wall and structured debate — critical dialogue and evidence evaluation","assessment":"Peer-assessment checklist, position paper","level":"Evaluate / analyze"},{"ilo":"ILO 4 — Construct a reasoned position","activity":"Context-Sensitive Professionalism Compass and synthesis discussion — seminar-style synthesis and reasoned judgement","assessment":"Critical Inquiry Portfolio and reflective memo","level":"Create"}],"support":[{"text":"Multiple entry points: visual concept map, policy text, oral debate or written reflection."},{"text":"Group roles — facilitator, evidence tracker, equity analyst, note-taker and presenter — rotated during the jigsaw to structure participation."},{"text":"Sentence frames for dialogue and writing: 'The evidence suggests… However, this assumption may overlook… A more context-sensitive view would…'"},{"text":"Pre-teach key terms — autonomy, accountability, professional identity and policy borrowing — with local examples and a glossary."},{"text":"Accessibility: captioned videos, large-print case packets, translated key terms, a quiet reflection option and flexible grouping."},{"text":"Provide the CEACE template as a printed grid and as a shared Google Doc for students who prefer typing or need extra time."},{"text":"Publish the case packet and Padlet link 48 hours in advance so students with caring or work commitments can prepare."}],"extension":[{"text":"Write a 1,000-word comparative policy brief comparing the local standards with one international framework."},{"text":"Lead a Socratic seminar on the debate motion in a later session, using the case packet as evidence."},{"text":"Analyze an additional framework (for example the GTCS Standards for Registration in Scotland or a Canadian provincial standard) and present a critique."},{"text":"Audit the case packet for missing voices and propose a fifth excerpt that centres equity and student perspective."}],"quizTasks":{"pre":"pre-quiz","post":"synthesis","flashcards":"flashcards"},"preClassCount":2,"tasks":[{"id":"pre-quiz","label":"Complete the diagnostic pre-test (6 items)"},{"id":"pre-ai","label":"Complete the five readings and annotate your local policy excerpt"},{"id":"dev-r1","label":"Complete Round 1 — CEACE case analysis and jigsaw"},{"id":"flashcards","label":"Match all six dimensions in the flashcard deck"},{"id":"synthesis","label":"Complete the post-test and synthesis"},{"id":"conceptmap","label":"Build your Context-Sensitive Professionalism Compass"}],"peerTasks":[{"id":"peer-1","label":"Uses specific evidence from the case packet and names its source."},{"id":"peer-2","label":"Questions an assumption and considers who benefits or is disadvantaged."},{"id":"peer-3","label":"Respects multiple perspectives and builds on peers' contributions."}],"cats":{"core":"Core concept","application":"Application","context":"Contextual critique"},"preTest":[{"id":"p1","cat":"core","q":"Teacher professionalism is best understood as:","opts":["Compliance with rules only","A combination of knowledge, autonomy, ethics, accountability, collaboration and identity","Personal charisma","Union membership only"],"a":1,"ok":"The multidimensional framing is the most comprehensive: professionalism is context-dependent and combines knowledge, autonomy, ethics, accountability, collaboration and identity.","no":"This is too narrow — professionalism is multidimensional and context-dependent, not a single trait or membership."},{"id":"p2","cat":"application","q":"Which factor most clearly illustrates contextual influence on teacher professionalism?","opts":["A teacher's individual lesson plan","National accountability policy and cultural expectations of teachers","A teacher's preferred classroom seating arrangement","A teacher's subject specialisation"],"a":1,"ok":"Policy and cultural expectations show how context shapes what counts as professionalism.","no":"This example is too individual or technical to show contextual influence on professionalism."},{"id":"p3","cat":"context","q":"International standards are always neutral and universally applicable.","opts":["True","False"],"a":1,"ok":"False. Standards reflect particular values, histories and policy priorities and must be read in context.","no":"Standards are not neutral: they encode particular values, histories and policy priorities."},{"id":"p4","cat":"core","q":"Which question best reflects critical inquiry?","opts":["What are the rules?","Who benefits from this definition of professionalism?","How many teachers agree?","Which country ranks highest?"],"a":1,"ok":"This question interrogates assumptions, power and interests — the core of critical inquiry.","no":"This question accepts the frame rather than interrogating its assumptions and interests."},{"id":"p5","cat":"core","q":"Professional autonomy and external accountability are always in conflict.","opts":["True","False"],"a":1,"ok":"False. They can conflict, but they can also be balanced or held in productive tension.","no":"They can conflict, but the relationship is not fixed: context and policy design matter."},{"id":"p6","cat":"context","q":"A comparative analysis of teacher professionalism should include:","opts":["Only international rankings","Context, evidence, assumptions and equity implications","Only local policy","Personal opinion without evidence"],"a":1,"ok":"Comparative analysis requires context, evidence, assumptions and equity implications.","no":"This omits the critical dimensions of comparison: context, evidence, assumptions and equity."}],"postTest":[{"id":"q1","cat":"core","q":"Which dimension is most often reduced to compliance when professionalism is defined narrowly?","opts":["Professional knowledge","Collaboration","External accountability","Professional identity"],"a":2,"ok":"Narrow definitions collapse professionalism into compliance with external accountability requirements.","no":"That dimension belongs to professionalism but is not the one usually reduced to compliance."},{"id":"q2","cat":"core","q":"Professional autonomy and external accountability are best understood as:","opts":["Always opposed","Identical concepts","Potentially balanced, depending on context and design","Irrelevant to professionalism"],"a":2,"ok":"They can conflict or be balanced; the relationship depends on context and policy design.","no":"The relationship is contextual, not fixed or identical."},{"id":"q3","cat":"application","q":"A system publishes school league tables; teachers report teaching to the test and discouraging struggling students from sitting exams. Which concept best explains this?","opts":["Accountability and performativity","Collaborative professionalism","Professional ethics and care","Professional knowledge and standards"],"a":0,"ok":"League tables exemplify performative accountability reshaping practice and equity.","no":"The scenario centres on external measurement reshaping behaviour, not on the other dimensions."},{"id":"q4","cat":"application","q":"A teacher is praised for high test scores but criticized for not adapting to multilingual learners. Which tension does this illustrate?","opts":["Knowledge versus standards","Collaboration versus autonomy","Identity versus context","Accountability versus ethics and equity"],"a":3,"ok":"Measured output is rewarded while care and equity are rendered invisible.","no":"The tension is between measured accountability and ethical, equitable practice."},{"id":"q5","cat":"context","q":"Which claim about international standards is most defensible?","opts":["They are neutral and should be adopted unchanged everywhere","They are irrelevant to local policy","They reflect particular values and histories and must be adapted critically","They always undermine teacher autonomy"],"a":2,"ok":"Standards encode values and histories; critical adaptation is required.","no":"This overstates or misreads the role of standards in local contexts."},{"id":"q6","cat":"context","q":"The strongest comparative analysis of local and international frameworks will:","opts":["Rank systems by test scores","Rely on personal experience alone","Treat international policy as automatically superior","Examine context, evidence, assumptions and equity implications"],"a":3,"ok":"Critical comparison interrogates context, evidence, assumptions and equity.","no":"This approach lacks the critical dimensions of comparison."}],"theories":[{"id":"knowledge","name":"Professional Knowledge & Standards","color":"#4338ca","who":"AITSL Australian Professional Standards; Teaching Council of Ireland Code of Professional Conduct; Darling-Hammond","desc":"Professionalism rests on a specialised body of knowledge sustained by initial education, certification and shared standards. The <a href=\"https://www.aitsl.edu.au/standards\" target=\"_blank\" rel=\"noopener\">AITSL Professional Standards<\/a> organise this around seven standards, while the <a href=\"https://www.teachingcouncil.ie/en/fitness-to-teach/code-of-professional-conduct/\" target=\"_blank\" rel=\"noopener\">Teaching Council Code of Professional Conduct<\/a> adds conduct and integrity obligations. Read standards as a language for describing practice, not as a complete definition of professionalism.","limit":"Standards can become checklists that fragment practice and privilege technical knowledge over relationship, context and judgement."},{"id":"autonomy","name":"Professional Autonomy & Agency","color":"#0d9488","who":"OECD TALIS indicators; Biesta; Hargreaves","desc":"Autonomy is the reasoned discretion teachers exercise over curriculum, pedagogy and assessment, individually and collectively. The <a href=\"https://www.oecd.org/en/about/programmes/talis.html\" target=\"_blank\" rel=\"noopener\">OECD TALIS programme<\/a> measures teachers' self-reported influence over curriculum and assessment, making autonomy visible as a comparative indicator. Autonomy is not independence from others: it is accountable professional judgement.","limit":"Autonomy can mask isolation and inconsistency, and it is unevenly distributed across schools and systems."},{"id":"ethics","name":"Professional Ethics & Care","color":"#b45309","who":"Teaching Council Code; Noddings; Sachs","desc":"Professionalism is a moral and relational practice: commitment to learners' wellbeing, integrity, confidentiality and care. Ethical codes make obligations explicit, but ethics is enacted in daily judgements about fairness, voice and dignity. This dimension is often invisible in metrics because care work is hard to count.","limit":"Codes can be aspirational or used punitively, and care work is undervalued and unevenly distributed, often falling to women and early-career teachers."},{"id":"accountability","name":"Accountability & Performativity","color":"#be123c","who":"Ball (2003); Sahlberg; national inspection and testing regimes","desc":"External accountability holds teachers to standards through testing, inspection, data and published rankings. Performativity describes how teachers come to judge themselves through those measures, reshaping what they value and do. Accountability can support professionalism when it is educative and proportionate; it can undermine it when it becomes high-stakes and narrow.","limit":"Narrows professionalism to what is measurable, erodes trust and can deepen inequity by rewarding schools that are already advantaged."},{"id":"collaboration","name":"Collaborative Professionalism","color":"#15803d","who":"Hargreaves & O'Connor (2018); Education International","desc":"Professionalism grows through collective inquiry: teachers examining student work together, co-planning, mentoring and sharing responsibility for all learners. Hargreaves and O'Connor distinguish collaborative professionalism from contrived collegiality — collaboration designed to secure compliance. <a href=\"https://www.ei-ie.org/en\" target=\"_blank\" rel=\"noopener\">Education International<\/a> links this collective dimension to teachers' professional rights and status.","limit":"Collaboration can be contrived, compliance-driven or unequally resourced; it requires time, trust and supportive leadership."},{"id":"identity","name":"Professional Identity & Context","color":"#7c3aed","who":"Sachs (2001); UNESCO; policy-borrowing scholarship","desc":"Professional identity is how teachers understand themselves and are understood by others, shaped by culture, history, status and policy borrowing. <a href=\"https://www.unesco.org/en/teachers\" target=\"_blank\" rel=\"noopener\">UNESCO's teacher programme<\/a> frames this globally, while local histories give professionalism different accents — deference, activism, expertise or care. Comparative analysis must therefore ask whose template is being borrowed and who is silent in it.","limit":"Risks essentialising national cultures and overlooking diversity, dissent and change within a single system."}],"flashcards":[{"id":"knowledge","label":"Professional Knowledge & Standards","desc":"Professionalism is grounded in a specialised, codified body of knowledge and demonstrated against shared standards."},{"id":"autonomy","label":"Professional Autonomy & Agency","desc":"Teachers are professionals because they exercise reasoned discretion and collective judgement in complex situations."},{"id":"ethics","label":"Professional Ethics & Care","desc":"Professionalism is a moral and relational commitment to learners' wellbeing, not merely technical competence."},{"id":"accountability","label":"Accountability & Performativity","desc":"Professionalism is best evidenced through measurable outcomes, inspection and compliance with external standards."},{"id":"collaboration","label":"Collaborative Professionalism","desc":"Professionalism grows through collective inquiry, shared responsibility and professional capital across a school."},{"id":"identity","label":"Professional Identity & Context","desc":"Professionalism is formed through cultural scripts, status and policy borrowing, so it means different things in different places."}],"scenarios":[{"id":"s1","text":"A ministry introduces national teacher standards and requires evidence portfolios for registration. Teachers say the standards clarify expectations but take time away from planning.","a":"knowledge","peer":"Who was involved in designing these standards, and whose knowledge of teaching counts as evidence?"},{"id":"s2","text":"In one school, teachers design their own interdisciplinary curriculum and defend it to parents and the board. Results vary between classes.","a":"autonomy","peer":"When does discretion become inconsistency, and who should decide the limits of professional judgement?"},{"id":"s3","text":"A teacher stays late to support a student facing housing insecurity, even though this work appears in no policy document or workload allocation.","a":"ethics","peer":"Why is care work invisible in most accountability systems, and who carries its cost?"},{"id":"s4","text":"A system ranks schools by test scores and publishes league tables. Teachers report teaching to the test and discouraging struggling students from sitting exams.","a":"accountability","peer":"Which learners are advantaged and disadvantaged when measured output becomes the definition of good teaching?"},{"id":"s5","text":"Teachers meet weekly in inquiry groups to examine student work and co-plan, and new teachers are mentored by the group rather than left alone.","a":"collaboration","peer":"Is this collaboration genuinely professional, or could it become contrived collegiality? What conditions make the difference?"},{"id":"s6","text":"A teacher trained abroad returns home and finds that 'good teaching' means strict discipline and deference, not the questioning pedagogy she learned.","a":"identity","peer":"Whose definition of good teaching is being borrowed, and what local knowledge is being displaced?"}],"critiques":[{"id":"knowledge","theory":"Professional Knowledge & Standards (optional AI extension)","sentences":[{"t":"Teacher professionalism is a single universal standard that every country should adopt unchanged.","h":"Reject — this conflates standards with professionalism and ignores the different histories and values embedded in frameworks such as AITSL and the Irish Code."},{"t":"Professional standards can make expectations explicit and support beginning teachers' development.","h":"Accept with qualification — standards can support development when they are formative and context-sensitive, but can become compliance checklists."},{"t":"The AITSL standards are legally binding in every jurisdiction.","h":"Wrong — AITSL is Australia's national framework; other jurisdictions have their own standards and codes."}]},{"id":"accountability","theory":"Accountability & Performativity (optional AI extension)","sentences":[{"t":"High-stakes testing reliably improves teacher professionalism.","h":"Reject — evidence is mixed; test-based accountability can narrow curricula, encourage teaching to the test and erode professional trust."},{"t":"Accountability and professional autonomy are always in conflict.","h":"Modify — they can conflict, but can also be balanced through educative, proportionate accountability."},{"t":"Performativity describes how teachers internalise external measures and come to judge themselves through them.","h":"Accurate — this is Ball's central argument about performativity."}]},{"id":"identity","theory":"Professional Identity & Context (optional AI extension)","sentences":[{"t":"National culture fully determines what teacher professionalism means.","h":"Reject — culture matters, but it is not deterministic; policy, economics, school context and individual agency also shape professionalism."},{"t":"Policy borrowing always improves teacher professionalism in the importing country.","h":"Wrong — borrowed policies can misfit local histories, values and capacity, and are often adapted or resisted."},{"t":"Teacher identity is shaped by both cultural scripts and policy context.","h":"Accurate — identity is formed at the intersection of culture, policy, status and personal experience."}]}],"chats":[{"p":"Is teacher professionalism just compliance with rules?","r":"Yes. Teacher professionalism is essentially compliance with external rules and standards. A teacher who meets every requirement is professional; one who does not is not. Autonomy is a distraction, because someone must be accountable. Therefore, the more rules a system imposes, the more professional its teachers become."},{"p":"How do local and international contexts shape professionalism?","r":"Context barely matters. Good teaching looks the same everywhere, so international standards such as AITSL should be adopted unchanged by every country. Local culture is mainly an obstacle to modernisation. International rankings prove which systems are most professional."},{"p":"What is the strongest evidence for external accountability?","r":"The strongest evidence is test scores. Systems that publish results always improve, and Finland shows that autonomy alone works, so accountability is unnecessary. In short, both more accountability and less accountability are proven to raise professionalism."}]};
+</script>
+<script>
+(function(){
+"use strict";
+
+/* ---- injected lesson data (see LESSONPLAN.md) ---- */
+var D = window.LESSON_DATA || {};
+
+/* ============================================================
+   STORE
+   ============================================================ */
+var KEY = (D.meta && D.meta.storeKey) || "lesson_v1";
+var store = {
+  progress:{}, pretest:null, posttest:null, critique:{}, chat:{},
+  flashcards:{}, scenarios:{}, conceptmap:{scenario:"",custom:"",ai:false,nodes:[]},
+  journal:{}, log:{}, theme:"light"
+};
+try{
+  var raw = localStorage.getItem(KEY);
+  if(raw){ var p = JSON.parse(raw); for(var k in p){ if(p.hasOwnProperty(k)) store[k]=p[k]; } }
+}catch(e){}
+function save(){
+  try{ localStorage.setItem(KEY, JSON.stringify(store)); }catch(e){}
+}
+
+/* ============================================================
+   UTILITIES
+   ============================================================ */
+function $(s,c){ return (c||document).querySelector(s); }
+function $$(s,c){ return Array.prototype.slice.call((c||document).querySelectorAll(s)); }
+function esc(s){ return String(s).replace(/[&<>"']/g,function(m){
+  return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]; }); }
+var toastEl = $("#toast"), toastT;
+function toast(msg){
+  toastEl.textContent = msg; toastEl.classList.add("show");
+  clearTimeout(toastT); toastT = setTimeout(function(){ toastEl.classList.remove("show"); }, 2200);
+}
+
+/* ============================================================
+   THEORY DATA
+   ============================================================ */
+var THEORIES = D.theories || [];
+function theoryById(id){ for(var i=0;i<THEORIES.length;i++){ if(THEORIES[i].id===id) return THEORIES[i]; } return null; }
+
+/* ============================================================
+   TASKS & PROGRESS
+   ============================================================ */
+var TASKS = D.tasks || [];
+var PEER_TASKS = D.peerTasks || [];
+var ALL_TASKS = TASKS.concat(PEER_TASKS);
+
+function taskHTML(t){
+  return '<div class="task" data-task="'+t.id+'" role="checkbox" tabindex="0" aria-checked="false">'+
+         '<span class="box" aria-hidden="true">✓</span><span class="label">'+esc(t.label)+'</span></div>';
+}
+function renderTasks(container, list){
+  if(!container) return;
+  container.innerHTML = list.map(taskHTML).join("");
+}
+function setTask(id, on){
+  store.progress[id] = !!on; save(); syncTask(id);
+  updateProgress();
+}
+function syncTask(id){
+  var done = !!store.progress[id];
+  $$('[data-task="'+id+'"]').forEach(function(el){
+    if(el.classList.contains("task")){
+      el.classList.toggle("done", done);
+      el.setAttribute("aria-checked", done ? "true" : "false");
+    }else{
+      el.setAttribute("aria-pressed", done ? "true" : "false");
+      if(!el.dataset.orig) el.dataset.orig = el.textContent;
+      el.textContent = done ? "✓ Completed" : el.dataset.orig;
+    }
+  });
+}
+function syncAllTasks(){ ALL_TASKS.forEach(function(t){ syncTask(t.id); }); }
+function doneCount(){
+  var n=0; TASKS.forEach(function(t){ if(store.progress[t.id]) n++; }); return n;
+}
+function updateProgress(){
+  var n = doneCount(), total = TASKS.length;
+  var pct = total ? Math.round(n/total*100) : 0;
+  var fill = $("#progressFill"); if(fill) fill.style.width = pct+"%";
+  var txt = $("#progressText"); if(txt) txt.textContent = pct+"% complete";
+  var st = $("#statTasks"); if(st) st.textContent = n+" / "+total;
+  var ring = $("#portRing"); if(ring) ring.style.setProperty("--p", pct);
+  var rt = $("#portRingText"); if(rt) rt.textContent = pct+"%";
+  var pt = $("#portTasks"); if(pt) pt.textContent = n+" of "+total+" tasks";
+}
+
+/* Delegated task clicks */
+document.addEventListener("click", function(e){
+  var el = e.target.closest("[data-task]");
+  if(!el) return;
+  var id = el.dataset.task;
+  setTask(id, !store.progress[id]);
+});
+document.addEventListener("keydown", function(e){
+  if(e.key!==" " && e.key!=="Enter") return;
+  var el = e.target.closest(".task[data-task]");
+  if(!el) return;
+  e.preventDefault();
+  setTask(el.dataset.task, !store.progress[el.dataset.task]);
+});
+
+/* ============================================================
+   QUIZZES
+   ============================================================ */
+var CATS = D.cats || {};
+var PRE_TEST = D.preTest || [];
+var POST_TEST = D.postTest || [];
+
+function quizState(key){
+  if(!store[key]) store[key] = {answers:{}, done:false};
+  return store[key];
+}
+function renderQuiz(container, questions, key){
+  var st = quizState(key);
+  var html = "";
+  questions.forEach(function(q,i){
+    var picked = st.answers[q.id];
+    html += '<div class="quiz-q" data-qid="'+q.id+'">';
+    html += '<div class="qtop"><span class="qnum">'+(i+1)+'</span><div><div style="font-weight:650">'+esc(q.q)+'</div>'+
+            '<span class="pill" style="margin-top:6px">'+CATS[q.cat]+'</span></div></div>';
+    html += '<div class="opts">';
+    q.opts.forEach(function(o,oi){
+      var cls = "opt";
+      if(picked!==undefined){
+        if(oi===q.a) cls += " correct";
+        else if(oi===picked) cls += " wrong";
+        cls += " locked";
+      }
+      html += '<label class="'+cls+'" data-oi="'+oi+'"><input type="radio" name="'+key+'_'+q.id+'" value="'+oi+'">'+
+              '<span class="marker">✓</span><span>'+esc(o)+'</span></label>';
+    });
+    html += "</div>";
+    var shown = picked!==undefined;
+    var ok = picked===q.a;
+    html += '<div class="explain '+(shown?"show ":"")+(ok?"ok":"no")+'">'+
+            '<strong>'+(ok?"✓ Correct. ":"✗ Not quite. ")+'</strong>'+esc(ok?q.ok:q.no)+'</div>';
+    html += "</div>";
+  });
+  html += '<div class="score-bar" data-summary></div>';
+  container.innerHTML = html;
+  container.querySelectorAll(".opt").forEach(function(lbl){
+    lbl.addEventListener("click", function(){
+      var qid = lbl.closest(".quiz-q").dataset.qid;
+      if(quizState(key).answers[qid]!==undefined) return;
+      quizState(key).answers[qid] = parseInt(lbl.dataset.oi,10);
+      save();
+      var done = Object.keys(quizState(key).answers).length === questions.length;
+      quizState(key).done = done;
+      save();
+      renderQuiz(container, questions, key);
+      if(done) finishQuiz(key, questions);
+      updatePortfolio();
+    });
+  });
+  renderSummary(container, questions, key);
+}
+function renderSummary(container, questions, key){
+  var st = quizState(key), sum = container.querySelector("[data-summary]");
+  if(!sum) return;
+  var answered = Object.keys(st.answers).length;
+  var score = 0;
+  var byCat = {};
+  questions.forEach(function(q){
+    var a = st.answers[q.id];
+    byCat[q.cat] = byCat[q.cat] || {right:0,total:0};
+    byCat[q.cat].total++;
+    if(a!==undefined){ if(a===q.a){ score++; byCat[q.cat].right++; } }
+  });
+  var pct = Math.round(score/questions.length*100);
+  var html = '<div style="width:100%">';
+  html += '<div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap">'+
+          '<span class="score-big">'+score+'/'+questions.length+'</span>'+
+          '<span class="pill '+(pct>=75?"green":pct>=50?"amber":"rose")+'">'+pct+'%</span>'+
+          '<span class="small muted">'+answered+' of '+questions.length+' answered</span></div>';
+  html += '<div class="cat-grid" style="margin-top:12px">';
+  Object.keys(byCat).forEach(function(c){
+    var d = byCat[c], p = d.total? Math.round(d.right/d.total*100):0;
+    var col = p>=75?"var(--green)":p>=50?"var(--amber)":"var(--rose)";
+    html += '<div class="cat-row"><span>'+CATS[c]+'</span><strong>'+d.right+'/'+d.total+'</strong>'+
+            '<span class="cat-track"><span class="cat-fill" style="width:'+p+'%;background:'+col+'"></span></span></div>';
+  });
+  html += "</div>";
+  if(answered>0 && answered<questions.length){
+    html += '<p class="small muted" style="margin:10px 0 0">Answer every question to see your full breakdown.</p>';
+  }
+  if(answered===questions.length){
+    var weak = Object.keys(byCat).filter(function(c){ return byCat[c].right < byCat[c].total; });
+    if(weak.length){
+      html += '<div class="callout warn" style="margin-bottom:0"><div class="ct">📌 Adaptive feedback — review these</div><p class="mb0 small">You missed items in: <strong>'+
+        weak.map(function(c){ return CATS[c]; }).join(", ")+
+        '</strong>. Revisit the <a href="#resources">reference cards</a> and the relevant critique in the activities section.</p></div>';
+    }else{
+      html += '<div class="callout tip" style="margin-bottom:0"><div class="ct">🎉 Full marks</div><p class="mb0 small">Now push further: can you identify where an AI would <em>misrepresent</em> these theories? Try the <a href="#activities">critique activity</a>.</p></div>';
+    }
+  }
+  html += "</div>";
+  sum.innerHTML = html;
+}
+function finishQuiz(key, questions){
+  var st = quizState(key);
+  var score = 0;
+  questions.forEach(function(q){ if(st.answers[q.id]===q.a) score++; });
+  if(key==="pretest"){
+    setTask((D.quizTasks || {}).pre || "pre-quiz", true);
+    toast("Pre-test saved: "+score+"/"+questions.length);
+  }else{
+    setTask((D.quizTasks || {}).post || "synthesis", true);
+    toast("Post-test saved: "+score+"/"+questions.length);
+    renderCompare();
+  }
+  updatePortfolio();
+}
+function scoreOf(key, questions){
+  var st = store[key]; if(!st) return null;
+  var answered = Object.keys(st.answers).length;
+  if(answered < questions.length) return null;
+  var s=0; questions.forEach(function(q){ if(st.answers[q.id]===q.a) s++; });
+  return {score:s, total:questions.length};
+}
+function renderCompare(){
+  var box = $("#compareBox"); if(!box) return;
+  var pre = scoreOf("pretest", PRE_TEST), post = scoreOf("posttest", POST_TEST);
+  if(!pre || !post){
+    box.innerHTML = '<p class="small muted">Complete both the pre-test and the post-test to see your growth comparison.</p>';
+    return;
+  }
+  var delta = post.score - pre.score;
+  var arrow = delta>0 ? "▲ +"+delta : delta<0 ? "▼ "+delta : "▬ 0";
+  var col = delta>0 ? "var(--green)" : delta<0 ? "var(--rose)" : "var(--text-mute)";
+  box.innerHTML = '<div class="card tight" style="margin:0"><div class="card-title"><span class="ic">📈</span> Pre-test vs post-test</div>'+
+    '<div class="grid g3">'+
+    '<div class="stat"><div class="n">'+pre.score+'/'+pre.total+'</div><div class="l">Pre-test</div></div>'+
+    '<div class="stat"><div class="n">'+post.score+'/'+post.total+'</div><div class="l">Post-test</div></div>'+
+    '<div class="stat"><div class="n" style="color:'+col+'">'+arrow+'</div><div class="l">Change</div></div>'+
+    '</div>'+
+    '<p class="small muted" style="margin:10px 0 0">'+(delta>0?"Growth against the same misconception categories.":delta===0?"No change — revisit the misconception categories above.":"Score decreased — check whether the post-test items were read carefully, or revisit the reference cards.")+'</p></div>';
+}
+
+/* Wire quiz buttons */
+var preBtn = $("#startPre");
+if(preBtn) preBtn.addEventListener("click", function(){
+  var c = $("#preQuiz"); c.style.display="block";
+  renderQuiz(c, PRE_TEST, "pretest");
+  preBtn.style.display="none";
+  c.scrollIntoView({behavior:"smooth", block:"start"});
+});
+var postBtn = $("#startPost");
+if(postBtn) postBtn.addEventListener("click", function(){
+  var c = $("#postQuiz"); c.style.display="block";
+  renderQuiz(c, POST_TEST, "posttest");
+  renderCompare();
+  c.scrollIntoView({behavior:"smooth", block:"start"});
+});
+
+/* ============================================================
+   THEORY CARDS
+   ============================================================ */
+var tc = $("#theoryCards");
+if(tc){
+  tc.innerHTML = THEORIES.map(function(t){
+    return '<div class="theory-card" style="--tc:'+t.color+'" id="theory-'+t.id+'">'+
+      '<h4>'+esc(t.name)+'</h4><div class="who">'+t.who+'</div>'+
+      '<p>'+t.desc+'</p>'+
+      '<div class="limit"><strong>Common limitation:</strong> '+esc(t.limit)+'</div></div>';
+  }).join("");
+}
+
+/* ============================================================
+   FLASHCARDS (drag & drop + tap fallback)
+   ============================================================ */
+var FC_PAIRS = D.flashcards || [];
+var fcSelected = null;
+function fcRender(){
+  var pool = $("#chipPool"), slots = $("#slotPool");
+  if(!pool || !slots) return;
+  if(!store.flashcards) store.flashcards = {};
+  var placed = store.flashcards;
+  fcSelected = null;
+  var order = FC_PAIRS.map(function(_,i){ return i; });
+  pool.innerHTML = FC_PAIRS.map(function(p,i){
+    var t = theoryById(p.id);
+    var done = placed[p.id];
+    return '<div class="chip '+(done?"placed":"")+'" draggable="'+(done?"false":"true")+'" data-id="'+p.id+'" style="--tc:'+t.color+'" tabindex="0" role="button" aria-label="Item chip: '+esc(p.label)+'">'+
+      '<span class="swatch"></span>'+esc(p.label)+'</div>';
+  }).join("");
+  slots.innerHTML = order.map(function(idx){
+    var p = FC_PAIRS[idx];
+    var filler = null;
+    for(var k in placed){ if(placed[k]===p.id) filler = k; }
+    var filled = !!filler;
+    return '<div class="slot '+(filled?"filled":"")+'" data-answer="'+p.id+'">'+
+      '<div class="slot-label">'+(filled?"Matched":"Assumption "+(order.indexOf(idx)+1))+'</div>'+
+      '<div class="slot-desc">'+esc(p.desc)+'</div>'+
+      '<div class="dropzone">'+(filled? "✓ "+esc(theoryById(filler).name) : "Drop the matching item here")+'</div></div>';
+  }).join("");
+  fcWire(); fcUpdateScore();
+}
+function fcWire(){
+  var pool = $("#chipPool"), slots = $("#slotPool");
+  $$(".chip", pool).forEach(function(chip){
+    if(chip.classList.contains("placed")) return;
+    chip.addEventListener("dragstart", function(e){
+      e.dataTransfer.setData("text/plain", chip.dataset.id);
+      e.dataTransfer.effectAllowed = "move";
+    });
+    chip.addEventListener("click", function(){
+      if(fcSelected === chip){ fcSelected = null; }
+      else { fcSelected = chip; }
+      $$(".chip", pool).forEach(function(c){ c.classList.toggle("picked", c===fcSelected); });
+    });
+    chip.addEventListener("keydown", function(e){
+      if(e.key===" "||e.key==="Enter"){ e.preventDefault(); chip.click(); }
+    });
+  });
+  $$(".slot", slots).forEach(function(slot){
+    if(slot.classList.contains("filled")) return;
+    slot.addEventListener("dragover", function(e){ e.preventDefault(); slot.classList.add("over"); });
+    slot.addEventListener("dragleave", function(){ slot.classList.remove("over"); });
+    slot.addEventListener("drop", function(e){
+      e.preventDefault(); slot.classList.remove("over");
+      fcAttempt(e.dataTransfer.getData("text/plain"), slot);
+    });
+    slot.addEventListener("click", function(){
+      if(fcSelected) fcAttempt(fcSelected.dataset.id, slot);
+    });
+  });
+}
+function fcAttempt(id, slot){
+  if(!id) return;
+  if(slot.dataset.answer === id){
+    if(!store.flashcards) store.flashcards = {};
+    store.flashcards[id] = slot.dataset.answer;
+    save(); fcRender();
+    var n = Object.keys(store.flashcards).length;
+    if(n===FC_PAIRS.length){ toast("Deck complete — every card matched!"); setTask((D.quizTasks || {}).flashcards || "flashcards", true); }
+    updatePortfolio();
+  }else{
+    slot.classList.add("bad");
+    setTimeout(function(){ slot.classList.remove("bad"); }, 420);
+    toast("Not quite — that item doesn’t match this prompt.");
+  }
+}
+function fcUpdateScore(){
+  var n = store.flashcards ? Object.keys(store.flashcards).length : 0;
+  var el = $("#fcScore"); if(el) el.textContent = n+" / "+FC_PAIRS.length+" matched";
+}
+var fcReset = $("#fcReset");
+if(fcReset) fcReset.addEventListener("click", function(){
+  store.flashcards = {}; save(); fcRender(); updatePortfolio();
+});
+
+/* ============================================================
+   SCENARIO QUIZ
+   ============================================================ */
+var SCENARIOS = D.scenarios || [];
+function scRender(){
+  var box = $("#scenarioQuiz"); if(!box) return;
+  if(!store.scenarios) store.scenarios = {};
+  var sel = store.scenarios;
+  box.innerHTML = SCENARIOS.map(function(s,i){
+    var picked = sel[s.id];
+    var checked = picked!==undefined;
+    var opts = THEORIES.map(function(t){
+      var cls = "opt";
+      if(checked){ if(t.id===s.a) cls+=" correct"; else if(t.id===picked) cls+=" wrong"; cls+=" locked"; }
+      return '<label class="'+cls+'" data-oid="'+t.id+'"><input type="radio" name="sc_'+s.id+'"><span class="marker">✓</span><span>'+esc(t.name)+'</span></label>';
+    }).join("");
+    return '<div class="quiz-q" data-sid="'+s.id+'"><div class="qtop"><span class="qnum">'+(i+1)+'</span>'+
+      '<div style="font-weight:650">'+esc(s.text)+'</div></div><div class="opts">'+opts+'</div>'+
+      '<div class="explain '+(checked?"show ":"")+(picked===s.a?"ok":"no")+'"><strong>'+(picked===s.a?"✓ Correct. ":"✗ Not quite. ")+'</strong>'+
+      'Best answer: <strong>'+esc(theoryById(s.a).name)+'</strong>.<br><span class="small">🗣 <em>Peer review:</em> '+esc(s.peer)+'</span></div></div>';
+  }).join("");
+  box.querySelectorAll(".opt").forEach(function(lbl){
+    lbl.addEventListener("click", function(){
+      var q = lbl.closest(".quiz-q"), sid = q.dataset.sid;
+      if(store.scenarios[sid]!==undefined) return;
+      store.scenarios[sid] = lbl.dataset.oid; save(); scRender(); scScore(); updatePortfolio();
+    });
+  });
+}
+function scScore(){
+  var n=0, answered=0;
+  SCENARIOS.forEach(function(s){ if(store.scenarios[s.id]!==undefined){ answered++; if(store.scenarios[s.id]===s.a) n++; } });
+  var el = $("#scenarioScore"); if(el) el.textContent = answered? n+" / "+SCENARIOS.length+" correct" : "—";
+}
+var scCheck = $("#scenarioCheck");
+if(scCheck) scCheck.addEventListener("click", function(){
+  scScore(); toast("Checked — see the peer-review prompt under each scenario.");
+});
+var scReset = $("#scenarioReset");
+if(scReset) scReset.addEventListener("click", function(){
+  store.scenarios = {}; save(); scRender(); scScore(); updatePortfolio();
+});
+
+/* ============================================================
+   AI CRITIQUE LAB
+   ============================================================ */
+var CRITIQUES = D.critiques || [];
+var CRIT_TOTAL = CRITIQUES.reduce(function(n,c){ return n + c.sentences.length; }, 0);
+function critRender(){
+  var box = $("#critiqueLab"); if(!box) return;
+  if(!store.critique) store.critique = {};
+  box.innerHTML = CRITIQUES.map(function(c){
+    var st = store.critique[c.id] || {verdicts:{}, rationale:"", verified:false};
+    var sents = c.sentences.map(function(s,si){
+      var v = st.verdicts[si];
+      return '<span class="sent"><span class="sent-text">'+esc(s.t)+'</span>'+
+        '<span class="verdicts">'+
+        '<button type="button" class="vbtn '+(v==="accept"?"on":"")+'" data-v="accept" data-c="'+c.id+'" data-s="'+si+'">✓ Accept</button>'+
+        '<button type="button" class="vbtn '+(v==="modify"?"on":"")+'" data-v="modify" data-c="'+c.id+'" data-s="'+si+'">✎ Modify</button>'+
+        '<button type="button" class="vbtn '+(v==="reject"?"on":"")+'" data-v="reject" data-c="'+c.id+'" data-s="'+si+'">✗ Reject</button>'+
+        '</span>'+
+        (v? '<span class="small muted" style="display:block;margin-top:6px">Model note: '+esc(s.h)+'</span>' : '')+
+        '</span>';
+    }).join("");
+    return '<div class="critique" data-c="'+c.id+'"><div class="critique-head">'+
+      '<span class="pill violet">AI output</span><h4>'+esc(c.theory)+' — AI summary</h4>'+
+      '<span class="pill" style="margin-left:auto">'+(st.rationale && Object.keys(st.verdicts).length===c.sentences.length ? "✓ Critiqued" : "In progress")+'</span></div>'+
+      '<div class="ai-bubble"><div class="ai-avatar" aria-hidden="true">🤖</div><div class="ai-text">'+sents+'</div></div>'+
+      '<div class="critique-body">'+
+      '<label class="field"><span>Justify your verdicts for '+esc(c.theory)+'</span>'+
+      '<textarea data-cr="'+c.id+'">'+esc(st.rationale||"")+'</textarea></label>'+
+      '<label class="checkline"><input type="checkbox" data-cv="'+c.id+'" '+(st.verified?"checked":"")+'><span>I checked these claims against my textbook or another authoritative source.</span></label>'+
+      '</div></div>';
+  }).join("");
+  critWire();
+}
+function critWire(){
+  $$("#critiqueLab .vbtn").forEach(function(b){
+    b.addEventListener("click", function(){
+      var c = b.dataset.c, s = parseInt(b.dataset.s,10);
+      if(!store.critique[c]) store.critique[c] = {verdicts:{}, rationale:"", verified:false};
+      store.critique[c].verdicts[s] = b.dataset.v; save(); critRender(); critStats(); updatePortfolio();
+    });
+  });
+  $$("#critiqueLab textarea[data-cr]").forEach(function(t){
+    t.addEventListener("input", function(){
+      var c = t.dataset.cr;
+      if(!store.critique[c]) store.critique[c] = {verdicts:{}, rationale:"", verified:false};
+      store.critique[c].rationale = t.value; save(); critStats();
+    });
+  });
+  $$("#critiqueLab input[data-cv]").forEach(function(i){
+    i.addEventListener("change", function(){
+      var c = i.dataset.cv;
+      if(!store.critique[c]) store.critique[c] = {verdicts:{}, rationale:"", verified:false};
+      store.critique[c].verified = i.checked; save(); critStats();
+    });
+  });
+}
+function critStats(){
+  var verdicts=0, complete=0;
+  CRITIQUES.forEach(function(c){
+    var st = store.critique[c.id]; if(!st) return;
+    var vc = Object.keys(st.verdicts||{}).length;
+    verdicts += vc;
+    if(vc === c.sentences.length && (st.rationale||"").trim().length>0) complete++;
+  });
+  var a = $("#critVerdicts"); if(a) a.textContent = verdicts;
+  var t = $("#critTotal"); if(t) t.textContent = CRIT_TOTAL;
+  var b = $("#critCount"); if(b) b.textContent = complete+"/"+CRITIQUES.length;
+  var f = $("#critFill"); if(f) f.style.width = Math.round(verdicts/CRIT_TOTAL*100)+"%";
+}
+var critReset = $("#critReset");
+if(critReset) critReset.addEventListener("click", function(){
+  store.critique = {}; save(); critRender(); critStats(); updatePortfolio();
+});
+
+/* ============================================================
+   CHAT SIMULATION
+   ============================================================ */
+var CHATS = D.chats || [];
+var chatWindow = $("#chatWindow");
+function chatPush(who, text){
+  if(!chatWindow) return;
+  var d = document.createElement("div");
+  d.className = "msg " + (who==="user"?"user":"ai");
+  d.innerHTML = '<div class="who">'+(who==="user"?"You":"AI")+'</div>'+esc(text);
+  chatWindow.appendChild(d);
+  chatWindow.scrollTop = chatWindow.scrollHeight;
+}
+var chatPrompts = $("#chatPrompts");
+if(chatPrompts){
+  chatPrompts.innerHTML = CHATS.map(function(c,i){
+    return '<button type="button" class="btn btn-sm" data-chat="'+i+'">'+esc(c.p)+'</button>';
+  }).join("");
+  chatPrompts.addEventListener("click", function(e){
+    var b = e.target.closest("[data-chat]"); if(!b) return;
+    var c = CHATS[parseInt(b.dataset.chat,10)];
+    chatPush("user", c.p);
+    setTimeout(function(){ chatPush("ai", c.r); }, 420);
+  });
+}
+var chatCrit = $("#chatCritique");
+if(chatCrit){
+  chatCrit.value = (store.chat && store.chat.critique) || "";
+  chatCrit.addEventListener("input", function(){
+    store.chat = store.chat || {};
+    store.chat.critique = chatCrit.value; save();
+  });
+}
+var chatSave = $("#chatSave");
+if(chatSave) chatSave.addEventListener("click", function(){
+  store.chat = store.chat || {}; store.chat.critique = chatCrit.value; save();
+  toast("Critique saved to your portfolio.");
+});
+
+/* ============================================================
+   CONCEPT MAP BUILDER
+   ============================================================ */
+function cmFillSelect(){
+  var sel = $("#cmTheory"); if(!sel) return;
+  sel.innerHTML = '<option value="">— Choose an item —</option>' +
+    THEORIES.map(function(t){ return '<option value="'+t.id+'">'+esc(t.name)+'</option>'; }).join("");
+}
+function cmRender(){
+  var empty = $("#mapEmpty"), core = $("#mapCore"), ring = $("#mapRing"), lbl = $("#mapScenarioLabel");
+  if(!empty||!core||!ring||!lbl) return;
+  var cm = store.conceptmap || {nodes:[]};
+  var scenario = (cm.custom && cm.custom.trim()) || cm.scenario || "";
+  var nodes = cm.nodes || [];
+  if(nodes.length===0){
+    empty.style.display=""; core.style.display="none"; return;
+  }
+  empty.style.display="none";
+  core.style.display="flex"; core.style.flexDirection="column";
+  core.style.alignItems="center"; core.style.gap="18px"; core.style.width="100%";
+  lbl.textContent = scenario || "Your scenario";
+  ring.innerHTML = nodes.map(function(n,i){
+    var t = theoryById(n.theory);
+    return '<div class="map-node" style="--tc:'+t.color+'"><span class="swatch"></span>'+
+      '<span title="'+esc(n.note||"")+'">'+esc(t.name)+'</span>'+
+      '<span class="x" role="button" tabindex="0" data-rm="'+i+'" aria-label="Remove '+esc(t.name)+'">×</span></div>';
+  }).join("");
+  $$("#mapRing .x").forEach(function(x){
+    x.addEventListener("click", function(){
+      store.conceptmap.nodes.splice(parseInt(x.dataset.rm,10),1); save(); cmRender(); updatePortfolio();
+    });
+  });
+  var sc = $("#cmScenario"), cu = $("#cmCustom"), ai = $("#cmAI");
+  if(sc) sc.value = cm.scenario||""; if(cu) cu.value = cm.custom||""; if(ai) ai.checked = !!cm.ai;
+}
+function cmWire(){
+  var add = $("#cmAdd");
+  if(add) add.addEventListener("click", function(){
+    var theory = $("#cmTheory").value, note = $("#cmNote").value.trim();
+    if(!theory){ toast("Choose an item first."); return; }
+    if(!note){ toast("Add a connection note explaining how it applies."); return; }
+    store.conceptmap = store.conceptmap || {nodes:[]};
+    store.conceptmap.nodes.push({theory:theory, note:note});
+    $("#cmNote").value=""; save(); cmRender(); updatePortfolio();
+    toast(theoryById(theory).name+" added to the map.");
+  });
+  var clr = $("#cmClear");
+  if(clr) clr.addEventListener("click", function(){
+    store.conceptmap = {scenario:"",custom:"",ai:false,nodes:[]}; save(); cmRender(); updatePortfolio();
+  });
+  ["#cmScenario","#cmCustom"].forEach(function(s){
+    var el = $(s); if(!el) return;
+    el.addEventListener("input", function(){
+      store.conceptmap = store.conceptmap || {nodes:[]};
+      if(s==="#cmScenario") store.conceptmap.scenario = el.value;
+      else store.conceptmap.custom = el.value;
+      save(); cmRender();
+    });
+  });
+  var ai = $("#cmAI");
+  if(ai) ai.addEventListener("change", function(){
+    store.conceptmap = store.conceptmap || {nodes:[]};
+    store.conceptmap.ai = ai.checked; save();
+  });
+}
+function cmExport(){
+  var cm = store.conceptmap || {nodes:[]};
+  var scenario = (cm.custom && cm.custom.trim()) || cm.scenario || "(no scenario set)";
+  var lines = ["CONCEPT MAP — "+(D.meta&&D.meta.title||"Lesson"),"=".repeat(52),"Scenario: "+scenario,
+    "AI-assisted: "+(cm.ai?"Yes (critique documented)":"No"),"","Theory nodes ("+(cm.nodes||[]).length+"):"];
+  (cm.nodes||[]).forEach(function(n,i){
+    lines.push(""); lines.push((i+1)+". "+theoryById(n.theory).name); lines.push("   Connection: "+n.note);
+  });
+  lines.push(""); lines.push("Generated locally from the interactive lesson plan.");
+  download(slug()+"-concept-map.txt", lines.join("\n"), "text/plain");
+}
+var cmExpBtn = $("#cmExport");
+if(cmExpBtn) cmExpBtn.addEventListener("click", cmExport);
+
+/* ============================================================
+   JOURNALS & LOGS
+   ============================================================ */
+$$("textarea[data-journal]").forEach(function(t){
+  t.value = (store.journal && store.journal[t.dataset.journal]) || "";
+  t.addEventListener("input", function(){
+    store.journal = store.journal || {}; store.journal[t.dataset.journal] = t.value; save();
+  });
+});
+$$("textarea[data-log]").forEach(function(t){
+  t.value = (store.log && store.log[t.dataset.log]) || "";
+  t.addEventListener("input", function(){
+    store.log = store.log || {}; store.log[t.dataset.log] = t.value; save();
+  });
+});
+
+/* ============================================================
+   PORTFOLIO SUMMARY & EXPORT
+   ============================================================ */
+function updatePortfolio(){
+  var pre = scoreOf("pretest", PRE_TEST), post = scoreOf("posttest", POST_TEST);
+  var pp = $("#portPre"), ppb = $("#portPreBar");
+  if(pp){ pp.textContent = pre? pre.score+"/"+pre.total : "Not taken"; }
+  if(ppb){ ppb.style.width = pre? Math.round(pre.score/pre.total*100)+"%" : "0%"; }
+  var po = $("#portPost"), pob = $("#portPostBar");
+  if(po){ po.textContent = post? post.score+"/"+post.total : "Not taken"; }
+  if(pob){ pob.style.width = post? Math.round(post.score/post.total*100)+"%" : "0%"; }
+  var complete=0;
+  CRITIQUES.forEach(function(c){
+    var st = store.critique && store.critique[c.id]; if(!st) return;
+    if(Object.keys(st.verdicts||{}).length===c.sentences.length && (st.rationale||"").trim()) complete++;
+  });
+  var pc = $("#portCrit"), pcb = $("#portCritBar");
+  if(pc) pc.textContent = complete+" / "+CRITIQUES.length;
+  if(pcb) pcb.style.width = CRITIQUES.length? Math.round(complete/CRITIQUES.length*100)+"%":"0%";
+  var fcn = store.flashcards? Object.keys(store.flashcards).length : 0;
+  var pf = $("#portFc"), pfb = $("#portFcBar");
+  if(pf) pf.textContent = fcn+" / "+FC_PAIRS.length;
+  if(pfb) pfb.style.width = FC_PAIRS.length? Math.round(fcn/FC_PAIRS.length*100)+"%":"0%";
+  var cmn = (store.conceptmap && store.conceptmap.nodes)? store.conceptmap.nodes.length : 0;
+  var pcm = $("#portCm"), pcmb = $("#portCmBar");
+  if(pcm) pcm.textContent = cmn;
+  if(pcmb) pcmb.style.width = Math.min(100, Math.round(cmn/3*100))+"%";
+  var statPre = $("#statPre"); if(statPre) statPre.textContent = pre? pre.score+"/"+pre.total : "—";
+  var statPost = $("#statPost"); if(statPost) statPost.textContent = post? post.score+"/"+post.total : "—";
+  var statCrit = $("#statCrit"); if(statCrit) statCrit.textContent = complete+" / "+CRITIQUES.length;
+}
+function slug(){ return ((D.meta && D.meta.slug) || "lesson").replace(/[^a-z0-9-]+/gi,"-").toLowerCase(); }
+function download(name, text, type){
+  try{
+    var blob = new Blob([text], {type:type||"text/plain"});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = url; a.download = name; document.body.appendChild(a); a.click();
+    document.body.removeChild(a); setTimeout(function(){ URL.revokeObjectURL(url); }, 1500);
+    toast("Exported "+name);
+  }catch(e){ toast("Export not supported in this browser."); }
+}
+var exAll = $("#exportAll");
+if(exAll) exAll.addEventListener("click", function(){
+  download(slug()+"-portfolio.json", JSON.stringify(store, null, 2), "application/json");
+});
+var exTxt = $("#exportText");
+if(exTxt) exTxt.addEventListener("click", function(){
+  var L = [];
+  L.push("CRITICAL REFLECTION PORTFOLIO");
+  L.push(D.meta&&D.meta.title||"Lesson");
+  L.push("=".repeat(56)); L.push("");
+  var pre = scoreOf("pretest", PRE_TEST), post = scoreOf("posttest", POST_TEST);
+  L.push("RESULTS");
+  L.push("Pre-test:  "+(pre? pre.score+"/"+pre.total : "not completed"));
+  L.push("Post-test: "+(post? post.score+"/"+post.total : "not completed"));
+  L.push("Tasks: "+doneCount()+" of "+TASKS.length+" complete");
+  L.push("");
+  L.push("AI CRITIQUE LAB — my verdicts");
+  CRITIQUES.forEach(function(c){
+    var st = store.critique && store.critique[c.id]; if(!st) return;
+    L.push(""); L.push("• "+c.theory);
+    c.sentences.forEach(function(s,si){
+      var v = st.verdicts[si] || "(no verdict)";
+      L.push("   ["+v.toUpperCase()+"] "+s.t);
+    });
+    if(st.rationale) L.push("   Rationale: "+st.rationale);
+    L.push("   Verified against a source: "+(st.verified?"yes":"no"));
+  });
+  L.push(""); L.push("AI DECISION LOG");
+  ["accept","modify","reject","human"].forEach(function(k){
+    if(store.log && store.log[k]) L.push("• "+k+": "+store.log[k]);
+  });
+  L.push(""); L.push("CONCEPT MAP");
+  var cm = store.conceptmap||{nodes:[]};
+  L.push("Scenario: "+((cm.custom&&cm.custom.trim())||cm.scenario||"(none)"));
+  (cm.nodes||[]).forEach(function(n,i){ L.push("   "+(i+1)+". "+theoryById(n.theory).name+" — "+n.note); });
+  L.push(""); L.push("REFLECTIONS");
+  var jlabels = {worked:"What worked well", struggle:"Where students struggled with AI criticality",
+    negotiation:"Evidence of negotiated meaning", changes:"Changes to make", final1:"How AI supported or hindered learning",
+    final2:"When I overrode AI", final3:"Human judgment that mattered most", final4:"What I learned about AI limits and bias"};
+  Object.keys(jlabels).forEach(function(k){
+    if(store.journal && store.journal[k]) L.push("• "+jlabels[k]+": "+store.journal[k]);
+  });
+  if(store.chat && store.chat.critique){ L.push(""); L.push("AI CHAT SYNTHESIS CRITIQUE"); L.push(store.chat.critique); }
+  download(slug()+"-portfolio.txt", L.join("\n"), "text/plain");
+});
+
+/* ============================================================
+   THEME / PRINT / RESET
+   ============================================================ */
+var themeBtn = $("#themeBtn");
+function applyTheme(t){
+  document.documentElement.setAttribute("data-theme", t);
+  if(themeBtn) themeBtn.textContent = (t==="dark"?"☀️":"🌙") + " Theme";
+  store.theme = t; save();
+}
+if(themeBtn) themeBtn.addEventListener("click", function(){
+  applyTheme(document.documentElement.getAttribute("data-theme")==="dark" ? "light" : "dark");
+});
+var printBtn = $("#printBtn");
+if(printBtn) printBtn.addEventListener("click", function(){ window.print(); });
+var resetBtn = $("#resetBtn");
+if(resetBtn) resetBtn.addEventListener("click", function(){
+  if(confirm("Reset all saved progress, quiz answers, critiques and reflections on this device?")){
+    try{ localStorage.removeItem(KEY); }catch(e){}
+    location.reload();
+  }
+});
+
+/* ============================================================
+   TABLE OF CONTENTS (from data) + SCROLL SPY
+   ============================================================ */
+(function(){
+  var box = $(".tocnav-inner");
+  if(box && D.nav && D.nav.length){
+    box.innerHTML = D.nav.map(function(n){
+      return '<a href="#'+esc(n.id)+'">'+esc(n.label)+'</a>';
+    }).join("");
+  }
+})();
+var navLinks = $$(".tocnav a");
+var sections = navLinks.map(function(a){ return $(a.getAttribute("href")); }).filter(Boolean);
+if("IntersectionObserver" in window && sections.length){
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(en.isIntersecting){
+        navLinks.forEach(function(a){ a.classList.toggle("active", a.getAttribute("href")==="#"+en.target.id); });
+      }
+    });
+  }, {rootMargin:"-130px 0px -70% 0px", threshold:0});
+  sections.forEach(function(s){ obs.observe(s); });
+}
+
+/* ============================================================
+   INIT
+   ============================================================ */
+applyTheme(store.theme || "light");
+renderTasks($("#preTasks"), TASKS.slice(0, (D.preClassCount||4)));
+renderTasks($("#peerTasks"), PEER_TASKS);
+renderTasks($("#allTasks"), TASKS);
+syncAllTasks();
+fcRender();
+scRender();
+critRender();
+critStats();
+cmFillSelect();
+cmRender();
+cmWire();
+updateProgress();
+updatePortfolio();
+renderCompare();
+})();
+</script>
 </body>
 </html>
