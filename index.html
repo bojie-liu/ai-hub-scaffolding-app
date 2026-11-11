@@ -3,14 +3,122 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Basic HTML Project</title>
+  <title>Metaverse &amp; Spatial AI — Future Directions Brainstorm</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <h1>Hello World!</h1>
-    <p>Welcome to your new project.</p>
+  <div id="error-screen" class="error-screen">
+    <div class="error-box">
+      <div class="error-icon">✕</div>
+      <h2 id="err-title">Connection error</h2>
+      <p id="err-desc"></p>
+      <pre id="err-detail"></pre>
+      <button type="button" class="btn primary" onclick="location.reload()">Reload</button>
+    </div>
   </div>
-  <script src="script.js"></script>
+
+  <main id="main" class="container">
+    <header class="app-header">
+      <div>
+        <p class="eyebrow">Metaverse &amp; Spatial AI · Reflection Studio</p>
+        <h1 id="app-title">From lesson to next step</h1>
+        <p id="app-intro" class="hub-url">A five-minute brainstorm that turns what you enjoyed building into a direction worth testing.</p>
+      </div>
+      <div class="header-right">
+        <span id="role-badge" class="role-badge"></span>
+        <span id="conn-badge" class="conn-badge">disconnected</span>
+      </div>
+    </header>
+
+    <section class="intro-card">
+      <div class="intro-main">
+        <h2>How this session works</h2>
+        <p>
+          Think back over your Metaverse &amp; Spatial AI lesson. Your partner will ask one question at a
+          time to help you notice the skills you genuinely <strong>enjoyed</strong> using, connect that
+          enjoyment to the kind of <strong>work</strong> you might want to explore, and choose one
+          <strong>small next step</strong> to test the idea. There is no single right answer — this is
+          exploratory and low-stakes, and the thinking stays yours.
+        </p>
+      </div>
+      <ul class="intro-topics" aria-label="Skills from the lesson">
+        <li>3D modelling</li>
+        <li>Texturing</li>
+        <li>Animation</li>
+        <li>UI/UX thinking</li>
+        <li>Visual logic with CoBlocks</li>
+        <li>Problem-solving a build</li>
+      </ul>
+    </section>
+
+    <div class="tutor-layout">
+      <section class="panel tutor-chat">
+        <div class="panel-head">
+          <h2>Chat with your tutor</h2>
+          <div class="chat-head-right">
+            <span id="chat-status" class="chat-status">connecting…</span>
+          </div>
+        </div>
+
+        <div id="chat-log" class="chat-wrap">
+          <p class="chat-empty" id="chat-empty">Your tutor will start the conversation.</p>
+        </div>
+
+        <form id="chat-form" class="chat-composer">
+          <textarea id="in-message" rows="2" placeholder="Type your answer…" disabled></textarea>
+          <button type="submit" class="btn primary" id="btn-send" disabled>Send</button>
+        </form>
+        <p class="chat-hint">Enter sends · Shift+Enter adds a new line</p>
+      </section>
+
+      <aside class="panel tutor-objectives">
+        <div class="panel-head">
+          <h2>Learning objectives</h2>
+          <span id="objective-count" class="chat-status">0 / 3</span>
+        </div>
+        <ul id="objective-list" class="objective-list">
+          <li class="chat-empty">Loading objectives…</li>
+        </ul>
+      </aside>
+    </div>
+
+    <section class="panel tips-panel">
+      <div class="panel-head">
+        <h2>Tips for a useful reflection</h2>
+      </div>
+      <ul class="tips-list">
+        <li>Anchor every skill in a <strong>specific moment</strong> — what you were doing, and what made it satisfying.</li>
+        <li>Keep the future part a <strong>hypothesis</strong> ("this might suit me because…"), not a fixed decision.</li>
+        <li>Make your next step <strong>small and testable</strong> — something you could try this week.</li>
+        <li>Stuck? Ask for a prompt starter or a list of options, and your partner will help you begin.</li>
+      </ul>
+    </section>
+
+    <section id="teacher-dashboard" class="panel" style="display:none">
+      <div class="panel-head">
+        <h2>Student progress</h2>
+        <div class="chat-head-right">
+          <span id="dashboard-status" class="chat-status"></span>
+          <button type="button" class="btn small" id="btn-refresh">Refresh</button>
+        </div>
+      </div>
+      <div id="student-list" class="student-list">
+        <p class="chat-empty">Students appear here once they start chatting.</p>
+      </div>
+      <div id="transcript-panel" class="transcript-panel" style="display:none">
+        <div class="panel-head">
+          <h2 id="transcript-title">Conversation</h2>
+          <button type="button" class="btn small" id="btn-close-transcript">Close</button>
+        </div>
+        <div id="transcript-log" class="chat-wrap"></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.6/dist/purify.min.js"></script>
+  <script src="tbs-client.js"></script>
+  <script src="ui.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
