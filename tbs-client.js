@@ -1,9 +1,9 @@
 /**
- * TBS Client SDK (v1.2.0)
+ * TBS Client SDK (v1.3.0)
  *
  * Plain-JavaScript client for the Tool Backend Service (TBS) platform API:
- * identity (/verify), AI chat (/chat, streaming or not), generic app data
- * (/data/*) and optional real-time rooms.
+ * identity (/verify, /renew), AI chat (/chat, streaming or not), generic app
+ * data (/data/*) and optional real-time rooms.
  *
  * Source of truth: templates/sdk/tbs-client.js in AI-InnoHub-front-end. Keep it in step with
  * services/tbs/src/routes.ts and templates/docs/tbs-api.md, then copy it to the template repo.
@@ -31,6 +31,10 @@
  *     if (me.sessionId) await tbs.connectRoom();   // only when a room was given
  *   }
  *
+ * The jwt expires. Every bearer call renews it automatically just before it lapses (and once
+ * more on a 401), so an open tab keeps working without a reload. Renewal itself stops at the
+ * server's absolute cap, after which onFatalError fires and a reload is the only way forward.
+ *
  * URL parameters read from location.search:
  *   tbsUrl (or tbs_url)  base URL of TBS
  *   tbs_token            one-time identity token, redeemed once at /verify
@@ -40,7 +44,7 @@
  * The jwt is kept in memory only. Never persist it. The API key never reaches the browser.
  */
 
-const TBS_CLIENT_VERSION = '1.2.0';
+const TBS_CLIENT_VERSION = '1.3.0';
 
 /** Server limits for POST /chat. */
 const TBS_MAX_MESSAGES = 100;
@@ -72,6 +76,26 @@ function tbsExtractMarkers(text) {
   return ids;
 }
 
+/**
+ * Message for a fetch that rejected instead of answering.
+ *
+ * A CORS refusal and an unreachable host are indistinguishable here: the browser deliberately withholds
+ * the reason, so both arrive as the same opaque TypeError. Naming only the server sends people looking
+ * for downtime that is not there, so mention both and name this page's origin — the value an operator
+ * needs when adding it to CORS_ORIGINS.
+ */
+function tbsUnreachableMessage(url) {
+  const origin =
+    typeof window !== 'undefined' && window.location ? window.location.origin || 'null' : 'unknown';
+  return (
+    'Could not reach TBS at ' +
+    url +
+    '. If the service is up, this page\'s origin (' +
+    origin +
+    ') is probably not in TBS\'s CORS_ORIGINS list, and the browser blocked the request before it was sent.'
+  );
+}
+
 class TbsError extends Error {
   constructor(message, status, body) {
     super(message);
@@ -94,6 +118,8 @@ class TbsClient {
     this.identity = null;
     this.hubIdentity = null;
     this.jwt = null;
+    this.jwtExpiresAt = 0;
+    this.renewPromise = null;
     this.history = [];
     this.ws = null;
     this.connectPromise = null;
@@ -176,7 +202,7 @@ class TbsClient {
       });
     } catch (err) {
       this.setStepStatus('verify', 'error');
-      this.triggerFatal('Cannot reach TBS', 'Could not reach TBS at ' + this.tbsUrl + '.', err.message);
+      this.triggerFatal('Cannot reach TBS', tbsUnreachableMessage(this.tbsUrl), err.message);
       return null;
     }
 
@@ -192,10 +218,94 @@ class TbsClient {
     }
 
     this.jwt = json.jwt;
+    // 0 means "unknown lifetime" (a TBS that predates expiresIn); ensureJwt() then never
+    // pre-emptively renews and the 401 path decides.
+    this.jwtExpiresAt = json.expiresIn ? Date.now() + json.expiresIn * 1000 : 0;
     delete json.jwt;
+    delete json.expiresIn;
     this.identity = json;
     this.setStepStatus('verify', 'ok');
     return this.identity;
+  }
+
+  /**
+   * Trades the current jwt for a fresh one. Sliding: the session lasts as long as the tab
+   * stays open, up to the server's absolute cap (then it answers 401 and we surface a fatal
+   * error). Single-flight, so several calls at once renew once.
+   */
+  renew() {
+    if (this.renewPromise) return this.renewPromise;
+    // A TBS older than /renew answers 404. Retrying it on every call would turn one missing
+    // route into a request storm, so remember the answer and fall back to the old behaviour:
+    // the jwt simply runs out and the app asks for a reload.
+    if (this.renewUnsupported) return Promise.reject(this.renewUnsupported);
+
+    this.setStepStatus('renew', 'busy');
+    this.renewPromise = (async () => {
+      let res;
+      try {
+        res = await fetch(this.tbsUrl + '/renew', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + this.jwt },
+        });
+      } catch (err) {
+        this.setStepStatus('renew', 'error');
+        throw new TbsError(tbsUnreachableMessage(this.tbsUrl), 0, err.message);
+      }
+
+      const json = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        this.setStepStatus('renew', 'error');
+        const error = new TbsError(this.describeError('renew', res.status, json), res.status, json);
+        if (res.status === 404) this.renewUnsupported = error;
+        throw error;
+      }
+
+      this.jwt = json.jwt;
+      this.jwtExpiresAt = json.expiresIn ? Date.now() + json.expiresIn * 1000 : 0;
+      this.setStepStatus('renew', 'ok');
+      return this.jwt;
+    })().finally(() => {
+      this.renewPromise = null;
+    });
+
+    return this.renewPromise;
+  }
+
+  /**
+   * Renews shortly before the jwt lapses, so ordinary calls never see a 401.
+   *
+   * Best-effort: if renewal fails, the current jwt may still be perfectly valid, so this
+   * deliberately does not throw. The caller proceeds and the 401 path takes over if the token
+   * really has lapsed.
+   */
+  async ensureJwt() {
+    if (!this.jwt) return;
+    // 60s of slack absorbs clock drift and a slow request. An unknown lifetime (0) skips the
+    // proactive path entirely.
+    if (this.jwtExpiresAt && Date.now() < this.jwtExpiresAt - 60 * 1000) return;
+    try {
+      await this.renew();
+    } catch (err) {
+      // Keep the old token and let the request decide.
+      if (err && err.name === 'AbortError') throw err;
+    }
+  }
+
+  /**
+   * Runs one bearer call, renewing once and retrying once when it comes back 401.
+   * `send` receives the jwt to attach; anything else is the caller's business.
+   */
+  async withJwt(send) {
+    await this.ensureJwt();
+    let result = await send(this.jwt);
+    if (result && result.status === 401) {
+      // A 401 means the token really was refused, so a failed renewal here is fatal to the call
+      // and propagates — unlike the speculative renewal above.
+      await this.renew();
+      result = await send(this.jwt);
+    }
+    return result;
   }
 
   /** Optional: learn who the user is on the platform origin (needs hubUrl and token). */
@@ -228,7 +338,9 @@ class TbsClient {
         : 'The request was rejected as invalid.';
     }
     if (status === 401) {
-      return 'Your session has expired or the link was already used. Reload the page from AI-InnoHub.';
+      // A 401 from /renew means renewal itself was refused (the absolute session cap, or a
+      // jwt that is already past saving). No retry can help — only a fresh page load can.
+      return 'Your session has ended or the link was already used. Reload the page from AI-InnoHub.';
     }
     if (status === 403) {
       return kind === 'ticket'
@@ -336,15 +448,18 @@ class TbsClient {
 
     let res;
     try {
-      res = await fetch(this.tbsUrl + '/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + this.jwt },
-        body: JSON.stringify(body),
-        signal: options.signal,
-      });
+      res = await this.withJwt((jwt) =>
+        fetch(this.tbsUrl + '/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + jwt },
+          body: JSON.stringify(body),
+          signal: options.signal,
+        })
+      );
     } catch (err) {
       if (err && err.name === 'AbortError') throw err;
-      throw new TbsError('Could not reach TBS at ' + this.tbsUrl + '.', 0, err.message);
+      if (err instanceof TbsError) throw err;
+      throw new TbsError(tbsUnreachableMessage(this.tbsUrl), 0, err.message);
     }
 
     // Errors found before a stream opens are always JSON.
@@ -422,18 +537,21 @@ class TbsClient {
     }
     let res;
     try {
-      res = await fetch(this.tbsUrl + path, {
-        method: options.method || 'GET',
-        headers: Object.assign(
-          { 'Authorization': 'Bearer ' + this.jwt },
-          options.body !== undefined ? { 'Content-Type': 'application/json' } : {}
-        ),
-        body: options.body !== undefined ? JSON.stringify(options.body) : undefined,
-        signal: options.signal,
-      });
+      res = await this.withJwt((jwt) =>
+        fetch(this.tbsUrl + path, {
+          method: options.method || 'GET',
+          headers: Object.assign(
+            { 'Authorization': 'Bearer ' + jwt },
+            options.body !== undefined ? { 'Content-Type': 'application/json' } : {}
+          ),
+          body: options.body !== undefined ? JSON.stringify(options.body) : undefined,
+          signal: options.signal,
+        })
+      );
     } catch (err) {
       if (err && err.name === 'AbortError') throw err;
-      throw new TbsError('Could not reach TBS at ' + this.tbsUrl + '.', 0, err.message);
+      if (err instanceof TbsError) throw err;
+      throw new TbsError(tbsUnreachableMessage(this.tbsUrl), 0, err.message);
     }
     const json = await res.json().catch(() => ({}));
     if (!res.ok) {
@@ -530,9 +648,22 @@ class TbsClient {
     }
   }
 
-  /** The caller's own completed objective ids, e.g. ['obj1', 'obj3']. */
+  /**
+   * The caller's own completed objective ids, e.g. ['obj1', 'obj3'].
+   *
+   * `objective_progress` is readable by a teacher across every subject (ownerReadAll), and an
+   * unfiltered read returns *every* participant's record — so a teacher who tested the student
+   * view would have been shown whichever record sorted first instead of their own. Naming the
+   * subject keeps this per-caller for both roles; the role only changes whether TBS honours the
+   * filter or pins it to the caller anyway.
+   */
   async getProgress(options) {
-    const record = await this.getRecord('objective_progress', 'progress', options);
+    options = options || {};
+    const subject = options.subject || (this.identity && this.identity.conversationId);
+    const record = await this.getRecord('objective_progress', 'progress', {
+      subject: subject || undefined,
+      signal: options.signal,
+    });
     return (record && record.data && Array.isArray(record.data.completed)) ? record.data.completed : [];
   }
 
@@ -583,14 +714,17 @@ class TbsClient {
     this.setStepStatus('ticket', 'busy');
     let res;
     try {
-      res = await fetch(this.tbsUrl + '/ws-ticket', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + this.jwt },
-        body: JSON.stringify({ sessionId: this.identity.sessionId }),
-      });
+      res = await this.withJwt((jwt) =>
+        fetch(this.tbsUrl + '/ws-ticket', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + jwt },
+          body: JSON.stringify({ sessionId: this.identity.sessionId }),
+        })
+      );
     } catch (err) {
       this.setStepStatus('ticket', 'error');
-      throw new TbsError('Could not reach TBS at ' + this.tbsUrl + '.', 0, err.message);
+      if (err instanceof TbsError) throw err;
+      throw new TbsError(tbsUnreachableMessage(this.tbsUrl), 0, err.message);
     }
 
     const json = await res.json().catch(() => ({}));
