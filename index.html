@@ -3,7 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Learning Session</title>
+  <title>Where Could This Take You Next? · Metaverse &amp; Spatial AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -19,15 +22,37 @@
 
   <main id="main" class="container">
     <header class="app-header">
-      <div>
-        <h1 id="app-title">Learning Session</h1>
-        <p id="app-intro" class="hub-url">Talk with your tutor to work through the objectives.</p>
+      <div class="app-header-main">
+        <p class="eyebrow">EdUHK · Metaverse &amp; Spatial AI</p>
+        <h1 id="app-title">Where could this take you next?</h1>
+        <p id="app-intro" class="hub-url">A short, low-stakes reflection linking what you enjoyed in the Metaverse &amp; Spatial AI lesson to your own future direction.</p>
       </div>
       <div class="header-right">
         <span id="role-badge" class="role-badge"></span>
         <span id="conn-badge" class="conn-badge">disconnected</span>
       </div>
     </header>
+
+    <section class="intro-card" aria-label="About this session">
+      <div class="intro-lead">
+        <h2>How this works</h2>
+        <p>Your tutor is a <strong>brainstorming partner</strong>, not a careers advisor. It asks one question at a time and will not write your answers for you — the links you draw are your own.</p>
+        <ul class="skill-chips" aria-label="Skills explored in the lesson">
+          <li>3D modelling</li>
+          <li>Texturing</li>
+          <li>Animation</li>
+          <li>UI/UX thinking</li>
+          <li>Visual logic with CoBlocks</li>
+          <li>Problem-solving</li>
+        </ul>
+      </div>
+      <ul class="tip-list">
+        <li><strong>Start with a moment.</strong> Recall something that finally worked — a model, a texture, an animation, a CoBlocks build.</li>
+        <li><strong>Say what drew you in.</strong> Name the skill behind that moment and why it felt satisfying.</li>
+        <li><strong>Keep it a hypothesis.</strong> Treat your direction as a guess worth testing, not a decision to make now.</li>
+        <li><strong>Finish with a small step.</strong> One low-stakes thing you could try next.</li>
+      </ul>
+    </section>
 
     <div class="tutor-layout">
       <section class="panel tutor-chat">
@@ -79,6 +104,8 @@
         <div id="transcript-log" class="chat-wrap"></div>
       </div>
     </section>
+
+    <p class="app-footer">Your tutor supports <strong>original reflection</strong> — it prompts your thinking rather than completing the work for you.</p>
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
