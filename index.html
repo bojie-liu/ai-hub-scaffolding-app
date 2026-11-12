@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Learning Session</title>
+  <title>Virtual Exhibition Design Studio — Brainstorming Partner</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -20,8 +20,8 @@
   <main id="main" class="container">
     <header class="app-header">
       <div>
-        <h1 id="app-title">Learning Session</h1>
-        <p id="app-intro" class="hub-url">Talk with your tutor to work through the objectives.</p>
+        <h1 id="app-title">Virtual Exhibition Design Studio</h1>
+        <p id="app-intro" class="hub-url">A design-thinking sounding board for your Delightex Edu exhibition build.</p>
       </div>
       <div class="header-right">
         <span id="role-badge" class="role-badge"></span>
@@ -29,21 +29,43 @@
       </div>
     </header>
 
+    <section class="intro-card">
+      <div class="intro-lead">
+        <h2 class="intro-heading">Five minutes of design thinking</h2>
+        <p class="intro-copy">This is a sounding board, <strong>not a worksheet</strong>. Your partner won't design the space for you — it reflects your idea back and asks what it would look like if you pushed it further. By the end you'll have three things pinned down for your next build session.</p>
+      </div>
+      <ul class="tip-list">
+        <li class="tip">
+          <span class="tip-num">1</span>
+          <span class="tip-text">Decide <strong>who the space is for</strong> and what that audience needs.</span>
+        </li>
+        <li class="tip">
+          <span class="tip-num">2</span>
+          <span class="tip-text">Propose <strong>what a visitor sees first</strong> and why that ordering works.</span>
+        </li>
+        <li class="tip">
+          <span class="tip-num">3</span>
+          <span class="tip-text">Commit to <strong>one build move</strong> — a Skybox, placement, NPC, or CoBlock trigger.</span>
+        </li>
+      </ul>
+      <p class="intro-prompt">Start with this: <em>“Who walks in first, and what do they notice in the opening three seconds?”</em></p>
+    </section>
+
     <div class="tutor-layout">
       <section class="panel tutor-chat">
         <div class="panel-head">
-          <h2>Chat with your tutor</h2>
+          <h2>Your design partner</h2>
           <div class="chat-head-right">
             <span id="chat-status" class="chat-status">connecting…</span>
           </div>
         </div>
 
         <div id="chat-log" class="chat-wrap">
-          <p class="chat-empty" id="chat-empty">Your tutor will start the conversation.</p>
+          <p class="chat-empty" id="chat-empty">Your design partner will open the conversation.</p>
         </div>
 
         <form id="chat-form" class="chat-composer">
-          <textarea id="in-message" rows="2" placeholder="Type your answer…" disabled></textarea>
+          <textarea id="in-message" rows="2" placeholder="Type your idea…" disabled></textarea>
           <button type="submit" class="btn primary" id="btn-send" disabled>Send</button>
         </form>
         <p class="chat-hint">Enter sends · Shift+Enter adds a new line</p>
@@ -51,7 +73,7 @@
 
       <aside class="panel tutor-objectives">
         <div class="panel-head">
-          <h2>Learning objectives</h2>
+          <h2>Your design goals</h2>
           <span id="objective-count" class="chat-status">0 / 3</span>
         </div>
         <ul id="objective-list" class="objective-list">
