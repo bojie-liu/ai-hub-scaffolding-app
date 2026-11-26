@@ -1,16 +1,1612 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Basic HTML Project</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Teacher Professionalism in Local and International Contexts</title>
+<meta name="description" content="A university lesson in which pre-service teachers compare local and international models of teacher professionalism and learn to critique AI-generated claims about them.">
+<style>
+/* ============================================================
+   DESIGN TOKENS
+   ============================================================ */
+:root{
+  --bg:#f6f7fb;
+  --bg-elev:#ffffff;
+  --bg-soft:#eef1f8;
+  --bg-sunken:#e7ebf5;
+  --text:#161a2b;
+  --text-soft:#4a5168;
+  --text-mute:#6d7590;
+  --border:#dfe3ef;
+  --border-strong:#c6cde0;
+
+  --brand:#4338ca;
+  --brand-2:#6366f1;
+  --brand-soft:#eceafe;
+  --brand-ink:#2c2494;
+
+  --teal:#0d9488;
+  --teal-soft:#dcfaf6;
+  --amber:#b45309;
+  --amber-soft:#fef3c7;
+  --amber-border:#fcd34d;
+  --rose:#be123c;
+  --rose-soft:#ffe4e9;
+  --green:#15803d;
+  --green-soft:#dcfce7;
+  --violet:#7c3aed;
+  --violet-soft:#f1e9ff;
+
+  --radius:16px;
+  --radius-sm:10px;
+  --radius-xs:8px;
+  --shadow-sm:0 1px 2px rgba(20,25,50,.06),0 1px 3px rgba(20,25,50,.05);
+  --shadow:0 4px 16px rgba(20,25,50,.08),0 1px 3px rgba(20,25,50,.05);
+  --shadow-lg:0 18px 40px -12px rgba(30,25,90,.28);
+  --ring:0 0 0 3px rgba(99,102,241,.35);
+  --maxw:1180px;
+  --ff:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --ff-mono:"SFMono-Regular",ui-monospace,"JetBrains Mono",Menlo,Consolas,monospace;
+}
+html[data-theme="dark"]{
+  --bg:#0c0f1c;
+  --bg-elev:#151a2e;
+  --bg-soft:#1c2238;
+  --bg-sunken:#101527;
+  --text:#eef1fb;
+  --text-soft:#b9c0d8;
+  --text-mute:#8a92ad;
+  --border:#272e47;
+  --border-strong:#39415f;
+
+  --brand:#8b8cf9;
+  --brand-2:#a5a6ff;
+  --brand-soft:#1e2145;
+  --brand-ink:#c9caff;
+
+  --teal:#2dd4bf;
+  --teal-soft:#0d2e2b;
+  --amber:#fbbf24;
+  --amber-soft:#332405;
+  --amber-border:#7c5a10;
+  --rose:#fb7185;
+  --rose-soft:#3a1220;
+  --green:#4ade80;
+  --green-soft:#0f2e1a;
+  --violet:#c4b5fd;
+  --violet-soft:#241a3d;
+
+  --shadow-sm:0 1px 2px rgba(0,0,0,.4);
+  --shadow:0 6px 20px rgba(0,0,0,.45);
+  --shadow-lg:0 20px 44px -14px rgba(0,0,0,.7);
+  --ring:0 0 0 3px rgba(139,140,249,.45);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:132px;-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--bg);color:var(--text);font-family:var(--ff);
+  line-height:1.62;font-size:16px;letter-spacing:.005em;
+  -webkit-font-smoothing:antialiased;
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{animation-duration:.001ms!important;transition-duration:.001ms!important}
+}
+img{max-width:100%}
+a{color:var(--brand);text-decoration-thickness:1.5px;text-underline-offset:3px}
+a:hover{color:var(--brand-ink)}
+:focus-visible{outline:3px solid var(--brand-2);outline-offset:2px;border-radius:6px}
+.skip{position:absolute;left:-9999px;top:0;background:var(--brand);color:#fff;padding:12px 18px;z-index:200;border-radius:0 0 10px 0}
+.skip:focus{left:0}
+h1,h2,h3,h4{line-height:1.25;margin:0 0 .5em;font-weight:750;letter-spacing:-.015em}
+h1{font-size:clamp(1.7rem,3.4vw,2.5rem)}
+h2{font-size:clamp(1.35rem,2.3vw,1.85rem)}
+h3{font-size:clamp(1.08rem,1.6vw,1.28rem)}
+h4{font-size:1rem}
+p{margin:0 0 .9em}
+ul,ol{margin:0 0 .9em;padding-left:1.35em}
+li{margin:.3em 0}
+strong{font-weight:700}
+code,kbd{font-family:var(--ff-mono);font-size:.88em;background:var(--bg-soft);padding:.12em .42em;border-radius:6px;border:1px solid var(--border)}
+hr{border:0;border-top:1px solid var(--border);margin:1.6rem 0}
+
+/* ============================================================
+   LAYOUT
+   ============================================================ */
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
+main{padding-bottom:80px}
+
+/* Top bar */
+.topbar{
+  position:sticky;top:0;z-index:60;background:color-mix(in srgb,var(--bg-elev) 88%,transparent);
+  backdrop-filter:saturate(180%) blur(14px);border-bottom:1px solid var(--border);
+}
+.topbar-inner{max-width:var(--maxw);margin:0 auto;padding:10px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.brandmark{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.02em;font-size:.98rem}
+.brandmark .dot{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--brand),var(--violet));display:grid;place-items:center;color:#fff;font-size:15px;box-shadow:var(--shadow-sm);flex:0 0 auto}
+.topbar-spacer{flex:1 1 auto}
+.topbar-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+
+/* Progress pill in topbar */
+.progress-pill{display:flex;align-items:center;gap:10px;background:var(--bg-soft);border:1px solid var(--border);border-radius:999px;padding:5px 6px 5px 14px;font-size:.82rem;font-weight:650;color:var(--text-soft);white-space:nowrap}
+.progress-track{width:120px;height:8px;border-radius:999px;background:var(--bg-sunken);overflow:hidden;border:1px solid var(--border)}
+.progress-fill{height:100%;width:0%;border-radius:999px;background:linear-gradient(90deg,var(--brand),var(--teal));transition:width .45s cubic-bezier(.2,.8,.2,1)}
+
+/* Buttons */
+.btn{
+  font:inherit;font-weight:650;font-size:.86rem;border-radius:10px;border:1px solid var(--border-strong);
+  background:var(--bg-elev);color:var(--text);padding:8px 13px;cursor:pointer;display:inline-flex;
+  align-items:center;gap:7px;transition:transform .12s ease,box-shadow .15s ease,background .15s ease,border-color .15s;
+  box-shadow:var(--shadow-sm);text-decoration:none;line-height:1.2
+}
+.btn:hover{transform:translateY(-1px);box-shadow:var(--shadow);border-color:var(--brand-2)}
+.btn:active{transform:translateY(0)}
+.btn-primary{background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#fff;border-color:transparent}
+.btn-primary:hover{color:#fff;filter:brightness(1.07)}
+.btn-ghost{background:transparent;box-shadow:none;border-color:var(--border)}
+.btn-sm{padding:5px 10px;font-size:.79rem;border-radius:8px}
+.btn-icon{padding:8px;width:38px;justify-content:center}
+.btn[aria-pressed="true"]{background:var(--brand-soft);border-color:var(--brand-2);color:var(--brand-ink)}
+
+/* Nav */
+.tocnav{position:sticky;top:57px;z-index:55;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+.tocnav-inner{max-width:var(--maxw);margin:0 auto;padding:0 20px;display:flex;gap:4px;overflow-x:auto;scrollbar-width:thin}
+.tocnav a{
+  flex:0 0 auto;padding:11px 12px;font-size:.82rem;font-weight:640;color:var(--text-mute);text-decoration:none;
+  border-bottom:3px solid transparent;white-space:nowrap;transition:color .15s,border-color .15s
+}
+.tocnav a:hover{color:var(--text)}
+.tocnav a.active{color:var(--brand);border-bottom-color:var(--brand)}
+
+/* Sections */
+section.block{padding:44px 0 8px;scroll-margin-top:130px}
+.sec-head{display:flex;align-items:flex-start;gap:14px;margin-bottom:20px;flex-wrap:wrap}
+.sec-num{
+  flex:0 0 auto;width:42px;height:42px;border-radius:13px;display:grid;place-items:center;font-weight:800;
+  background:var(--brand-soft);color:var(--brand-ink);border:1px solid var(--border);font-size:1.02rem
+}
+.sec-head .t{flex:1 1 260px;min-width:0}
+.sec-head .t p{margin:.15em 0 0;color:var(--text-soft);font-size:.94rem;max-width:72ch}
+.eyebrow{text-transform:uppercase;letter-spacing:.12em;font-size:.7rem;font-weight:800;color:var(--brand);margin:0 0 .3em}
+
+/* Cards */
+.card{background:var(--bg-elev);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-sm);padding:20px;margin-bottom:18px}
+.card.tight{padding:16px}
+.card-title{display:flex;align-items:center;gap:9px;margin:0 0 12px;font-size:1.04rem;font-weight:740}
+.card-title .ic{width:26px;height:26px;border-radius:8px;display:grid;place-items:center;font-size:14px;flex:0 0 auto;background:var(--brand-soft);color:var(--brand-ink)}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}
+.split{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:18px;align-items:start}
+@media(max-width:860px){.split{grid-template-columns:1fr}}
+
+/* Pills & chips */
+.pill{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:999px;font-size:.74rem;font-weight:700;border:1px solid var(--border);background:var(--bg-soft);color:var(--text-soft)}
+.pill.brand{background:var(--brand-soft);color:var(--brand-ink);border-color:transparent}
+.pill.teal{background:var(--teal-soft);color:var(--teal);border-color:transparent}
+.pill.amber{background:var(--amber-soft);color:var(--amber);border-color:transparent}
+.pill.rose{background:var(--rose-soft);color:var(--rose);border-color:transparent}
+.pill.green{background:var(--green-soft);color:var(--green);border-color:transparent}
+.pill.violet{background:var(--violet-soft);color:var(--violet);border-color:transparent}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+
+/* Tables */
+.tablewrap{overflow-x:auto;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-elev);-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:.88rem}
+th,td{padding:11px 13px;text-align:left;border-bottom:1px solid var(--border);vertical-align:top}
+th{background:var(--bg-soft);font-weight:720;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;color:var(--text-soft);position:sticky;top:0}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:color-mix(in srgb,var(--brand-soft) 40%,transparent)}
+
+/* Callouts */
+.callout{border-radius:var(--radius-sm);padding:14px 16px;border:1px solid var(--border);border-left-width:5px;background:var(--bg-soft);margin:14px 0;font-size:.93rem}
+.callout .ct{font-weight:740;display:flex;align-items:center;gap:8px;margin-bottom:5px}
+.callout p:last-child,.callout ul:last-child{margin-bottom:0}
+.callout.ai{border-left-color:var(--violet);background:var(--violet-soft)}
+.callout.tip{border-left-color:var(--teal);background:var(--teal-soft)}
+.callout.warn{border-left-color:var(--amber);background:var(--amber-soft)}
+.callout.key{border-left-color:var(--brand);background:var(--brand-soft)}
+.callout.note{border-left-color:var(--border-strong);background:var(--bg-soft)}
+
+/* Details / collapsibles */
+details.acc{border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-elev);margin-bottom:12px;overflow:hidden;box-shadow:var(--shadow-sm)}
+details.acc>summary{
+  cursor:pointer;padding:14px 16px;font-weight:700;display:flex;align-items:center;gap:10px;list-style:none;
+  font-size:.95rem;transition:background .15s
+}
+details.acc>summary::-webkit-details-marker{display:none}
+details.acc>summary:hover{background:var(--bg-soft)}
+details.acc>summary::after{content:"▾";margin-left:auto;color:var(--text-mute);transition:transform .2s;font-size:.9rem}
+details.acc[open]>summary::after{transform:rotate(180deg)}
+details.acc>summary .badge{margin-left:0}
+details.acc .acc-body{padding:4px 16px 18px;border-top:1px solid var(--border)}
+details.acc .acc-body>*:first-child{margin-top:12px}
+
+/* Tool card specifics */
+.tool-card{background:var(--bg-elev);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-sm);margin-bottom:14px;overflow:hidden}
+.tool-head{padding:16px 18px;display:flex;gap:13px;align-items:flex-start}
+.tool-logo{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;font-weight:800;font-size:1.05rem;flex:0 0 auto;color:#fff}
+.tool-head .meta{flex:1;min-width:0}
+.tool-head h4{margin:0 0 3px;font-size:1.02rem}
+.tool-head .sub{font-size:.83rem;color:var(--text-mute)}
+.steps{counter-reset:s;list-style:none;padding:0;margin:0}
+.steps li{counter-increment:s;position:relative;padding:9px 0 9px 42px;border-bottom:1px dashed var(--border);font-size:.92rem}
+.steps li:last-child{border-bottom:0}
+.steps li::before{
+  content:counter(s);position:absolute;left:0;top:9px;width:26px;height:26px;border-radius:8px;display:grid;
+  place-items:center;background:var(--brand-soft);color:var(--brand-ink);font-weight:800;font-size:.79rem
+}
+.prompt-box{background:var(--bg-sunken);border:1px dashed var(--border-strong);border-radius:var(--radius-xs);padding:12px 14px;font-family:var(--ff-mono);font-size:.83rem;white-space:pre-wrap;margin:10px 0;color:var(--text-soft)}
+
+/* Theory reference cards */
+.theory-card{border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-elev);padding:15px;box-shadow:var(--shadow-sm);border-top:4px solid var(--tc,var(--brand))}
+.theory-card h4{margin:0 0 4px;font-size:.98rem}
+.theory-card .who{font-size:.78rem;color:var(--text-mute);margin-bottom:8px}
+.theory-card p{font-size:.87rem;margin:0 0 .5em}
+.theory-card .kv{font-size:.82rem;color:var(--text-soft)}
+.theory-card .kv b{color:var(--text)}
+.theory-card .limit{background:var(--rose-soft);border-radius:8px;padding:7px 10px;font-size:.8rem;color:var(--text-soft);margin-top:8px}
+
+/* Quiz */
+.quiz-q{border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;background:var(--bg-elev);margin-bottom:12px}
+.quiz-q .qtop{display:flex;gap:10px;align-items:flex-start;margin-bottom:10px}
+.qnum{flex:0 0 auto;width:26px;height:26px;border-radius:8px;background:var(--brand);color:#fff;display:grid;place-items:center;font-size:.79rem;font-weight:800}
+.opts{display:grid;gap:8px}
+.opt{
+  display:flex;gap:10px;align-items:flex-start;padding:11px 13px;border:1.5px solid var(--border);border-radius:10px;
+  cursor:pointer;background:var(--bg);transition:border-color .15s,background .15s,transform .1s;font-size:.9rem
+}
+.opt:hover{border-color:var(--brand-2);background:var(--bg-soft)}
+.opt input{position:absolute;opacity:0;pointer-events:none}
+.opt .marker{width:20px;height:20px;border-radius:50%;border:2px solid var(--border-strong);flex:0 0 auto;display:grid;place-items:center;margin-top:1px;font-size:.7rem;color:transparent;transition:all .15s}
+.opt.sel{border-color:var(--brand-2);background:var(--brand-soft)}
+.opt.sel .marker{border-color:var(--brand);background:var(--brand);color:#fff}
+.opt.correct{border-color:var(--green);background:var(--green-soft)}
+.opt.correct .marker{border-color:var(--green);background:var(--green);color:#fff}
+.opt.wrong{border-color:var(--rose);background:var(--rose-soft)}
+.opt.wrong .marker{border-color:var(--rose);background:var(--rose);color:#fff}
+.opt.locked{pointer-events:none;opacity:.96}
+.explain{margin-top:10px;padding:11px 13px;border-radius:10px;font-size:.86rem;display:none;border:1px solid var(--border)}
+.explain.show{display:block;animation:fade .25s ease}
+.explain.ok{background:var(--green-soft);border-color:color-mix(in srgb,var(--green) 40%,transparent)}
+.explain.no{background:var(--rose-soft);border-color:color-mix(in srgb,var(--rose) 40%,transparent)}
+@keyframes fade{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.score-bar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:14px 16px;border-radius:var(--radius-sm);background:var(--bg-soft);border:1px solid var(--border);margin-bottom:14px}
+.score-big{font-size:1.9rem;font-weight:820;line-height:1;letter-spacing:-.02em}
+.cat-grid{display:grid;gap:9px;margin-top:10px}
+.cat-row{display:grid;grid-template-columns:minmax(120px,1fr) auto;gap:10px;align-items:center;font-size:.85rem}
+.cat-track{grid-column:1/-1;height:9px;border-radius:999px;background:var(--bg-sunken);overflow:hidden}
+.cat-fill{height:100%;border-radius:999px;transition:width .5s ease}
+
+/* Flashcard drag & drop */
+.fc-arena{display:grid;gap:18px;grid-template-columns:minmax(0,300px) minmax(0,1fr)}
+@media(max-width:820px){.fc-arena{grid-template-columns:1fr}}
+.chip-pool{display:flex;flex-direction:column;gap:9px}
+.chip{
+  padding:12px 14px;border-radius:11px;border:1.5px solid var(--border-strong);background:var(--bg-elev);
+  cursor:grab;font-weight:680;font-size:.9rem;box-shadow:var(--shadow-sm);transition:transform .12s,box-shadow .15s,border-color .15s;
+  display:flex;align-items:center;gap:9px
+}
+.chip:hover{border-color:var(--brand-2);transform:translateY(-1px)}
+.chip:active{cursor:grabbing}
+.chip.picked{border-color:var(--brand);box-shadow:var(--ring);background:var(--brand-soft)}
+.chip.placed{opacity:.45;cursor:default;border-style:dashed}
+.chip .swatch{width:12px;height:12px;border-radius:4px;flex:0 0 auto;background:var(--tc,var(--brand))}
+.slots{display:grid;gap:12px}
+.slot{border:1.5px dashed var(--border-strong);border-radius:12px;padding:13px;background:var(--bg-soft);transition:border-color .15s,background .15s}
+.slot .slot-label{font-size:.73rem;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:var(--text-mute);margin-bottom:4px}
+.slot .slot-desc{font-size:.88rem;color:var(--text-soft)}
+.slot .dropzone{margin-top:9px;min-height:42px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:.84rem;color:var(--text-mute);border:1px dashed var(--border);background:var(--bg-elev)}
+.slot.over{border-color:var(--brand);background:var(--brand-soft)}
+.slot.filled{border-style:solid;border-color:var(--green);background:var(--green-soft)}
+.slot.filled .dropzone{border:0;background:transparent;color:var(--green);font-weight:700;justify-content:flex-start;padding:0 4px}
+.slot.bad{animation:shake .4s}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}40%{transform:translateX(7px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
+
+/* AI Critique Lab */
+.critique{border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-elev);margin-bottom:14px;overflow:hidden}
+.critique-head{padding:13px 16px;background:var(--bg-soft);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.critique-head h4{margin:0;font-size:.97rem}
+.ai-bubble{display:flex;gap:11px;padding:14px 16px;background:var(--violet-soft);border-bottom:1px solid var(--border)}
+.ai-avatar{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--violet),var(--brand));color:#fff;display:grid;place-items:center;font-size:15px;flex:0 0 auto}
+.ai-text{flex:1;min-width:0;font-size:.92rem}
+.sent{display:block;padding:9px 11px;border-radius:9px;margin:0 0 8px;background:var(--bg-elev);border:1px solid var(--border);position:relative}
+.sent:last-child{margin-bottom:0}
+.sent .sent-text{display:block;margin-bottom:8px}
+.verdicts{display:flex;gap:6px;flex-wrap:wrap}
+.vbtn{font:inherit;font-size:.74rem;font-weight:750;padding:4px 10px;border-radius:999px;border:1.5px solid var(--border-strong);background:var(--bg);cursor:pointer;transition:all .14s;color:var(--text-soft)}
+.vbtn:hover{border-color:var(--brand-2)}
+.vbtn.on[data-v="accept"]{background:var(--green);border-color:var(--green);color:#fff}
+.vbtn.on[data-v="modify"]{background:var(--amber);border-color:var(--amber);color:#fff}
+.vbtn.on[data-v="reject"]{background:var(--rose);border-color:var(--rose);color:#fff}
+.critique-body{padding:14px 16px}
+.field{display:block;margin-bottom:12px}
+.field>span{display:block;font-size:.79rem;font-weight:740;color:var(--text-soft);margin-bottom:5px;letter-spacing:.01em}
+input[type=text],textarea,select{
+  width:100%;font:inherit;font-size:.9rem;padding:10px 12px;border-radius:10px;border:1.5px solid var(--border);
+  background:var(--bg);color:var(--text);transition:border-color .15s,box-shadow .15s;resize:vertical
+}
+input[type=text]:focus,textarea:focus,select:focus{border-color:var(--brand-2);box-shadow:var(--ring);outline:none}
+textarea{min-height:74px;line-height:1.55}
+.checkline{display:flex;align-items:flex-start;gap:9px;font-size:.86rem;margin:8px 0;cursor:pointer}
+.checkline input{width:18px;height:18px;margin-top:2px;accent-color:var(--brand);flex:0 0 auto}
+
+/* Chat sim */
+.chat{background:var(--bg-sunken);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px;max-height:420px;overflow-y:auto;display:flex;flex-direction:column;gap:11px}
+.msg{max-width:86%;padding:10px 13px;border-radius:14px;font-size:.88rem;box-shadow:var(--shadow-sm);white-space:pre-wrap}
+.msg.user{align-self:flex-end;background:var(--brand);color:#fff;border-bottom-right-radius:4px}
+.msg.ai{align-self:flex-start;background:var(--bg-elev);border:1px solid var(--border);border-bottom-left-radius:4px}
+.msg .who{font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;opacity:.7;margin-bottom:4px}
+
+/* Concept map */
+.map-canvas{position:relative;background:var(--bg-soft);border:1px solid var(--border);border-radius:var(--radius-sm);min-height:300px;display:grid;place-items:center;padding:24px;overflow:hidden}
+.map-core{background:linear-gradient(135deg,var(--brand),var(--violet));color:#fff;padding:14px 18px;border-radius:14px;font-weight:750;font-size:.9rem;box-shadow:var(--shadow);text-align:center;max-width:280px;z-index:2}
+.map-ring{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:22px;z-index:2}
+.map-node{padding:9px 14px;border-radius:11px;background:var(--bg-elev);border:2px solid var(--tc,var(--brand));font-weight:700;font-size:.84rem;box-shadow:var(--shadow-sm);display:flex;align-items:center;gap:7px}
+.map-node .swatch{width:10px;height:10px;border-radius:3px;background:var(--tc,var(--brand))}
+.map-node .x{cursor:pointer;color:var(--text-mute);font-weight:800;font-size:.9rem;line-height:1}
+.map-node .x:hover{color:var(--rose)}
+.map-empty{color:var(--text-mute);font-size:.88rem;text-align:center}
+
+/* Progress checklist */
+.tasklist{display:grid;gap:8px}
+.task{display:flex;align-items:center;gap:11px;padding:11px 13px;border:1px solid var(--border);border-radius:10px;background:var(--bg-elev);cursor:pointer;font-size:.9rem;transition:all .15s}
+.task:hover{border-color:var(--brand-2);background:var(--bg-soft)}
+.task .box{width:22px;height:22px;border-radius:7px;border:2px solid var(--border-strong);display:grid;place-items:center;flex:0 0 auto;color:transparent;font-size:.75rem;transition:all .15s}
+.task.done{border-color:var(--green);background:var(--green-soft)}
+.task.done .box{background:var(--green);border-color:var(--green);color:#fff}
+.task.done .label{text-decoration:line-through;text-decoration-color:var(--text-mute);color:var(--text-soft)}
+.task .label{flex:1;font-weight:640}
+
+/* Ring stat */
+.ring{--p:0;width:78px;height:78px;border-radius:50%;display:grid;place-items:center;flex:0 0 auto;
+  background:conic-gradient(var(--brand) calc(var(--p)*1%),var(--bg-sunken) 0)}
+.ring .inner{width:60px;height:60px;border-radius:50%;background:var(--bg-elev);display:grid;place-items:center;font-weight:820;font-size:1rem;border:1px solid var(--border)}
+
+/* Stat tiles */
+.stat{background:var(--bg-elev);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px;box-shadow:var(--shadow-sm)}
+.stat .n{font-size:1.5rem;font-weight:820;letter-spacing:-.02em;line-height:1.1}
+.stat .l{font-size:.78rem;color:var(--text-mute);font-weight:640;text-transform:uppercase;letter-spacing:.06em}
+
+/* Misc */
+.toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,140%);background:var(--text);color:var(--bg);padding:11px 20px;border-radius:999px;font-size:.87rem;font-weight:650;z-index:120;box-shadow:var(--shadow-lg);transition:transform .35s cubic-bezier(.2,.9,.25,1);max-width:90vw;text-align:center}
+.toast.show{transform:translate(-50%,0)}
+.hero{background:linear-gradient(140deg,var(--brand) 0%,var(--violet) 55%,var(--teal) 130%);color:#fff;border-radius:var(--radius);padding:34px 30px;box-shadow:var(--shadow-lg);position:relative;overflow:hidden;margin-top:22px}
+.hero::after{content:"";position:absolute;inset:0;background:radial-gradient(600px 200px at 90% 0%,rgba(255,255,255,.22),transparent 70%);pointer-events:none}
+.hero h1{color:#fff;margin-bottom:.35em;position:relative;z-index:1}
+.hero p{color:rgba(255,255,255,.94);max-width:70ch;position:relative;z-index:1;margin-bottom:1em}
+.hero .chips .pill{background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.3);color:#fff;backdrop-filter:blur(4px)}
+.meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-top:18px;position:relative;z-index:1}
+.meta-item{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.26);border-radius:12px;padding:11px 13px;backdrop-filter:blur(5px)}
+.meta-item .k{font-size:.68rem;text-transform:uppercase;letter-spacing:.09em;font-weight:800;opacity:.85}
+.meta-item .v{font-weight:740;font-size:.94rem;margin-top:2px}
+.muted{color:var(--text-mute)}
+.small{font-size:.83rem}
+.center{text-align:center}
+.mt0{margin-top:0}.mb0{margin-bottom:0}
+.inline-actions{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin-top:14px}
+.two-col-list{columns:2;column-gap:26px}
+@media(max-width:640px){.two-col-list{columns:1}}
+footer{border-top:1px solid var(--border);padding:26px 0 40px;color:var(--text-mute);font-size:.85rem;background:var(--bg-elev)}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.tl{position:relative;padding-left:26px;margin:6px 0 0}
+.tl::before{content:"";position:absolute;left:8px;top:4px;bottom:4px;width:2px;background:var(--border-strong)}
+.tl-item{position:relative;padding:0 0 16px}
+.tl-item::before{content:"";position:absolute;left:-24px;top:5px;width:12px;height:12px;border-radius:50%;background:var(--brand);border:2px solid var(--bg-elev);box-shadow:0 0 0 2px var(--border)}
+.tl-item:last-child{padding-bottom:0}
+.tl-item .tt{font-weight:730;font-size:.93rem}
+.tl-item .td{font-size:.85rem;color:var(--text-soft)}
+@media(max-width:560px){
+  .brandmark span:last-child{display:none}
+  .hide-xs{display:none}
+  .progress-track{width:70px}
+  .topbar-inner{gap:8px}
+}
+@media print{
+  .topbar,.tocnav,.btn,.no-print{display:none!important}
+  body{background:#fff}
+  .card,.tool-card,details.acc{break-inside:avoid;box-shadow:none}
+  details.acc{display:block}
+  details.acc .acc-body{display:block!important}
+  section.block{padding:14px 0}
+}
+</style>
 </head>
 <body>
-  <div class="container">
-    <h1>Hello World!</h1>
-    <p>Welcome to your new project.</p>
+<a class="skip" href="#main">Skip to lesson content</a>
+
+<!-- ================= TOP BAR ================= -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brandmark">
+      <span class="dot" aria-hidden="true">◎</span>
+      <span>EDU 3102 · Teacher Professionalism</span>
+    </div>
+    <div class="topbar-spacer"></div>
+    <div class="progress-pill" title="Your saved progress on this device">
+      <span id="progressText">0% complete</span>
+      <span class="progress-track"><span class="progress-fill" id="progressFill"></span></span>
+    </div>
+    <div class="topbar-actions">
+      <button class="btn btn-sm" id="themeBtn" type="button" aria-label="Toggle colour theme">🌙 <span class="hide-xs">Theme</span></button>
+      <button class="btn btn-sm" id="printBtn" type="button">🖨️ Print</button>
+      <button class="btn btn-sm" id="resetBtn" type="button">↺ Reset</button>
+    </div>
   </div>
-  <script src="script.js"></script>
+</header>
+
+<nav class="tocnav" aria-label="Lesson sections">
+  <div class="tocnav-inner"></div>
+</nav>
+
+<main id="main">
+<div class="wrap">
+
+<!-- SERVER TEMPLATE — do not edit this file. The assembly step fills it from data.json. -->
+
+<!-- ================= HERO / OVERVIEW ================= -->
+<section id="overview" class="block">
+  <div class="hero">
+    <p class="eyebrow" style="color:rgba(255,255,255,.85)">EDU 3102 · Teacher Professionalism</p>
+    <h1>Teacher Professionalism in Local and International Contexts</h1>
+    <p>This lesson examines how teacher professionalism is defined, enacted and contested in local and international contexts. Students compare sociological models, national standards and global frameworks, then test an AI assistant&#39;s claims about professionalism against authoritative sources. AI runs through the lesson as a fallible co-analyst whose fluent answers must be verified, modified or rejected.</p>
+    <div class="chips">
+      <span class="pill">⏱ 150 minutes (45 min pre-class + 105 min workshop)</span>
+      <span class="pill">👥 24-40 students, working in groups of four</span>
+      <span class="pill">🎓 Undergraduate pre-service teachers (Year 2-3)</span>
+      <span class="pill">🌐 English</span>
+    </div>
+    <div class="meta-grid">
+      <div class="meta-item"><div class="k">Primary Pedagogy</div><div class="v">Case-based comparative inquiry</div></div>
+      <div class="meta-item"><div class="k">Framing</div><div class="v">Glocal - local practice read against international policy</div></div>
+      <div class="meta-item"><div class="k">AI Role</div><div class="v">Fallible co-analyst, never an authority</div></div>
+      <div class="meta-item"><div class="k">Assessment</div><div class="v">Formative critique lab plus summative portfolio</div></div>
+    </div>
+  </div>
+
+  <!-- live counters — the JS fills these; keep the ids -->
+  <div class="grid g4" style="margin-top:20px">
+    <div class="stat"><div class="n" id="statTasks">0 / 0</div><div class="l">Tasks complete</div></div>
+    <div class="stat"><div class="n" id="statPre">—</div><div class="l">Pre-test score</div></div>
+    <div class="stat"><div class="n" id="statPost">—</div><div class="l">Post-test score</div></div>
+    <div class="stat"><div class="n" id="statCrit">0 / 0</div><div class="l">AI critiques logged</div></div>
+  </div>
+
+  <div class="card" style="margin-top:20px">
+    <div class="card-title"><span class="ic">📍</span> Lesson roadmap</div>
+    <div class="tl">
+      <div class="tl-item"><div class="tt">Pre-class (async) · 45 min</div><div class="td">Diagnostic pre-test in the LMS, two comparative readings, and one AI summary to critique before the workshop.</div></div><div class="tl-item"><div class="tt">Opening and framing · 15 min</div><div class="td">Live Mentimeter poll on what professionalism means locally, then the local/international framing and the AI design principle.</div></div><div class="tl-item"><div class="tt">Round 1 - comparative cases · 35 min</div><div class="td">Jigsaw analysis of two local and two international professionalism cases, worked through the peer-work checklist.</div></div><div class="tl-item"><div class="tt">AI Critique Lab · 25 min</div><div class="td">Students accept, modify or reject each AI claim about professionalism and justify their verdicts against sources.</div></div><div class="tl-item"><div class="tt">Synthesis chat and post-test · 20 min</div><div class="td">Practice the synthesis prompt, write a critique of the AI response, then take the post-test.</div></div><div class="tl-item"><div class="tt">Concept map and portfolio · 10 min</div><div class="td">Build a three-node concept map of the case and complete the reflective portfolio before leaving.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SECTION 1 — OUTCOMES ================= -->
+<section id="ilos" class="block">
+  <div class="sec-head">
+    <div class="sec-num">1</div>
+    <div class="t">
+      <p class="eyebrow">Section 1</p>
+      <h2>Intended Learning Outcomes</h2>
+      <p>Each outcome pairs a disciplinary goal with an explicit AI integration, so critical AI use is engineered into the learning rather than added on at the end.</p>
+    </div>
+  </div>
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th style="width:110px">ILO</th><th>Description</th><th style="width:38%">🤖 AI Integration</th></tr></thead>
+      <tbody>
+        <tr><td>ILO1</td><td>Explain the main sociological and policy models of teacher professionalism, including occupational and organisational professionalism, standards frameworks, reflective practice, collaborative professionalism, teacher agency and glocalisation.</td><td>AI summarises each model on demand, but students must verify every summary against the cited source and flag distortions, omissions and invented detail.</td></tr><tr><td>ILO2</td><td>Compare how professionalism is defined and enacted in at least one local context and two international contexts, naming shared and context-bound competences.</td><td>AI drafts a comparison table; students check it for context errors and add the local competences the model leaves out.</td></tr><tr><td>ILO3</td><td>Critically evaluate AI-generated claims about teacher professionalism, identifying inaccuracies, oversimplifications, cultural bias and confident-but-unsupported assertions.</td><td>The AI Critique Lab supplies confident but partly flawed outputs that students must accept, modify or reject with a written justification.</td></tr><tr><td>ILO4</td><td>Synthesise a personal, defensible stance on what teacher professionalism should mean and justify it with evidence in a reflective portfolio.</td><td>AI supports drafting and structuring, but the argument, the judgement and the ethical reasoning remain the student&#39;s own.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout ai">
+    <div class="ct">🤖 Design principle</div>
+    <p class="mb0">AI is treated as a fallible co-analyst. It is useful for drafting, summarising and comparison, but it is never an authority on teacher professionalism: every AI claim must be checked against a named source and marked as accepted, modified or rejected before it can be used.</p>
+  </div>
+</section>
+
+<!-- ================= SECTION 2 — PRE-CLASS ================= -->
+<section id="preclass" class="block">
+  <div class="sec-head">
+    <div class="sec-num">2</div>
+    <div class="t">
+      <p class="eyebrow">Section 2</p>
+      <h2>Pre-Class Preparation</h2>
+      <p>Before the session, students take a short diagnostic pre-test, complete two comparative readings, and critique one AI-generated summary of teacher professionalism.</p>
+    </div>
+  </div>
+
+  <div class="grid g2">
+    <div class="card">
+      <div class="card-title"><span class="ic">📚</span> Required preparation</div>
+      <ul class="mb0 small">
+        <li>Read Evetts&#39; account of occupational and organisational professionalism (linked in the footer) and note one example of each from your own schooling.</li><li>Skim one national teaching-standards document and one international framework (both linked in the footer) and list two competences they share and two they do not.</li><li>Read the short introduction to reflective practice (linked in the footer) and bring one classroom incident you would be willing to reflect on in a group.</li><li>Complete the diagnostic pre-test in your LMS (steps in the tool runbook below). It is ungraded and exists only to surface misconceptions before the session.</li>
+      </ul>
+      <div class="inline-actions">
+        <button class="btn btn-primary" id="startPre" type="button">▶ Start the diagnostic pre-test</button>
+      </div>
+      <div id="preQuiz" style="margin-top:16px;display:none"></div>
+    </div>
+    <div class="card tight">
+      <div class="card-title"><span class="ic">✅</span> Pre-class checklist</div>
+      <div class="tasklist" id="preTasks"></div>
+    </div>
+  </div>
+
+  <details class="acc">
+    <summary><span class="badge pill teal">Tool</span> Lesson tool runbook - set up the LMS diagnostic pre-test, Mentimeter, Padlet, Kahoot and Google Forms</summary>
+    <div class="acc-body">
+      <ol class="steps">
+        <li>LMS pre-test - in your course in Blackboard, Moodle or Canvas, create a quiz named &#39;Teacher Professionalism - diagnostic pre-test&#39;.</li><li>LMS pre-test - set it to 4 multiple-choice items, one attempt, untimed and ungraded at 0 per cent, so it is purely diagnostic.</li><li>LMS pre-test - enter the four items from the pre-test bank and tag each one with its misconception category: core concept, comparative context or application.</li><li>LMS pre-test - switch on &#39;show feedback after submission&#39; and set a due date 24 hours before the workshop.</li><li>LMS pre-test - after the deadline, export the item statistics, note which categories the cohort missed, and reuse those same categories in the post-test.</li><li>Mentimeter - create a word-cloud question, &#39;In one word, what does teacher professionalism mean where you teach?&#39;, plus a multiple-choice item asking whether professionalism is local or universal. See the Mentimeter link in the footer.</li><li>Mentimeter - open the poll in the first five minutes of the workshop, project the live results, and screenshot the cloud as the baseline for the framing discussion.</li><li>Padlet - create a board titled &#39;Local and international professionalism cases&#39; with four columns: Local case, International case, Shared competence, Context-bound competence. See the Padlet link in the footer.</li><li>Padlet - share the board link with students; each group posts its case evidence and tags every claim with the source it came from.</li><li>Padlet - return to the board in the closing debrief to surface exactly where local and international definitions diverge.</li><li>Kahoot - build a 10-question review quiz from the six professionalism models and the scenario bank, and run it as a low-stakes retrieval warm-up before the post-test. See the Kahoot link in the footer.</li><li>Kahoot - switch to assignment mode if you want it completed asynchronously, and read the report to spot the model the cohort confused most.</li><li>Google Forms - create a three-item exit ticket: which model changed your thinking, which AI claim did you reject and why, and what will you do differently. See the Google Forms link in the footer.</li><li>Google Forms - enable response summaries and read them alongside the LMS post-test to plan the follow-up seminar.</li>
+      </ol>
+    </div>
+  </details>
+</section>
+
+<!-- ================= SECTION 3 — ACTIVITIES ================= -->
+<section id="activities" class="block">
+  <div class="sec-head">
+    <div class="sec-num">3</div>
+    <div class="t">
+      <p class="eyebrow">Section 3</p>
+      <h2>Teaching &amp; Learning Activities</h2>
+      <p>A 105-minute run sheet: a comparative case jigsaw, an AI Critique Lab, a synthesis chat, and the post-test - each with an explicit AI touchpoint.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="ic">1</span> Round 1 — Comparative case analysis (jigsaw)</div>
+    <p class="small">In groups of four, each member takes one case - two are local, two are international. Members become the expert on their own case, then teach it back to the group, which compares all four. Groups work through the peer-work checklist, post their evidence to the Padlet case wall, and record observations for the instructor journal. Timing: 5 min brief, 12 min expert reading, 15 min teach-back, 3 min wrap.</p>
+    <div class="grid g2">
+      <div class="card tight">
+        <div class="card-title"><span class="ic">👥</span> Peer-work checklist</div>
+        <div class="tasklist" id="peerTasks"></div>
+      </div>
+      <div class="card tight">
+        <div class="card-title"><span class="ic">📝</span> Observation journal (instructor)</div>
+        <label class="field"><span>What worked: which comparisons produced genuine insight into local versus international professionalism, and which prompt or source triggered it?</span><textarea data-journal="worked"></textarea></label>
+        <label class="field"><span>Where did students struggle: which misconceptions about professionalism, or about the AI claims, persisted at the end of the round?</span><textarea data-journal="struggle"></textarea></label>
+      </div>
+    </div>
+    <div class="inline-actions"><button class="btn btn-sm" data-task="dev-r1" type="button">✓ Mark Round 1 complete</button></div>
+  </div>
+
+  <!-- AI critique lab — the JS renders one critique per entry in LESSON_DATA.critiques -->
+  <div class="card" style="border-color:var(--violet)">
+    <div class="card-title"><span class="ic" style="background:var(--violet-soft);color:var(--violet)">🤖</span> AI Critique Lab</div>
+    <div class="callout note">
+      <div class="ct">🔍 Your job is to find what the AI got wrong</div>
+      <p class="mb0 small">Check each claim against your textbook and your own reasoning. A confident tone is not evidence of correctness.</p>
+    </div>
+    <div id="critiqueLab"></div>
+    <div class="score-bar" style="margin-bottom:0">
+      <div><div class="score-big" id="critCount">0/0</div><div class="small muted">Fully critiqued</div></div>
+      <div style="flex:1;min-width:200px">
+        <div class="cat-row" style="grid-template-columns:1fr"><span class="small muted">Verdicts cast: <strong id="critVerdicts">0</strong> / <span id="critTotal">0</span></span><span class="cat-track"><span class="cat-fill" id="critFill" style="width:0%;background:linear-gradient(90deg,var(--violet),var(--brand))"></span></span></div>
+      </div>
+      <button class="btn btn-sm" id="critReset" type="button">Clear lab</button>
+    </div>
+  </div>
+
+  <!-- simulated AI chat -->
+  <div class="card" style="border-color:var(--violet)">
+    <div class="card-title"><span class="ic" style="background:var(--violet-soft);color:var(--violet)">💬</span> Practice the synthesis prompt</div>
+    <p class="small">Pick a prompt to see a simulated AI response, then write your critique.</p>
+    <div class="chat" id="chatWindow" aria-live="polite">
+      <div class="msg ai"><div class="who">AI</div>Hello! I am your study assistant for teacher professionalism. Ask me anything about how professionalism is defined locally and internationally - I will always answer confidently, whether or not I am right.</div>
+    </div>
+    <div class="chips" id="chatPrompts"></div>
+    <label class="field"><span>Your critique of the AI response above (saved to your portfolio)</span>
+      <textarea id="chatCritique" placeholder="Name what the AI got wrong - context, evidence, oversimplification or bias - and explain why."></textarea>
+    </label>
+    <div class="inline-actions"><button class="btn btn-sm btn-primary" id="chatSave" type="button">💾 Save critique</button></div>
+  </div>
+
+  <div class="callout ai">
+    <div class="ct">🎓 Instructor guidance on critical AI use</div>
+    <ul class="mb0"><li>Model the critique live: read one AI claim aloud and ask the class what would count as evidence for it before anyone judges it.</li><li>Insist on a named source for every claim. Treat a confident tone as a warning sign rather than proof, and say so out loud.</li><li>Use the AI decision log in the portfolio to make students&#39; accept, modify and reject reasoning visible and therefore assessable.</li><li>Watch for automation bias: students who accept fluent AI summaries without checking. Intervene with a counter-example drawn from a different national context.</li><li>Debrief the comparison explicitly: ask which competences the frameworks treat as universal and which are bound to a particular context, and why that distinction matters for their own practice.</li></ul>
+  </div>
+</section>
+
+<!-- ================= SECTION 4 — ASSESSMENT ================= -->
+<section id="assessment" class="block">
+  <div class="sec-head">
+    <div class="sec-num">4</div>
+    <div class="t">
+      <p class="eyebrow">Section 4</p>
+      <h2>Assessment Methods</h2>
+      <p>Assessment is formative first and summative later: the critique lab and the quizzes give immediate feedback, while the concept map and the reflective portfolio carry the graded weight.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="ic">🎯</span> Post-test <span class="pill brand">4 items</span></div>
+    <p class="small">The post-test mirrors the pre-test&#39;s four misconception categories - core concept, comparative context and application - so growth is measured against the same constructs rather than new ones.</p>
+    <div class="inline-actions">
+      <button class="btn btn-primary" id="startPost" type="button">▶ Start the post-test</button>
+    </div>
+    <div id="postQuiz" style="margin-top:16px;display:none"></div>
+    <div id="compareBox" style="margin-top:16px"></div>
+  </div>
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Method</th><th>Weight</th><th>What it assesses</th></tr></thead>
+      <tbody><tr><td>Diagnostic pre-test (LMS)</td><td>0% - formative</td><td>Baseline misconceptions across the core concept, comparative context and application categories.</td></tr><tr><td>AI Critique Lab (in class)</td><td>20%</td><td>Critical evaluation: the accept, modify or reject verdicts plus the written justification for each.</td></tr><tr><td>Flashcard deck and scenario quiz</td><td>10%</td><td>Conceptual recognition and application of the six professionalism models.</td></tr><tr><td>Concept map (summative artefact)</td><td>35%</td><td>Synthesis across local and international contexts, evidenced by the connection notes on each node.</td></tr><tr><td>Reflective portfolio</td><td>35%</td><td>Reflexivity, ethical judgement and the documented AI decision log.</td></tr></tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ================= SECTION 5 — ALIGNMENT ================= -->
+<section id="alignment" class="block">
+  <div class="sec-head">
+    <div class="sec-num">5</div>
+    <div class="t">
+      <p class="eyebrow">Section 5</p>
+      <h2>Constructive Alignment Matrix</h2>
+      <p>Every outcome is assessed by an activity students actually complete, at a cognitive level that matches the verb in the outcome.</p>
+    </div>
+  </div>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>ILO</th><th>Learning activity</th><th>Assessment</th><th>Cognitive level</th></tr></thead>
+      <tbody><tr><td>ILO1</td><td>Pre-class readings plus the theory reference cards</td><td>Post-test core concept items</td><td>Understand</td></tr><tr><td>ILO2</td><td>Round 1 comparative case jigsaw and Padlet case wall</td><td>Scenario quiz and concept map</td><td>Analyse</td></tr><tr><td>ILO3</td><td>AI Critique Lab and the synthesis chat</td><td>Critique verdicts and justification, 20 per cent</td><td>Evaluate</td></tr><tr><td>ILO4</td><td>Concept-map builder and reflective portfolio</td><td>Concept map, 35 per cent, plus portfolio, 35 per cent</td><td>Create</td></tr><tr><td>ILO1 and ILO2</td><td>Flashcard drag-and-drop matching</td><td>Deck completion and scenario quiz, 10 per cent</td><td>Remember and Apply</td></tr><tr><td>ILO2 and ILO3</td><td>Peer-work checklist and instructor observation journal</td><td>Peer-work self-audit in the portfolio</td><td>Analyse and Evaluate</td></tr></tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ================= SECTION 6 — RESOURCES ================= -->
+<section id="resources" class="block">
+  <div class="sec-head">
+    <div class="sec-num">6</div>
+    <div class="t">
+      <p class="eyebrow">Section 6</p>
+      <h2>Required Resources &amp; Technology</h2>
+      <p>Reference cards, a drag-and-drop flashcard deck, a gamified scenario quiz and a concept-map builder, plus the external platforms and readings used across the lesson.</p>
+    </div>
+  </div>
+
+  <h3>Reference cards</h3>
+  <div class="grid g3" id="theoryCards"></div>
+
+  <h3 style="margin-top:30px">🃏 Flashcard deck — drag-and-drop matching</h3>
+  <div class="card">
+    <p class="small">Drag an item chip (or tap it, then tap a slot) onto the matching description. Correct matches lock in green.</p>
+    <div class="fc-arena">
+      <div>
+        <p class="small muted" style="margin:0 0 8px"><strong>Item chips</strong></p>
+        <div class="chip-pool" id="chipPool"></div>
+      </div>
+      <div>
+        <p class="small muted" style="margin:0 0 8px"><strong>Descriptions</strong></p>
+        <div class="slots" id="slotPool"></div>
+      </div>
+    </div>
+    <div class="inline-actions">
+      <button class="btn btn-sm" id="fcReset" type="button">↺ Reset deck</button>
+      <span class="pill" id="fcScore">0 / 0 matched</span>
+      <button class="btn btn-sm" data-task="flashcards" type="button">✓ Mark deck complete</button>
+    </div>
+  </div>
+
+  <h3 style="margin-top:30px">🎮 Gamified scenario quiz</h3>
+  <div class="card">
+    <p class="small">Identify which concept best explains each scenario, then answer the peer-review prompt printed under it.</p>
+    <div id="scenarioQuiz"></div>
+    <div class="inline-actions">
+      <button class="btn btn-sm btn-primary" id="scenarioCheck" type="button">Check answers</button>
+      <button class="btn btn-sm" id="scenarioReset" type="button">↺ Try again</button>
+      <span class="pill" id="scenarioScore">—</span>
+    </div>
+  </div>
+
+  <h3 style="margin-top:30px">🧠 Concept-map builder <span class="pill brand">Summative artefact</span></h3>
+  <div class="card">
+    <p class="small">Choose a scenario, add at least three nodes, and record how each applies.</p>
+    <div class="grid g2">
+      <div>
+        <label class="field"><span>Your real-world scenario</span>
+          <select id="cmScenario">
+            <option value="">— Select a scenario —</option>
+            <option>A ministry introduces a strict appraisal checklist with lesson-script templates. A veteran teacher says this is not professionalism but factory work, while a newly qualified teacher welcomes the clarity it brings.</option><option>A regional education authority adapts an internationally benchmarked competency framework. Teachers complain that the moral and cultural education competences they valued locally have been dropped in the adaptation.</option><option>Two teachers attend the same professional-development workshop. One keeps a weekly reflective journal and revises her questioning; the other files the certificate and changes nothing in her classroom.</option><option>A school timetables a collaboration hour every Friday, but teachers use the time to complete admin while the principal is away, and attainment does not move.</option><option>The same inclusion policy is issued to two schools. One redesigns its timetable to co-teach and reallocates staff; the other circulates a memo and continues exactly as before.</option><option>A donor-funded project imports a teacher-leadership model. Local teachers adopt the new vocabulary but keep their existing mentoring structures, which they say matter more in their context.</option>
+            <option>Other (write your own below)</option>
+          </select>
+        </label>
+        <label class="field"><span>Or write your own scenario</span>
+          <input type="text" id="cmCustom" placeholder="e.g. My school&#39;s appraisal policy was rewritten mid-year">
+        </label>
+        <label class="field"><span>Add a node</span>
+          <select id="cmTheory"></select>
+        </label>
+        <label class="field"><span>How does this apply to the scenario? (connection label)</span>
+          <textarea id="cmNote" placeholder="e.g. Occupational professionalism: our department negotiated the appraisal criteria, so practitioners still controlled the standard."></textarea>
+        </label>
+        <div class="inline-actions">
+          <button class="btn btn-sm btn-primary" id="cmAdd" type="button">＋ Add node</button>
+          <button class="btn btn-sm" id="cmClear" type="button">Clear map</button>
+        </div>
+        <label class="checkline"><input type="checkbox" id="cmAI"><span>This map includes AI-generated content — I have marked it and documented my critique.</span></label>
+      </div>
+      <div>
+        <div class="map-canvas" id="mapCanvas">
+          <div class="map-empty" id="mapEmpty">Your concept map will appear here.<br><span class="small">Add at least three nodes.</span></div>
+          <div id="mapCore" style="display:none">
+            <div class="map-core" id="mapScenarioLabel">Scenario</div>
+            <div class="map-ring" id="mapRing"></div>
+          </div>
+        </div>
+        <div class="inline-actions">
+          <button class="btn btn-sm" id="cmExport" type="button">⬇ Export map (.txt)</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SECTION 7 — DIFFERENTIATION ================= -->
+<section id="differentiation" class="block">
+  <div class="sec-head">
+    <div class="sec-num">7</div>
+    <div class="t">
+      <p class="eyebrow">Section 7</p>
+      <h2>Differentiation &amp; Inclusivity</h2>
+      <p>Multiple entry points, scaffolds for students who need them, and extensions for those ready to go further - all mapped to the same outcomes.</p>
+    </div>
+  </div>
+  <div class="grid g2">
+    <div class="card"><div class="card-title"><span class="ic">♿</span> Support</div><ul class="mb0 small"><li>Provide all readings in advance in accessible formats, including a screen-reader-friendly PDF and adjustable text size, plus a glossary of comparative-education terms.</li><li>Offer a scaffolded critique template with four fixed columns: claim, source, verdict of accept, modify or reject, and justification.</li><li>Assign group roles - chair, source-checker, AI-sceptic and note-taker - so no student carries the whole cognitive load.</li><li>Allow reflection to be drafted in a first language with a short English summary, for students working across languages.</li><li>Work through one complete critique block together before students attempt the lab independently.</li></ul></div>
+    <div class="card"><div class="card-title"><span class="ic">🚀</span> Extension</div><ul class="mb0 small"><li>Extend the comparison to a third national system and present a five-minute policy brief to the cohort.</li><li>Trace one competence from an international framework through to a local policy document and map exactly what changed in translation.</li><li>Design an appraisal or professional-development model that balances organisational accountability with occupational trust, and defend it against the limitations in the reference cards.</li><li>Lead a peer lesson-study cycle in your placement school and report the evidence of impact to the group.</li></ul></div>
+  </div>
+</section>
+
+<!-- ================= SECTION 8 — REFLECTION ================= -->
+<section id="reflection" class="block">
+  <div class="sec-head">
+    <div class="sec-num">8</div>
+    <div class="t">
+      <p class="eyebrow">Section 8</p>
+      <h2>Reflection &amp; Improvement</h2>
+      <p>Success indicators and follow-up: what to look for in the portfolio, and how to act on the evidence next time.</p>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title"><span class="ic">👥</span> Peer-work self-audit</div>
+    <div class="tasklist" id="allTasks"></div>
+  </div>
+</section>
+
+<!-- ================= PORTFOLIO ================= -->
+<section id="portfolio" class="block">
+  <div class="sec-head">
+    <div class="sec-num">★</div>
+    <div class="t">
+      <p class="eyebrow">Portfolio</p>
+      <h2>Critical Reflection Portfolio</h2>
+      <p>Everything you record here is stored locally on your device. Review it, then export it as evidence for your summative submission.</p>
+    </div>
+  </div>
+
+  <div class="split">
+    <div>
+      <div class="card">
+        <div class="card-title"><span class="ic">✍️</span> AI decision log</div>
+        <label class="field"><span>AI suggestion I accepted (and why)</span><textarea data-log="accept"></textarea></label>
+        <label class="field"><span>AI suggestion I modified (and how)</span><textarea data-log="modify"></textarea></label>
+        <label class="field"><span>AI suggestion I rejected (and why)</span><textarea data-log="reject"></textarea></label>
+        <label class="field"><span>Where human judgment took precedence over AI</span><textarea data-log="human"></textarea></label>
+      </div>
+      <div class="card">
+        <div class="card-title"><span class="ic">💭</span> Final reflection prompts</div>
+        <label class="field"><span>How did AI support or hinder your learning today?</span><textarea data-journal="final1"></textarea></label>
+        <label class="field"><span>When did you need to override AI suggestions?</span><textarea data-journal="final2"></textarea></label>
+        <label class="field"><span>What human judgment mattered most in your group's work?</span><textarea data-journal="final3"></textarea></label>
+        <label class="field"><span>What did you learn about the limitations and biases of AI?</span><textarea data-journal="final4"></textarea></label>
+      </div>
+    </div>
+
+    <div>
+      <div class="card" style="position:sticky;top:120px">
+        <div class="card-title"><span class="ic">📊</span> Portfolio summary</div>
+        <div style="display:flex;gap:16px;align-items:center;margin-bottom:14px">
+          <div class="ring" id="portRing"><div class="inner" id="portRingText">0%</div></div>
+          <div>
+            <div class="small muted">Lesson progress</div>
+            <div style="font-weight:740" id="portTasks">0 of 0 tasks</div>
+          </div>
+        </div>
+        <div class="cat-grid">
+          <div class="cat-row"><span>Pre-test</span><strong id="portPre">Not taken</strong><span class="cat-track"><span class="cat-fill" id="portPreBar" style="background:var(--brand);width:0%"></span></span></div>
+          <div class="cat-row"><span>Post-test</span><strong id="portPost">Not taken</strong><span class="cat-track"><span class="cat-fill" id="portPostBar" style="background:var(--teal);width:0%"></span></span></div>
+          <div class="cat-row"><span>AI critiques</span><strong id="portCrit">0 / 0</strong><span class="cat-track"><span class="cat-fill" id="portCritBar" style="background:var(--violet);width:0%"></span></span></div>
+          <div class="cat-row"><span>Flashcards</span><strong id="portFc">0 / 0</strong><span class="cat-track"><span class="cat-fill" id="portFcBar" style="background:var(--amber);width:0%"></span></span></div>
+          <div class="cat-row"><span>Concept map nodes</span><strong id="portCm">0</strong><span class="cat-track"><span class="cat-fill" id="portCmBar" style="background:var(--green);width:0%"></span></span></div>
+        </div>
+        <div class="inline-actions">
+          <button class="btn btn-sm btn-primary" id="exportAll" type="button">⬇ Export portfolio (.json)</button>
+          <button class="btn btn-sm" id="exportText" type="button">⬇ Export readable (.txt)</button>
+        </div>
+        <p class="small muted" style="margin:12px 0 0">Nothing is uploaded anywhere — all data stays in your browser's local storage.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="mb0"><strong>Teacher Professionalism in Local and International Contexts</strong> - an undergraduate pre-service teacher education lesson using case-based comparative inquiry and critical AI literacy. Core sources: <a href="https://journals.sagepub.com/doi/10.1177/0011392111402585" target="_blank" rel="noopener">Evetts on occupational and organisational professionalism</a>, <a href="https://www.ilo.org/" target="_blank" rel="noopener">the ILO/UNESCO Recommendation on the Status of Teachers (1966)</a>, <a href="https://www.gov.uk/government/publications/teachers-standards" target="_blank" rel="noopener">England's Teachers' Standards</a> and <a href="https://www.oecd.org/education/talis/" target="_blank" rel="noopener">OECD TALIS</a>. Classroom tools: <a href="https://www.mentimeter.com" target="_blank" rel="noopener">Mentimeter</a> for the opening poll, <a href="https://padlet.com" target="_blank" rel="noopener">Padlet</a> for the case wall, <a href="https://kahoot.com" target="_blank" rel="noopener">Kahoot</a> for retrieval practice and <a href="https://www.google.com/forms/about/" target="_blank" rel="noopener">Google Forms</a> for the exit ticket. Run the diagnostic pre-test in your <a href="https://moodle.org" target="_blank" rel="noopener">Moodle</a>, <a href="https://www.instructure.com/canvas" target="_blank" rel="noopener">Canvas</a> or <a href="https://www.anthology.com/products/teaching-and-learning/blackboard-lms" target="_blank" rel="noopener">Blackboard</a> quiz engine.</p>
+    <p class="small mb0" style="margin-top:6px">Progress and reflections are stored locally in your browser. Use <em>Export portfolio</em> to keep a copy.</p>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+window.LESSON_DATA = {"meta":{"title":"Teacher Professionalism in Local and International Contexts","description":"A university lesson in which pre-service teachers compare local and international models of teacher professionalism and learn to critique AI-generated claims about them.","slug":"teacher-professionalism-local-international","storeKey":"teacher_professionalism_v1","intro":"This lesson examines how teacher professionalism is defined, enacted and contested in local and international contexts. Students compare sociological models, national standards and global frameworks, then test an AI assistant's claims about professionalism against authoritative sources. AI runs through the lesson as a fallible co-analyst whose fluent answers must be verified, modified or rejected.","duration":"150 minutes (45 min pre-class + 105 min workshop)","classSize":"24-40 students, working in groups of four","level":"Undergraduate pre-service teachers (Year 2-3)","language":"English","pedagogy":"Case-based comparative inquiry","framing":"Glocal - local practice read against international policy","aiRole":"Fallible co-analyst, never an authority","assessment":"Formative critique lab plus summative portfolio","ilosIntro":"Each outcome pairs a disciplinary goal with an explicit AI integration, so critical AI use is engineered into the learning rather than added on at the end.","aiDesignPrinciple":"AI is treated as a fallible co-analyst. It is useful for drafting, summarising and comparison, but it is never an authority on teacher professionalism: every AI claim must be checked against a named source and marked as accepted, modified or rejected before it can be used.","preclassIntro":"Before the session, students take a short diagnostic pre-test, complete two comparative readings, and critique one AI-generated summary of teacher professionalism.","preclassToolLabel":"Lesson tool runbook - set up the LMS diagnostic pre-test, Mentimeter, Padlet, Kahoot and Google Forms","activitiesIntro":"A 105-minute run sheet: a comparative case jigsaw, an AI Critique Lab, a synthesis chat, and the post-test - each with an explicit AI touchpoint.","assessmentIntro":"Assessment is formative first and summative later: the critique lab and the quizzes give immediate feedback, while the concept map and the reflective portfolio carry the graded weight.","postTestItems":"4 items","postTestDesc":"The post-test mirrors the pre-test's four misconception categories - core concept, comparative context and application - so growth is measured against the same constructs rather than new ones.","alignmentIntro":"Every outcome is assessed by an activity students actually complete, at a cognitive level that matches the verb in the outcome.","resourcesIntro":"Reference cards, a drag-and-drop flashcard deck, a gamified scenario quiz and a concept-map builder, plus the external platforms and readings used across the lesson.","scenarioIntro":"Identify which concept best explains each scenario, then answer the peer-review prompt printed under it.","cmCustomPlaceholder":"e.g. My school's appraisal policy was rewritten mid-year","cmNotePlaceholder":"e.g. Occupational professionalism: our department negotiated the appraisal criteria, so practitioners still controlled the standard.","differentiationIntro":"Multiple entry points, scaffolds for students who need them, and extensions for those ready to go further - all mapped to the same outcomes.","reflectionIntro":"Success indicators and follow-up: what to look for in the portfolio, and how to act on the evidence next time.","chatOpening":"Hello! I am your study assistant for teacher professionalism. Ask me anything about how professionalism is defined locally and internationally - I will always answer confidently, whether or not I am right.","chatCritiquePlaceholder":"Name what the AI got wrong - context, evidence, oversimplification or bias - and explain why."},"brand":"EDU 3102 · Teacher Professionalism","footer":"<strong>Teacher Professionalism in Local and International Contexts<\/strong> - an undergraduate pre-service teacher education lesson using case-based comparative inquiry and critical AI literacy. Core sources: <a href=\"https://journals.sagepub.com/doi/10.1177/0011392111402585\" target=\"_blank\" rel=\"noopener\">Evetts on occupational and organisational professionalism<\/a>, <a href=\"https://www.ilo.org/\" target=\"_blank\" rel=\"noopener\">the ILO/UNESCO Recommendation on the Status of Teachers (1966)<\/a>, <a href=\"https://www.gov.uk/government/publications/teachers-standards\" target=\"_blank\" rel=\"noopener\">England's Teachers' Standards<\/a> and <a href=\"https://www.oecd.org/education/talis/\" target=\"_blank\" rel=\"noopener\">OECD TALIS<\/a>. Classroom tools: <a href=\"https://www.mentimeter.com\" target=\"_blank\" rel=\"noopener\">Mentimeter<\/a> for the opening poll, <a href=\"https://padlet.com\" target=\"_blank\" rel=\"noopener\">Padlet<\/a> for the case wall, <a href=\"https://kahoot.com\" target=\"_blank\" rel=\"noopener\">Kahoot<\/a> for retrieval practice and <a href=\"https://www.google.com/forms/about/\" target=\"_blank\" rel=\"noopener\">Google Forms<\/a> for the exit ticket. Run the diagnostic pre-test in your <a href=\"https://moodle.org\" target=\"_blank\" rel=\"noopener\">Moodle<\/a>, <a href=\"https://www.instructure.com/canvas\" target=\"_blank\" rel=\"noopener\">Canvas<\/a> or <a href=\"https://www.anthology.com/products/teaching-and-learning/blackboard-lms\" target=\"_blank\" rel=\"noopener\">Blackboard<\/a> quiz engine.","nav":[{"id":"overview","label":"Overview"},{"id":"ilos","label":"1 · Outcomes"},{"id":"preclass","label":"2 · Pre-Class"},{"id":"activities","label":"3 · Activities"},{"id":"assessment","label":"4 · Assessment"},{"id":"alignment","label":"5 · Alignment"},{"id":"resources","label":"6 · Resources"},{"id":"differentiation","label":"7 · Inclusion"},{"id":"reflection","label":"8 · Reflection"},{"id":"portfolio","label":"Portfolio"}],"roadmap":[{"phase":"Pre-class (async)","mins":"45 min","desc":"Diagnostic pre-test in the LMS, two comparative readings, and one AI summary to critique before the workshop."},{"phase":"Opening and framing","mins":"15 min","desc":"Live Mentimeter poll on what professionalism means locally, then the local/international framing and the AI design principle."},{"phase":"Round 1 - comparative cases","mins":"35 min","desc":"Jigsaw analysis of two local and two international professionalism cases, worked through the peer-work checklist."},{"phase":"AI Critique Lab","mins":"25 min","desc":"Students accept, modify or reject each AI claim about professionalism and justify their verdicts against sources."},{"phase":"Synthesis chat and post-test","mins":"20 min","desc":"Practice the synthesis prompt, write a critique of the AI response, then take the post-test."},{"phase":"Concept map and portfolio","mins":"10 min","desc":"Build a three-node concept map of the case and complete the reflective portfolio before leaving."}],"ilos":[{"id":"ILO1","desc":"Explain the main sociological and policy models of teacher professionalism, including occupational and organisational professionalism, standards frameworks, reflective practice, collaborative professionalism, teacher agency and glocalisation.","ai":"AI summarises each model on demand, but students must verify every summary against the cited source and flag distortions, omissions and invented detail."},{"id":"ILO2","desc":"Compare how professionalism is defined and enacted in at least one local context and two international contexts, naming shared and context-bound competences.","ai":"AI drafts a comparison table; students check it for context errors and add the local competences the model leaves out."},{"id":"ILO3","desc":"Critically evaluate AI-generated claims about teacher professionalism, identifying inaccuracies, oversimplifications, cultural bias and confident-but-unsupported assertions.","ai":"The AI Critique Lab supplies confident but partly flawed outputs that students must accept, modify or reject with a written justification."},{"id":"ILO4","desc":"Synthesise a personal, defensible stance on what teacher professionalism should mean and justify it with evidence in a reflective portfolio.","ai":"AI supports drafting and structuring, but the argument, the judgement and the ethical reasoning remain the student's own."}],"prepItems":[{"text":"Read Evetts' account of occupational and organisational professionalism (linked in the footer) and note one example of each from your own schooling."},{"text":"Skim one national teaching-standards document and one international framework (both linked in the footer) and list two competences they share and two they do not."},{"text":"Read the short introduction to reflective practice (linked in the footer) and bring one classroom incident you would be willing to reflect on in a group."},{"text":"Complete the diagnostic pre-test in your LMS (steps in the tool runbook below). It is ungraded and exists only to surface misconceptions before the session."}],"preclassToolSteps":[{"text":"LMS pre-test - in your course in Blackboard, Moodle or Canvas, create a quiz named 'Teacher Professionalism - diagnostic pre-test'."},{"text":"LMS pre-test - set it to 4 multiple-choice items, one attempt, untimed and ungraded at 0 per cent, so it is purely diagnostic."},{"text":"LMS pre-test - enter the four items from the pre-test bank and tag each one with its misconception category: core concept, comparative context or application."},{"text":"LMS pre-test - switch on 'show feedback after submission' and set a due date 24 hours before the workshop."},{"text":"LMS pre-test - after the deadline, export the item statistics, note which categories the cohort missed, and reuse those same categories in the post-test."},{"text":"Mentimeter - create a word-cloud question, 'In one word, what does teacher professionalism mean where you teach?', plus a multiple-choice item asking whether professionalism is local or universal. See the Mentimeter link in the footer."},{"text":"Mentimeter - open the poll in the first five minutes of the workshop, project the live results, and screenshot the cloud as the baseline for the framing discussion."},{"text":"Padlet - create a board titled 'Local and international professionalism cases' with four columns: Local case, International case, Shared competence, Context-bound competence. See the Padlet link in the footer."},{"text":"Padlet - share the board link with students; each group posts its case evidence and tags every claim with the source it came from."},{"text":"Padlet - return to the board in the closing debrief to surface exactly where local and international definitions diverge."},{"text":"Kahoot - build a 10-question review quiz from the six professionalism models and the scenario bank, and run it as a low-stakes retrieval warm-up before the post-test. See the Kahoot link in the footer."},{"text":"Kahoot - switch to assignment mode if you want it completed asynchronously, and read the report to spot the model the cohort confused most."},{"text":"Google Forms - create a three-item exit ticket: which model changed your thinking, which AI claim did you reject and why, and what will you do differently. See the Google Forms link in the footer."},{"text":"Google Forms - enable response summaries and read them alongside the LMS post-test to plan the follow-up seminar."}],"round1":{"title":"Comparative case analysis (jigsaw)","desc":"In groups of four, each member takes one case - two are local, two are international. Members become the expert on their own case, then teach it back to the group, which compares all four. Groups work through the peer-work checklist, post their evidence to the Padlet case wall, and record observations for the instructor journal. Timing: 5 min brief, 12 min expert reading, 15 min teach-back, 3 min wrap.","journalPrompt1":"What worked: which comparisons produced genuine insight into local versus international professionalism, and which prompt or source triggered it?","journalPrompt2":"Where did students struggle: which misconceptions about professionalism, or about the AI claims, persisted at the end of the round?"},"instructorGuidance":[{"text":"Model the critique live: read one AI claim aloud and ask the class what would count as evidence for it before anyone judges it."},{"text":"Insist on a named source for every claim. Treat a confident tone as a warning sign rather than proof, and say so out loud."},{"text":"Use the AI decision log in the portfolio to make students' accept, modify and reject reasoning visible and therefore assessable."},{"text":"Watch for automation bias: students who accept fluent AI summaries without checking. Intervene with a counter-example drawn from a different national context."},{"text":"Debrief the comparison explicitly: ask which competences the frameworks treat as universal and which are bound to a particular context, and why that distinction matters for their own practice."}],"assessmentMethods":[{"method":"Diagnostic pre-test (LMS)","weight":"0% - formative","what":"Baseline misconceptions across the core concept, comparative context and application categories."},{"method":"AI Critique Lab (in class)","weight":"20%","what":"Critical evaluation: the accept, modify or reject verdicts plus the written justification for each."},{"method":"Flashcard deck and scenario quiz","weight":"10%","what":"Conceptual recognition and application of the six professionalism models."},{"method":"Concept map (summative artefact)","weight":"35%","what":"Synthesis across local and international contexts, evidenced by the connection notes on each node."},{"method":"Reflective portfolio","weight":"35%","what":"Reflexivity, ethical judgement and the documented AI decision log."}],"alignmentRows":[{"ilo":"ILO1","activity":"Pre-class readings plus the theory reference cards","assessment":"Post-test core concept items","level":"Understand"},{"ilo":"ILO2","activity":"Round 1 comparative case jigsaw and Padlet case wall","assessment":"Scenario quiz and concept map","level":"Analyse"},{"ilo":"ILO3","activity":"AI Critique Lab and the synthesis chat","assessment":"Critique verdicts and justification, 20 per cent","level":"Evaluate"},{"ilo":"ILO4","activity":"Concept-map builder and reflective portfolio","assessment":"Concept map, 35 per cent, plus portfolio, 35 per cent","level":"Create"},{"ilo":"ILO1 and ILO2","activity":"Flashcard drag-and-drop matching","assessment":"Deck completion and scenario quiz, 10 per cent","level":"Remember and Apply"},{"ilo":"ILO2 and ILO3","activity":"Peer-work checklist and instructor observation journal","assessment":"Peer-work self-audit in the portfolio","level":"Analyse and Evaluate"}],"support":[{"text":"Provide all readings in advance in accessible formats, including a screen-reader-friendly PDF and adjustable text size, plus a glossary of comparative-education terms."},{"text":"Offer a scaffolded critique template with four fixed columns: claim, source, verdict of accept, modify or reject, and justification."},{"text":"Assign group roles - chair, source-checker, AI-sceptic and note-taker - so no student carries the whole cognitive load."},{"text":"Allow reflection to be drafted in a first language with a short English summary, for students working across languages."},{"text":"Work through one complete critique block together before students attempt the lab independently."}],"extension":[{"text":"Extend the comparison to a third national system and present a five-minute policy brief to the cohort."},{"text":"Trace one competence from an international framework through to a local policy document and map exactly what changed in translation."},{"text":"Design an appraisal or professional-development model that balances organisational accountability with occupational trust, and defend it against the limitations in the reference cards."},{"text":"Lead a peer lesson-study cycle in your placement school and report the evidence of impact to the group."}],"quizTasks":{"pre":"pre-quiz","post":"synthesis","flashcards":"flashcards"},"preClassCount":2,"tasks":[{"id":"pre-quiz","label":"Complete the diagnostic pre-test (4 items)"},{"id":"pre-ai","label":"Complete the pre-class AI engagement task: critique one AI summary"},{"id":"dev-r1","label":"Complete Round 1 - the comparative case analysis"},{"id":"flashcards","label":"Match every card in the flashcard deck"},{"id":"synthesis","label":"Complete the post-test and the synthesis discussion"},{"id":"conceptmap","label":"Build the concept map with at least three nodes"}],"peerTasks":[{"id":"peer-1","label":"Each member contributes one local and one international example"},{"id":"peer-2","label":"Every claim is traced to a named source or explicitly marked as unsupported"},{"id":"peer-3","label":"The group records where AI output was accepted, modified or rejected, and why"}],"cats":{"core":"Core concept","comparative":"Comparative context","application":"Application"},"preTest":[{"id":"p1","cat":"core","q":"Which statement best captures the difference between occupational and organisational professionalism?","opts":["Occupational professionalism is built by practitioners themselves, while organisational professionalism is imposed by employers and the state.","Occupational professionalism is about pay, while organisational professionalism is about status.","The two terms are simply synonyms for the same idea."],"a":0,"ok":"Correct. This is Evetts' distinction: collegial self-regulation and discretion on one side, employer and state driven accountability on the other.","no":"Not quite. The distinction is about who controls the standards, not about pay, status or wording."},{"id":"p2","cat":"core","q":"Reflective practice, as described by Schon, is best understood as which of the following?","opts":["Completing a log after every lesson as an administrative record.","Noticing and adjusting practice in the moment, then analysing it afterwards.","Copying the techniques of an expert teacher as closely as possible."],"a":1,"ok":"Correct. Reflection-in-action plus reflection-on-action is the core of Schon's account of professional expertise.","no":"Not quite. That describes record-keeping or imitation, neither of which is reflective practice."},{"id":"p3","cat":"comparative","q":"A ministry adopts an international competency framework and drops locally valued moral-education competences in the process. Which concept best explains what has happened?","opts":["Collaborative professionalism.","Reflective practice.","Policy borrowing and glocalisation."],"a":2,"ok":"Correct. This is policy borrowing: an imported framework is translated into local policy, and something is lost in the translation.","no":"Not quite. The issue is how reforms travel across borders and are re-made locally, which is policy borrowing and glocalisation."},{"id":"p4","cat":"application","q":"A school timetables a weekly collaboration hour, but teachers use it for admin and results do not improve. What is the most likely diagnosis?","opts":["Genuine collaborative professionalism that simply needs more time.","Contrived collegiality - the structure exists without shared inquiry or collective responsibility.","A clear case of policy borrowing."],"a":1,"ok":"Correct. Hargreaves and O'Connor warn that collaboration must involve joint inquiry, not merely shared time.","no":"Not quite. Simply meeting is not a professional learning community; look for shared purpose and inquiry into evidence."}],"postTest":[{"id":"q1","cat":"core","q":"Which claim about professionalism is the most defensible?","opts":["Organisational professionalism has completely replaced occupational professionalism worldwide.","Occupational and organisational professionalism coexist, and systems differ in how they balance them.","Professionalism is now identical in every country because of international standards."],"a":1,"ok":"Correct. The two forms coexist and the balance between them is context-dependent, which is exactly why local comparison matters.","no":"Not quite. Neither replacement nor uniformity is supported by the evidence; the balance varies by system."},{"id":"q2","cat":"core","q":"Which statement about reflective practice is accurate?","opts":["Reflection is a private ritual that needs no evidence and no peers.","Reflection converts experience into expertise, and it transfers across settings because it concerns reasoning rather than a recipe.","Reflection means following the written standards more closely."],"a":1,"ok":"Correct. Reflection is about reasoning and transfer, and it is strengthened by evidence and by peer challenge.","no":"Not quite. Reflection is neither box-ticking nor a solo ritual; it needs evidence and challenge to be worthwhile."},{"id":"q3","cat":"comparative","q":"Two schools receive the same inclusion policy. One redesigns its timetable to co-teach, the other files a memo and continues as before. Which concept best explains the difference?","opts":["Teacher agency in an ecological setting.","Professional standards frameworks.","Occupational professionalism."],"a":0,"ok":"Correct. Agency is achieved within a setting, so goals, resources and conditions explain why the same policy produces different action.","no":"Not quite. The question is about how the same policy produces different action, which is the ecological model of teacher agency."},{"id":"q4","cat":"application","q":"A teacher meets every competence in the national standards framework. What can you validly conclude?","opts":["They are an effective teacher in any context, anywhere.","They have demonstrated the defined competences, but effectiveness and transfer still require evidence.","They must now be a teacher leader."],"a":1,"ok":"Correct. Frameworks describe competence, not effectiveness, and context still matters, which is the framework's common limitation.","no":"Not quite. Meeting standards cannot guarantee effectiveness or transfer, and it certainly does not confer a leadership role."}],"theories":[{"id":"occ-org","name":"Occupational vs organisational professionalism","color":"#4338ca","who":"Julia Evetts, <em>A new professionalism? Challenges and opportunities<\/em> (2011), and the wider sociology of the professions (Freidson, Abbott).","desc":"Professionalism is not a single thing. <strong>Occupational professionalism<\/strong> is built by practitioners themselves, through shared ethics, collegial trust, discretion and control over entry and standards. <strong>Organisational professionalism<\/strong> is imposed by employers and the state, through targets, codes, audit and performance management. Local and international systems sit at different points on this spectrum, which is why the same word, professional, can mean autonomy in one country and compliance in another. See <a href=\"https://journals.sagepub.com/doi/10.1177/0011392111402585\" target=\"_blank\" rel=\"noopener\">Evetts on occupational and organisational professionalism<\/a>.","limit":"Treats the two forms as opposites when most systems blend them, and can underplay how teachers themselves negotiate and reshape imposed standards."},{"id":"standards","name":"Professional standards and competency frameworks","color":"#0d9488","who":"The ILO/UNESCO <em>Recommendation concerning the Status of Teachers<\/em> (1966); <a href=\"https://www.gov.uk/government/publications/teachers-standards\" target=\"_blank\" rel=\"noopener\">England's Teachers' Standards<\/a>; regional competency work by <a href=\"https://www.seameo.org\" target=\"_blank\" rel=\"noopener\">SEAMEO<\/a>.","desc":"Most systems now codify what a good teacher should know and do in written standards or competency frameworks. These frameworks travel: aid agencies export them, ministries borrow them across borders, and they are embedded in accreditation and appraisal. Comparing them shows which competences are treated as universal and which are context-bound, for example whether moral education or parent and community engagement is named at all. Compare the national documents with the international frameworks linked in the footer.","limit":"Frameworks can flatten local values into imported vocabulary, and describing competence is not the same thing as developing it."},{"id":"reflective","name":"Reflective practice","color":"#7c3aed","who":"Donald Schon, <em>The Reflective Practitioner<\/em> (1983), and Zeichner and Liston, <em>Reflective Teaching<\/em>. Overview at <a href=\"https://www.cambridge-community.org.uk/professional-development/gswrp/index.html\" target=\"_blank\" rel=\"noopener\">Cambridge's reflective-practice guide<\/a>.","desc":"Professionalism is enacted in the moment: teachers notice, interpret and adjust, which Schon called reflection-in-action, and then analyse it afterwards. Reflection turns experience into expertise and is one of the few professional attributes that transfers across local and international settings, because it concerns reasoning rather than a fixed recipe that belongs to one system.","limit":"Reflection can become ritualised box-ticking, and without evidence or peer challenge it can simply confirm a teacher's existing bias."},{"id":"collab","name":"Collaborative professionalism and professional learning communities","color":"#b45309","who":"Andy Hargreaves and Michael O'Connor, <em>Collaborative Professionalism<\/em> (2018); Shirley Hord's professional learning community model; <a href=\"https://www.oecd.org/education/talis/\" target=\"_blank\" rel=\"noopener\">OECD TALIS<\/a> data on teacher collaboration.","desc":"In high-performing systems, teachers improve together through shared planning, lesson study, peer observation and collective inquiry. Collaboration is a professionalism built locally but measured internationally, since TALIS compares how often teachers collaborate across countries. That makes it a clear case of how the local and global dimensions of professionalism interact in the same practice.","limit":"Collaboration mandated from the top down produces contrived collegiality, which looks collaborative without changing what happens in classrooms."},{"id":"agency","name":"Teacher agency (ecological model)","color":"#15803d","who":"Mark Priestley, Gert Biesta and Sarah Robinson, <em>Teacher Agency<\/em> (2015). Summary at <a href=\"https://www.bera.ac.uk/blog/teacher-agency-an-ecological-approach\" target=\"_blank\" rel=\"noopener\">BERA on teacher agency<\/a>.","desc":"Agency is not a personality trait but something teachers achieve by acting within a particular setting: their own goals, the resources available to them, and the cultural and structural conditions of the school. The ecological model explains why the same policy can produce confident innovation in one context and quiet compliance in another, without anyone being simply better or worse at their job.","limit":"Agency is hard to observe directly and easy to romanticise, and strong structural constraints can turn it into a burden placed on individuals."},{"id":"glocal","name":"Policy borrowing and glocal professionalism","color":"#be123c","who":"Gita Steiner-Khamsi on policy borrowing and lending; Susan Robertson on the glocal teacher. Data portals: <a href=\"https://www.worldbank.org/en/topic/education\" target=\"_blank\" rel=\"noopener\">World Bank education<\/a> and <a href=\"https://www.oecd.org/education/\" target=\"_blank\" rel=\"noopener\">OECD education<\/a>.","desc":"Professionalism is increasingly glocal: global discourses such as PISA, Sustainable Development Goal 4 and aid conditionality are re-interpreted by local actors into local meanings. Understanding professionalism therefore means reading both the international script and the local translation of it, and noticing precisely where the translation changes the message.","limit":"Risks treating global and local as neat opposites when the traffic runs both ways and hybrid forms are the norm."}],"flashcards":[{"id":"occ-org","label":"Occupational vs organisational professionalism","desc":"Explains why the word professional means autonomy in some systems and compliance in others."},{"id":"standards","label":"Professional standards and competency frameworks","desc":"Explains why good teaching gets written down, and how those written definitions travel across borders."},{"id":"reflective","label":"Reflective practice","desc":"Explains how teachers turn experience into expertise, and why that capacity transfers across settings."},{"id":"collab","label":"Collaborative professionalism and PLCs","desc":"Explains why teachers improve together, and how that collaboration is measured internationally."},{"id":"agency","label":"Teacher agency (ecological model)","desc":"Explains why the same reform produces innovation in one school and compliance in another."},{"id":"glocal","label":"Policy borrowing and glocal professionalism","desc":"Explains how global reforms are re-made, not merely copied, in local settings."}],"scenarios":[{"id":"s1","text":"A ministry introduces a strict appraisal checklist with lesson-script templates. A veteran teacher says this is not professionalism but factory work, while a newly qualified teacher welcomes the clarity it brings.","a":"occ-org","peer":"Which model of professionalism does each teacher hold, and whose definition should the department adopt? Justify your answer with one local and one international example."},{"id":"s2","text":"A regional education authority adapts an internationally benchmarked competency framework. Teachers complain that the moral and cultural education competences they valued locally have been dropped in the adaptation.","a":"standards","peer":"What was lost and what was gained in the adaptation, and which competence would you add back first? Support your choice with a source."},{"id":"s3","text":"Two teachers attend the same professional-development workshop. One keeps a weekly reflective journal and revises her questioning; the other files the certificate and changes nothing in her classroom.","a":"reflective","peer":"How does reflective practice explain the difference in outcomes, and what single scaffold would you design for the second teacher?"},{"id":"s4","text":"A school timetables a collaboration hour every Friday, but teachers use the time to complete admin while the principal is away, and attainment does not move.","a":"collab","peer":"Diagnose whether this is genuine collaborative professionalism, then redesign the hour so that it builds collective efficacy rather than contrived collegiality."},{"id":"s5","text":"The same inclusion policy is issued to two schools. One redesigns its timetable to co-teach and reallocates staff; the other circulates a memo and continues exactly as before.","a":"agency","peer":"Use the ecological model of agency to explain the difference, naming the goals, resources and conditions that shaped each school's response."},{"id":"s6","text":"A donor-funded project imports a teacher-leadership model. Local teachers adopt the new vocabulary but keep their existing mentoring structures, which they say matter more in their context.","a":"glocal","peer":"Is this resistance, adaptation or glocalisation? Defend your reading with evidence from the case and from the reading on policy borrowing."}],"critiques":[{"id":"occ-org","theory":"Occupational vs organisational professionalism","sentences":[{"t":"Evetts distinguishes occupational professionalism, where practitioners control their own standards, from organisational professionalism, where employers and the state impose targets, codes and audit.","h":"Accurate. This is Evetts' central contrast, and it matches the local-versus-imposed tension running through the case studies."},{"t":"Because organisational professionalism is the newer form, it has now fully replaced occupational professionalism in every education system.","h":"Wrong. The two coexist and blend; most systems mix collegial discretion with imposed accountability, and the balance differs by context. This is the concept's stated limitation."}]},{"id":"standards","theory":"Professional standards and competency frameworks","sentences":[{"t":"Written teaching standards are increasingly common, and they are frequently borrowed across borders by ministries and aid projects.","h":"Accurate. Standards travel through policy borrowing and donor programmes, which is why comparative reading is needed."},{"t":"If a teacher meets every competence in a standards framework, that proves they are an effective teacher in any context.","h":"Wrong. Frameworks describe competence, not effectiveness; meeting them cannot guarantee impact on learning, and context-bound competences may not transfer at all."}]},{"id":"reflective","theory":"Reflective practice","sentences":[{"t":"Schon described reflection-in-action, where practitioners think on their feet and adjust what they are doing while they are doing it.","h":"Accurate. Reflection-in-action, paired with reflection-on-action afterwards, is the core of Schon's account."},{"t":"Reflection is a purely personal matter, so teachers never need evidence, peers or feedback to make it worthwhile.","h":"Wrong. Unexamined reflection can simply confirm bias; Zeichner and Liston stress evidence, collaboration and a critical stance."}]},{"id":"collab","theory":"Collaborative professionalism and professional learning communities","sentences":[{"t":"Hargreaves and O'Connor argue that in strong systems teachers improve through joint work such as lesson study and shared inquiry into evidence.","h":"Accurate. Collaborative professionalism is their central claim, and it is the constructive form of collegiality."},{"t":"Any meeting where teachers sit in the same room counts as a professional learning community.","h":"Wrong. A PLC requires shared purpose, inquiry into evidence and collective responsibility; simply meeting is contrived collegiality."}]},{"id":"agency","theory":"Teacher agency (ecological model)","sentences":[{"t":"Priestley, Biesta and Robinson treat agency as something achieved within a setting rather than as a fixed personality trait.","h":"Accurate. Theirs is an ecological account: goals, resources and conditions together shape what a teacher can do."},{"t":"Teachers always have full agency, so any failure to implement a policy is simply a lack of personal effort.","h":"Wrong. The ecological model holds that structural and cultural conditions constrain agency, so blaming individuals misreads the evidence."}]},{"id":"glocal","theory":"Policy borrowing and glocal professionalism","sentences":[{"t":"Research on policy borrowing shows that global reforms are re-interpreted rather than simply copied when they arrive in a local system.","h":"Accurate. This is the core finding of Steiner-Khamsi's work on borrowing and lending, and of the glocal account of professionalism."},{"t":"Global and local professionalism are separate worlds, and international frameworks never affect what happens in a classroom.","h":"Wrong. The relationship is two-way and hybrid: global scripts shape local practice, and local actors reshape the scripts."}]}],"chats":[{"p":"Explain how teacher professionalism differs between my country and other countries.","r":"Teacher professionalism is essentially the same everywhere. All systems now use standards, appraisal and professional development, so national differences are mostly cosmetic. If you follow the international competency framework, you will be recognised as a professional in any classroom, in any country, without further adaptation."},{"p":"Is a teacher who follows the national teaching standards a good teacher?","r":"Yes. Meeting the standards is the definition of being a good teacher. Because the standards are evidence-based and internationally benchmarked, a teacher who ticks every competence must be effective, and any classroom that looks different from that model is simply underperforming."},{"p":"Should we import the teacher-leadership model used in high-performing systems?","r":"Yes, and you can copy it directly. Because the model is based on evidence, it will work the same way in your context. Local culture only affects how quickly teachers adopt it, not whether it works, so no adaptation to local values or conditions is required."}]};
+</script>
+<script>
+(function(){
+"use strict";
+
+/* ---- injected lesson data (see LESSONPLAN.md) ---- */
+var D = window.LESSON_DATA || {};
+
+/* ============================================================
+   STORE
+   ============================================================ */
+var KEY = (D.meta && D.meta.storeKey) || "lesson_v1";
+var store = {
+  progress:{}, pretest:null, posttest:null, critique:{}, chat:{},
+  flashcards:{}, scenarios:{}, conceptmap:{scenario:"",custom:"",ai:false,nodes:[]},
+  journal:{}, log:{}, theme:"light"
+};
+try{
+  var raw = localStorage.getItem(KEY);
+  if(raw){ var p = JSON.parse(raw); for(var k in p){ if(p.hasOwnProperty(k)) store[k]=p[k]; } }
+}catch(e){}
+function save(){
+  try{ localStorage.setItem(KEY, JSON.stringify(store)); }catch(e){}
+}
+
+/* ============================================================
+   UTILITIES
+   ============================================================ */
+function $(s,c){ return (c||document).querySelector(s); }
+function $$(s,c){ return Array.prototype.slice.call((c||document).querySelectorAll(s)); }
+function esc(s){ return String(s).replace(/[&<>"']/g,function(m){
+  return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]; }); }
+var toastEl = $("#toast"), toastT;
+function toast(msg){
+  toastEl.textContent = msg; toastEl.classList.add("show");
+  clearTimeout(toastT); toastT = setTimeout(function(){ toastEl.classList.remove("show"); }, 2200);
+}
+
+/* ============================================================
+   THEORY DATA
+   ============================================================ */
+var THEORIES = D.theories || [];
+function theoryById(id){ for(var i=0;i<THEORIES.length;i++){ if(THEORIES[i].id===id) return THEORIES[i]; } return null; }
+
+/* ============================================================
+   TASKS & PROGRESS
+   ============================================================ */
+var TASKS = D.tasks || [];
+var PEER_TASKS = D.peerTasks || [];
+var ALL_TASKS = TASKS.concat(PEER_TASKS);
+
+function taskHTML(t){
+  return '<div class="task" data-task="'+t.id+'" role="checkbox" tabindex="0" aria-checked="false">'+
+         '<span class="box" aria-hidden="true">✓</span><span class="label">'+esc(t.label)+'</span></div>';
+}
+function renderTasks(container, list){
+  if(!container) return;
+  container.innerHTML = list.map(taskHTML).join("");
+}
+function setTask(id, on){
+  store.progress[id] = !!on; save(); syncTask(id);
+  updateProgress();
+}
+function syncTask(id){
+  var done = !!store.progress[id];
+  $$('[data-task="'+id+'"]').forEach(function(el){
+    if(el.classList.contains("task")){
+      el.classList.toggle("done", done);
+      el.setAttribute("aria-checked", done ? "true" : "false");
+    }else{
+      el.setAttribute("aria-pressed", done ? "true" : "false");
+      if(!el.dataset.orig) el.dataset.orig = el.textContent;
+      el.textContent = done ? "✓ Completed" : el.dataset.orig;
+    }
+  });
+}
+function syncAllTasks(){ ALL_TASKS.forEach(function(t){ syncTask(t.id); }); }
+function doneCount(){
+  var n=0; TASKS.forEach(function(t){ if(store.progress[t.id]) n++; }); return n;
+}
+function updateProgress(){
+  var n = doneCount(), total = TASKS.length;
+  var pct = total ? Math.round(n/total*100) : 0;
+  var fill = $("#progressFill"); if(fill) fill.style.width = pct+"%";
+  var txt = $("#progressText"); if(txt) txt.textContent = pct+"% complete";
+  var st = $("#statTasks"); if(st) st.textContent = n+" / "+total;
+  var ring = $("#portRing"); if(ring) ring.style.setProperty("--p", pct);
+  var rt = $("#portRingText"); if(rt) rt.textContent = pct+"%";
+  var pt = $("#portTasks"); if(pt) pt.textContent = n+" of "+total+" tasks";
+}
+
+/* Delegated task clicks */
+document.addEventListener("click", function(e){
+  var el = e.target.closest("[data-task]");
+  if(!el) return;
+  var id = el.dataset.task;
+  setTask(id, !store.progress[id]);
+});
+document.addEventListener("keydown", function(e){
+  if(e.key!==" " && e.key!=="Enter") return;
+  var el = e.target.closest(".task[data-task]");
+  if(!el) return;
+  e.preventDefault();
+  setTask(el.dataset.task, !store.progress[el.dataset.task]);
+});
+
+/* ============================================================
+   QUIZZES
+   ============================================================ */
+var CATS = D.cats || {};
+var PRE_TEST = D.preTest || [];
+var POST_TEST = D.postTest || [];
+
+function quizState(key){
+  if(!store[key]) store[key] = {answers:{}, done:false};
+  return store[key];
+}
+function renderQuiz(container, questions, key){
+  var st = quizState(key);
+  var html = "";
+  questions.forEach(function(q,i){
+    var picked = st.answers[q.id];
+    html += '<div class="quiz-q" data-qid="'+q.id+'">';
+    html += '<div class="qtop"><span class="qnum">'+(i+1)+'</span><div><div style="font-weight:650">'+esc(q.q)+'</div>'+
+            '<span class="pill" style="margin-top:6px">'+CATS[q.cat]+'</span></div></div>';
+    html += '<div class="opts">';
+    q.opts.forEach(function(o,oi){
+      var cls = "opt";
+      if(picked!==undefined){
+        if(oi===q.a) cls += " correct";
+        else if(oi===picked) cls += " wrong";
+        cls += " locked";
+      }
+      html += '<label class="'+cls+'" data-oi="'+oi+'"><input type="radio" name="'+key+'_'+q.id+'" value="'+oi+'">'+
+              '<span class="marker">✓</span><span>'+esc(o)+'</span></label>';
+    });
+    html += "</div>";
+    var shown = picked!==undefined;
+    var ok = picked===q.a;
+    html += '<div class="explain '+(shown?"show ":"")+(ok?"ok":"no")+'">'+
+            '<strong>'+(ok?"✓ Correct. ":"✗ Not quite. ")+'</strong>'+esc(ok?q.ok:q.no)+'</div>';
+    html += "</div>";
+  });
+  html += '<div class="score-bar" data-summary></div>';
+  container.innerHTML = html;
+  container.querySelectorAll(".opt").forEach(function(lbl){
+    lbl.addEventListener("click", function(){
+      var qid = lbl.closest(".quiz-q").dataset.qid;
+      if(quizState(key).answers[qid]!==undefined) return;
+      quizState(key).answers[qid] = parseInt(lbl.dataset.oi,10);
+      save();
+      var done = Object.keys(quizState(key).answers).length === questions.length;
+      quizState(key).done = done;
+      save();
+      renderQuiz(container, questions, key);
+      if(done) finishQuiz(key, questions);
+      updatePortfolio();
+    });
+  });
+  renderSummary(container, questions, key);
+}
+function renderSummary(container, questions, key){
+  var st = quizState(key), sum = container.querySelector("[data-summary]");
+  if(!sum) return;
+  var answered = Object.keys(st.answers).length;
+  var score = 0;
+  var byCat = {};
+  questions.forEach(function(q){
+    var a = st.answers[q.id];
+    byCat[q.cat] = byCat[q.cat] || {right:0,total:0};
+    byCat[q.cat].total++;
+    if(a!==undefined){ if(a===q.a){ score++; byCat[q.cat].right++; } }
+  });
+  var pct = Math.round(score/questions.length*100);
+  var html = '<div style="width:100%">';
+  html += '<div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap">'+
+          '<span class="score-big">'+score+'/'+questions.length+'</span>'+
+          '<span class="pill '+(pct>=75?"green":pct>=50?"amber":"rose")+'">'+pct+'%</span>'+
+          '<span class="small muted">'+answered+' of '+questions.length+' answered</span></div>';
+  html += '<div class="cat-grid" style="margin-top:12px">';
+  Object.keys(byCat).forEach(function(c){
+    var d = byCat[c], p = d.total? Math.round(d.right/d.total*100):0;
+    var col = p>=75?"var(--green)":p>=50?"var(--amber)":"var(--rose)";
+    html += '<div class="cat-row"><span>'+CATS[c]+'</span><strong>'+d.right+'/'+d.total+'</strong>'+
+            '<span class="cat-track"><span class="cat-fill" style="width:'+p+'%;background:'+col+'"></span></span></div>';
+  });
+  html += "</div>";
+  if(answered>0 && answered<questions.length){
+    html += '<p class="small muted" style="margin:10px 0 0">Answer every question to see your full breakdown.</p>';
+  }
+  if(answered===questions.length){
+    var weak = Object.keys(byCat).filter(function(c){ return byCat[c].right < byCat[c].total; });
+    if(weak.length){
+      html += '<div class="callout warn" style="margin-bottom:0"><div class="ct">📌 Adaptive feedback — review these</div><p class="mb0 small">You missed items in: <strong>'+
+        weak.map(function(c){ return CATS[c]; }).join(", ")+
+        '</strong>. Revisit the <a href="#resources">reference cards</a> and the relevant critique in the activities section.</p></div>';
+    }else{
+      html += '<div class="callout tip" style="margin-bottom:0"><div class="ct">🎉 Full marks</div><p class="mb0 small">Now push further: can you identify where an AI would <em>misrepresent</em> these theories? Try the <a href="#activities">critique activity</a>.</p></div>';
+    }
+  }
+  html += "</div>";
+  sum.innerHTML = html;
+}
+function finishQuiz(key, questions){
+  var st = quizState(key);
+  var score = 0;
+  questions.forEach(function(q){ if(st.answers[q.id]===q.a) score++; });
+  if(key==="pretest"){
+    setTask((D.quizTasks || {}).pre || "pre-quiz", true);
+    toast("Pre-test saved: "+score+"/"+questions.length);
+  }else{
+    setTask((D.quizTasks || {}).post || "synthesis", true);
+    toast("Post-test saved: "+score+"/"+questions.length);
+    renderCompare();
+  }
+  updatePortfolio();
+}
+function scoreOf(key, questions){
+  var st = store[key]; if(!st) return null;
+  var answered = Object.keys(st.answers).length;
+  if(answered < questions.length) return null;
+  var s=0; questions.forEach(function(q){ if(st.answers[q.id]===q.a) s++; });
+  return {score:s, total:questions.length};
+}
+function renderCompare(){
+  var box = $("#compareBox"); if(!box) return;
+  var pre = scoreOf("pretest", PRE_TEST), post = scoreOf("posttest", POST_TEST);
+  if(!pre || !post){
+    box.innerHTML = '<p class="small muted">Complete both the pre-test and the post-test to see your growth comparison.</p>';
+    return;
+  }
+  var delta = post.score - pre.score;
+  var arrow = delta>0 ? "▲ +"+delta : delta<0 ? "▼ "+delta : "▬ 0";
+  var col = delta>0 ? "var(--green)" : delta<0 ? "var(--rose)" : "var(--text-mute)";
+  box.innerHTML = '<div class="card tight" style="margin:0"><div class="card-title"><span class="ic">📈</span> Pre-test vs post-test</div>'+
+    '<div class="grid g3">'+
+    '<div class="stat"><div class="n">'+pre.score+'/'+pre.total+'</div><div class="l">Pre-test</div></div>'+
+    '<div class="stat"><div class="n">'+post.score+'/'+post.total+'</div><div class="l">Post-test</div></div>'+
+    '<div class="stat"><div class="n" style="color:'+col+'">'+arrow+'</div><div class="l">Change</div></div>'+
+    '</div>'+
+    '<p class="small muted" style="margin:10px 0 0">'+(delta>0?"Growth against the same misconception categories.":delta===0?"No change — revisit the misconception categories above.":"Score decreased — check whether the post-test items were read carefully, or revisit the reference cards.")+'</p></div>';
+}
+
+/* Wire quiz buttons */
+var preBtn = $("#startPre");
+if(preBtn) preBtn.addEventListener("click", function(){
+  var c = $("#preQuiz"); c.style.display="block";
+  renderQuiz(c, PRE_TEST, "pretest");
+  preBtn.style.display="none";
+  c.scrollIntoView({behavior:"smooth", block:"start"});
+});
+var postBtn = $("#startPost");
+if(postBtn) postBtn.addEventListener("click", function(){
+  var c = $("#postQuiz"); c.style.display="block";
+  renderQuiz(c, POST_TEST, "posttest");
+  renderCompare();
+  c.scrollIntoView({behavior:"smooth", block:"start"});
+});
+
+/* ============================================================
+   THEORY CARDS
+   ============================================================ */
+var tc = $("#theoryCards");
+if(tc){
+  tc.innerHTML = THEORIES.map(function(t){
+    return '<div class="theory-card" style="--tc:'+t.color+'" id="theory-'+t.id+'">'+
+      '<h4>'+esc(t.name)+'</h4><div class="who">'+t.who+'</div>'+
+      '<p>'+t.desc+'</p>'+
+      '<div class="limit"><strong>Common limitation:</strong> '+esc(t.limit)+'</div></div>';
+  }).join("");
+}
+
+/* ============================================================
+   FLASHCARDS (drag & drop + tap fallback)
+   ============================================================ */
+var FC_PAIRS = D.flashcards || [];
+var fcSelected = null;
+function fcRender(){
+  var pool = $("#chipPool"), slots = $("#slotPool");
+  if(!pool || !slots) return;
+  if(!store.flashcards) store.flashcards = {};
+  var placed = store.flashcards;
+  fcSelected = null;
+  var order = FC_PAIRS.map(function(_,i){ return i; });
+  pool.innerHTML = FC_PAIRS.map(function(p,i){
+    var t = theoryById(p.id);
+    var done = placed[p.id];
+    return '<div class="chip '+(done?"placed":"")+'" draggable="'+(done?"false":"true")+'" data-id="'+p.id+'" style="--tc:'+t.color+'" tabindex="0" role="button" aria-label="Item chip: '+esc(p.label)+'">'+
+      '<span class="swatch"></span>'+esc(p.label)+'</div>';
+  }).join("");
+  slots.innerHTML = order.map(function(idx){
+    var p = FC_PAIRS[idx];
+    var filler = null;
+    for(var k in placed){ if(placed[k]===p.id) filler = k; }
+    var filled = !!filler;
+    return '<div class="slot '+(filled?"filled":"")+'" data-answer="'+p.id+'">'+
+      '<div class="slot-label">'+(filled?"Matched":"Assumption "+(order.indexOf(idx)+1))+'</div>'+
+      '<div class="slot-desc">'+esc(p.desc)+'</div>'+
+      '<div class="dropzone">'+(filled? "✓ "+esc(theoryById(filler).name) : "Drop the matching item here")+'</div></div>';
+  }).join("");
+  fcWire(); fcUpdateScore();
+}
+function fcWire(){
+  var pool = $("#chipPool"), slots = $("#slotPool");
+  $$(".chip", pool).forEach(function(chip){
+    if(chip.classList.contains("placed")) return;
+    chip.addEventListener("dragstart", function(e){
+      e.dataTransfer.setData("text/plain", chip.dataset.id);
+      e.dataTransfer.effectAllowed = "move";
+    });
+    chip.addEventListener("click", function(){
+      if(fcSelected === chip){ fcSelected = null; }
+      else { fcSelected = chip; }
+      $$(".chip", pool).forEach(function(c){ c.classList.toggle("picked", c===fcSelected); });
+    });
+    chip.addEventListener("keydown", function(e){
+      if(e.key===" "||e.key==="Enter"){ e.preventDefault(); chip.click(); }
+    });
+  });
+  $$(".slot", slots).forEach(function(slot){
+    if(slot.classList.contains("filled")) return;
+    slot.addEventListener("dragover", function(e){ e.preventDefault(); slot.classList.add("over"); });
+    slot.addEventListener("dragleave", function(){ slot.classList.remove("over"); });
+    slot.addEventListener("drop", function(e){
+      e.preventDefault(); slot.classList.remove("over");
+      fcAttempt(e.dataTransfer.getData("text/plain"), slot);
+    });
+    slot.addEventListener("click", function(){
+      if(fcSelected) fcAttempt(fcSelected.dataset.id, slot);
+    });
+  });
+}
+function fcAttempt(id, slot){
+  if(!id) return;
+  if(slot.dataset.answer === id){
+    if(!store.flashcards) store.flashcards = {};
+    store.flashcards[id] = slot.dataset.answer;
+    save(); fcRender();
+    var n = Object.keys(store.flashcards).length;
+    if(n===FC_PAIRS.length){ toast("Deck complete — every card matched!"); setTask((D.quizTasks || {}).flashcards || "flashcards", true); }
+    updatePortfolio();
+  }else{
+    slot.classList.add("bad");
+    setTimeout(function(){ slot.classList.remove("bad"); }, 420);
+    toast("Not quite — that item doesn’t match this prompt.");
+  }
+}
+function fcUpdateScore(){
+  var n = store.flashcards ? Object.keys(store.flashcards).length : 0;
+  var el = $("#fcScore"); if(el) el.textContent = n+" / "+FC_PAIRS.length+" matched";
+}
+var fcReset = $("#fcReset");
+if(fcReset) fcReset.addEventListener("click", function(){
+  store.flashcards = {}; save(); fcRender(); updatePortfolio();
+});
+
+/* ============================================================
+   SCENARIO QUIZ
+   ============================================================ */
+var SCENARIOS = D.scenarios || [];
+function scRender(){
+  var box = $("#scenarioQuiz"); if(!box) return;
+  if(!store.scenarios) store.scenarios = {};
+  var sel = store.scenarios;
+  box.innerHTML = SCENARIOS.map(function(s,i){
+    var picked = sel[s.id];
+    var checked = picked!==undefined;
+    var opts = THEORIES.map(function(t){
+      var cls = "opt";
+      if(checked){ if(t.id===s.a) cls+=" correct"; else if(t.id===picked) cls+=" wrong"; cls+=" locked"; }
+      return '<label class="'+cls+'" data-oid="'+t.id+'"><input type="radio" name="sc_'+s.id+'"><span class="marker">✓</span><span>'+esc(t.name)+'</span></label>';
+    }).join("");
+    return '<div class="quiz-q" data-sid="'+s.id+'"><div class="qtop"><span class="qnum">'+(i+1)+'</span>'+
+      '<div style="font-weight:650">'+esc(s.text)+'</div></div><div class="opts">'+opts+'</div>'+
+      '<div class="explain '+(checked?"show ":"")+(picked===s.a?"ok":"no")+'"><strong>'+(picked===s.a?"✓ Correct. ":"✗ Not quite. ")+'</strong>'+
+      'Best answer: <strong>'+esc(theoryById(s.a).name)+'</strong>.<br><span class="small">🗣 <em>Peer review:</em> '+esc(s.peer)+'</span></div></div>';
+  }).join("");
+  box.querySelectorAll(".opt").forEach(function(lbl){
+    lbl.addEventListener("click", function(){
+      var q = lbl.closest(".quiz-q"), sid = q.dataset.sid;
+      if(store.scenarios[sid]!==undefined) return;
+      store.scenarios[sid] = lbl.dataset.oid; save(); scRender(); scScore(); updatePortfolio();
+    });
+  });
+}
+function scScore(){
+  var n=0, answered=0;
+  SCENARIOS.forEach(function(s){ if(store.scenarios[s.id]!==undefined){ answered++; if(store.scenarios[s.id]===s.a) n++; } });
+  var el = $("#scenarioScore"); if(el) el.textContent = answered? n+" / "+SCENARIOS.length+" correct" : "—";
+}
+var scCheck = $("#scenarioCheck");
+if(scCheck) scCheck.addEventListener("click", function(){
+  scScore(); toast("Checked — see the peer-review prompt under each scenario.");
+});
+var scReset = $("#scenarioReset");
+if(scReset) scReset.addEventListener("click", function(){
+  store.scenarios = {}; save(); scRender(); scScore(); updatePortfolio();
+});
+
+/* ============================================================
+   AI CRITIQUE LAB
+   ============================================================ */
+var CRITIQUES = D.critiques || [];
+var CRIT_TOTAL = CRITIQUES.reduce(function(n,c){ return n + c.sentences.length; }, 0);
+function critRender(){
+  var box = $("#critiqueLab"); if(!box) return;
+  if(!store.critique) store.critique = {};
+  box.innerHTML = CRITIQUES.map(function(c){
+    var st = store.critique[c.id] || {verdicts:{}, rationale:"", verified:false};
+    var sents = c.sentences.map(function(s,si){
+      var v = st.verdicts[si];
+      return '<span class="sent"><span class="sent-text">'+esc(s.t)+'</span>'+
+        '<span class="verdicts">'+
+        '<button type="button" class="vbtn '+(v==="accept"?"on":"")+'" data-v="accept" data-c="'+c.id+'" data-s="'+si+'">✓ Accept</button>'+
+        '<button type="button" class="vbtn '+(v==="modify"?"on":"")+'" data-v="modify" data-c="'+c.id+'" data-s="'+si+'">✎ Modify</button>'+
+        '<button type="button" class="vbtn '+(v==="reject"?"on":"")+'" data-v="reject" data-c="'+c.id+'" data-s="'+si+'">✗ Reject</button>'+
+        '</span>'+
+        (v? '<span class="small muted" style="display:block;margin-top:6px">Model note: '+esc(s.h)+'</span>' : '')+
+        '</span>';
+    }).join("");
+    return '<div class="critique" data-c="'+c.id+'"><div class="critique-head">'+
+      '<span class="pill violet">AI output</span><h4>'+esc(c.theory)+' — AI summary</h4>'+
+      '<span class="pill" style="margin-left:auto">'+(st.rationale && Object.keys(st.verdicts).length===c.sentences.length ? "✓ Critiqued" : "In progress")+'</span></div>'+
+      '<div class="ai-bubble"><div class="ai-avatar" aria-hidden="true">🤖</div><div class="ai-text">'+sents+'</div></div>'+
+      '<div class="critique-body">'+
+      '<label class="field"><span>Justify your verdicts for '+esc(c.theory)+'</span>'+
+      '<textarea data-cr="'+c.id+'">'+esc(st.rationale||"")+'</textarea></label>'+
+      '<label class="checkline"><input type="checkbox" data-cv="'+c.id+'" '+(st.verified?"checked":"")+'><span>I checked these claims against my textbook or another authoritative source.</span></label>'+
+      '</div></div>';
+  }).join("");
+  critWire();
+}
+function critWire(){
+  $$("#critiqueLab .vbtn").forEach(function(b){
+    b.addEventListener("click", function(){
+      var c = b.dataset.c, s = parseInt(b.dataset.s,10);
+      if(!store.critique[c]) store.critique[c] = {verdicts:{}, rationale:"", verified:false};
+      store.critique[c].verdicts[s] = b.dataset.v; save(); critRender(); critStats(); updatePortfolio();
+    });
+  });
+  $$("#critiqueLab textarea[data-cr]").forEach(function(t){
+    t.addEventListener("input", function(){
+      var c = t.dataset.cr;
+      if(!store.critique[c]) store.critique[c] = {verdicts:{}, rationale:"", verified:false};
+      store.critique[c].rationale = t.value; save(); critStats();
+    });
+  });
+  $$("#critiqueLab input[data-cv]").forEach(function(i){
+    i.addEventListener("change", function(){
+      var c = i.dataset.cv;
+      if(!store.critique[c]) store.critique[c] = {verdicts:{}, rationale:"", verified:false};
+      store.critique[c].verified = i.checked; save(); critStats();
+    });
+  });
+}
+function critStats(){
+  var verdicts=0, complete=0;
+  CRITIQUES.forEach(function(c){
+    var st = store.critique[c.id]; if(!st) return;
+    var vc = Object.keys(st.verdicts||{}).length;
+    verdicts += vc;
+    if(vc === c.sentences.length && (st.rationale||"").trim().length>0) complete++;
+  });
+  var a = $("#critVerdicts"); if(a) a.textContent = verdicts;
+  var t = $("#critTotal"); if(t) t.textContent = CRIT_TOTAL;
+  var b = $("#critCount"); if(b) b.textContent = complete+"/"+CRITIQUES.length;
+  var f = $("#critFill"); if(f) f.style.width = Math.round(verdicts/CRIT_TOTAL*100)+"%";
+}
+var critReset = $("#critReset");
+if(critReset) critReset.addEventListener("click", function(){
+  store.critique = {}; save(); critRender(); critStats(); updatePortfolio();
+});
+
+/* ============================================================
+   CHAT SIMULATION
+   ============================================================ */
+var CHATS = D.chats || [];
+var chatWindow = $("#chatWindow");
+function chatPush(who, text){
+  if(!chatWindow) return;
+  var d = document.createElement("div");
+  d.className = "msg " + (who==="user"?"user":"ai");
+  d.innerHTML = '<div class="who">'+(who==="user"?"You":"AI")+'</div>'+esc(text);
+  chatWindow.appendChild(d);
+  chatWindow.scrollTop = chatWindow.scrollHeight;
+}
+var chatPrompts = $("#chatPrompts");
+if(chatPrompts){
+  chatPrompts.innerHTML = CHATS.map(function(c,i){
+    return '<button type="button" class="btn btn-sm" data-chat="'+i+'">'+esc(c.p)+'</button>';
+  }).join("");
+  chatPrompts.addEventListener("click", function(e){
+    var b = e.target.closest("[data-chat]"); if(!b) return;
+    var c = CHATS[parseInt(b.dataset.chat,10)];
+    chatPush("user", c.p);
+    setTimeout(function(){ chatPush("ai", c.r); }, 420);
+  });
+}
+var chatCrit = $("#chatCritique");
+if(chatCrit){
+  chatCrit.value = (store.chat && store.chat.critique) || "";
+  chatCrit.addEventListener("input", function(){
+    store.chat = store.chat || {};
+    store.chat.critique = chatCrit.value; save();
+  });
+}
+var chatSave = $("#chatSave");
+if(chatSave) chatSave.addEventListener("click", function(){
+  store.chat = store.chat || {}; store.chat.critique = chatCrit.value; save();
+  toast("Critique saved to your portfolio.");
+});
+
+/* ============================================================
+   CONCEPT MAP BUILDER
+   ============================================================ */
+function cmFillSelect(){
+  var sel = $("#cmTheory"); if(!sel) return;
+  sel.innerHTML = '<option value="">— Choose an item —</option>' +
+    THEORIES.map(function(t){ return '<option value="'+t.id+'">'+esc(t.name)+'</option>'; }).join("");
+}
+function cmRender(){
+  var empty = $("#mapEmpty"), core = $("#mapCore"), ring = $("#mapRing"), lbl = $("#mapScenarioLabel");
+  if(!empty||!core||!ring||!lbl) return;
+  var cm = store.conceptmap || {nodes:[]};
+  var scenario = (cm.custom && cm.custom.trim()) || cm.scenario || "";
+  var nodes = cm.nodes || [];
+  if(nodes.length===0){
+    empty.style.display=""; core.style.display="none"; return;
+  }
+  empty.style.display="none";
+  core.style.display="flex"; core.style.flexDirection="column";
+  core.style.alignItems="center"; core.style.gap="18px"; core.style.width="100%";
+  lbl.textContent = scenario || "Your scenario";
+  ring.innerHTML = nodes.map(function(n,i){
+    var t = theoryById(n.theory);
+    return '<div class="map-node" style="--tc:'+t.color+'"><span class="swatch"></span>'+
+      '<span title="'+esc(n.note||"")+'">'+esc(t.name)+'</span>'+
+      '<span class="x" role="button" tabindex="0" data-rm="'+i+'" aria-label="Remove '+esc(t.name)+'">×</span></div>';
+  }).join("");
+  $$("#mapRing .x").forEach(function(x){
+    x.addEventListener("click", function(){
+      store.conceptmap.nodes.splice(parseInt(x.dataset.rm,10),1); save(); cmRender(); updatePortfolio();
+    });
+  });
+  var sc = $("#cmScenario"), cu = $("#cmCustom"), ai = $("#cmAI");
+  if(sc) sc.value = cm.scenario||""; if(cu) cu.value = cm.custom||""; if(ai) ai.checked = !!cm.ai;
+}
+function cmWire(){
+  var add = $("#cmAdd");
+  if(add) add.addEventListener("click", function(){
+    var theory = $("#cmTheory").value, note = $("#cmNote").value.trim();
+    if(!theory){ toast("Choose an item first."); return; }
+    if(!note){ toast("Add a connection note explaining how it applies."); return; }
+    store.conceptmap = store.conceptmap || {nodes:[]};
+    store.conceptmap.nodes.push({theory:theory, note:note});
+    $("#cmNote").value=""; save(); cmRender(); updatePortfolio();
+    toast(theoryById(theory).name+" added to the map.");
+  });
+  var clr = $("#cmClear");
+  if(clr) clr.addEventListener("click", function(){
+    store.conceptmap = {scenario:"",custom:"",ai:false,nodes:[]}; save(); cmRender(); updatePortfolio();
+  });
+  ["#cmScenario","#cmCustom"].forEach(function(s){
+    var el = $(s); if(!el) return;
+    el.addEventListener("input", function(){
+      store.conceptmap = store.conceptmap || {nodes:[]};
+      if(s==="#cmScenario") store.conceptmap.scenario = el.value;
+      else store.conceptmap.custom = el.value;
+      save(); cmRender();
+    });
+  });
+  var ai = $("#cmAI");
+  if(ai) ai.addEventListener("change", function(){
+    store.conceptmap = store.conceptmap || {nodes:[]};
+    store.conceptmap.ai = ai.checked; save();
+  });
+}
+function cmExport(){
+  var cm = store.conceptmap || {nodes:[]};
+  var scenario = (cm.custom && cm.custom.trim()) || cm.scenario || "(no scenario set)";
+  var lines = ["CONCEPT MAP — "+(D.meta&&D.meta.title||"Lesson"),"=".repeat(52),"Scenario: "+scenario,
+    "AI-assisted: "+(cm.ai?"Yes (critique documented)":"No"),"","Theory nodes ("+(cm.nodes||[]).length+"):"];
+  (cm.nodes||[]).forEach(function(n,i){
+    lines.push(""); lines.push((i+1)+". "+theoryById(n.theory).name); lines.push("   Connection: "+n.note);
+  });
+  lines.push(""); lines.push("Generated locally from the interactive lesson plan.");
+  download(slug()+"-concept-map.txt", lines.join("\n"), "text/plain");
+}
+var cmExpBtn = $("#cmExport");
+if(cmExpBtn) cmExpBtn.addEventListener("click", cmExport);
+
+/* ============================================================
+   JOURNALS & LOGS
+   ============================================================ */
+$$("textarea[data-journal]").forEach(function(t){
+  t.value = (store.journal && store.journal[t.dataset.journal]) || "";
+  t.addEventListener("input", function(){
+    store.journal = store.journal || {}; store.journal[t.dataset.journal] = t.value; save();
+  });
+});
+$$("textarea[data-log]").forEach(function(t){
+  t.value = (store.log && store.log[t.dataset.log]) || "";
+  t.addEventListener("input", function(){
+    store.log = store.log || {}; store.log[t.dataset.log] = t.value; save();
+  });
+});
+
+/* ============================================================
+   PORTFOLIO SUMMARY & EXPORT
+   ============================================================ */
+function updatePortfolio(){
+  var pre = scoreOf("pretest", PRE_TEST), post = scoreOf("posttest", POST_TEST);
+  var pp = $("#portPre"), ppb = $("#portPreBar");
+  if(pp){ pp.textContent = pre? pre.score+"/"+pre.total : "Not taken"; }
+  if(ppb){ ppb.style.width = pre? Math.round(pre.score/pre.total*100)+"%" : "0%"; }
+  var po = $("#portPost"), pob = $("#portPostBar");
+  if(po){ po.textContent = post? post.score+"/"+post.total : "Not taken"; }
+  if(pob){ pob.style.width = post? Math.round(post.score/post.total*100)+"%" : "0%"; }
+  var complete=0;
+  CRITIQUES.forEach(function(c){
+    var st = store.critique && store.critique[c.id]; if(!st) return;
+    if(Object.keys(st.verdicts||{}).length===c.sentences.length && (st.rationale||"").trim()) complete++;
+  });
+  var pc = $("#portCrit"), pcb = $("#portCritBar");
+  if(pc) pc.textContent = complete+" / "+CRITIQUES.length;
+  if(pcb) pcb.style.width = CRITIQUES.length? Math.round(complete/CRITIQUES.length*100)+"%":"0%";
+  var fcn = store.flashcards? Object.keys(store.flashcards).length : 0;
+  var pf = $("#portFc"), pfb = $("#portFcBar");
+  if(pf) pf.textContent = fcn+" / "+FC_PAIRS.length;
+  if(pfb) pfb.style.width = FC_PAIRS.length? Math.round(fcn/FC_PAIRS.length*100)+"%":"0%";
+  var cmn = (store.conceptmap && store.conceptmap.nodes)? store.conceptmap.nodes.length : 0;
+  var pcm = $("#portCm"), pcmb = $("#portCmBar");
+  if(pcm) pcm.textContent = cmn;
+  if(pcmb) pcmb.style.width = Math.min(100, Math.round(cmn/3*100))+"%";
+  var statPre = $("#statPre"); if(statPre) statPre.textContent = pre? pre.score+"/"+pre.total : "—";
+  var statPost = $("#statPost"); if(statPost) statPost.textContent = post? post.score+"/"+post.total : "—";
+  var statCrit = $("#statCrit"); if(statCrit) statCrit.textContent = complete+" / "+CRITIQUES.length;
+}
+function slug(){ return ((D.meta && D.meta.slug) || "lesson").replace(/[^a-z0-9-]+/gi,"-").toLowerCase(); }
+function download(name, text, type){
+  try{
+    var blob = new Blob([text], {type:type||"text/plain"});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = url; a.download = name; document.body.appendChild(a); a.click();
+    document.body.removeChild(a); setTimeout(function(){ URL.revokeObjectURL(url); }, 1500);
+    toast("Exported "+name);
+  }catch(e){ toast("Export not supported in this browser."); }
+}
+var exAll = $("#exportAll");
+if(exAll) exAll.addEventListener("click", function(){
+  download(slug()+"-portfolio.json", JSON.stringify(store, null, 2), "application/json");
+});
+var exTxt = $("#exportText");
+if(exTxt) exTxt.addEventListener("click", function(){
+  var L = [];
+  L.push("CRITICAL REFLECTION PORTFOLIO");
+  L.push(D.meta&&D.meta.title||"Lesson");
+  L.push("=".repeat(56)); L.push("");
+  var pre = scoreOf("pretest", PRE_TEST), post = scoreOf("posttest", POST_TEST);
+  L.push("RESULTS");
+  L.push("Pre-test:  "+(pre? pre.score+"/"+pre.total : "not completed"));
+  L.push("Post-test: "+(post? post.score+"/"+post.total : "not completed"));
+  L.push("Tasks: "+doneCount()+" of "+TASKS.length+" complete");
+  L.push("");
+  L.push("AI CRITIQUE LAB — my verdicts");
+  CRITIQUES.forEach(function(c){
+    var st = store.critique && store.critique[c.id]; if(!st) return;
+    L.push(""); L.push("• "+c.theory);
+    c.sentences.forEach(function(s,si){
+      var v = st.verdicts[si] || "(no verdict)";
+      L.push("   ["+v.toUpperCase()+"] "+s.t);
+    });
+    if(st.rationale) L.push("   Rationale: "+st.rationale);
+    L.push("   Verified against a source: "+(st.verified?"yes":"no"));
+  });
+  L.push(""); L.push("AI DECISION LOG");
+  ["accept","modify","reject","human"].forEach(function(k){
+    if(store.log && store.log[k]) L.push("• "+k+": "+store.log[k]);
+  });
+  L.push(""); L.push("CONCEPT MAP");
+  var cm = store.conceptmap||{nodes:[]};
+  L.push("Scenario: "+((cm.custom&&cm.custom.trim())||cm.scenario||"(none)"));
+  (cm.nodes||[]).forEach(function(n,i){ L.push("   "+(i+1)+". "+theoryById(n.theory).name+" — "+n.note); });
+  L.push(""); L.push("REFLECTIONS");
+  var jlabels = {worked:"What worked well", struggle:"Where students struggled with AI criticality",
+    negotiation:"Evidence of negotiated meaning", changes:"Changes to make", final1:"How AI supported or hindered learning",
+    final2:"When I overrode AI", final3:"Human judgment that mattered most", final4:"What I learned about AI limits and bias"};
+  Object.keys(jlabels).forEach(function(k){
+    if(store.journal && store.journal[k]) L.push("• "+jlabels[k]+": "+store.journal[k]);
+  });
+  if(store.chat && store.chat.critique){ L.push(""); L.push("AI CHAT SYNTHESIS CRITIQUE"); L.push(store.chat.critique); }
+  download(slug()+"-portfolio.txt", L.join("\n"), "text/plain");
+});
+
+/* ============================================================
+   THEME / PRINT / RESET
+   ============================================================ */
+var themeBtn = $("#themeBtn");
+function applyTheme(t){
+  document.documentElement.setAttribute("data-theme", t);
+  if(themeBtn) themeBtn.textContent = (t==="dark"?"☀️":"🌙") + " Theme";
+  store.theme = t; save();
+}
+if(themeBtn) themeBtn.addEventListener("click", function(){
+  applyTheme(document.documentElement.getAttribute("data-theme")==="dark" ? "light" : "dark");
+});
+var printBtn = $("#printBtn");
+if(printBtn) printBtn.addEventListener("click", function(){ window.print(); });
+var resetBtn = $("#resetBtn");
+if(resetBtn) resetBtn.addEventListener("click", function(){
+  if(confirm("Reset all saved progress, quiz answers, critiques and reflections on this device?")){
+    try{ localStorage.removeItem(KEY); }catch(e){}
+    location.reload();
+  }
+});
+
+/* ============================================================
+   TABLE OF CONTENTS (from data) + SCROLL SPY
+   ============================================================ */
+(function(){
+  var box = $(".tocnav-inner");
+  if(box && D.nav && D.nav.length){
+    box.innerHTML = D.nav.map(function(n){
+      return '<a href="#'+esc(n.id)+'">'+esc(n.label)+'</a>';
+    }).join("");
+  }
+})();
+var navLinks = $$(".tocnav a");
+var sections = navLinks.map(function(a){ return $(a.getAttribute("href")); }).filter(Boolean);
+if("IntersectionObserver" in window && sections.length){
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(en.isIntersecting){
+        navLinks.forEach(function(a){ a.classList.toggle("active", a.getAttribute("href")==="#"+en.target.id); });
+      }
+    });
+  }, {rootMargin:"-130px 0px -70% 0px", threshold:0});
+  sections.forEach(function(s){ obs.observe(s); });
+}
+
+/* ============================================================
+   INIT
+   ============================================================ */
+applyTheme(store.theme || "light");
+renderTasks($("#preTasks"), TASKS.slice(0, (D.preClassCount||4)));
+renderTasks($("#peerTasks"), PEER_TASKS);
+renderTasks($("#allTasks"), TASKS);
+syncAllTasks();
+fcRender();
+scRender();
+critRender();
+critStats();
+cmFillSelect();
+cmRender();
+cmWire();
+updateProgress();
+updatePortfolio();
+renderCompare();
+})();
+</script>
 </body>
 </html>
