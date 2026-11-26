@@ -1,0 +1,25 @@
+{
+  "collections": [
+    {
+      "name": "notes",
+      "readPolicy": "subject",
+      "writePolicy": "subject",
+      "ownerReadAll": true
+    }
+  ],
+  "routes": {
+    "POST /notes": {
+      "access": [
+        "student",
+        "teacher"
+      ],
+      "write": true
+    },
+    "GET /notes": {
+      "access": [
+        "student",
+        "teacher"
+      ]
+    }
+  }
+}

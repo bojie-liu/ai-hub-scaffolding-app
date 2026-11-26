@@ -1,11 +1,34 @@
 {
   "objectives": [
-    { "id": "obj1", "title": "Objective 1", "description": "Describe the first learning objective." },
-    { "id": "obj2", "title": "Objective 2", "description": "Describe the second learning objective." },
-    { "id": "obj3", "title": "Objective 3", "description": "Describe the third learning objective." }
+    {
+      "id": "obj1",
+      "title": "Identify questioning strategies",
+      "description": "Student names at least two questioning strategies a Hong Kong primary teacher could use to check understanding, referring to a classroom example."
+    },
+    {
+      "id": "obj2",
+      "title": "Explain a classroom example",
+      "description": "Student explains how one Hong Kong primary classroom example shows a teacher checking understanding through questioning, using specific details from the example."
+    },
+    {
+      "id": "obj3",
+      "title": "Connect to a learning theory",
+      "description": "Student connects the classroom example to Bloom's taxonomy or Vygotsky's Zone of Proximal Development by naming the theory and explaining the link."
+    }
   ],
-  "guardrails": [],
-  "scaffolding": [],
+  "guardrails": [
+    "Stay on the session topic of questioning to check understanding in Hong Kong primary lessons; if the student goes off-topic, acknowledge briefly and redirect politely.",
+    "Never give the final answer outright; guide with questions and hints so the student constructs the response.",
+    "Keep all language encouraging, age-appropriate, inclusive, and safe for classroom use.",
+    "Never claim an objective is complete on the student's behalf; ask the student to show evidence and let them decide what they have demonstrated.",
+    "If the student asks for the answer, provide a hint or a similar worked case instead of the complete response.",
+    "Keep replies concise and focused because the session is short."
+  ],
+  "scaffolding": [
+    "Ask a probing question to prompt the student to identify one questioning moment from a Hong Kong primary lesson; after one unproductive exchange, move to the next step.",
+    "Give one concrete hint, such as a question type or a moment to look for; after one unproductive exchange, move to the next step.",
+    "Share a brief worked example of a similar case and ask the student to map it to their own classroom example and chosen learning theory."
+  ],
   "extraPrompt": "",
-  "openingMessage": null
+  "openingMessage": "Hello! Objective 1: You will identify at least two questioning strategies a Hong Kong primary teacher uses to check understanding. Objective 2: You will explain how one classroom example shows a teacher checking understanding through questioning. Objective 3: You will connect that example to Bloom's taxonomy or Vygotsky's Zone of Proximal Development. Let's start with the guiding question: How do teachers use questioning to check understanding in a Hong Kong primary school lesson?"
 }
